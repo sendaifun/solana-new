@@ -9,6 +9,7 @@ import skillsData from "../shared/constants/solana-skills.json" with { type: "js
 import { interactiveMcps, buildMcpsIndex, searchMcps, type McpsData } from "./interactive-mcps.js";
 import mcpsData from "../shared/constants/solana-mcps.json" with { type: "json" };
 import { interactiveUniversalSearch, buildUniversalIndex } from "./interactive-universal.js";
+import { interactiveOnboarding, agentOnboarding } from "./interactive-onboarding.js";
 import { renderBanner } from "./banner.js";
 
 function parseFlags(args: string[]): { flags: Record<string, string | boolean>; positional: string[] } {
@@ -273,6 +274,15 @@ async function cmdMcps(args: string[]): Promise<void> {
   for (const m of allItems) console.log(`  ${m.id}  (${m.repo})  ${m.description}`);
 }
 
+async function cmdStart(args: string[]): Promise<void> {
+  const { flags } = parseFlags(args);
+  if (flags.agent === true) {
+    agentOnboarding();
+    return;
+  }
+  await interactiveOnboarding();
+}
+
 // --- Help ---
 
 function gradientSolanaNew(): string {
@@ -301,6 +311,7 @@ function printUsage(): void {
   console.log("");
   console.log(`  ${B}Discover${R}  ${DIM}— explore the Solana ecosystem${R}`);
   console.log("");
+  row(`${B}start${R}`,                                               "What do you want to build? (guided onboarding)");
   row(`${B}<query>${R}`,                                             "Search anything — repos, skills, mcps");
   row("search",                                            "Interactive universal search");
   row(`repos ${DIM}[--search <q>] [--category <cat>]${R}`,           "Browse or filter repos");
@@ -322,6 +333,7 @@ async function main(): Promise<void> {
     return;
   }
 
+  if (command === "start") return cmdStart(args);
   if (command === "search") return cmdSearch(args);
   if (command === "repos") return cmdRepos(args);
   if (command === "clone") return cmdClone(args);

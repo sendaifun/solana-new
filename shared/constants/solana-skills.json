@@ -6,8 +6,8 @@
   "fetched_at": "2026-03-22T20:22:18.633Z",
   "install_all_command": "npx skills add https://github.com/solana-foundation/solana-dev-skill",
   "counts": {
-    "official": 14,
-    "community": 52
+    "official": 15,
+    "community": 57
   },
   "official_skills": [
     {
@@ -107,6 +107,13 @@
       "description": "A testing pyramid for Solana programs using LiteSVM for fast unit tests, Mollusk for isolated instruction checks, and Surfpool for integration tests with realistic state.",
       "github_url": "https://github.com/solana-foundation/solana-dev-skill/blob/main/skill/references/testing.md",
       "raw_url": "https://raw.githubusercontent.com/solana-foundation/solana-dev-skill/main/skill/references/testing.md"
+    },
+    {
+      "slug": "kit",
+      "title": "@solana/kit Reference",
+      "description": "Comprehensive guide to @solana/kit — the modular, tree-shakable JavaScript SDK for Solana covering accounts, codecs, Codama codegen, plugins, React integration, and program interaction.",
+      "github_url": "https://github.com/solana-foundation/solana-dev-skill/tree/main/skill/references/kit",
+      "raw_url": "https://raw.githubusercontent.com/solana-foundation/solana-dev-skill/main/skill/references/kit/overview.md"
     }
   ],
   "community_skills": [
@@ -512,6 +519,51 @@
       "url": "https://github.com/sendaifun/skills/tree/main/skills/magicblock",
       "category": {
         "labelKey": "gaming"
+      }
+    },
+    {
+      "slug": "helius-build-skill",
+      "title": "Helius Build Skill (Official)",
+      "description": "Official Helius skill for core Solana development — DAS API, Sender, WebSockets, LaserStream gRPC, webhooks, wallet API, and transaction analysis.",
+      "url": "https://github.com/helius-labs/core-ai/tree/main/helius-skills/helius",
+      "category": {
+        "labelKey": "infrastructure"
+      }
+    },
+    {
+      "slug": "helius-phantom-skill",
+      "title": "Helius x Phantom Skill (Official)",
+      "description": "Official Helius skill for frontend dApp development with Phantom Connect SDK — React, React Native, browser, token gating, and payments.",
+      "url": "https://github.com/helius-labs/core-ai/tree/main/helius-skills/helius-phantom",
+      "category": {
+        "labelKey": "infrastructure"
+      }
+    },
+    {
+      "slug": "helius-dflow-skill",
+      "title": "Helius x DFlow Skill (Official)",
+      "description": "Official Helius skill for trading applications — spot swaps, prediction markets, real-time streaming, and Proof KYC via DFlow.",
+      "url": "https://github.com/helius-labs/core-ai/tree/main/helius-skills/helius-dflow",
+      "category": {
+        "labelKey": "defi"
+      }
+    },
+    {
+      "slug": "helius-svm-skill",
+      "title": "Helius SVM Skill (Official)",
+      "description": "Official Helius skill for Solana protocol internals — SVM execution model, consensus, account model, validator economics, and token extensions.",
+      "url": "https://github.com/helius-labs/core-ai/tree/main/helius-skills/svm",
+      "category": {
+        "labelKey": "infrastructure"
+      }
+    },
+    {
+      "slug": "solana-onboarding",
+      "title": "Solana Ecosystem Onboarding",
+      "description": "AI agent navigation guide — decision trees for which skills, repos, and MCPs to use for any Solana task, with workflow recipes for DeFi, NFTs, agents, and more.",
+      "url": "https://github.com/sendaifun/solana-new-cli/blob/main/docs/onboarding.md",
+      "category": {
+        "labelKey": "tooling"
       }
     }
   ],

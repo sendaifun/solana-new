@@ -47,11 +47,11 @@
     },
     {
       "id": "solana-action-express",
-      "repo": "McDegens-DAO/solana-action-express",
+      "repo": "SolDapper/solana-action-express",
       "description": "Express.js server template for building Solana Actions/Blinks backends",
       "category": "scaffold",
       "keywords": ["blinks", "actions", "express", "server", "api", "backend"],
-      "clone_command": "git clone https://github.com/McDegens-DAO/solana-action-express.git",
+      "clone_command": "git clone https://github.com/SolDapper/solana-action-express.git",
       "is_template": true
     },
     {
@@ -145,6 +145,15 @@
       "is_template": false
     },
     {
+      "id": "helius-core-ai",
+      "repo": "helius-labs/core-ai",
+      "description": "Official Helius AI tooling — CLI, MCP server, skills, and Claude plugin for Solana RPC, DAS API, webhooks, and transaction sending",
+      "category": "infrastructure",
+      "keywords": ["helius", "rpc", "das", "mcp", "cli", "webhook", "api", "infrastructure", "ai"],
+      "clone_command": "git clone https://github.com/helius-labs/core-ai.git",
+      "is_template": false
+    },
+    {
       "id": "solana-agent-kit",
       "repo": "sendaifun/solana-agent-kit",
       "description": "Connect AI agents to 60+ Solana protocols (LangChain/Vercel AI/Eliza compatible)",
@@ -208,13 +217,13 @@
       "is_template": false
     },
     {
-      "id": "switchboard-functions",
-      "repo": "switchboard-xyz/solana-functions-template",
-      "description": "Template for custom Switchboard oracle functions on Solana",
+      "id": "switchboard-solana",
+      "repo": "rain-foundation/switchboard-solana",
+      "description": "Switchboard oracle integration for Solana — price feeds, VRF randomness, and custom data feeds",
       "category": "oracle",
-      "keywords": ["oracle", "switchboard", "function", "off-chain", "data"],
-      "clone_command": "git clone https://github.com/switchboard-xyz/solana-functions-template.git",
-      "is_template": true
+      "keywords": ["oracle", "switchboard", "price", "vrf", "randomness", "data"],
+      "clone_command": "git clone https://github.com/rain-foundation/switchboard-solana.git",
+      "is_template": false
     },
     {
       "id": "solana-unity-sdk",
@@ -242,15 +251,6 @@
       "keywords": ["zk", "compression", "zero-knowledge", "state", "privacy"],
       "clone_command": "git clone https://github.com/Lightprotocol/light-protocol.git",
       "is_template": false
-    },
-    {
-      "id": "auto-fun",
-      "repo": "elizaOS/auto.fun",
-      "description": "Open-source Solana launchpad with bonding curves + Raydium migration",
-      "category": "token",
-      "keywords": ["launch", "bonding", "curve", "token", "pump", "launchpad", "meme"],
-      "clone_command": "git clone https://github.com/elizaOS/auto.fun.git",
-      "is_template": true
     },
     {
       "id": "depin-examples",

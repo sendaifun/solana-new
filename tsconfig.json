@@ -19,6 +19,7 @@
     "cli/interactive-skills.ts",
     "cli/interactive-mcps.ts",
     "cli/interactive-universal.ts",
+    "cli/interactive-onboarding.ts",
     "cli/banner.ts",
     "core/router/recommend-repo.ts",
     "shared/types/index.ts",

@@ -133,11 +133,11 @@
     {
       "id": "solentic",
       "name": "Solentic (Blueprint Staking)",
-      "repo": "blueprint-infrastructure/solentic",
+      "repo": "blueprint-infrastructure/solentic-mcp",
       "description": "Native Solana staking infrastructure for AI agents — 18 MCP tools, 21 REST endpoints, 13 A2A skills",
       "category": "defi",
       "setup_command": "claude mcp add --transport http solentic https://solentic.theblueprint.xyz/mcp",
-      "url": "https://github.com/blueprint-infrastructure/solentic",
+      "url": "https://github.com/blueprint-infrastructure/solentic-mcp",
       "keywords": ["staking", "defi", "blueprint", "a2a", "agents", "validator", "delegate"]
     },
     {
@@ -163,7 +163,7 @@
     {
       "id": "phantom-mcp-server",
       "name": "Phantom Wallet MCP (Official)",
-      "repo": "phantom",
+      "repo": "phantom/mcp-server",
       "description": "Official Phantom MCP — embedded wallet access, sign/send transactions, token swaps, transfers across Solana and EVM chains",
       "category": "wallet",
       "setup_command": "npm install @phantom/mcp-server",
@@ -191,16 +191,6 @@
       "keywords": ["wallet", "balance", "transactions", "sol", "send", "bpf", "logs"]
     },
     {
-      "id": "pump-mcp",
-      "name": "PUMP MCP (Pump.fun)",
-      "repo": "8bitsats/PUMP-MCP",
-      "description": "Create and manage Solana tokens on Pump.fun — create, buy, sell tokens, get info, manage accounts",
-      "category": "token-launch",
-      "setup_command": "git clone https://github.com/8bitsats/PUMP-MCP && cd PUMP-MCP && npm install",
-      "url": "https://github.com/8bitsats/PUMP-MCP",
-      "keywords": ["pumpfun", "pump.fun", "memecoin", "token-launch", "create", "buy", "sell"]
-    },
-    {
       "id": "mcp-meme-deployer",
       "name": "Meme Token Deployer MCP",
       "repo": "kirabuilds/mcp-meme-deployer",
@@ -219,16 +209,6 @@
       "setup_command": "git clone https://github.com/tony-42069/solana-mcp && cd solana-mcp && npm install",
       "url": "https://github.com/tony-42069/solana-mcp",
       "keywords": ["memecoin", "analytics", "whale", "social", "radar", "tracking", "culture"]
-    },
-    {
-      "id": "100ms-spl-token-sniper-mcp",
-      "name": "100ms SPL Token Sniper (Raydium)",
-      "repo": "monostate/100ms-spl-token-sniper-mcp",
-      "description": "High-speed token sniping for Raydium pools — multi-region execution, WebSocket monitoring, 100ms target",
-      "category": "trading",
-      "setup_command": "git clone https://github.com/monostate/100ms-spl-token-sniper-mcp && cd 100ms-spl-token-sniper-mcp && npm install",
-      "url": "https://github.com/monostate/100ms-spl-token-sniper-mcp",
-      "keywords": ["sniper", "raydium", "trading", "speed", "websocket", "spl", "token"]
     },
     {
       "id": "quant72-mcp",
@@ -343,11 +323,11 @@
     {
       "id": "daocli",
       "name": "daoCLI",
-      "repo": "DaoCLI/daoCLI-init",
+      "repo": "assetCLI/daoCLI-init",
       "description": "MCP-compatible DAO server for AI agents — create and manage programmatic DAOs across Solana and StarkNet",
       "category": "dao",
-      "setup_command": "git clone https://github.com/DaoCLI/daoCLI-init && cd daoCLI-init && npm install",
-      "url": "https://github.com/DaoCLI/daoCLI-init",
+      "setup_command": "git clone https://github.com/assetCLI/daoCLI-init && cd daoCLI-init && npm install",
+      "url": "https://github.com/assetCLI/daoCLI-init",
       "keywords": ["dao", "governance", "multisig", "token", "amm", "starknet", "treasury"]
     },
     {
@@ -433,21 +413,21 @@
     {
       "id": "solmcp",
       "name": "SolMCP",
-      "repo": "N-45div/SolMCP---SendAI-MCP-competition",
+      "repo": "N-45div/SolMCP-Solana-MCP-Server",
       "description": "Python MCP with Helius, DexScreener, and Pyth oracle integration for validators",
       "category": "infrastructure",
-      "setup_command": "git clone https://github.com/N-45div/SolMCP---SendAI-MCP-competition.git",
-      "url": "https://github.com/N-45div/SolMCP---SendAI-MCP-competition",
+      "setup_command": "git clone https://github.com/N-45div/SolMCP-Solana-MCP-Server.git",
+      "url": "https://github.com/N-45div/SolMCP-Solana-MCP-Server",
       "keywords": ["solmcp", "python", "helius", "dexscreener", "pyth", "validator"]
     },
     {
       "id": "defi-analytics-mcp",
       "name": "Solana DeFi Analytics MCP",
-      "repo": "kirtiraj22/solana-mcp",
+      "repo": "kirtiraj22/Solana-DeFi-Analytics-MCP-Server",
       "description": "Wallet analytics, transaction monitoring, and DeFi strategy optimization",
       "category": "data",
-      "setup_command": "git clone https://github.com/kirtiraj22/solana-mcp.git",
-      "url": "https://github.com/kirtiraj22/solana-mcp",
+      "setup_command": "git clone https://github.com/kirtiraj22/Solana-DeFi-Analytics-MCP-Server.git",
+      "url": "https://github.com/kirtiraj22/Solana-DeFi-Analytics-MCP-Server",
       "keywords": ["defi", "analytics", "wallet", "strategy", "optimization"]
     },
     {
@@ -489,6 +469,56 @@
       "setup_command": "git clone https://github.com/sendaifun/x402-mcp.git",
       "url": "https://github.com/sendaifun/x402-mcp",
       "keywords": ["x402", "payment", "micropayment", "sendai"]
+    },
+    {
+      "id": "flash-trade-mcp",
+      "name": "Flash Trade MCP",
+      "repo": "flash-trade/flash-trade-MCP",
+      "description": "Perpetual DEX tooling for Flash Trade on Solana — leveraged long/short positions across SOL, BTC, ETH with Pyth Lazer prices, non-custodial",
+      "category": "defi",
+      "setup_command": "npx flash-trade-mcp",
+      "url": "https://github.com/flash-trade/flash-trade-MCP",
+      "keywords": ["flash", "trade", "perpetual", "perps", "leverage", "futures", "defi", "trading", "pyth"]
+    },
+    {
+      "id": "solscan-mcp",
+      "name": "Solscan MCP",
+      "repo": "wowinter13/solscan-mcp",
+      "description": "Query Solana transactions, token info, and account activities via Solscan Pro API — Rust-based MCP for blockchain forensics and analytics",
+      "category": "data",
+      "setup_command": "cargo install solscan-mcp",
+      "url": "https://github.com/wowinter13/solscan-mcp",
+      "keywords": ["solscan", "explorer", "transaction", "analytics", "forensics", "account", "token", "rust"]
+    },
+    {
+      "id": "perp-cli-mcp",
+      "name": "Perp CLI MCP (HypurrQuant)",
+      "repo": "hypurrquant/perp-cli",
+      "description": "Multi-DEX perpetual futures CLI + MCP server — Pacifica (Solana), Hyperliquid, Lighter. 18 tools for AI-powered perps trading",
+      "category": "trading",
+      "setup_command": "npx -y -p perp-cli perp-mcp",
+      "url": "https://github.com/hypurrquant/perp-cli",
+      "keywords": ["perps", "perpetual", "futures", "pacifica", "hyperliquid", "trading", "leverage", "orderbook"]
+    },
+    {
+      "id": "dexter-mcp",
+      "name": "Dexter MCP",
+      "repo": "Dexter-DAO/dexter-mcp",
+      "description": "60+ Solana DeFi tools over HTTP and stdio — swaps, liquidity, lending, staking, and portfolio management in one MCP server",
+      "category": "defi",
+      "setup_command": "git clone https://github.com/Dexter-DAO/dexter-mcp && cd dexter-mcp && npm install",
+      "url": "https://github.com/Dexter-DAO/dexter-mcp",
+      "keywords": ["dexter", "defi", "swap", "liquidity", "lending", "staking", "portfolio", "aggregator"]
+    },
+    {
+      "id": "unclaimed-sol-mcp",
+      "name": "Unclaimed SOL MCP",
+      "repo": "unclaimed-sol/unclaimed-sol-mcp",
+      "description": "Scan and claim reclaimable SOL from dormant wallet accounts — close empty token accounts, burn dust, reclaim rent via AI assistants",
+      "category": "tooling",
+      "setup_command": "npx -y @unclaimed-sol/mcp",
+      "url": "https://github.com/unclaimed-sol/unclaimed-sol-mcp",
+      "keywords": ["unclaimed", "sol", "rent", "reclaim", "token", "accounts", "cleanup", "dust"]
     }
   ]
 }
