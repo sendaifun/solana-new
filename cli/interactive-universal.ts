@@ -40,26 +40,11 @@ export interface UniversalItem {
 }
 
 export function buildUniversalIndex(
-  harnesses: HarnessDefinition[],
   repos: ClonableRepo[],
   skillsData: SkillsData,
   mcpsData: McpsData,
 ): UniversalItem[] {
   const items: UniversalItem[] = [];
-
-  for (const h of harnesses) {
-    items.push({
-      kind: "harness",
-      id: h.id,
-      name: h.id,
-      source: "built-in",
-      description: h.description,
-      category: h.surface.join(", "),
-      action_command: `solana-new plan "<prompt>" --agent codex`,
-      action_label: "scaffold",
-      keywords: [h.id, ...h.surface, ...h.frameworks, ...h.description.toLowerCase().split(/\s+/), "harness"],
-    });
-  }
 
   for (const r of repos) {
     items.push({
@@ -266,13 +251,12 @@ export interface UniversalSearchResult {
 }
 
 export async function interactiveUniversalSearch(
-  harnesses: HarnessDefinition[],
   repos: ClonableRepo[],
   skillsData: SkillsData,
   mcpsData: McpsData,
   initialQuery?: string,
 ): Promise<UniversalSearchResult> {
-  const allItems = buildUniversalIndex(harnesses, repos, skillsData, mcpsData);
+  const allItems = buildUniversalIndex(repos, skillsData, mcpsData);
   const featured = initialItems(allItems);
   let query = initialQuery ?? "";
   let selected = 0;

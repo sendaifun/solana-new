@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 import process from "node:process";
 import { listReposByCategory, searchRepos, type ClonableRepo } from "../core/router/recommend-repo.js";
-import harnessData from "../shared/constants/harnesses.json" with { type: "json" };
-import type { HarnessDefinition } from "../shared/types/index.js";
 import { interactiveSearch } from "./interactive-search.js";
 import { interactiveSkills, buildSkillsIndex, searchSkills, type SkillsData } from "./interactive-skills.js";
 import skillsData from "../shared/constants/solana-skills.json" with { type: "json" };
@@ -93,13 +91,12 @@ async function runInstall(command: string, label: string): Promise<void> {
 async function cmdSearch(args: string[]): Promise<void> {
   const { flags, positional } = parseFlags(args);
   const query = typeof flags.search === "string" ? flags.search : positional.join(" ").trim();
-  const harnesses = harnessData.harnesses as HarnessDefinition[];
   const allRepos = listReposByCategory();
   const skills = skillsData as SkillsData;
   const mcps = mcpsData as McpsData;
 
   if (flags.agent === true) {
-    const allItems = buildUniversalIndex(harnesses, allRepos, skills, mcps);
+    const allItems = buildUniversalIndex(allRepos, skills, mcps);
     const results = query
       ? allItems.filter((item) => {
           const words = query.toLowerCase().split(/\s+/).filter(Boolean);
@@ -111,7 +108,7 @@ async function cmdSearch(args: string[]): Promise<void> {
   }
 
   if (process.stdin.isTTY) {
-    const result = await interactiveUniversalSearch(harnesses, allRepos, skills, mcps, query || undefined);
+    const result = await interactiveUniversalSearch(allRepos, skills, mcps, query || undefined);
     if (result.action === "quit" || !result.item) return;
 
     const item = result.item;
@@ -170,9 +167,8 @@ async function cmdRepos(args: string[]): Promise<void> {
 
   // Default: interactive TUI
   if (process.stdin.isTTY) {
-    const harnesses = harnessData.harnesses as HarnessDefinition[];
     const allRepos = listReposByCategory();
-    const result = await interactiveSearch(harnesses, allRepos);
+    const result = await interactiveSearch([], allRepos);
     if (result.action === "quit" || !result.item) return;
 
     if (result.item.kind === "harness") {
