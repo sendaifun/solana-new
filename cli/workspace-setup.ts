@@ -2,7 +2,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { spawn } from "node:child_process";
 import type { Recommendation } from "./interactive-onboarding.js";
-import type { SearchProjectsResponse } from "./copilot-client.js";
+import type { LandscapeData } from "./copilot-client.js";
 import {
   RESET, DIM, BOLD, CYAN, GREEN, YELLOW, MAGENTA, RED,
   GRADIENT_SOLANA_DOT_NEW, COMPETITION_HIGH, COMPETITION_MEDIUM,
@@ -16,7 +16,9 @@ export interface WorkspaceSetupInput {
   subcategoryLabel: string;
   subcategoryDescription: string;
   recommendation: Recommendation;
-  landscapeData?: SearchProjectsResponse | null;
+  landscapeData?: LandscapeData | null;
+  ideaText?: string;
+  winnerSkills?: Array<{ name: string; install: string; reason: string }>;
 }
 
 interface SetupItem {
@@ -122,26 +124,32 @@ function generateClaudeMd(input: WorkspaceSetupInput, projectName: string, selec
     md += `\n`;
   }
 
-  if (input.landscapeData && input.landscapeData.totalFound > 0) {
+  if (input.ideaText) {
+    md += `## Original Idea\n> ${input.ideaText}\n\n`;
+  }
+
+  const ld = input.landscapeData;
+  if (ld?.search && ld.search.totalFound > 0) {
     md += `## Competitive Landscape\n`;
-    md += `${input.landscapeData.totalFound} similar projects found across Solana hackathons.\n\n`;
-    if (input.landscapeData.results.length > 0) {
-      for (const p of input.landscapeData.results.slice(0, 5)) {
-        const winner = p.prize ? " (winner)" : "";
-        md += `- **${p.name}**${winner} \u2014 ${p.hackathon.name}`;
-        if (p.oneLiner) md += `\n  ${p.oneLiner}`;
-        md += `\n`;
-      }
+    md += `${ld.search.totalFound} similar projects found across Solana hackathons.\n\n`;
+    for (const p of ld.search.results.slice(0, 5)) {
+      const winner = p.prize ? " (winner)" : "";
+      md += `- **${p.name}**${winner} \u2014 ${p.hackathon.name}`;
+      if (p.oneLiner) md += `\n  ${p.oneLiner}`;
       md += `\n`;
     }
-    const total = input.landscapeData.totalFound;
-    if (total > COMPETITION_HIGH) {
-      md += `> **Crowded space.** Use Colosseum Copilot to find a differentiated angle.\n\n`;
-    } else if (total > COMPETITION_MEDIUM) {
-      md += `> Moderate competition. Use Copilot to find underserved niches.\n\n`;
-    } else {
-      md += `> Open space \u2014 use Copilot to validate there's real demand here.\n\n`;
+    md += `\n`;
+  }
+
+  if (ld?.gaps) {
+    md += `## Gap Analysis\n`;
+    if (ld.gaps.overindexed.length > 0) {
+      md += `Winners build more: ${ld.gaps.overindexed.slice(0, 4).map(t => `**${t.label}** (+${(t.delta * 100).toFixed(0)}%)`).join(", ")}\n\n`;
     }
+    if (ld.gaps.underindexed.length > 0) {
+      md += `Winners skip: ${ld.gaps.underindexed.slice(0, 4).map(t => `**${t.label}** (${(t.delta * 100).toFixed(0)}%)`).join(", ")}\n\n`;
+    }
+    md += `> ${ld.gaps.summary}\n\n`;
   }
 
   if (input.recommendation.tip) {
@@ -149,9 +157,9 @@ function generateClaudeMd(input: WorkspaceSetupInput, projectName: string, selec
   }
 
   md += `## Ecosystem Commands\n`;
+  md += `- \`solana-new idea "your idea"\` \u2014 landscape + gap analysis\n`;
   md += `- \`solana-new search <query>\` \u2014 find repos, skills, MCPs\n`;
   md += `- \`solana-new skills\` \u2014 browse available skills\n`;
-  md += `- \`solana-new mcps\` \u2014 browse MCP servers\n`;
 
   return md;
 }
@@ -181,13 +189,14 @@ function generateCursorRules(input: WorkspaceSetupInput, projectName: string, se
     rules += `\n`;
   }
 
-  if (input.landscapeData && input.landscapeData.totalFound > 0) {
-    rules += `Competitive landscape: ${input.landscapeData.totalFound} similar projects exist.\n`;
-    if (input.landscapeData.totalFound > COMPETITION_HIGH) {
-      rules += `This is a crowded space. Help the user find a differentiated angle.\n`;
-    }
-    rules += `\n`;
+  const ld = input.landscapeData;
+  if (ld?.search && ld.search.totalFound > 0) {
+    rules += `Competitive landscape: ${ld.search.totalFound} similar projects exist.\n`;
   }
+  if (ld?.gaps?.summary) {
+    rules += `Gap analysis: ${ld.gaps.summary}\n`;
+  }
+  if (ld?.search || ld?.gaps) rules += `\n`;
 
   if (input.recommendation.tip) {
     rules += `Tips: ${input.recommendation.tip}\n`;
@@ -366,6 +375,11 @@ export async function interactiveWorkspaceSetup(input: WorkspaceSetupInput): Pro
   });
   for (const s of rec.skills) {
     items.push({ kind: "skill", label: s.name, command: s.install, selected: true });
+  }
+  if (input.winnerSkills) {
+    for (const w of input.winnerSkills) {
+      items.push({ kind: "skill", label: `${w.name} (winner pick)`, command: w.install, selected: true });
+    }
   }
   for (const m of rec.mcps) {
     items.push({ kind: "mcp", label: m.name, command: m.setup, selected: true });

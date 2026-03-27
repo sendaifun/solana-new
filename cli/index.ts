@@ -7,7 +7,7 @@ import skillsData from "../shared/constants/solana-skills.json" with { type: "js
 import { interactiveMcps, buildMcpsIndex, searchMcps, type McpsData } from "./interactive-mcps.js";
 import mcpsData from "../shared/constants/solana-mcps.json" with { type: "json" };
 import { interactiveUniversalSearch, buildUniversalIndex } from "./interactive-universal.js";
-import { interactiveOnboarding, agentOnboarding } from "./interactive-onboarding.js";
+import { interactiveOnboarding, agentOnboarding, agentIdea } from "./interactive-onboarding.js";
 import { interactiveWorkspaceSetup } from "./workspace-setup.js";
 import { getToken, saveToken, readConfig } from "./copilot-auth.js";
 import { verifyToken } from "./copilot-client.js";
@@ -274,6 +274,33 @@ async function cmdStart(args: string[]): Promise<void> {
       subcategoryDescription: result.subcategoryDescription,
       recommendation: result.recommendation,
       landscapeData: result.landscapeData,
+      ideaText: result.ideaText,
+      winnerSkills: result.winnerSkills,
+    });
+  }
+}
+
+async function cmdIdea(args: string[]): Promise<void> {
+  const { flags, positional } = parseFlags(args);
+  const isAgent = flags.agent !== undefined;
+  const agentValue = typeof flags.agent === "string" ? flags.agent : "";
+  const query = [agentValue, ...positional].join(" ").trim();
+
+  if (isAgent) {
+    if (!query) { console.log('Usage: solana-new idea --agent "your idea"'); return; }
+    await agentIdea(query);
+    return;
+  }
+
+  const result = await interactiveOnboarding(query || undefined);
+  if (result.action === "setup") {
+    await interactiveWorkspaceSetup({
+      subcategoryLabel: result.subcategoryLabel,
+      subcategoryDescription: result.subcategoryDescription,
+      recommendation: result.recommendation,
+      landscapeData: result.landscapeData,
+      ideaText: result.ideaText,
+      winnerSkills: result.winnerSkills,
     });
   }
 }
@@ -355,19 +382,12 @@ function printUsage(): void {
   }
 
   console.log("");
-  console.log(`  ${BOLD}Discover${RESET}  ${DIM}— explore the Solana ecosystem${RESET}`);
-  console.log("");
-  row(`${BOLD}start${RESET}`,                                               "What do you want to build? (guided onboarding)");
-  row(`${BOLD}<query>${RESET}`,                                             "Search anything — repos, skills, mcps");
-  row("search",                                            "Interactive universal search");
-  row(`repos ${DIM}[--search <q>] [--category <cat>]${RESET}`,           "Browse or filter repos");
-  row(`skills ${DIM}[--search <q>]${RESET}`,                             "Browse or filter skills");
-  row(`mcps ${DIM}[--search <q>]${RESET}`,                               "Browse or filter MCP servers");
-  console.log("");
-  console.log(`  ${BOLD}Config${RESET}`);
-  console.log("");
-  row(`config`,                                              "Show current config");
-  row(`config token`,                                        "Update Colosseum Copilot token");
+  row(`${BOLD}start${RESET}`,                                               "Guided onboarding + landscape + workspace setup");
+  row(`${BOLD}idea${RESET} ${DIM}[text]${RESET}`,                                          "Free-form idea \u2014 landscape + gap analysis");
+  row(`${BOLD}search${RESET} ${DIM}[query]${RESET}`,                                       "Find repos, skills, MCPs");
+  row(`${BOLD}repos${RESET} ${DIM}[--search <q>]${RESET}`,                                 "Browse / filter repos");
+  row(`${BOLD}skills${RESET} ${DIM}[--search <q>]${RESET}`,                                "Browse / filter skills");
+  row(`${BOLD}config${RESET} ${DIM}[token]${RESET}`,                                       "Manage Copilot token + settings");
   console.log("");
   console.log(`  ${DIM}All commands support ${BOLD}--agent${RESET}${DIM} for machine-readable output${RESET}`);
   console.log("");
@@ -385,11 +405,10 @@ async function main(): Promise<void> {
   }
 
   if (command === "start") return cmdStart(args);
+  if (command === "idea" || command === "landscape") return cmdIdea(args);
   if (command === "search") return cmdSearch(args);
   if (command === "repos") return cmdRepos(args);
-  if (command === "clone") return cmdClone(args);
   if (command === "skills") return cmdSkills(args);
-  if (command === "mcps") return cmdMcps(args);
   if (command === "config") return cmdConfig(args);
 
   // Unknown command → search

@@ -54,6 +54,32 @@ export function padFooter(lines: string[], footer: string[], rows: number): stri
   return lines.slice(0, rows);
 }
 
+// Bordered insight box
+export function insightBox(text: string, width = 60): string[] {
+  const inner = width - 4;
+  const words = text.split(" ");
+  const wrapped: string[] = [];
+  let line = "";
+  for (const word of words) {
+    if (line.length + word.length + 1 > inner) {
+      wrapped.push(line);
+      line = word;
+    } else {
+      line = line ? `${line} ${word}` : word;
+    }
+  }
+  if (line) wrapped.push(line);
+
+  const top = `  \u250c Copilot Insight ${"─".repeat(Math.max(width - 19, 0))}\u2510`;
+  const bot = `  \u2514${"─".repeat(width - 2)}\u2518`;
+  const lines = [top];
+  for (const l of wrapped) {
+    lines.push(`  \u2502 ${l}${" ".repeat(Math.max(inner - l.length, 0))} \u2502`);
+  }
+  lines.push(bot);
+  return lines;
+}
+
 // Kebab-case slug helper
 export function toKebabSlug(text: string): string {
   return text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
