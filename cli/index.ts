@@ -10,7 +10,11 @@ import { interactiveMcps, buildMcpsIndex, searchMcps, type McpsData } from "./in
 import mcpsData from "../shared/constants/solana-mcps.json" with { type: "json" };
 import { interactiveUniversalSearch, buildUniversalIndex } from "./interactive-universal.js";
 import { interactiveOnboarding, agentOnboarding } from "./interactive-onboarding.js";
+import { interactiveWorkspaceSetup } from "./workspace-setup.js";
+import { getToken, saveToken, readConfig } from "./copilot-auth.js";
+import { verifyToken } from "./copilot-client.js";
 import { renderBanner } from "./banner.js";
+import { RESET, DIM, BOLD, CYAN, GREEN, YELLOW, GRADIENT_SOLANA_DASH_NEW } from "./colors.js";
 
 function parseFlags(args: string[]): { flags: Record<string, string | boolean>; positional: string[] } {
   const flags: Record<string, string | boolean> = {};
@@ -63,9 +67,9 @@ function agentOutput(label: string, items: any[], fields: string[]): void {
   }
 }
 
-async function runClone(command: string, label: string): Promise<void> {
+async function runShell(command: string, label: string, verb = "Running"): Promise<void> {
   const { spawn } = await import("node:child_process");
-  console.log(`\n  Cloning ${label}...\n  $ ${command}\n`);
+  console.log(`\n  ${verb} ${label}...\n  $ ${command}\n`);
   const child = spawn("sh", ["-c", command], { stdio: "inherit" });
   await new Promise<void>((resolve, reject) => {
     child.on("close", (code) => {
@@ -74,19 +78,6 @@ async function runClone(command: string, label: string): Promise<void> {
     });
   });
   console.log(`\n  Done: ${label}\n`);
-}
-
-async function runInstall(command: string, label: string): Promise<void> {
-  const { spawn } = await import("node:child_process");
-  console.log(`\n  Installing ${label}...\n  $ ${command}\n`);
-  const child = spawn("sh", ["-c", command], { stdio: "inherit" });
-  await new Promise<void>((resolve, reject) => {
-    child.on("close", (code) => {
-      if (code === 0) resolve();
-      else reject(new Error(`Failed with exit code ${code}`));
-    });
-  });
-  console.log(`\n  Installed ${label}\n`);
 }
 
 // --- Commands ---
@@ -120,7 +111,7 @@ async function cmdSearch(args: string[]): Promise<void> {
       console.log(`\n  Harness: ${item.id}\n  ${item.description}\n`);
       return;
     }
-    await runClone(item.action_command, item.id);
+    await runShell(item.action_command, item.id);
     return;
   }
 
@@ -179,7 +170,7 @@ async function cmdRepos(args: string[]): Promise<void> {
     if (result.item.kind === "harness") {
       console.log(`\n  Harness: ${result.item.id}\n  ${result.item.description}\n`);
     } else if (result.item.clone_command) {
-      await runClone(result.item.clone_command, result.item.id);
+      await runShell(result.item.clone_command, result.item.id);
     }
     return;
   }
@@ -201,7 +192,7 @@ async function cmdClone(args: string[]): Promise<void> {
   let command = repo.clone_command;
   if (outDir && command.startsWith("git clone ")) command = `${command} ${outDir}`;
 
-  await runClone(command, repo.id);
+  await runShell(command, repo.id);
 }
 
 async function cmdSkills(args: string[]): Promise<void> {
@@ -233,7 +224,7 @@ async function cmdSkills(args: string[]): Promise<void> {
   if (process.stdin.isTTY) {
     const result = await interactiveSkills(data);
     if (result.action === "quit" || !result.item) return;
-    await runInstall(result.item.install_command, result.item.title);
+    await runShell(result.item.install_command, result.item.title);
     return;
   }
 
@@ -266,7 +257,7 @@ async function cmdMcps(args: string[]): Promise<void> {
   if (process.stdin.isTTY) {
     const result = await interactiveMcps(data);
     if (result.action === "quit" || !result.item) return;
-    await runInstall(result.item.setup_command, result.item.name);
+    await runShell(result.item.setup_command, result.item.name);
     return;
   }
 
@@ -280,45 +271,109 @@ async function cmdStart(args: string[]): Promise<void> {
     agentOnboarding();
     return;
   }
-  await interactiveOnboarding();
+  const result = await interactiveOnboarding();
+  if (result.action === "setup") {
+    await interactiveWorkspaceSetup({
+      subcategoryLabel: result.subcategoryLabel,
+      subcategoryDescription: result.subcategoryDescription,
+      recommendation: result.recommendation,
+      landscapeData: result.landscapeData,
+    });
+  }
+}
+
+async function verifyAndSave(token: string): Promise<boolean> {
+  process.stdout.write(`  ${DIM}Verifying...${RESET}`);
+  const valid = await verifyToken(token);
+  if (valid) {
+    saveToken(token);
+    console.log(`\r  ${GREEN}Token verified and saved.${RESET}          `);
+  } else {
+    console.log(`\r  ${YELLOW}Invalid token. Not saved.${RESET}          `);
+  }
+  return valid;
+}
+
+async function cmdConfig(args: string[]): Promise<void> {
+  const { positional } = parseFlags(args);
+  const sub = positional[0];
+
+  if (!sub || sub === "show") {
+    const config = readConfig();
+    const token = getToken();
+    console.log("");
+    console.log(`  ${BOLD}Config${RESET} ${DIM}(~/.solana-new/config.json)${RESET}`);
+    console.log("");
+    if (token) {
+      const masked = token.slice(0, 20) + "..." + token.slice(-8);
+      const src = process.env.COLOSSEUM_COPILOT_PAT ? "env" : "config";
+      console.log(`  ${BOLD}copilot-token${RESET}   ${GREEN}set${RESET} ${DIM}(${masked}) [${src}]${RESET}`);
+    } else {
+      console.log(`  ${BOLD}copilot-token${RESET}   ${YELLOW}not set${RESET}  ${DIM}https://arena.colosseum.org/copilot${RESET}`);
+    }
+    if (config.copilotTokenSetAt) {
+      console.log(`  ${BOLD}token-set-at${RESET}    ${DIM}${config.copilotTokenSetAt}${RESET}`);
+    }
+    console.log("");
+    console.log(`  ${DIM}Update:  solana-new config token${RESET}`);
+    console.log("");
+    return;
+  }
+
+  if (sub === "token") {
+    const tokenValue = positional[1];
+    if (!tokenValue) {
+      const { createInterface } = await import("node:readline");
+      const rl = createInterface({ input: process.stdin, output: process.stdout });
+      console.log("");
+      console.log(`  ${BOLD}Update Colosseum Copilot token${RESET}`);
+      console.log(`  ${DIM}Get a new token: ${CYAN}https://arena.colosseum.org/copilot${RESET}`);
+      console.log("");
+      const answer = await new Promise<string>((resolve) => {
+        rl.question(`  Paste token: `, (a) => { rl.close(); resolve(a.trim()); });
+      });
+      if (!answer) { console.log(`  ${DIM}Cancelled.${RESET}\n`); return; }
+      await verifyAndSave(answer);
+      console.log("");
+      return;
+    }
+    await verifyAndSave(tokenValue);
+    return;
+  }
+
+  console.log(`\n  ${BOLD}Usage:${RESET}`);
+  console.log(`    solana-new config              Show current config`);
+  console.log(`    solana-new config token         Update Copilot token (interactive)`);
+  console.log(`    solana-new config token <pat>   Set Copilot token directly\n`);
 }
 
 // --- Help ---
 
-function gradientSolanaNew(): string {
-  const chars = "solana-new";
-  const codes = [
-    "\x1b[38;2;130;80;255m", "\x1b[38;2;145;70;250m", "\x1b[38;2;165;60;240m",
-    "\x1b[38;2;185;55;225m", "\x1b[38;2;200;50;210m", "\x1b[38;2;215;45;190m",
-    "\x1b[38;2;230;40;170m", "\x1b[38;2;240;35;150m", "\x1b[38;2;250;30;135m",
-    "\x1b[38;2;255;25;120m",
-  ];
-  return chars.split("").map((c, i) => `${codes[i]}${c}`).join("") + "\x1b[0m";
-}
-
 function printUsage(): void {
-  const sn = gradientSolanaNew();
-  const DIM = "\x1b[2m";
-  const R = "\x1b[0m";
-  const B = "\x1b[1m";
+  const sn = GRADIENT_SOLANA_DASH_NEW;
   const COL = 50;
 
   function row(cmd: string, desc: string) {
     const vis = cmd.replace(/\x1b\[[0-9;]*m/g, "").length;
-    console.log(`  ${sn} ${cmd}${" ".repeat(Math.max(COL - vis, 2))}${DIM}${desc}${R}`);
+    console.log(`  ${sn} ${cmd}${" ".repeat(Math.max(COL - vis, 2))}${DIM}${desc}${RESET}`);
   }
 
   console.log("");
-  console.log(`  ${B}Discover${R}  ${DIM}— explore the Solana ecosystem${R}`);
+  console.log(`  ${BOLD}Discover${RESET}  ${DIM}— explore the Solana ecosystem${RESET}`);
   console.log("");
-  row(`${B}start${R}`,                                               "What do you want to build? (guided onboarding)");
-  row(`${B}<query>${R}`,                                             "Search anything — repos, skills, mcps");
+  row(`${BOLD}start${RESET}`,                                               "What do you want to build? (guided onboarding)");
+  row(`${BOLD}<query>${RESET}`,                                             "Search anything — repos, skills, mcps");
   row("search",                                            "Interactive universal search");
-  row(`repos ${DIM}[--search <q>] [--category <cat>]${R}`,           "Browse or filter repos");
-  row(`skills ${DIM}[--search <q>]${R}`,                             "Browse or filter skills");
-  row(`mcps ${DIM}[--search <q>]${R}`,                               "Browse or filter MCP servers");
+  row(`repos ${DIM}[--search <q>] [--category <cat>]${RESET}`,           "Browse or filter repos");
+  row(`skills ${DIM}[--search <q>]${RESET}`,                             "Browse or filter skills");
+  row(`mcps ${DIM}[--search <q>]${RESET}`,                               "Browse or filter MCP servers");
   console.log("");
-  console.log(`  ${DIM}All commands support ${B}--agent${R}${DIM} for machine-readable output${R}`);
+  console.log(`  ${BOLD}Config${RESET}`);
+  console.log("");
+  row(`config`,                                              "Show current config");
+  row(`config token`,                                        "Update Colosseum Copilot token");
+  console.log("");
+  console.log(`  ${DIM}All commands support ${BOLD}--agent${RESET}${DIM} for machine-readable output${RESET}`);
   console.log("");
 }
 
@@ -339,6 +394,7 @@ async function main(): Promise<void> {
   if (command === "clone") return cmdClone(args);
   if (command === "skills") return cmdSkills(args);
   if (command === "mcps") return cmdMcps(args);
+  if (command === "config") return cmdConfig(args);
 
   // Unknown command → search
   return cmdSearch([command, ...args]);

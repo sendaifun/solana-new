@@ -321,16 +321,6 @@
       "keywords": ["web3js", "tooling", "development", "deploy", "smart-contract", "web3"]
     },
     {
-      "id": "daocli",
-      "name": "daoCLI",
-      "repo": "assetCLI/daoCLI-init",
-      "description": "MCP-compatible DAO server for AI agents — create and manage programmatic DAOs across Solana and StarkNet",
-      "category": "dao",
-      "setup_command": "git clone https://github.com/assetCLI/daoCLI-init && cd daoCLI-init && npm install",
-      "url": "https://github.com/assetCLI/daoCLI-init",
-      "keywords": ["dao", "governance", "multisig", "token", "amm", "starknet", "treasury"]
-    },
-    {
       "id": "assetcli",
       "name": "assetCLI",
       "repo": "assetCLI/assetCLI-init",

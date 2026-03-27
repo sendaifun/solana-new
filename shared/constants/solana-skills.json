@@ -7,7 +7,7 @@
   "install_all_command": "npx skills add https://github.com/solana-foundation/solana-dev-skill",
   "counts": {
     "official": 15,
-    "community": 57
+    "community": 55
   },
   "official_skills": [
     {
@@ -63,15 +63,15 @@
       "slug": "programs-anchor",
       "title": "Programs with Anchor",
       "description": "Write Solana programs using the Anchor framework for fast iteration, automatic account validation, and built-in TypeScript client generation.",
-      "github_url": "https://github.com/solana-foundation/solana-dev-skill/blob/main/skill/references/programs-anchor.md",
-      "raw_url": "https://raw.githubusercontent.com/solana-foundation/solana-dev-skill/main/skill/references/programs-anchor.md"
+      "github_url": "https://github.com/solana-foundation/solana-dev-skill/blob/main/skill/references/programs/anchor.md",
+      "raw_url": "https://raw.githubusercontent.com/solana-foundation/solana-dev-skill/main/skill/references/programs/anchor.md"
     },
     {
       "slug": "programs-pinocchio",
       "title": "Programs with Pinocchio",
       "description": "Build high-performance Solana programs with zero-copy techniques and minimal dependencies, without the solana-program overhead.",
-      "github_url": "https://github.com/solana-foundation/solana-dev-skill/blob/main/skill/references/programs-pinocchio.md",
-      "raw_url": "https://raw.githubusercontent.com/solana-foundation/solana-dev-skill/main/skill/references/programs-pinocchio.md"
+      "github_url": "https://github.com/solana-foundation/solana-dev-skill/blob/main/skill/references/programs/pinocchio.md",
+      "raw_url": "https://raw.githubusercontent.com/solana-foundation/solana-dev-skill/main/skill/references/programs/pinocchio.md"
     },
     {
       "slug": "resources",
@@ -91,15 +91,15 @@
       "slug": "surfpool-cheatcodes",
       "title": "Surfpool Cheatcodes",
       "description": "Full reference for all surfnet_* RPC methods to manipulate time, accounts, and programs in a local Surfpool network during testing.",
-      "github_url": "https://github.com/solana-foundation/solana-dev-skill/blob/main/skill/references/surfpool-cheatcodes.md",
-      "raw_url": "https://raw.githubusercontent.com/solana-foundation/solana-dev-skill/main/skill/references/surfpool-cheatcodes.md"
+      "github_url": "https://github.com/solana-foundation/solana-dev-skill/blob/main/skill/references/surfpool/cheatcodes.md",
+      "raw_url": "https://raw.githubusercontent.com/solana-foundation/solana-dev-skill/main/skill/references/surfpool/cheatcodes.md"
     },
     {
       "slug": "surfpool",
       "title": "Surfpool",
       "description": "A drop-in replacement for solana-test-validator with sub-second startup, automatic mainnet state cloning, transaction profiling, and a built-in web UI.",
-      "github_url": "https://github.com/solana-foundation/solana-dev-skill/blob/main/skill/references/surfpool.md",
-      "raw_url": "https://raw.githubusercontent.com/solana-foundation/solana-dev-skill/main/skill/references/surfpool.md"
+      "github_url": "https://github.com/solana-foundation/solana-dev-skill/blob/main/skill/references/surfpool/overview.md",
+      "raw_url": "https://raw.githubusercontent.com/solana-foundation/solana-dev-skill/main/skill/references/surfpool/overview.md"
     },
     {
       "slug": "testing",
@@ -219,13 +219,6 @@
       "title": "PumpFun Skill",
       "description": "AI coding skill for PumpFun Protocol covering token launches, bonding curves, and PumpSwap integrations.",
       "url": "https://github.com/sendaifun/skills/tree/main/skills/pumpfun",
-      "category": null
-    },
-    {
-      "slug": "ranger-finance-skill",
-      "title": "Ranger Finance Skill",
-      "description": "AI coding skill for Ranger Finance, a Solana perps aggregator across Drift, Flash, and Jupiter.",
-      "url": "https://github.com/sendaifun/skills/tree/main/skills/ranger-finance",
       "category": null
     },
     {
@@ -555,15 +548,6 @@
       "url": "https://github.com/helius-labs/core-ai/tree/main/helius-skills/svm",
       "category": {
         "labelKey": "infrastructure"
-      }
-    },
-    {
-      "slug": "solana-onboarding",
-      "title": "Solana Ecosystem Onboarding",
-      "description": "AI agent navigation guide — decision trees for which skills, repos, and MCPs to use for any Solana task, with workflow recipes for DeFi, NFTs, agents, and more.",
-      "url": "https://github.com/sendaifun/solana-new-cli/blob/main/docs/onboarding.md",
-      "category": {
-        "labelKey": "tooling"
       }
     }
   ],

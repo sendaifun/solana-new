@@ -23,7 +23,7 @@ There are **three types of resources** in solana.new:
 | Provide liquidity (concentrated) | `orca-skill` or `raydium-skill` | `demcp-orca-mcp` | `whirlpools` |
 | Provide liquidity (constant product) | `raydium-skill` or `meteora-skill` | — | `raydium-cp-swap` |
 | Lending / borrowing | `kamino-skill` or `lulo-skill` or `marginfi-skill` | — | — |
-| Perps / leverage | `drift-skill` or `ranger-finance-skill` | `flash-trade-mcp` or `perp-cli-mcp` | — |
+| Perps / leverage | `drift-skill` | `flash-trade-mcp` or `perp-cli-mcp` | — |
 | Liquid staking | `sanctum-skill` | `marinade-finance-mcp-server` | `marinade-liquid-staking` |
 | Prediction markets | `dflow-skill` or `pnp-markets-skill` | `dflow-mcp` | — |
 | Token launch (pump.fun) | `pumpfun-skill` or `clawpump-skill` | `pump-mcp` | — |

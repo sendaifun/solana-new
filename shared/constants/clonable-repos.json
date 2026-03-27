@@ -2,7 +2,7 @@
   "repos": [
     {
       "id": "create-solana-dapp",
-      "repo": "solana-developers/create-solana-dapp",
+      "repo": "solana-foundation/create-solana-dapp",
       "description": "Official CLI that scaffolds Solana dApps from templates (Next.js, React+Vite, Express, Node scripts)",
       "category": "scaffold",
       "keywords": ["scaffold", "create", "init", "starter", "next", "react", "vite", "express"],

@@ -1,22 +1,12 @@
-const RESET = "\x1b[0m";
-const DIM = "\x1b[2m";
-const BOLD = "\x1b[1m";
-const CYAN = "\x1b[36m";
-const GREEN = "\x1b[32m";
-const YELLOW = "\x1b[33m";
-const MAGENTA = "\x1b[35m";
-const BLUE = "\x1b[34m";
-
-function gradientTitle(): string {
-  const chars = "solana.new";
-  const codes = [
-    "\x1b[38;2;130;80;255m", "\x1b[38;2;145;70;250m", "\x1b[38;2;165;60;240m",
-    "\x1b[38;2;185;55;225m", "\x1b[38;2;200;50;210m", "\x1b[38;2;215;45;190m",
-    "\x1b[38;2;230;40;170m", "\x1b[38;2;240;35;150m", "\x1b[38;2;250;30;135m",
-    "\x1b[38;2;255;25;120m",
-  ];
-  return chars.split("").map((c, i) => `${codes[i]}${c}`).join("") + RESET;
-}
+import { createInterface } from "node:readline";
+import { getToken, saveToken, shouldPromptForToken, markTokenPrompted } from "./copilot-auth.js";
+import { verifyToken, searchProjects, type SearchProjectsResponse } from "./copilot-client.js";
+import {
+  RESET, DIM, BOLD, CYAN, GREEN, YELLOW, MAGENTA, BLUE, RED,
+  GRADIENT_SOLANA_DOT_NEW, COMPETITION_HIGH, COMPETITION_MEDIUM,
+  ALT_SCREEN_ON, ALT_SCREEN_OFF, CURSOR_HIDE, CURSOR_SHOW, CLEAR_SCREEN,
+  padFooter,
+} from "./colors.js";
 
 export interface Recommendation {
   skills: Array<{ name: string; install: string; official?: boolean }>;
@@ -37,6 +27,10 @@ interface Subcategory {
   description: string;
   recommendation: Recommendation;
 }
+
+export type OnboardingResult =
+  | { action: "quit" }
+  | { action: "setup"; subcategoryLabel: string; subcategoryDescription: string; recommendation: Recommendation; landscapeData: SearchProjectsResponse | null };
 
 const CATEGORIES: Category[] = [
   {
@@ -66,7 +60,6 @@ const CATEGORIES: Category[] = [
         recommendation: {
           skills: [
             { name: "Drift Skill", install: "npx skills add https://github.com/sendaifun/skills/tree/main/skills/drift" },
-            { name: "Ranger Finance Skill", install: "npx skills add https://github.com/sendaifun/skills/tree/main/skills/ranger-finance" },
           ],
           mcps: [
             { name: "Flash Trade MCP", setup: "npx flash-trade-mcp" },
@@ -117,7 +110,7 @@ const CATEGORIES: Category[] = [
             { name: "Sanctum Skill", install: "npx skills add https://github.com/sendaifun/skills/tree/main/skills/sanctum" },
           ],
           mcps: [
-            { name: "Marinade MCP", setup: "git clone https://github.com/lorine93s/marinade-finance-mcp-server && cd marinade-finance-mcp-server && npm install" },
+            { name: "Marinade MCP", setup: "git clone https://github.com/leandrogavidia/marinade-finance-mcp-server && cd marinade-finance-mcp-server && npm install" },
           ],
           repos: [],
           tip: "Sanctum for LST swaps and Infinity pool. Marinade for mSOL.",
@@ -446,13 +439,42 @@ const CATEGORIES: Category[] = [
   },
 ];
 
+// --- Copilot query map ---
+
+const COPILOT_QUERIES: Record<string, string> = {
+  "Swap tokens (Jupiter)": "token swap DEX aggregator",
+  "Perps / Leverage trading": "perpetual futures leverage trading",
+  "Provide liquidity (AMM / CLMM)": "liquidity pool AMM concentrated",
+  "Lending / Borrowing": "lending borrowing DeFi protocol",
+  "Liquid staking": "liquid staking LST token",
+  "Token launch (pump.fun)": "token launch bonding curve memecoin",
+  "Prediction markets": "prediction market betting oracle",
+  "AI agent (TypeScript)": "AI agent autonomous trading",
+  "Telegram bot": "telegram bot crypto wallet",
+  "Discord bot": "discord bot Solana crypto",
+  "Agent with Phantom wallet": "AI agent wallet embedded",
+  "Multi-agent workflows": "multi agent orchestration workflow",
+  "New dApp (Next.js / React)": "dApp frontend web application",
+  "Mobile app (React Native)": "mobile app Solana wallet",
+  "Payments / checkout": "payments checkout Solana Pay commerce",
+  "Blinks / Actions": "blinks actions shareable transaction",
+  "Anchor programs": "anchor program smart contract",
+  "Pinocchio (high-performance)": "high performance program zero copy",
+  "Security audit": "security audit vulnerability scanner",
+  "Mint NFTs (Metaplex Core)": "NFT mint collection marketplace",
+  "Compressed NFTs": "compressed NFT cNFT state compression",
+  "Helius (RPC + DAS + Webhooks)": "RPC API indexing webhooks infrastructure",
+  "Price feeds / Oracles": "price feed oracle data",
+  "Transaction forensics / Analytics": "analytics explorer transaction forensics",
+};
+
 // --- Rendering ---
 
 function buildCategoryScreen(categories: Category[], selected: number, rows: number): string[] {
   const lines: string[] = [];
 
   lines.push("");
-  lines.push(`  ${gradientTitle()}  ${BOLD}What are you building?${RESET}`);
+  lines.push(`  ${GRADIENT_SOLANA_DOT_NEW}  ${BOLD}What are you building?${RESET}`);
   lines.push("");
   lines.push(`  ${DIM}Pick a category to get personalized skill + MCP + repo recommendations${RESET}`);
   lines.push("");
@@ -480,7 +502,7 @@ function buildSubcategoryScreen(category: Category, selected: number, rows: numb
   const lines: string[] = [];
 
   lines.push("");
-  lines.push(`  ${gradientTitle()}  ${BOLD}${category.icon} ${category.label}${RESET}`);
+  lines.push(`  ${GRADIENT_SOLANA_DOT_NEW}  ${BOLD}${category.icon} ${category.label}${RESET}`);
   lines.push("");
   lines.push(`  ${DIM}What specifically?${RESET}`);
   lines.push("");
@@ -510,7 +532,7 @@ function buildRecommendationScreen(sub: Subcategory, rows: number): string[] {
   const rec = sub.recommendation;
 
   lines.push("");
-  lines.push(`  ${gradientTitle()}  ${BOLD}${sub.label}${RESET}`);
+  lines.push(`  ${GRADIENT_SOLANA_DOT_NEW}  ${BOLD}${sub.label}${RESET}`);
   lines.push("");
 
   if (rec.skills.length > 0) {
@@ -546,17 +568,124 @@ function buildRecommendationScreen(sub: Subcategory, rows: number): string[] {
     lines.push("");
   }
 
-  const footer = [`  ${DIM}esc back${RESET}  ${DIM}q quit${RESET}`];
+  const footer = [`  ${BOLD}enter${RESET} ${DIM}setup workspace${RESET}  ${DIM}esc back${RESET}  ${DIM}q quit${RESET}`];
   while (lines.length < rows - footer.length) lines.push("");
   lines.push(...footer);
 
   return lines.slice(0, rows);
 }
 
+function buildLandscapeScreen(
+  sub: Subcategory,
+  data: SearchProjectsResponse | null,
+  loading: boolean,
+  error: boolean,
+  rows: number,
+): string[] {
+  const lines: string[] = [];
+
+  lines.push("");
+  lines.push(`  ${GRADIENT_SOLANA_DOT_NEW}  ${BOLD}Landscape: ${sub.label}${RESET}`);
+  lines.push("");
+
+  if (loading) {
+    lines.push(`  ${DIM}Analyzing competitive landscape...${RESET}`);
+    lines.push("");
+    lines.push(`  ${DIM}Searching 5,400+ Solana hackathon projects via Colosseum Copilot${RESET}`);
+    const footer = [`  ${DIM}please wait...${RESET}`];
+    while (lines.length < rows - footer.length) lines.push("");
+    lines.push(...footer);
+    return lines.slice(0, rows);
+  }
+
+  if (error || !data) {
+    lines.push(`  ${DIM}Could not fetch landscape data. Showing recommendations instead.${RESET}`);
+    lines.push("");
+    const footer = [`  ${BOLD}enter${RESET} ${DIM}see recommendations${RESET}  ${DIM}esc back${RESET}`];
+    while (lines.length < rows - footer.length) lines.push("");
+    lines.push(...footer);
+    return lines.slice(0, rows);
+  }
+
+  lines.push(`  ${BOLD}${data.totalFound}${RESET} ${DIM}similar projects found across Solana hackathons${RESET}`);
+  lines.push("");
+
+  if (data.results.length > 0) {
+    lines.push(`  ${YELLOW}${BOLD}Notable projects:${RESET}`);
+    lines.push("");
+
+    for (const project of data.results.slice(0, 5)) {
+      const tag = project.prize ? ` ${GREEN}[winner]${RESET}` : "";
+      lines.push(`    ${BOLD}${project.name}${RESET}${tag}`);
+      if (project.oneLiner) {
+        const liner = project.oneLiner.length > 70 ? project.oneLiner.slice(0, 67) + "..." : project.oneLiner;
+        lines.push(`    ${DIM}${liner}${RESET}`);
+      }
+      lines.push(`    ${CYAN}${project.hackathon.name}${RESET}`);
+      lines.push("");
+    }
+  }
+
+  if (data.totalFound > 0) {
+    const level = data.totalFound > COMPETITION_HIGH ? "High" : data.totalFound > COMPETITION_MEDIUM ? "Medium" : "Low";
+    const filled = Math.min(Math.round(data.totalFound / 5), 10);
+    const bar = "\u2588".repeat(filled) + "\u2591".repeat(10 - filled);
+    const color = data.totalFound > COMPETITION_HIGH ? RED : data.totalFound > COMPETITION_MEDIUM ? YELLOW : GREEN;
+
+    lines.push(`  ${BOLD}Competition:${RESET} ${color}${bar} ${level}${RESET} ${DIM}(${data.totalFound} projects)${RESET}`);
+    lines.push("");
+
+    if (data.totalFound > COMPETITION_HIGH) {
+      lines.push(`  ${YELLOW}Crowded space. Differentiate with a specific niche or novel mechanism.${RESET}`);
+    } else if (data.totalFound > COMPETITION_MEDIUM) {
+      lines.push(`  ${DIM}Moderate competition. Room for well-executed entrants.${RESET}`);
+    } else {
+      lines.push(`  ${GREEN}Open space \u2014 relatively few existing projects here.${RESET}`);
+    }
+    lines.push("");
+  }
+
+  const footer = [`  ${BOLD}enter${RESET} ${DIM}see recommendations${RESET}  ${DIM}esc back${RESET}  ${DIM}q quit${RESET}`];
+  while (lines.length < rows - footer.length) lines.push("");
+  lines.push(...footer);
+
+  return lines.slice(0, rows);
+}
+
+// --- Token prompt ---
+
+const COPILOT_SIGNUP_URL = "https://arena.colosseum.org/copilot";
+
+async function promptForCopilotToken(): Promise<string | undefined> {
+  const rl = createInterface({ input: process.stdin, output: process.stdout });
+
+  console.log("");
+  console.log(`  ${BOLD}Colosseum Copilot${RESET} ${DIM}\u2014 competitive landscape analysis${RESET}`);
+  console.log(`  ${DIM}See what\u2019s already been built before you start.${RESET}`);
+  console.log(`  ${DIM}5,400+ hackathon projects \u00b7 65+ curated sources \u00b7 6,300+ crypto products${RESET}`);
+  console.log("");
+  console.log(`  ${BOLD}Get your free token:${RESET} ${CYAN}${COPILOT_SIGNUP_URL}${RESET}`);
+  console.log(`  ${DIM}Sign in \u2192 copy your Personal Access Token \u2192 paste below${RESET}`);
+  console.log("");
+
+  return new Promise((resolve) => {
+    rl.question(`  Paste token (Enter to skip): `, (answer) => {
+      rl.close();
+      resolve(answer.trim() || undefined);
+    });
+  });
+}
+
 // --- Agent output ---
 
 export function agentOnboarding(): void {
+  const token = getToken();
   console.log("Solana Ecosystem Onboarding — What do you want to build?\n");
+  if (token) {
+    console.log("Colosseum Copilot: ACTIVE — landscape analysis available for each category.\n");
+  } else {
+    console.log(`Tip: Get a token at ${COPILOT_SIGNUP_URL} and set COLOSSEUM_COPILOT_PAT to enable competitive landscape analysis.\n`);
+  }
   for (const cat of CATEGORIES) {
     console.log(`${cat.icon} ${cat.label} — ${cat.description}`);
     for (const sub of cat.subcategories) {
@@ -578,27 +707,54 @@ export function agentOnboarding(): void {
 
 // --- Interactive TUI ---
 
-type Screen = "categories" | "subcategories" | "recommendation";
+type Screen = "categories" | "subcategories" | "landscape" | "recommendation";
 
-export async function interactiveOnboarding(): Promise<void> {
+export async function interactiveOnboarding(): Promise<OnboardingResult> {
   const stdin = process.stdin;
   const stdout = process.stdout;
 
   if (!stdin.isTTY) {
     agentOnboarding();
-    return;
+    return { action: "quit" };
+  }
+
+  // One-time Copilot token setup
+  let copilotToken = getToken();
+  if (!copilotToken && shouldPromptForToken()) {
+    const entered = await promptForCopilotToken();
+    if (entered) {
+      process.stdout.write(`  ${DIM}Verifying token...${RESET}`);
+      const valid = await verifyToken(entered);
+      if (valid) {
+        saveToken(entered);
+        copilotToken = entered;
+        console.log(`\r  ${GREEN}Token verified and saved to ~/.solana-new/config.json${RESET}          `);
+      } else {
+        console.log(`\r  ${YELLOW}Invalid token \u2014 skipping landscape analysis.${RESET}                `);
+        markTokenPrompted();
+      }
+      console.log("");
+    } else {
+      markTokenPrompted();
+      console.log(`  ${DIM}Skipped. You can add it later: export COLOSSEUM_COPILOT_PAT="your-token"${RESET}`);
+      console.log("");
+    }
   }
 
   stdin.setRawMode(true);
   stdin.resume();
   stdin.setEncoding("utf8");
 
-  stdout.write("\x1b[?1049h");
-  stdout.write("\x1b[?25l");
+  stdout.write(ALT_SCREEN_ON);
+  stdout.write(CURSOR_HIDE);
 
   let screen: Screen = "categories";
   let catIndex = 0;
   let subIndex = 0;
+  let landscapeData: SearchProjectsResponse | null = null;
+  let landscapeLoading = false;
+  let landscapeError = false;
+  let landscapeGeneration = 0;
 
   function getRows(): number { return stdout.rows || 24; }
 
@@ -610,11 +766,16 @@ export async function interactiveOnboarding(): Promise<void> {
       lines = buildCategoryScreen(CATEGORIES, catIndex, rows);
     } else if (screen === "subcategories") {
       lines = buildSubcategoryScreen(CATEGORIES[catIndex], subIndex, rows);
+    } else if (screen === "landscape") {
+      lines = buildLandscapeScreen(
+        CATEGORIES[catIndex].subcategories[subIndex],
+        landscapeData, landscapeLoading, landscapeError, rows,
+      );
     } else {
       lines = buildRecommendationScreen(CATEGORIES[catIndex].subcategories[subIndex], rows);
     }
 
-    stdout.write(`\x1b[H\x1b[J${lines.join("\n")}`);
+    stdout.write(`${CLEAR_SCREEN}${lines.join("\n")}`);
   }
 
   draw();
@@ -622,21 +783,21 @@ export async function interactiveOnboarding(): Promise<void> {
   const onResize = () => draw();
   stdout.on("resize", onResize);
 
-  return new Promise((resolve) => {
+  return new Promise<OnboardingResult>((resolve) => {
     function cleanup() {
       stdout.removeListener("resize", onResize);
       stdin.setRawMode(false);
       stdin.pause();
       stdin.removeListener("data", onData);
-      stdout.write("\x1b[?25h");
-      stdout.write("\x1b[?1049l");
+      stdout.write(CURSOR_SHOW);
+      stdout.write(ALT_SCREEN_OFF);
     }
 
     function onData(key: string) {
       if (key === "\x03") { cleanup(); process.exit(0); }
 
       if (screen === "categories") {
-        if (key === "\x1b") { cleanup(); resolve(); return; }
+        if (key === "\x1b") { cleanup(); resolve({ action: "quit" }); return; }
         if (key === "\x1b[A") { catIndex = Math.max(catIndex - 1, 0); draw(); return; }
         if (key === "\x1b[B") { catIndex = Math.min(catIndex + 1, CATEGORIES.length - 1); draw(); return; }
         if (key === "\r" || key === "\n") { screen = "subcategories"; subIndex = 0; draw(); return; }
@@ -645,10 +806,61 @@ export async function interactiveOnboarding(): Promise<void> {
         const subs = CATEGORIES[catIndex].subcategories;
         if (key === "\x1b[A") { subIndex = Math.max(subIndex - 1, 0); draw(); return; }
         if (key === "\x1b[B") { subIndex = Math.min(subIndex + 1, subs.length - 1); draw(); return; }
+        if (key === "\r" || key === "\n") {
+          const sub = CATEGORIES[catIndex].subcategories[subIndex];
+          const query = COPILOT_QUERIES[sub.label];
+          if (copilotToken && query) {
+            screen = "landscape";
+            landscapeData = null;
+            landscapeLoading = true;
+            landscapeError = false;
+            const gen = ++landscapeGeneration;
+            draw();
+            searchProjects(copilotToken, query)
+              .then((data) => {
+                if (gen !== landscapeGeneration) return;
+                landscapeData = data;
+                landscapeLoading = false;
+                if (screen === "landscape") draw();
+              })
+              .catch(() => {
+                if (gen !== landscapeGeneration) return;
+                landscapeLoading = false;
+                landscapeError = true;
+                if (screen === "landscape") draw();
+              });
+          } else {
+            screen = "recommendation";
+            draw();
+          }
+          return;
+        }
+      } else if (screen === "landscape") {
+        if (landscapeLoading) return;
+        if (key === "\x1b") { screen = "subcategories"; draw(); return; }
         if (key === "\r" || key === "\n") { screen = "recommendation"; draw(); return; }
+        if (key === "q" || key === "Q") { cleanup(); resolve({ action: "quit" }); return; }
       } else {
-        if (key === "\x1b" || key === "\x1b[A") { screen = "subcategories"; draw(); return; }
-        if (key === "q" || key === "Q") { cleanup(); resolve(); return; }
+        // recommendation screen — Enter triggers workspace setup
+        if (key === "\r" || key === "\n") {
+          const sub = CATEGORIES[catIndex].subcategories[subIndex];
+          cleanup();
+          resolve({
+            action: "setup",
+            subcategoryLabel: sub.label,
+            subcategoryDescription: sub.description,
+            recommendation: sub.recommendation,
+            landscapeData,
+          });
+          return;
+        }
+        if (key === "\x1b" || key === "\x1b[A") {
+          const sub = CATEGORIES[catIndex].subcategories[subIndex];
+          screen = (copilotToken && COPILOT_QUERIES[sub.label]) ? "landscape" : "subcategories";
+          draw();
+          return;
+        }
+        if (key === "q" || key === "Q") { cleanup(); resolve({ action: "quit" }); return; }
       }
     }
 
