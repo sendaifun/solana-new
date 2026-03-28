@@ -437,6 +437,12 @@ function printUsage(): void {
   }
 
   console.log("");
+  row(`${BOLD}start${RESET}`,                                               "Guided onboarding + landscape + workspace setup");
+  row(`${BOLD}idea${RESET} ${DIM}[text]${RESET}`,                                          "Free-form idea \u2014 landscape + gap analysis");
+  row(`${BOLD}search${RESET} ${DIM}[query]${RESET}`,                                       "Find repos, skills, MCPs");
+  row(`${BOLD}repos${RESET} ${DIM}[--search <q>]${RESET}`,                                 "Browse / filter repos");
+  row(`${BOLD}skills${RESET} ${DIM}[--search <q>]${RESET}`,                                "Browse / filter skills");
+  row(`${BOLD}config${RESET} ${DIM}[token]${RESET}`,                                       "Manage Copilot token + settings");
   console.log(`  ${BOLD}Get Started${RESET}`);
   console.log("");
   row(`${BOLD}init${RESET}`,                                                "Install journey skills \u2192 open Claude Code \u2192 go");
@@ -471,6 +477,7 @@ async function main(): Promise<void> {
 
   if (command === "init") { const { flags } = parseFlags(args); return cmdInit(args, flags); }
   if (command === "start") return cmdStart(args);
+  if (command === "idea" || command === "landscape") return cmdIdea(args);
   if (command === "journey") return cmdJourney(args);
   if (command === "idea" || command === "landscape") return cmdIdea(args);
   if (command === "search") return cmdSearch(args);
