@@ -81,6 +81,15 @@ Use official docs or sites to answer:
 - whether a protocol or company already covers the wedge
 - whether the technical thesis is plausible
 
+## Helius Blog
+
+Fetch `https://www.helius.dev/blog` for Solana-specific ecosystem intelligence:
+
+- infrastructure trends (compression, priority fees, token extensions, DAS API)
+- builder pain points and what the ecosystem is investing in
+- technical deep-dives that reveal gaps or emerging primitives
+- use recent posts to validate whether a technical thesis is timely
+
 ## Broader Web
 
 Use broader search to find:

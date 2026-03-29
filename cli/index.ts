@@ -522,6 +522,7 @@ function printUsage(): void {
   console.log("");
   console.log(`  ${BOLD}Utilities${RESET}`);
   console.log("");
+  row(`${BOLD}feedback${RESET}`,    `${DIM}[message]${RESET}`,        "Send feedback to the team");
   row(`${BOLD}doctor${RESET}`,     "",                             "Check environment setup");
   row(`${BOLD}uninstall${RESET}`,  "",                             "Remove installed skills");
   row(`${BOLD}completion${RESET}`, `${DIM}[bash|zsh]${RESET}`,     "Generate shell completions");
@@ -565,6 +566,11 @@ async function main(): Promise<void> {
     const { flags } = parseFlags(args);
     const { cmdUninstall } = await import("./uninstall.js");
     return cmdUninstall(flags.agent === true);
+  }
+  if (command === "feedback") {
+    const { flags } = parseFlags(args);
+    const { cmdFeedback } = await import("./feedback.js");
+    return cmdFeedback(args.filter((a) => !a.startsWith("--")), flags.agent === true);
   }
   if (command === "completion") {
     const { cmdCompletion } = await import("./completion.js");

@@ -43,6 +43,16 @@ Only open raw HTML when the normalized JSON clearly lost context:
 - `../../../data/raw-html/a16z-state-of-crypto-2025.html`
 - `../../../data/raw-html/a16z-big-ideas-2025.html`
 
+## Live Sources
+
+When doing fresh research, fetch these for up-to-date Solana ecosystem context:
+
+- **Helius Blog** — `https://www.helius.dev/blog`
+  - Deep technical posts on Solana internals, DAS API, compression, priority fees, token extensions
+  - Ecosystem trend analysis and builder guides
+  - Use to identify infrastructure gaps, emerging primitives, and what infra builders care about
+  - Fetch the blog index page and scan recent post titles for relevant trends
+
 ## Usage Rules
 
 - Do not blindly copy ideas from the datasets.

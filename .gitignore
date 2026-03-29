@@ -1,6 +1,9 @@
 node_modules
 dist
 .env
+.env.local
+.env.production
+.env*.local
 .solana-new/
 .telemetry/
 
@@ -20,8 +23,10 @@ Thumbs.db
 *.swp
 *.swo
 
+# Convex generated files
+convex/_generated/
+
 # Not shipped yet — experimental build pipeline
-convex/
 mcp/
 qdrant/
 core/planner/
@@ -44,3 +49,6 @@ docs/market-catalog.md
 docs/testing-guide.md
 docs/runtime.md
 PRD.md
+
+.claude/
+.agents/

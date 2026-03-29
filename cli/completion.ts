@@ -1,4 +1,4 @@
-const COMMANDS = ["init", "ship", "start", "idea", "search", "repos", "skills", "copilot", "doctor", "uninstall", "completion"];
+const COMMANDS = ["init", "ship", "start", "idea", "search", "repos", "skills", "copilot", "feedback", "doctor", "uninstall", "completion"];
 
 const BASH_SCRIPT = `
 # solana-new bash completion
@@ -23,6 +23,7 @@ _solana_new() {
     'repos:Browse / filter repos'
     'skills:Browse / filter skills'
     'copilot:Manage Copilot token + settings'
+    'feedback:Send feedback to the team'
     'doctor:Check environment setup'
     'uninstall:Remove installed skills'
     'completion:Generate shell completions'

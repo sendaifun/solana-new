@@ -1,2 +1,4 @@
-name: Navigate Skills
-prompt: "What skills, repos, and MCP servers are available in solana-new? Help me find the right tool."
+interface:
+  display_name: "Navigate Skills"
+  short_description: "Browse all installed solana-new skills, repos, and MCPs to find the right tool"
+  default_prompt: "What skills, repos, and MCP servers are available in solana-new? Help me find the right tool for my task."

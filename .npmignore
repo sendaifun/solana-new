@@ -1,0 +1,31 @@
+# Source (dist/ is shipped instead)
+cli/
+core/
+shared/
+
+# Convex backend (not needed by users)
+convex/
+
+# Env files
+.env
+.env.*
+.env*.local
+
+# Dev files
+*.tsbuildinfo
+.DS_Store
+.vscode/
+.idea/
+tests/
+scripts/
+tmp-smoke/
+test-solana-pay/
+test-cli-claude
+
+# Git
+.git/
+.gitignore
+
+# Docs
+CLAUDE.md
+PRD.md

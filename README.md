@@ -20,6 +20,7 @@ solana-new search [query]                         Find repos, skills, MCPs
 solana-new repos [--search <q>]                   Browse or filter repos
 solana-new skills [--search <q>]                  Browse or filter skills
 solana-new copilot [token]                        Manage Copilot token + settings
+solana-new feedback [message]                     Send feedback to the team
 solana-new completion [bash|zsh]                  Generate shell completions
 ```
 
@@ -100,6 +101,41 @@ eval "$(solana-new completion zsh)"
 eval "$(solana-new completion bash)"
 ```
 
+## Development
+
+### Setup
+
+```bash
+pnpm install
+pnpm build
+```
+
+### Environment
+
+Copy `.env.example` to `.env` for local development:
+
+```bash
+cp .env.example .env
+```
+
+| Variable | Purpose |
+|----------|---------|
+| `CONVEX_URL` | Dev Convex deployment URL |
+| `PROD_CONVEX_URL` | Prod Convex deployment URL |
+
+Get your deployment URLs from [dashboard.convex.dev](https://dashboard.convex.dev). `.env` is gitignored, `.env.example` is committed.
+
+### Convex Backend
+
+Feedback is stored in Convex. Schema and mutations are in `convex/`.
+
+```bash
+npx convex dev --once       # push functions to dev
+npx convex deploy           # push functions to prod
+```
+
+Both `CONVEX_URL` (dev) and `PROD_CONVEX_URL` (prod) must be set in `.env`. The CLI uses `CONVEX_URL` when set, otherwise falls back to `PROD_CONVEX_URL`. Without either, feedback silently skips.
+
 ## Project Structure
 
 ```
@@ -112,6 +148,7 @@ cli/
   interactive-skills.ts     Skills TUI
   interactive-mcps.ts       MCPs TUI
   interactive-universal.ts  Universal search TUI (combines all)
+  feedback.ts               Send feedback to Convex
   completion.ts             Shell completion generation
   banner.ts                 ASCII art banner
   data/
@@ -123,4 +160,7 @@ skills/
   build/                    Implementation skills (10 skills)
   launch/                   Go-to-market skills (3 skills)
   data/                     Datasets, catalogs, phase handoff spec
+convex/
+  schema.ts                 Feedback table schema
+  feedback.ts               Submit mutation
 ```
