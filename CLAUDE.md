@@ -15,15 +15,14 @@ pnpm dev              # run CLI via tsx (no build needed)
 ## Commands
 
 ```bash
-solana-new init                                   # install 10 journey skills to ~/.claude/skills/
-solana-new journey                                # Idea → Build → Launch TUI (Enter launches Claude)
-solana-new start                                  # guided onboarding (category → workspace setup)
-solana-new <query>                                # search anything — shorthand
-solana-new search                                 # interactive universal search
-solana-new repos [--search <q>] [--category <c>]  # browse or filter repos
+solana-new init                                   # install journey skills → open Claude Code → go
+solana-new journey                                # Idea → Build → Launch TUI
+solana-new start                                  # guided onboarding + landscape + workspace setup
+solana-new idea [text]                            # free-form idea — landscape + gap analysis
+solana-new search [query]                         # find repos, skills, MCPs
+solana-new repos [--search <q>]                   # browse or filter repos
 solana-new skills [--search <q>]                  # browse or filter skills
-solana-new mcps [--search <q>]                    # browse or filter MCPs
-solana-new clone <repo-id> [--out <dir>]          # clone a repo
+solana-new config [token]                         # manage Copilot token + settings
 ```
 
 Add `--agent` to any command for machine-readable plaintext output (for Claude Code / Codex).

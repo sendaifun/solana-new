@@ -12,16 +12,17 @@ Guide the user through implementing their Solana MVP feature by feature. Break t
 ## Workflow
 
 1. Check for `.solana-new/build-context.json`. If found, use the stack and architecture decisions. If not, ask what they've set up and what they want to build.
-2. Read [references/solana-dev-patterns.md](references/solana-dev-patterns.md) for common implementation patterns.
-3. Break the MVP into 3-5 milestones, each shippable in 1-2 hours.
-4. For each milestone:
+2. Read [references/skill-mcp-usage-guide.md](references/skill-mcp-usage-guide.md) to understand what tools are available BEFORE building.
+3. Read [references/dev-environment-setup.md](references/dev-environment-setup.md) to ensure the dev environment is ready.
+4. Read [references/solana-dev-patterns.md](references/solana-dev-patterns.md) for implementation patterns.
+5. Break the MVP into 3-5 milestones, each shippable in 1-2 hours.
+6. For each milestone:
    a. Explain what we're building and why
    b. Write the code (use installed skills for domain guidance)
    c. Test it (devnet first, always)
    d. Verify it works before moving on
-5. When stuck, consult [references/error-recovery-guide.md](references/error-recovery-guide.md).
-6. After MVP is complete, run through [references/testing-checklist.md](references/testing-checklist.md).
-7. Read [references/skill-mcp-usage-guide.md](references/skill-mcp-usage-guide.md) to effectively use installed tools.
+7. When stuck, consult [references/error-recovery-guide.md](references/error-recovery-guide.md).
+8. After MVP is complete, run through [references/testing-checklist.md](references/testing-checklist.md).
 
 ## Non-Negotiables
 
@@ -44,13 +45,18 @@ This skill is **Phase 2 (Build)** in the Idea → Build → Launch journey.
 - `build_status.devnet_deployed`: boolean
 - `build_status.program_id`: string (if applicable)
 
-See `../../../data/specs/phase-handoff.md` for the full JSON contract.
+When MVP is complete and tests pass, tell the user to proceed to **review-and-iterate** for security audit and production readiness check.
+
+When updating `build-context.json`, **deep-merge** with existing content — don't overwrite fields from prior phases.
+
+See `../../data/specs/phase-handoff.md` for the full JSON contract.
 
 ## Resources
 
 ### references/
 
+- [references/dev-environment-setup.md](references/dev-environment-setup.md)
+- [references/skill-mcp-usage-guide.md](references/skill-mcp-usage-guide.md)
 - [references/solana-dev-patterns.md](references/solana-dev-patterns.md)
 - [references/error-recovery-guide.md](references/error-recovery-guide.md)
 - [references/testing-checklist.md](references/testing-checklist.md)
-- [references/skill-mcp-usage-guide.md](references/skill-mcp-usage-guide.md)

@@ -1,37 +1,76 @@
 # Skill & MCP Usage Guide
 
-How to effectively use installed Claude Code skills and MCP servers during development.
+Use installed skills and MCPs during development — they accelerate every step.
 
-## Skills
+## How to Check What's Installed
 
-Skills are Claude Code SKILL.md files that give Claude domain expertise. When a skill is installed:
-- Claude automatically reads the SKILL.md when relevant prompts are detected
-- Skills contain references, frameworks, and best practices for a specific domain
-- You don't need to "call" them — just ask Claude about the domain
+- **Skills**: `~/.claude/skills/` directory, or listed in your project's CLAUDE.md
+- **MCPs**: `.claude/settings.json` in your project root
+- **Install a skill**: `npx skills add <github-url>`
 
-### Effective Usage
-- "How do I swap tokens using Jupiter?" → triggers Jupiter Skill
-- "Write an Anchor program for staking" → triggers Programs (Anchor) Skill
-- "Review this code for security issues" → triggers Security Skill
+## Skills by Task
 
-### Tips
-- Check which skills are installed: look at the `skills` section in your project's CLAUDE.md
-- If Claude seems to lack domain knowledge, verify the relevant skill is installed
-- Skills stack — having both "Jupiter" and "DeFi" skills gives Claude richer context
+### Writing Programs
+| Skill | What it gives you |
+|-------|-------------------|
+| `programs-anchor` (official) | Anchor constraints, derive macros, account validation |
+| `programs-pinocchio` (official) | Zero-copy patterns (88-95% CU savings) |
+| `idl-codegen` (official) | Generate typed clients from IDLs via Codama |
+| `solana-anchor-claude-skill` | End-to-end Anchor patterns with LiteSVM testing |
 
-## MCP Servers
+### Frontend / SDK
+| Skill | What it gives you |
+|-------|-------------------|
+| `kit` (official) | @solana/kit reference (the modern SDK) |
+| `frontend-framework-kit` (official) | @solana/kit for frontend integration |
+| `kit-web3-interop` (official) | Migration from web3.js v1 to @solana/kit |
+| `phantom-connect-skill` | Wallet connection + embedded wallets |
 
-MCPs give Claude access to external APIs and data. When an MCP is configured:
-- Claude can call MCP tools to fetch real-time data
-- MCPs appear in `.claude/settings.json` under `mcpServers`
+### Testing
+| Skill | What it gives you |
+|-------|-------------------|
+| `testing` (official) | Testing pyramid: LiteSVM, Mollusk, Surfpool |
+| `surfpool` (official) | Drop-in test-validator with mainnet state |
+| `surfpool-cheatcodes` (official) | Manipulate time, accounts, programs locally |
 
-### Common MCPs and Their Tools
-- **Helius MCP**: Fetch account data, transaction history, token balances, DAS API
-- **Jupiter MCP**: Get swap quotes, route information, token prices
-- **Solana Developer MCP**: Search Solana documentation, get program examples
-- **DexScreener MCP**: Token prices, pair data, trending tokens
+### Security & Debugging
+| Skill | What it gives you |
+|-------|-------------------|
+| `security` (official) | Signer checks, PDA validation, arithmetic safety |
+| `vulnhunter-skill` | Automated vulnerability scanning |
+| `code-recon-skill` | Architecture-level security audits |
+| `common-errors` (official) | Diagnose toolchain/build/runtime errors |
+| `compatibility-matrix` (official) | Version matching (Anchor, Solana CLI, Rust) |
 
-### Tips
-- Use MCPs for real-time data instead of hardcoding values
-- If an MCP call fails, check your API key in `.env`
-- MCPs are especially useful for testing — verify on-chain state after transactions
+## MCPs by Task
+
+### Core Development
+| MCP | Tools |
+|-----|-------|
+| `helius-mcp` | 60+ tools: wallet data, transactions, DAS API, webhooks |
+| `solana-fender-mcp` | Anchor program static analysis |
+| `anchor-mcp` | Anchor security CLI |
+
+### DeFi Integration
+| MCP | Tools |
+|-----|-------|
+| `dcspark-jupiter` | Jupiter swap quotes + execution |
+| `demcp-orca-mcp` | Orca Whirlpool operations |
+
+### Data & Analytics
+| MCP | Tools |
+|-----|-------|
+| `opensvm-dexscreener-mcp` | Real-time token/pair data |
+| `solscan-mcp` | Transaction forensics |
+
+### Wallet
+| MCP | Tools |
+|-----|-------|
+| `phantom-mcp-server` | Wallet operations (Solana + EVM) |
+
+## Tips
+
+- Read each skill's SKILL.md before using — it explains triggers and capabilities
+- MCPs provide real-time data — always prefer them over hardcoded values
+- Combine skills: `programs-anchor` for writing + `testing` for tests + `security` for audit
+- If an MCP returns unexpected results, use `simulateTransaction()` to verify

@@ -18,7 +18,7 @@ Match an idea to the right technology stack.
 
 | Primitive | Tools |
 |-----------|-------|
-| Token transfers | @solana/web3.js, SPL Token |
+| Token transfers | @solana/kit (or legacy @solana/web3.js), SPL Token |
 | Swaps | Jupiter SDK/MCP |
 | NFTs | Metaplex SDK |
 | Programs | Anchor framework |
@@ -40,8 +40,8 @@ Match an idea to the right technology stack.
 
 | Choice | When |
 |--------|------|
-| Jupiter Unified Wallet Adapter (@jup-ag/wallet-adapter) | Any Next.js/React dApp (ALWAYS use this, never stubs) |
-| Phantom MCP | Agent that needs wallet access |
+| Wallet Standard (`@solana/wallet-adapter-react`) | Any Next.js/React dApp — auto-detects Phantom, Solflare, Backpack |
+| Phantom MCP (`phantom-mcp-server`) | Agent that needs wallet access |
 | None | Backend-only or bot |
 
 ## Output

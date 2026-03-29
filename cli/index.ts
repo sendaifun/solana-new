@@ -4,8 +4,8 @@ import { listReposByCategory, searchRepos, type ClonableRepo } from "../core/rou
 import { interactiveSearch } from "./interactive-search.js";
 import { interactiveSkills, buildSkillsIndex, searchSkills, type SkillsData } from "./interactive-skills.js";
 import skillsData from "../shared/constants/solana-skills.json" with { type: "json" };
-import { interactiveMcps, buildMcpsIndex, searchMcps, type McpsData } from "./interactive-mcps.js";
 import mcpsData from "../shared/constants/solana-mcps.json" with { type: "json" };
+import { buildMcpsIndex, searchMcps, type McpsData } from "./interactive-mcps.js";
 import { interactiveUniversalSearch, buildUniversalIndex } from "./interactive-universal.js";
 import { interactiveOnboarding, agentOnboarding, agentIdea } from "./interactive-onboarding.js";
 import { cmdInit } from "./init.js";
@@ -177,21 +177,6 @@ async function cmdRepos(args: string[]): Promise<void> {
   for (const repo of repos) console.log(`  ${repo.id}  (${repo.repo})  ${repo.description}`);
 }
 
-async function cmdClone(args: string[]): Promise<void> {
-  const { flags, positional } = parseFlags(args);
-  const repoId = positional[0];
-  if (!repoId) throw new Error('Usage: solana-new clone <repo-id> [--out <dir>]');
-
-  const repo = listReposByCategory().find((r) => r.id === repoId);
-  if (!repo) throw new Error(`Unknown repo: ${repoId}\nRun "solana-new repos" to browse.`);
-
-  const outDir = typeof flags.out === "string" ? flags.out : undefined;
-  let command = repo.clone_command;
-  if (outDir && command.startsWith("git clone ")) command = `${command} ${outDir}`;
-
-  await runShell(command, repo.id);
-}
-
 async function cmdSkills(args: string[]): Promise<void> {
   const { flags } = parseFlags(args);
   const query = typeof flags.search === "string" ? flags.search : undefined;
@@ -227,39 +212,6 @@ async function cmdSkills(args: string[]): Promise<void> {
 
   const allItems = buildSkillsIndex(data);
   for (const s of allItems) console.log(`  ${s.slug}  [${s.kind}]  ${s.description}`);
-}
-
-async function cmdMcps(args: string[]): Promise<void> {
-  const { flags } = parseFlags(args);
-  const query = typeof flags.search === "string" ? flags.search : undefined;
-  const data = mcpsData as McpsData;
-
-  if (flags.agent === true) {
-    const allItems = buildMcpsIndex(data);
-    const results = query ? searchMcps(allItems, query) : allItems;
-    agentOutput(query ? `MCPs: "${query}"` : "All Solana MCP servers", results.map((m) => ({ ...m, kind: "mcp" })), ["id", "name", "repo", "category", "description", "setup_command"]);
-    return;
-  }
-
-  if (query) {
-    const allItems = buildMcpsIndex(data);
-    const results = searchMcps(allItems, query);
-    if (results.length === 0) { console.log("No matching MCP servers found."); return; }
-    console.log(`\nFound ${results.length} MCP servers:\n`);
-    for (const item of results) console.log(`  ${item.id}  (${item.repo})  ${item.category}\n    ${item.description}\n    ${item.setup_command}\n`);
-    return;
-  }
-
-  // Default: interactive TUI
-  if (process.stdin.isTTY) {
-    const result = await interactiveMcps(data);
-    if (result.action === "quit" || !result.item) return;
-    await runShell(result.item.setup_command, result.item.name);
-    return;
-  }
-
-  const allItems = buildMcpsIndex(data);
-  for (const m of allItems) console.log(`  ${m.id}  (${m.repo})  ${m.description}`);
 }
 
 async function cmdStart(args: string[]): Promise<void> {

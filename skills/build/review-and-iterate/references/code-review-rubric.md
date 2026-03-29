@@ -1,46 +1,75 @@
 # Code Review Rubric
 
-Scoring dimensions for Solana project quality.
+Scoring dimensions for Solana project quality. Weighted by importance.
 
-## Dimensions (A-F scale)
+## Dimensions (A-F scale, weighted)
 
-### 1. Correctness
-- Does the code do what it claims?
-- Are edge cases handled?
-- Are transactions properly confirmed?
-- Are token amounts handled with correct decimals?
+### 1. Security (weight: 3x) — most critical
+Any critical security finding drops the overall grade to C or below.
 
-### 2. Security
-- See security-basics.md for the full checklist
-- Any critical finding drops the overall grade to C or below
+| Grade | Criteria |
+|-------|----------|
+| A | All P0+P1 checks from security-basics.md pass. Fuzz tested. |
+| B | All P0 checks pass, P1 mostly covered. No exploitable issues. |
+| C | Missing 1-2 P0 checks but no actively exploitable vulnerability. |
+| F | Missing signer checks, unchecked math, or exploitable PDA confusion. |
 
-### 3. Code Organization
-- Clear separation of concerns
-- Consistent naming conventions
-- No dead code or commented-out blocks
-- Functions are focused (single responsibility)
+**Tools:** `security` (official), `vulnhunter-skill`, `solana-fender-mcp`
 
-### 4. Error Handling
-- Meaningful error messages
-- No swallowed errors (empty catch blocks)
-- Transaction failures handled gracefully
-- User-facing errors are human-readable
+### 2. Correctness (weight: 2x)
+| Grade | Criteria |
+|-------|----------|
+| A | All paths tested. Edge cases handled. Token decimals correct. Transactions confirmed. |
+| B | Happy paths work. Most edge cases covered. Minor decimal display issues. |
+| C | Core logic works but edge cases cause unexpected behavior. |
+| F | Fundamental logic errors. Transactions fail silently. |
 
-### 5. Testing
-- Core paths have test coverage
-- Tests run against devnet or local validator
-- Tests are deterministic (no flaky network calls without mocks)
+### 3. Error Handling (weight: 2x)
+| Grade | Criteria |
+|-------|----------|
+| A | Custom error types. User-friendly messages. No swallowed errors. Retry logic. |
+| B | Meaningful errors for common cases. Some generic catch blocks. |
+| C | Mix of good and empty catch blocks. Some errors reach the user as raw codes. |
+| F | Panics, unwrap() on fallible operations, silent failures. |
 
-### 6. Documentation
-- README explains setup and usage
-- Complex logic has inline comments
-- API/program interfaces are documented
-- Environment variables are documented in .env.example
+### 4. Testing (weight: 1.5x)
+| Grade | Criteria |
+|-------|----------|
+| A | Unit tests (LiteSVM), integration tests (Surfpool), security scan clean. |
+| B | Core instruction tests pass. At least one E2E test. |
+| C | Some tests exist but don't cover critical paths. |
+| F | No tests, or tests that always pass regardless of code changes. |
 
-## Overall Grade
+**Tools:** `testing` (official), `surfpool` (official), `trident` repo
 
-- **A**: Excellent across all dimensions, production-ready
-- **B**: Good overall, minor improvements needed
-- **C**: Functional but has significant gaps
-- **D**: Works but has security or quality concerns
-- **F**: Not ready — critical issues found
+### 5. Code Organization (weight: 1x)
+| Grade | Criteria |
+|-------|----------|
+| A | Clear module separation. Single-responsibility functions. No dead code. |
+| B | Mostly organized. Some large functions that could be split. |
+| C | Inconsistent structure. Dead code present. Mixed concerns. |
+
+### 6. Documentation (weight: 0.5x)
+| Grade | Criteria |
+|-------|----------|
+| A | README with setup/usage. .env.example. Complex logic commented. Program IDL documented. |
+| B | README exists. Most env vars documented. Key functions commented. |
+| C | Minimal docs. Setup requires reading the code. |
+
+## Overall Grade Calculation
+
+Weighted average: `(Security×3 + Correctness×2 + ErrorHandling×2 + Testing×1.5 + CodeOrg×1 + Docs×0.5) / 10`
+
+Map to letter: A (90+), B (75-89), C (60-74), D (40-59), F (<40)
+
+**Override rule:** Any critical security finding = max grade C regardless of other scores.
+
+## Review Output
+
+For each finding, include:
+1. **Severity**: Critical / High / Medium / Low
+2. **Category**: Which dimension (Security, Correctness, etc.)
+3. **Description**: What's wrong and why it matters
+4. **Fix**: Specific code change (not just a warning)
+
+Write the review as a local HTML artifact.

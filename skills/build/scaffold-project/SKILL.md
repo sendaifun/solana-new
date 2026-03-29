@@ -42,7 +42,11 @@ This skill is **Phase 2 (Build)** in the Idea → Build → Launch journey.
 - `architecture`: chosen pattern name and key decisions
 - `build_status`: { mvp_complete: false, tests_passing: false, devnet_deployed: false }
 
-See `../../../data/specs/phase-handoff.md` for the full JSON contract.
+When done, tell the user to proceed to **build-with-claude** for guided MVP implementation.
+
+When writing `build-context.json`, **deep-merge** with existing content — don't overwrite fields from prior phases.
+
+See `../../data/specs/phase-handoff.md` for the full JSON contract.
 
 ## Resources
 

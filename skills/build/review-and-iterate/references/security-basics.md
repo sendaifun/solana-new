@@ -2,52 +2,163 @@
 
 Solana-specific security checklist. Every program review must check these.
 
+> **Tools:** `security` skill (official), `vulnhunter-skill`, `code-recon-skill`, `solana-fender-mcp`, `trident` repo (fuzzing)
+
 ## Critical Checks (P0)
 
 ### 1. Signer Verification
-- Every privileged instruction checks that the correct account signed
-- In Anchor: `#[account(signer)]` or `Signer` type
-- Missing signer checks = anyone can call your admin functions
+Every privileged instruction must check that the correct account signed.
+
+```rust
+// Anchor: use Signer type
+#[account(mut)]
+pub authority: Signer<'info>,
+
+// Native: check manually
+if !authority.is_signer { return Err(ProgramError::MissingRequiredSignature); }
+```
+Missing signer checks = anyone can call your admin functions.
 
 ### 2. Account Ownership
-- Verify accounts are owned by the expected program
-- In Anchor: `#[account(owner = expected_program)]`
-- Without this, attackers can pass fake accounts
+Verify accounts are owned by the expected program.
+
+```rust
+// Anchor: Account<'info, T> checks ownership automatically
+pub my_account: Account<'info, MyData>,
+
+// For cross-program accounts:
+#[account(owner = other_program::ID)]
+pub external_account: AccountInfo<'info>,
+```
+Without this, attackers can pass fake accounts with crafted data.
 
 ### 3. PDA Validation
-- PDA seeds must be deterministic and include enough entropy
-- Always re-derive the PDA in the instruction handler, don't trust the client
-- Check for PDA seed collisions in multi-tenant designs
+PDA seeds must be deterministic and include enough entropy.
+
+```rust
+#[account(
+    seeds = [b"vault", user.key().as_ref()],
+    bump = vault.bump,  // Always save and reuse the bump
+)]
+pub vault: Account<'info, Vault>,
+```
+- Always re-derive the PDA in the instruction — never trust the client
+- Save the canonical bump in account state to avoid re-derivation cost
+- Include unique identifiers in seeds (user pubkey, mint address) to prevent collisions
 
 ### 4. Arithmetic Safety
-- Use checked math (`checked_add`, `checked_mul`) or Anchor's built-in checks
-- Overflow/underflow in token calculations = loss of funds
+Use checked math — overflow/underflow in token calculations = loss of funds.
+
+```rust
+// Good
+let result = amount_a.checked_add(amount_b).ok_or(ErrorCode::MathOverflow)?;
+
+// Bad
+let result = amount_a + amount_b; // Can overflow silently
+```
+Anchor enables overflow checks by default in release builds, but always use `checked_*` explicitly.
 
 ### 5. Reinitialization Protection
-- Accounts that should be initialized once must check an `is_initialized` flag
-- In Anchor: `init` constraint handles this, but custom programs must check manually
+Accounts that should be initialized once must not be reinitializable.
+
+```rust
+// Anchor: init constraint handles this
+#[account(init, payer = user, space = 8 + DataSize)]
+pub data: Account<'info, MyData>,
+
+// Custom programs: check an is_initialized flag
+if account.is_initialized { return Err(ErrorCode::AlreadyInitialized); }
+```
+
+### 6. Type Cosplay Prevention
+Ensure accounts are the expected type — attackers can pass account structs of different types with matching layouts.
+
+```rust
+// Anchor: handled automatically via 8-byte discriminator
+// Custom programs: add a type discriminator field and check it
+if account.discriminator != EXPECTED_DISCRIMINATOR {
+    return Err(ErrorCode::InvalidAccountType);
+}
+```
+
+### 7. Bump Seed Canonicalization
+Always use the canonical bump (from `find_program_address`) and save it.
+
+```rust
+// Good: save bump on init, reuse on subsequent calls
+#[account(
+    seeds = [b"config"],
+    bump = config.bump, // Saved during initialization
+)]
+
+// Bad: letting Anchor re-derive (costs CU, risk of bump grinding)
+#[account(seeds = [b"config"], bump)]
+```
 
 ## Important Checks (P1)
 
-### 6. Rent Drain
-- Don't allow closing accounts without reclaiming rent to the right recipient
-- Check that `close` targets are validated
+### 8. Closing Account Attacks
+Accounts can be resurrected after closing if not properly zeroed.
 
-### 7. Duplicate Account Aliasing
-- If an instruction takes multiple accounts, verify they're not the same account
-- Same-account aliasing can break invariants
+```rust
+// Anchor: use close constraint
+#[account(mut, close = recipient)]
+pub account_to_close: Account<'info, MyData>,
+```
+The `close` constraint zeros the data, reclaims rent, and assigns to system program.
 
-### 8. CPI Authority
-- When doing cross-program invocations, ensure the signing PDA has minimal authority
-- Don't give CPI callers more power than needed
+### 9. Token Account Validation
+Verify token accounts match the expected mint and owner.
 
-### 9. Front-running
-- Consider if transaction ordering matters for your logic
-- Use commit-reveal or time locks for sensitive operations
+```rust
+#[account(
+    mut,
+    token::mint = expected_mint,
+    token::authority = user,
+)]
+pub user_token_account: Account<'info, TokenAccount>,
+```
+
+### 10. Rent Drain
+Don't allow closing accounts without reclaiming rent to the right recipient.
+Check that `close` targets are validated — attacker shouldn't redirect rent.
+
+### 11. Duplicate Account Aliasing
+If an instruction takes multiple accounts, verify they're not the same account.
+Same-account aliasing can break invariants (e.g., transfer from A to A).
+
+### 12. CPI Authority
+When doing cross-program invocations, ensure the signing PDA has minimal authority.
+Don't give CPI callers more power than needed.
+
+### 13. Front-running
+Consider if transaction ordering matters for your logic.
+Use commit-reveal patterns or time locks for sensitive operations (e.g., auctions, oracle updates).
+
+## DeFi-Specific Security
+
+### Oracle Manipulation
+- Never use a single oracle source — use Pyth confidence intervals
+- Check oracle staleness (last update timestamp)
+- Use TWAP for price-sensitive operations
+
+### Flash Loan Attacks
+- Don't rely on balances checked in the same transaction for pricing
+- Verify state across multiple transactions when possible
+
+### Slippage
+- Always enforce slippage limits in swap operations
+- Never hardcode slippage — let users configure it
+
+### MEV / Sandwich Attacks
+- Consider Jito bundles for MEV protection
+- Use commit-reveal for sensitive operations
+- Add minimum output amounts to all swaps
 
 ## Client-Side Security
 
 - Never expose private keys in frontend code
-- Never commit .env files with real keys
+- Never commit `.env` files with real keys
 - Use environment variables for all secrets
-- Validate user input before sending transactions
+- Validate user input before building transactions
+- Simulate transactions before sending on mainnet

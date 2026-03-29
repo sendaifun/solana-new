@@ -7,7 +7,7 @@ description: Review Solana project code for quality, security, and production re
 
 ## Overview
 
-Perform a structured code review of a Solana project. Check for security vulnerabilities, code quality, gas optimization, and production readiness. Produce an actionable report with specific fixes.
+Perform a structured code review of a Solana project. Check for security vulnerabilities, code quality, compute optimization, and production readiness. Produce an actionable report with specific fixes.
 
 ## Workflow
 
@@ -15,7 +15,7 @@ Perform a structured code review of a Solana project. Check for security vulnera
 2. Scan the project structure and identify all Solana-related code.
 3. Apply [references/code-review-rubric.md](references/code-review-rubric.md) for quality scoring.
 4. Check against [references/security-basics.md](references/security-basics.md) for vulnerability patterns.
-5. Evaluate optimization opportunities with [references/gas-optimization.md](references/gas-optimization.md).
+5. Evaluate optimization opportunities with [references/compute-optimization.md](references/compute-optimization.md).
 6. Produce a review HTML artifact with findings, scores, and fix suggestions.
 
 ## Non-Negotiables
@@ -42,7 +42,9 @@ When the review is clean, tell the user they can proceed to **Phase 3 (Launch)**
 - `create-pitch-deck` — structured pitch deck
 - `submit-to-hackathon` — hackathon submission builder
 
-See `../../../data/specs/phase-handoff.md` for the full JSON contract.
+When updating `build-context.json`, **deep-merge** with existing content — don't overwrite fields from prior phases.
+
+See `../../data/specs/phase-handoff.md` for the full JSON contract.
 
 ## Resources
 
@@ -50,4 +52,4 @@ See `../../../data/specs/phase-handoff.md` for the full JSON contract.
 
 - [references/code-review-rubric.md](references/code-review-rubric.md)
 - [references/security-basics.md](references/security-basics.md)
-- [references/gas-optimization.md](references/gas-optimization.md)
+- [references/compute-optimization.md](references/compute-optimization.md)
