@@ -38,7 +38,7 @@ This skill is **Phase 2 (Build)** in the Idea → Build → Launch journey.
 
 **Reads**: `.solana-new/idea-context.json` (from Phase 1)
 **Writes**: `.solana-new/build-context.json` with:
-- `stack`: harness name, skills installed, MCPs configured, repos cloned
+- `stack`: skills installed, MCPs configured, repos cloned
 - `architecture`: chosen pattern name and key decisions
 - `build_status`: { mvp_complete: false, tests_passing: false, devnet_deployed: false }
 

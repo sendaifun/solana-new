@@ -50,9 +50,9 @@ Skills live in `skills/<phase>/<skill-name>/`. To add a new skill, create a fold
 
 | Catalog | Count | File |
 |---------|-------|------|
-| Repos | 59 | `shared/constants/clonable-repos.json` |
-| Skills | 66 | `shared/constants/solana-skills.json` |
-| MCPs | 49 | `shared/constants/solana-mcps.json` |
+| Repos | 59 | `cli/data/clonable-repos.json` |
+| Skills | 71 | `cli/data/solana-skills.json` |
+| MCPs | 49 | `cli/data/solana-mcps.json` |
 
 ## File Map
 
@@ -63,24 +63,22 @@ cli/
   interactive-journey.ts    Idea → Build → Launch TUI (launches Claude Code)
   interactive-onboarding.ts Category → recommendation → workspace setup
   workspace-setup.ts        Clone repos, install skills, configure MCPs
-  interactive-search.ts     Repos + harnesses TUI
+  interactive-search.ts     Repos TUI
   interactive-skills.ts     Skills TUI
   interactive-mcps.ts       MCPs TUI
   interactive-universal.ts  Universal search TUI (combines all)
   banner.ts                 ASCII art banner
+  data/
+    clonable-repos.json     59 repos (Solana official, SendAI, Metaplex, DeFi, etc.)
+    solana-skills.json      71 skills (15 official + 56 community)
+    solana-mcps.json        49 MCP servers
 skills/
   idea/                     Discovery & planning skills (4 skills)
-  build/                    Implementation skills (3 skills)
+  build/                    Implementation skills (10 skills)
   launch/                   Go-to-market skills (3 skills)
-  shared/                   Datasets, downloaded sources, phase handoff spec
+  data/                     Datasets, catalogs, phase handoff spec
 core/
   router/recommend-repo.ts  Repo search, filter by category/keyword
-shared/
-  types/index.ts            HarnessDefinition, Surface, Framework types
-  constants/
-    clonable-repos.json     59 repos (Solana official, SendAI, Metaplex, DeFi, etc.)
-    solana-skills.json      66 skills (14 official + 52 community)
-    solana-mcps.json        49 MCP servers
 ```
 
 ## Conventions

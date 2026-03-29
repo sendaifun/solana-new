@@ -13,8 +13,7 @@
     "skills/build/",
     "skills/launch/",
     "skills/data/",
-    "skills/README.md",
-    "shared/"
+    "skills/README.md"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json && chmod +x dist/cli/index.js",

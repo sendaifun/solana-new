@@ -22,8 +22,7 @@
     "cli/interactive-onboarding.ts",
     "cli/banner.ts",
     "core/router/recommend-repo.ts",
-    "shared/types/index.ts",
-    "shared/constants/*.json"
+    "cli/data/*.json"
   ],
   "exclude": [
     "dist",

@@ -6,11 +6,11 @@ How to search the solana-new catalogs for competitive intelligence.
 
 | Catalog | Count | Location |
 |---------|-------|----------|
-| Repos | 59 | `shared/constants/clonable-repos.json` |
-| Skills | 66 | `shared/constants/solana-skills.json` |
-| MCPs | 49 | `shared/constants/solana-mcps.json` |
+| Repos | 59 | `~/.claude/skills/_data/catalogs/clonable-repos.json` |
+| Skills | 66 | `~/.claude/skills/_data/catalogs/solana-skills.json` |
+| MCPs | 49 | `~/.claude/skills/_data/catalogs/solana-mcps.json` |
 
-These are in the solana-new CLI project root, NOT in the skills directory.
+These are installed automatically by `solana-new init` alongside the skills.
 
 ## How to Search
 

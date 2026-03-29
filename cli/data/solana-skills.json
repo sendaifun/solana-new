@@ -7,7 +7,7 @@
   "install_all_command": "npx skills add https://github.com/solana-foundation/solana-dev-skill",
   "counts": {
     "official": 15,
-    "community": 55
+    "community": 56
   },
   "official_skills": [
     {
@@ -548,6 +548,15 @@
       "url": "https://github.com/helius-labs/core-ai/tree/main/helius-skills/svm",
       "category": {
         "labelKey": "infrastructure"
+      }
+    },
+    {
+      "slug": "qedgen-formal-verification",
+      "title": "QEDGen — Formal Verification",
+      "description": "Agent-driven formal verification for Solana programs using Lean 4 proofs. Write specs, model state machines, prove access control, CPI correctness, conservation invariants, and arithmetic safety with Leanstral for hard sub-goals.",
+      "url": "https://github.com/qedgen/solana-skills/blob/main/SKILL.md",
+      "category": {
+        "labelKey": "security"
       }
     }
   ],

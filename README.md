@@ -1,41 +1,74 @@
 # solana.new
 
-Discover the Solana ecosystem — 59 repos, 66 skills, and 49 MCP servers, searchable from your terminal.
+CLI tool to discover the Solana ecosystem and build products — 59 repos, 71 skills, and 49 MCP servers, searchable from your terminal with interactive TUI and agent-friendly output.
 
 ## Quick Start
 
 ```bash
-pnpm install && pnpm build
-```
-
-```bash
-npx solana-new jupiter
-npx solana-new search
-npx solana-new repos
-npx solana-new skills
-npx solana-new mcps
+npx solana-new init         # install 17 journey skills → ready for Claude Code
+npx solana-new ship         # pick a prompt → launches Claude Code
 ```
 
 ## Commands
 
 ```
-solana-new <query>                                Search anything — repos, skills, mcps
-solana-new search                                 Interactive universal search
-solana-new repos [--search <q>] [--category <c>]  Browse or filter repos
+solana-new init                                   Install journey skills to Claude Code
+solana-new ship                                   Idea → Build → Launch TUI
+solana-new start                                  Guided onboarding + landscape + workspace setup
+solana-new idea [text]                            Free-form idea — landscape + gap analysis
+solana-new search [query]                         Find repos, skills, MCPs
+solana-new repos [--search <q>]                   Browse or filter repos
 solana-new skills [--search <q>]                  Browse or filter skills
-solana-new mcps [--search <q>]                    Browse or filter MCP servers
-solana-new clone <repo-id> [--out <dir>]          Clone a repo
-
-All commands support --agent for machine-readable output.
+solana-new copilot [token]                        Manage Copilot token + settings
+solana-new completion [bash|zsh]                  Generate shell completions
 ```
+
+Add `--agent` to any command for machine-readable plaintext output (for Claude Code / Codex).
+
+## Journey Skills (auto-installed via `solana-new init`)
+
+17 skills across 3 phases — user just asks naturally, right skill activates.
+
+### Phase 1: Idea — Discovery & Planning
+| Skill | Trigger |
+|-------|---------|
+| `find-next-crypto-idea` | "What should I build on Solana?" |
+| `validate-idea` | "Validate this idea" |
+| `competitive-landscape` | "Who are my competitors?" |
+| `defillama-research` | "Show me DeFi opportunities on Solana" |
+
+### Phase 2: Build — Solana Implementation
+| Skill | Trigger |
+|-------|---------|
+| `scaffold-project` | "Scaffold my Solana project with Anchor" |
+| `build-with-claude` | "Help me build the Solana MVP step by step" |
+| `build-defi-protocol` | "Build a DeFi protocol on Solana" |
+| `build-blinks` | "Build a Solana Action / Blink" |
+| `launch-token` | "Launch an SPL token on Solana" |
+| `build-data-pipeline` | "Build a Solana data pipeline" |
+| `build-mobile` | "Build a Solana mobile app" |
+| `debug-program` | "Debug my failing Solana program" |
+| `review-and-iterate` | "Review my Solana program for security" |
+| `navigate-skills` | "What skills do I have?" |
+
+### Phase 3: Launch — Hackathon Submission
+| Skill | Trigger |
+|-------|---------|
+| `deploy-to-mainnet` | "Deploy to mainnet" |
+| `create-pitch-deck` | "Create a pitch deck" |
+| `submit-to-hackathon` | "Prepare my hackathon submission" |
+
+Skills live in `skills/<phase>/<skill-name>/`. Run `solana-new init` to install them to `~/.claude/skills/`.
 
 ## What's Indexed
 
 | Catalog | Count | Description |
 |---------|-------|-------------|
 | **Repos** | 59 | Solana official, Metaplex, Orca, Raydium, Jupiter, SendAI examples, community scaffolds |
-| **Skills** | 66 | 14 official from solana.com + 52 community from sendaifun/skills and others |
+| **Skills** | 71 | 15 official from solana.com + 56 community (Jupiter, Drift, Orca, Helius, QEDGen, etc.) |
 | **MCPs** | 49 | Helius, Jupiter, Phantom, Orca, Chainstack, openSVM, security, DAO, multi-chain |
+
+Catalog data is also installed to `~/.claude/skills/_data/catalogs/` so skills can search it at runtime.
 
 ## Interactive TUI
 
@@ -52,28 +85,44 @@ All browse commands open a full-screen interactive search:
 Add `--agent` to any command for machine-readable plaintext output, optimized for Claude Code and Codex:
 
 ```bash
-solana-new search --agent             # all 178+ items
+solana-new ship --agent               # all skills with prompts
 solana-new repos --search defi --agent
 solana-new skills --agent
-solana-new mcps --agent
+```
+
+## Shell Completions
+
+```bash
+# zsh (add to ~/.zshrc)
+eval "$(solana-new completion zsh)"
+
+# bash (add to ~/.bashrc)
+eval "$(solana-new completion bash)"
 ```
 
 ## Project Structure
 
 ```
 cli/
-  index.ts                  CLI entry point and command dispatcher
-  banner.ts                 ASCII art banner
-  interactive-search.ts     Repos TUI
+  index.ts                  Command dispatcher, agent output, help
+  init.ts                   Auto-install skills to ~/.claude/skills/
+  interactive-journey.ts    Idea → Build → Launch TUI (launches Claude Code)
+  interactive-onboarding.ts Category → recommendation → workspace setup
+  interactive-search.ts     Repos, Skills, MCPs TUI
   interactive-skills.ts     Skills TUI
   interactive-mcps.ts       MCPs TUI
-  interactive-universal.ts  Universal search TUI
-core/
-  router/recommend-repo.ts  Repo search and filtering
-shared/
-  types/index.ts            TypeScript types
-  constants/
+  interactive-universal.ts  Universal search TUI (combines all)
+  completion.ts             Shell completion generation
+  banner.ts                 ASCII art banner
+  data/
     clonable-repos.json     59 repos catalog
-    solana-skills.json      66 skills catalog
+    solana-skills.json      71 skills catalog
     solana-mcps.json        49 MCP servers catalog
+skills/
+  idea/                     Discovery & planning skills (4 skills)
+  build/                    Implementation skills (10 skills)
+  launch/                   Go-to-market skills (3 skills)
+  data/                     Datasets, catalogs, phase handoff spec
+core/
+  router/recommend-repo.ts  Repo search, filter by category/keyword
 ```

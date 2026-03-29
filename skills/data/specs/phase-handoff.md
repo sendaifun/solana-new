@@ -95,7 +95,7 @@ Written by: `scaffold-project`, `build-with-claude`, `review-and-iterate`
   "completed_at": "2026-03-28T18:00:00Z",
   "idea_context_ref": ".solana-new/idea-context.json",
   "stack": {
-    "harness": "next-anchor",
+    "template": "next-anchor",
     "skills_installed": ["solana-agent-kit", "jupiter", "helius"],
     "mcps_configured": ["helius-mcp", "jupiter-mcp"],
     "repos_cloned": ["create-solana-agent"],

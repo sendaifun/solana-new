@@ -86,6 +86,39 @@ function installSkillsGlobal(agent: boolean): { installed: string[]; skipped: st
     }
   }
 
+  // Install data to _data/ (skills/data/* + cli/data/ catalogs)
+  const skillsDataRoot = join(getSkillsRoot(), "data");
+  const cliDataRoot = join(__dirname, "..", "cli", "data");
+  const cliDataRootDist = join(__dirname, "data");
+  const catalogSrc = existsSync(cliDataRoot) ? cliDataRoot : cliDataRootDist;
+
+  const targets = [join(claudeSkillsDir, "_data")];
+  if (existsSync(join(homedir(), ".codex"))) {
+    targets.push(join(codexSkillsDir, "_data"));
+  }
+
+  for (const dest of targets) {
+    if (existsSync(dest)) continue;
+    mkdirSync(dest, { recursive: true });
+    // Copy skills/data (ideas, defi, specs) — skip raw-html
+    if (existsSync(skillsDataRoot)) {
+      cpSync(skillsDataRoot, dest, {
+        recursive: true,
+        filter: (src) => !src.split("/").pop()?.startsWith("raw-html"),
+      });
+    }
+    // Copy catalog JSONs from cli/data/
+    if (existsSync(catalogSrc)) {
+      const catalogDest = join(dest, "catalogs");
+      mkdirSync(catalogDest, { recursive: true });
+      for (const f of readdirSync(catalogSrc)) {
+        if (f.endsWith(".json")) {
+          cpSync(join(catalogSrc, f), join(catalogDest, f));
+        }
+      }
+    }
+  }
+
   return { installed, skipped };
 }
 

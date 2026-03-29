@@ -1,5 +1,4 @@
 import type { ClonableRepo } from "../core/router/recommend-repo.js";
-import type { HarnessDefinition } from "../shared/types/index.js";
 
 const RESET = "\x1b[0m";
 const DIM = "\x1b[2m";
@@ -25,7 +24,7 @@ function gradientSearch(): string {
 }
 
 export interface SearchItem {
-  kind: "harness" | "repo";
+  kind: "repo";
   id: string;
   label: string;
   repoSlug: string;
@@ -35,45 +34,24 @@ export interface SearchItem {
   clone_command?: string;
 }
 
-function buildIndex(
-  harnesses: HarnessDefinition[],
-  repos: ClonableRepo[],
-): SearchItem[] {
-  const items: SearchItem[] = [];
-
-  for (const h of harnesses) {
-    items.push({
-      kind: "harness",
-      id: h.id,
-      label: h.id,
-      repoSlug: "",
-      description: h.description,
-      meta: `surfaces: ${h.surface.join(", ")}  frameworks: ${h.frameworks.join(", ")}`,
-      keywords: [h.id, ...h.surface, ...h.frameworks, ...h.description.toLowerCase().split(/\s+/)],
-    });
-  }
-
-  for (const r of repos) {
-    items.push({
-      kind: "repo",
-      id: r.id,
-      label: r.id,
-      repoSlug: r.repo,
-      description: r.description,
-      meta: r.category,
-      keywords: [
-        ...r.keywords,
-        r.id,
-        r.repo,
-        ...r.repo.split("/"),
-        r.category,
-        ...r.description.toLowerCase().split(/\s+/),
-      ],
-      clone_command: r.clone_command,
-    });
-  }
-
-  return items;
+function buildIndex(repos: ClonableRepo[]): SearchItem[] {
+  return repos.map((r) => ({
+    kind: "repo" as const,
+    id: r.id,
+    label: r.id,
+    repoSlug: r.repo,
+    description: r.description,
+    meta: r.category,
+    keywords: [
+      ...r.keywords,
+      r.id,
+      r.repo,
+      ...r.repo.split("/"),
+      r.category,
+      ...r.description.toLowerCase().split(/\s+/),
+    ],
+    clone_command: r.clone_command,
+  }));
 }
 
 function filterItems(items: SearchItem[], query: string): SearchItem[] {
@@ -109,7 +87,7 @@ function buildLines(
   const lines: string[] = [];
   const W = 62;
 
-  lines.push(`  ${BOLD}${CYAN}solana.new${RESET}  ${DIM}repos & harnesses${RESET}`);
+  lines.push(`  ${BOLD}${CYAN}solana.new${RESET}  ${DIM}repos${RESET}`);
   lines.push("");
 
   const topBorder = `  ╭${"─".repeat(W + 2)}╮`;
@@ -153,12 +131,7 @@ function buildLines(
       const pointer = isSelected ? `${CYAN}❯${RESET}` : " ";
       const nameColor = isSelected ? BOLD + CYAN : BOLD;
 
-      let tag: string;
-      if (item.kind === "harness") {
-        tag = `${GREEN}[harness]${RESET}`;
-      } else {
-        tag = `${YELLOW}(${item.repoSlug})${RESET}`;
-      }
+      const tag = `${YELLOW}(${item.repoSlug})${RESET}`;
 
       lines.push(`  ${pointer} ${nameColor}${item.label}${RESET}  ${tag}  ${DIM}${item.meta}${RESET}`);
 
@@ -179,11 +152,7 @@ function buildLines(
   const footerLines: string[] = [""];
   if (items.length > 0) {
     const sel = items[selected];
-    if (sel?.kind === "repo") {
-      footerLines.push(`  ${DIM}↑↓ scroll${RESET}  ${BOLD}enter${RESET} ${DIM}clone${RESET}  ${DIM}esc quit${RESET}    ${MAGENTA}▸ ${sel.id}${RESET}`);
-    } else {
-      footerLines.push(`  ${DIM}↑↓ scroll${RESET}  ${BOLD}enter${RESET} ${DIM}select${RESET}  ${DIM}esc quit${RESET}   ${GREEN}▸ ${sel.id}${RESET}`);
-    }
+    footerLines.push(`  ${DIM}↑↓ scroll${RESET}  ${BOLD}enter${RESET} ${DIM}clone${RESET}  ${DIM}esc quit${RESET}    ${MAGENTA}▸ ${sel.id}${RESET}`);
   } else {
     footerLines.push(`  ${DIM}esc quit${RESET}`);
   }
@@ -202,10 +171,9 @@ export interface InteractiveSearchResult {
 }
 
 export async function interactiveSearch(
-  harnesses: HarnessDefinition[],
   repos: ClonableRepo[],
 ): Promise<InteractiveSearchResult> {
-  const allItems = buildIndex(harnesses, repos);
+  const allItems = buildIndex(repos);
   let query = "";
   let selected = 0;
   let filtered = filterItems(allItems, query);
@@ -216,7 +184,7 @@ export async function interactiveSearch(
 
   if (!stdin.isTTY) {
     for (const item of allItems) {
-      const tag = item.kind === "harness" ? "[harness]" : `(${item.repoSlug})`;
+      const tag = `(${item.repoSlug})`;
       console.log(`  ${item.id} ${tag}  ${item.description}`);
     }
     return { item: null, action: "quit" };

@@ -6,8 +6,8 @@ import { fileURLToPath } from "node:url";
 import { listReposByCategory, searchRepos, type ClonableRepo } from "../core/router/recommend-repo.js";
 import { interactiveSearch } from "./interactive-search.js";
 import { interactiveSkills, buildSkillsIndex, searchSkills, type SkillsData } from "./interactive-skills.js";
-import skillsData from "../shared/constants/solana-skills.json" with { type: "json" };
-import mcpsData from "../shared/constants/solana-mcps.json" with { type: "json" };
+import skillsData from "./data/solana-skills.json" with { type: "json" };
+import mcpsData from "./data/solana-mcps.json" with { type: "json" };
 import { buildMcpsIndex, searchMcps, type McpsData } from "./interactive-mcps.js";
 import { interactiveUniversalSearch, buildUniversalIndex } from "./interactive-universal.js";
 import { interactiveOnboarding, agentOnboarding, agentIdea } from "./interactive-onboarding.js";
@@ -159,12 +159,7 @@ async function cmdSearch(args: string[]): Promise<void> {
     const result = await interactiveUniversalSearch(allRepos, skills, mcps, query || undefined);
     if (result.action === "quit" || !result.item) return;
 
-    const item = result.item;
-    if (item.kind === "harness") {
-      console.log(`\n  Harness: ${item.id}\n  ${item.description}\n`);
-      return;
-    }
-    await runShell(item.action_command, item.id);
+    await runShell(result.item.action_command, result.item.id);
     return;
   }
 
@@ -226,12 +221,10 @@ async function cmdRepos(args: string[]): Promise<void> {
   // Default: interactive TUI
   if (process.stdin.isTTY) {
     const allRepos = listReposByCategory();
-    const result = await interactiveSearch([], allRepos);
+    const result = await interactiveSearch(allRepos);
     if (result.action === "quit" || !result.item) return;
 
-    if (result.item.kind === "harness") {
-      console.log(`\n  Harness: ${result.item.id}\n  ${result.item.description}\n`);
-    } else if (result.item.clone_command) {
+    if (result.item.clone_command) {
       await runShell(result.item.clone_command, result.item.id);
     }
     return;

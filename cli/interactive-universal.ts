@@ -1,5 +1,4 @@
 import type { ClonableRepo } from "../core/router/recommend-repo.js";
-import type { HarnessDefinition } from "../shared/types/index.js";
 import type { SkillsData } from "./interactive-skills.js";
 import type { McpsData, McpItem } from "./interactive-mcps.js";
 
@@ -28,7 +27,7 @@ function gradientSearch(): string {
 }
 
 export interface UniversalItem {
-  kind: "harness" | "repo" | "skill" | "mcp";
+  kind: "repo" | "skill" | "mcp";
   id: string;
   name: string;
   source: string; // org/repo or "built-in"
@@ -125,7 +124,6 @@ function padVisible(str: string, width: number): string {
 
 function kindTag(kind: string): string {
   switch (kind) {
-    case "harness": return `${GREEN}harness${RESET}`;
     case "repo": return `${YELLOW}repo${RESET}`;
     case "skill": return `${MAGENTA}skill${RESET}`;
     case "mcp": return `${BLUE}mcp${RESET}`;
@@ -136,15 +134,14 @@ function kindTag(kind: string): string {
 // Pick a curated initial view: a few from each category
 function initialItems(allItems: UniversalItem[]): UniversalItem[] {
   const picks: UniversalItem[] = [];
-  const byKind: Record<string, UniversalItem[]> = { harness: [], repo: [], skill: [], mcp: [] };
+  const byKind: Record<string, UniversalItem[]> = { repo: [], skill: [], mcp: [] };
   for (const item of allItems) {
     byKind[item.kind]?.push(item);
   }
-  // 3 harnesses, 4 repos, 4 skills, 4 mcps = 15
-  picks.push(...byKind.harness.slice(0, 3));
-  picks.push(...byKind.repo.slice(0, 4));
-  picks.push(...byKind.skill.slice(0, 4));
-  picks.push(...byKind.mcp.slice(0, 4));
+  // 5 repos, 5 skills, 5 mcps = 15
+  picks.push(...byKind.repo.slice(0, 5));
+  picks.push(...byKind.skill.slice(0, 5));
+  picks.push(...byKind.mcp.slice(0, 5));
   return picks;
 }
 

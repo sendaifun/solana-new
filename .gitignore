@@ -23,7 +23,6 @@ Thumbs.db
 # Not shipped yet — experimental build pipeline
 convex/
 mcp/
-harnesses/
 qdrant/
 core/planner/
 core/executor/
@@ -34,14 +33,12 @@ core/telemetry/
 core/agents/
 core/knowledge/
 core/router/suggest-ecosystem.ts
-core/router/recommend-harness.ts
 cli/state.ts
 tests/
 scripts/
 shared/utils/
 shared/types/contracts.ts
 shared/types/*.schema.json
-shared/constants/harnesses.json
 shared/constants/market-catalog.json
 docs/market-catalog.md
 docs/testing-guide.md
