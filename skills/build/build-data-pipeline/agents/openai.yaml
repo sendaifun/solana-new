@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build Data Pipeline"
+  short_description: "Build Solana indexers, webhooks, and analytics pipelines"
+  default_prompt: "Help me build a data pipeline for Solana. I need to index on-chain data and make it queryable."

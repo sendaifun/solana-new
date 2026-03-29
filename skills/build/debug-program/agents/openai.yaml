@@ -1,0 +1,4 @@
+interface:
+  display_name: "Debug Program"
+  short_description: "Systematically debug Solana program errors and transaction failures"
+  default_prompt: "Help me debug my Solana program. I'm getting an error and need to figure out what's wrong."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build Mobile"
+  short_description: "Build Solana mobile apps with React Native or native Android"
+  default_prompt: "Help me build a Solana mobile app. Guide me through wallet connection, transaction signing, and mobile-specific patterns."

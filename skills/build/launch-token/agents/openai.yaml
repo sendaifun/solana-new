@@ -1,0 +1,4 @@
+interface:
+  display_name: "Launch Token"
+  short_description: "End-to-end token creation and launch on Solana"
+  default_prompt: "Help me launch a token on Solana. Walk me through choosing the right approach and executing the launch."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build DeFi Protocol"
+  short_description: "Design and implement DeFi programs on Solana"
+  default_prompt: "Help me build a DeFi protocol on Solana. Guide me through the architecture, math, security, and testing."
