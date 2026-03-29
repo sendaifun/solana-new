@@ -1,5 +1,5 @@
 import process from "node:process";
-import { spawn } from "node:child_process";
+import { spawn, execSync } from "node:child_process";
 import {
   RESET, DIM, BOLD, CYAN, GREEN, YELLOW, MAGENTA,
   ALT_SCREEN_ON, ALT_SCREEN_OFF, CURSOR_HIDE, CURSOR_SHOW, CLEAR_SCREEN,
@@ -127,7 +127,7 @@ function buildScreen(selectedPhase: number, selectedSkill: number, rows: number)
   return lines.slice(0, rows);
 }
 
-export async function interactiveJourney(): Promise<void> {
+export async function interactiveJourney(opts: { yolo?: boolean } = {}): Promise<void> {
   const stdin = process.stdin;
   const stdout = process.stdout;
 
@@ -167,8 +167,32 @@ export async function interactiveJourney(): Promise<void> {
 
     function launchClaude(prompt: string) {
       cleanup();
-      console.log(`\n  Launching Claude Code...\n`);
-      const child = spawn("claude", [prompt], { stdio: "inherit" });
+
+      if (opts.yolo) {
+        // Yolo mode: send the prompt directly
+        console.log(`\n  Launching Claude Code (yolo mode)...\n`);
+        const child = spawn("claude", [prompt], { stdio: "inherit" });
+        child.on("close", () => resolve());
+        child.on("error", (err) => {
+          if ((err as NodeJS.ErrnoException).code === "ENOENT") {
+            console.log(`  Claude Code not found. Install it: npm i -g @anthropic-ai/claude-code`);
+            console.log(`  Then run: claude "${prompt}"\n`);
+          } else {
+            console.error(`  Failed to launch Claude Code: ${err.message}\n`);
+          }
+          resolve();
+        });
+        return;
+      }
+
+      // Default: copy prompt to clipboard so user can paste, review, and edit before sending
+      try {
+        execSync("pbcopy", { input: prompt });
+        console.log(`\n  Prompt copied to clipboard — paste (⌘V) into Claude Code, edit if needed, then send.\n`);
+      } catch {
+        console.log(`\n  Prompt:\n\n${prompt}\n`);
+      }
+      const child = spawn("claude", [], { stdio: "inherit" });
       child.on("close", () => resolve());
       child.on("error", (err) => {
         if ((err as NodeJS.ErrnoException).code === "ENOENT") {

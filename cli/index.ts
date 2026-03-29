@@ -291,7 +291,7 @@ async function cmdConfig(args: string[]): Promise<void> {
       console.log(`  ${BOLD}token-set-at${RESET}    ${DIM}${config.copilotTokenSetAt}${RESET}`);
     }
     console.log("");
-    console.log(`  ${DIM}Update:  solana-new config token${RESET}`);
+    console.log(`  ${DIM}Update / Regenerate at: ${CYAN}https://arena.colosseum.org/copilot${RESET}`);
     console.log("");
     return;
   }
@@ -323,9 +323,9 @@ async function cmdConfig(args: string[]): Promise<void> {
   console.log(`    solana-new config token <pat>   Set Copilot token directly\n`);
 }
 
-// --- Journey ---
+// --- Ship ---
 
-function journeyAgent(): void {
+function shipAgent(): void {
   console.log(`Solana Developer Journey — Idea → Build → Launch`);
   console.log(``);
   console.log(`Phase 1: Idea — Discovery & Planning`);
@@ -355,26 +355,26 @@ function journeyAgent(): void {
   console.log(`    claude "Prepare my hackathon submission"`);
   console.log(``);
   console.log(`Skills auto-installed to ~/.claude/skills/ via: solana-new init`);
-  console.log(`Select and launch directly: solana-new journey`);
+  console.log(`Select and launch directly: solana-new ship`);
 }
 
-async function cmdJourney(args: string[]): Promise<void> {
+async function cmdShip(args: string[]): Promise<void> {
   const { flags } = parseFlags(args);
 
   if (flags.agent === true) {
-    journeyAgent();
+    shipAgent();
     return;
   }
 
   // Interactive TUI
   if (process.stdin.isTTY) {
     const { interactiveJourney } = await import("./interactive-journey.js");
-    await interactiveJourney();
+    await interactiveJourney({ yolo: flags.yolo === true });
     return;
   }
 
   // Non-TTY fallback
-  journeyAgent();
+  shipAgent();
 }
 
 // --- Help ---
@@ -390,8 +390,8 @@ function printUsage(): void {
 
   console.log(`  ${BOLD}Get Started${RESET}`);
   console.log("");
-  row(`${BOLD}init${RESET}`,                                                "Install journey skills \u2192 open Claude Code \u2192 go");
-  row(`${BOLD}journey${RESET}`,                                             "Idea \u2192 Build \u2192 Launch guide");
+  row(`${BOLD}init${RESET}`,                                                "Install skills \u2192 open Claude Code \u2192 go");
+  row(`${BOLD}ship${RESET}`,                                                "Idea \u2192 Build \u2192 Launch guide");
   console.log("");
   console.log(`  ${BOLD}Discover${RESET}  ${DIM}\u2014 explore the Solana ecosystem${RESET}`);
   console.log("");
@@ -401,9 +401,9 @@ function printUsage(): void {
   row(`${BOLD}repos${RESET} ${DIM}[--search <q>]${RESET}`,                                 "Browse / filter repos");
   row(`${BOLD}skills${RESET} ${DIM}[--search <q>]${RESET}`,                                "Browse / filter skills");
   console.log("");
-  console.log(`  ${BOLD}Config${RESET}`);
+  console.log(`  ${BOLD}Colosseum Copilot${RESET}`);
   console.log("");
-  row(`${BOLD}config${RESET} ${DIM}[token]${RESET}`,                                       "Manage Copilot token + settings");
+  row(`${BOLD}copilot${RESET} ${DIM}[token]${RESET}`,                                      "Manage Copilot token + settings");
   console.log("");
   console.log(`  ${DIM}All commands support ${BOLD}--agent${RESET}${DIM} for machine-readable output${RESET}`);
   console.log("");
@@ -423,11 +423,11 @@ async function main(): Promise<void> {
   if (command === "init") { const { flags } = parseFlags(args); return cmdInit(args, flags); }
   if (command === "start") return cmdStart(args);
   if (command === "idea" || command === "landscape") return cmdIdea(args);
-  if (command === "journey") return cmdJourney(args);
+  if (command === "ship") return cmdShip(args);
   if (command === "search") return cmdSearch(args);
   if (command === "repos") return cmdRepos(args);
   if (command === "skills") return cmdSkills(args);
-  if (command === "config") return cmdConfig(args);
+  if (command === "copilot" || command === "config") return cmdConfig(args);
 
   // Unknown command → search
   return cmdSearch([command, ...args]);

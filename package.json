@@ -17,7 +17,7 @@
     "shared/"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.json && chmod +x dist/cli/index.js",
     "dev": "tsx cli/index.ts",
     "postinstall": "node dist/cli/index.js init --agent 2>/dev/null || true"
   },
