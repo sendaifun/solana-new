@@ -1,4 +1,4 @@
-const COMMANDS = ["init", "ship", "start", "idea", "search", "repos", "skills", "copilot", "feedback", "doctor", "uninstall", "completion"];
+const COMMANDS = ["init", "ship", "search", "repos", "skills", "copilot", "feedback", "doctor", "uninstall", "completion"];
 
 const BASH_SCRIPT = `
 # solana-new bash completion
@@ -15,10 +15,8 @@ const ZSH_SCRIPT = `
 _solana_new() {
   local -a commands
   commands=(
-    'init:Install skills to Claude Code'
+    'init:Install skills to Codex/Claude'
     'ship:Idea → Build → Launch guide'
-    'start:Guided onboarding + landscape + workspace setup'
-    'idea:Free-form idea — landscape + gap analysis'
     'search:Find repos, skills, MCPs'
     'repos:Browse / filter repos'
     'skills:Browse / filter skills'
@@ -47,7 +45,7 @@ _solana_new() {
           ;;
         copilot)
           local -a subcmds
-          subcmds=('token:Update Copilot token' 'show:Show current config')
+          subcmds=('start:Guided onboarding + idea analysis' 'token:Update Copilot token' 'show:Show current config')
           _describe -t subcommands 'copilot subcommand' subcmds
           ;;
         *)

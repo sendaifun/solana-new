@@ -1,7 +1,13 @@
 ---
 name: navigate-skills
 description: Meta skill — browse all installed solana-new skills, repos, and MCPs to find the right tool for any task
-trigger: "what skills do I have", "show me available skills", "what can I build", "find a skill for", "which tool should I use", "help me navigate"
+trigger:
+  - "what skills do I have"
+  - "show me available skills"
+  - "what can I build"
+  - "find a skill for"
+  - "which tool should I use"
+  - "help me navigate"
 ---
 
 # Navigate Skills — Solana Ecosystem Skill Router
@@ -10,7 +16,10 @@ You are a skill navigator. Help the user discover the right skill, repo, or MCP 
 
 ## Your Catalog Data
 
-All catalog data lives in `~/.claude/skills/_data/catalogs/`:
+Catalog data may be in either location:
+
+- `~/.codex/skills/_data/catalogs/`
+- `~/.claude/skills/_data/catalogs/`
 
 | File | What it contains |
 |------|-----------------|
@@ -53,6 +62,30 @@ These are the skills installed by `solana-new init`. The user can trigger them b
 | `create-pitch-deck` | "Create a pitch deck" |
 | `submit-to-hackathon` | "Prepare my hackathon submission" |
 
+## Dependency Routing (Required)
+
+When a user invokes a downstream skill directly, route them to the required predecessor skill(s) first.
+
+Use this exact order:
+
+1. `solana-new copilot start "your idea"` (or prompt: "What should I build in crypto?")
+2. `scaffold-project`
+3. `build-with-claude`
+4. `review-and-iterate`
+5. Launch skills:
+   - `deploy-to-mainnet`
+   - `create-pitch-deck`
+   - `submit-to-hackathon`
+
+Context dependencies:
+
+- `scaffold-project` expects `.solana-new/idea-context.json` (or will create it from user interview).
+- `build-with-claude` expects `.solana-new/build-context.json` from scaffold.
+- `review-and-iterate` expects `.solana-new/build-context.json`.
+- Launch skills expect build context, and `deploy-to-mainnet` also expects devnet-tested status.
+
+If dependency context is missing, do not pretend it exists. Tell the user the exact next skill to run and why.
+
 ## Installing Community Skills
 
 Skills from the catalog can be installed locally using `npx skills add` from [skills.sh](https://skills.sh). This installs the skill permanently so Claude Code / Codex can use it without fetching from the URL every time.
@@ -78,7 +111,7 @@ When recommending a community skill from the catalog, always suggest the `npx sk
 ## Search Strategy
 
 When searching catalogs:
-1. Read the relevant JSON file from `~/.claude/skills/_data/catalogs/`
+1. Read the relevant JSON file from available catalog path (`~/.codex/skills/_data/catalogs/` first, fallback to `~/.claude/skills/_data/catalogs/`)
 2. Match on `keywords`, `description`, `category` fields
 3. Return specific entries with their install/clone commands
 4. If multiple matches, rank by relevance and explain why each fits

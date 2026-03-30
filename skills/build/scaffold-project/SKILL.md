@@ -23,6 +23,17 @@ Take a validated idea and turn it into a ready-to-code workspace with the right 
    - Generate `CLAUDE.md` with project context
 7. Write `.solana-new/build-context.json` with stack decisions.
 
+## Dependency Gate (Required)
+
+Before scaffolding, enforce this dependency rule:
+
+1. If `.solana-new/idea-context.json` exists, proceed.
+2. If it is missing, do this first:
+   - Tell the user: "Run `solana-new copilot start \"your idea\"` first so we can generate `idea-context.json`."
+   - Provide one concrete example prompt they can run immediately.
+3. Only continue without `idea-context.json` if the user explicitly asks to proceed anyway.
+4. If proceeding without it, collect the minimum required fields and create `.solana-new/idea-context.json` before writing `build-context.json`.
+
 ## Non-Negotiables
 
 - Always recommend a specific starter repo from the solana-new catalog. Do not suggest building from scratch unless no relevant repo exists.
@@ -31,6 +42,7 @@ Take a validated idea and turn it into a ready-to-code workspace with the right 
 - Do not install tools the user cannot run (check Node.js version, OS compatibility).
 - Write the scaffold plan as a local HTML artifact before executing.
 - If the idea-context suggests the idea hasn't been validated, recommend running validate-idea first (but don't block).
+- Never silently skip missing context. Always explain which prerequisite skill generates it.
 
 ## Phase Handoff
 

@@ -1,6 +1,7 @@
 import type { ClonableRepo } from "./repos.js";
 import type { SkillsData } from "./interactive-skills.js";
 import type { McpsData, McpItem } from "./interactive-mcps.js";
+import { normalizeAgentCommand } from "./agent-cli.js";
 
 const RESET = "\x1b[0m";
 const DIM = "\x1b[2m";
@@ -96,7 +97,7 @@ export function buildUniversalIndex(
       source: m.repo,
       description: m.description,
       category: m.category,
-      action_command: m.setup_command,
+      action_command: normalizeAgentCommand(m.setup_command),
       action_label: "install",
       keywords: [m.id, ...m.id.split("-"), ...m.name.toLowerCase().split(/\s+/), ...m.description.toLowerCase().split(/\s+/), m.category, m.repo, ...m.repo.split("/"), ...m.keywords, "mcp"],
     });

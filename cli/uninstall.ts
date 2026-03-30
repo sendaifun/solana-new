@@ -2,7 +2,7 @@ import { existsSync, rmSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { homedir } from "node:os";
-import { RESET, DIM, BOLD, GREEN, YELLOW, RED } from "./colors.js";
+import { RESET, DIM, BOLD, RED } from "./colors.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -17,7 +17,10 @@ function getSkillsRoot(): string {
 function discoverExpectedSkills(): string[] {
   const root = getSkillsRoot();
   if (!root) return [];
-  const phases = ["idea", "build", "launch"];
+  const phases = readdirSync(root, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .sort();
   const skills: string[] = [];
   for (const phase of phases) {
     const phaseDir = join(root, phase);
@@ -35,38 +38,59 @@ export function cmdUninstall(agent: boolean): void {
   const expected = discoverExpectedSkills();
   const claudeSkillsDir = join(homedir(), ".claude", "skills");
   const codexSkillsDir = join(homedir(), ".codex", "skills");
-  const removed: string[] = [];
+  const removedClaude: string[] = [];
+  const removedCodex: string[] = [];
+  const removedAny = new Set<string>();
 
   for (const skill of expected) {
     const claudePath = join(claudeSkillsDir, skill);
     if (existsSync(claudePath)) {
       rmSync(claudePath, { recursive: true, force: true });
-      removed.push(skill);
+      removedClaude.push(skill);
+      removedAny.add(skill);
     }
     const codexPath = join(codexSkillsDir, skill);
     if (existsSync(codexPath)) {
       rmSync(codexPath, { recursive: true, force: true });
+      removedCodex.push(skill);
+      removedAny.add(skill);
     }
   }
 
   if (agent) {
-    if (removed.length === 0) {
+    if (removedAny.size === 0) {
       console.log("No skills to remove.");
     } else {
-      console.log(`Removed ${removed.length} skills from ~/.claude/skills/:`);
-      for (const s of removed) console.log(`  - ${s}`);
+      console.log(`Removed ${removedAny.size} skills from Claude/Codex skill dirs.`);
+      if (removedClaude.length > 0) {
+        console.log("  ~/.claude/skills:");
+        for (const s of removedClaude) console.log(`    - ${s}`);
+      }
+      if (removedCodex.length > 0) {
+        console.log("  ~/.codex/skills:");
+        for (const s of removedCodex) console.log(`    - ${s}`);
+      }
       console.log("\nRun solana-new init to reinstall.");
     }
     return;
   }
 
   console.log("");
-  if (removed.length === 0) {
+  if (removedAny.size === 0) {
     console.log(`  ${DIM}No skills installed to remove.${RESET}`);
   } else {
-    console.log(`  ${BOLD}Removed ${removed.length} skills:${RESET}`);
+    console.log(`  ${BOLD}Removed ${removedAny.size} skills:${RESET}`);
     console.log("");
-    for (const s of removed) console.log(`    ${RED}-${RESET} ${s}`);
+    if (removedClaude.length > 0) {
+      console.log(`  ${BOLD}~/.claude/skills/${RESET}`);
+      for (const s of removedClaude) console.log(`    ${RED}-${RESET} ${s}`);
+      console.log("");
+    }
+    if (removedCodex.length > 0) {
+      console.log(`  ${BOLD}~/.codex/skills/${RESET}`);
+      for (const s of removedCodex) console.log(`    ${RED}-${RESET} ${s}`);
+      console.log("");
+    }
     console.log("");
     console.log(`  ${DIM}Run ${BOLD}solana-new init${RESET}${DIM} to reinstall.${RESET}`);
   }

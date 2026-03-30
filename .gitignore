@@ -40,7 +40,8 @@ core/knowledge/
 core/router/suggest-ecosystem.ts
 cli/state.ts
 tests/
-scripts/
+scripts/*
+!scripts/bootstrap-agent-setup.sh
 shared/utils/
 shared/types/contracts.ts
 shared/types/*.schema.json

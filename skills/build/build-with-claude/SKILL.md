@@ -24,6 +24,17 @@ Guide the user through implementing their Solana MVP feature by feature. Break t
 7. When stuck, consult [references/error-recovery-guide.md](references/error-recovery-guide.md).
 8. After MVP is complete, run through [references/testing-checklist.md](references/testing-checklist.md).
 
+## Dependency Gate (Required)
+
+This skill depends on scaffold output.
+
+1. If `.solana-new/build-context.json` is missing:
+   - Tell the user: "Run `scaffold-project` first (or `solana-new copilot start \"your idea\"` → `scaffold-project`)."
+   - Explain that `build-with-claude` needs stack/repo/MCP decisions from scaffold.
+2. If `build-context.json` exists but `stack` is missing, redirect to `scaffold-project`.
+3. Only proceed without scaffold context if the user explicitly asks to continue anyway.
+4. If proceeding, create/repair `.solana-new/build-context.json` with minimum required `stack` and `build_status` fields before coding.
+
 ## Non-Negotiables
 
 - Never write more than 1 milestone of code before testing. Ship small, verify often.
@@ -32,6 +43,7 @@ Guide the user through implementing their Solana MVP feature by feature. Break t
 - Use the installed skills and MCPs — they exist to help. Don't reinvent what a skill already provides.
 - Keep explanations short. The user is here to build, not read essays.
 - Update `.solana-new/build-context.json` as milestones are completed.
+- Never silently continue when dependency context is missing. Redirect with exact next-skill order.
 
 ## Phase Handoff
 

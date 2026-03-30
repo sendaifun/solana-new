@@ -27,6 +27,13 @@ function loadEnv(): void {
 loadEnv();
 const CONVEX_URL = process.env.CONVEX_URL ?? "";
 const PROD_CONVEX_URL = process.env.PROD_CONVEX_URL ?? "";
+const TELEGRAM_USERNAME = "scriptscrypt";
+
+type FeedbackInput = {
+  message: string;
+  contact?: string;
+  useConvex: boolean;
+};
 
 function getVersion(): string {
   for (const rel of ["../package.json", "../../package.json"]) {
@@ -62,7 +69,81 @@ async function submitFeedback(message: string, contact?: string): Promise<boolea
   }
 }
 
-async function interactiveFeedback(): Promise<void> {
+function parseFeedbackArgs(args: string[]): FeedbackInput {
+  const msgParts: string[] = [];
+  let contact: string | undefined;
+  let useConvex = false;
+
+  for (let i = 0; i < args.length; i += 1) {
+    const token = args[i];
+    if (token === "--contact") {
+      const next = args[i + 1];
+      if (next && !next.startsWith("--")) {
+        contact = next;
+        i += 1;
+      }
+      continue;
+    }
+    if (token === "--convex") {
+      useConvex = true;
+      continue;
+    }
+    if (token.startsWith("--")) continue;
+    msgParts.push(token);
+  }
+
+  return {
+    message: msgParts.join(" ").trim(),
+    contact: contact?.trim() || undefined,
+    useConvex,
+  };
+}
+
+function buildTelegramText(message: string, contact?: string): string {
+  const lines = [
+    `Feedback for solana-new v${getVersion()} (${process.platform}-${process.arch})`,
+    "",
+    message.trim(),
+  ];
+  if (contact) lines.push("", `Contact: ${contact}`);
+  return lines.join("\n");
+}
+
+function buildTelegramUrl(message: string, contact?: string): string {
+  const text = buildTelegramText(message, contact);
+  return `https://t.me/${TELEGRAM_USERNAME}?text=${encodeURIComponent(text)}`;
+}
+
+async function openExternalUrl(url: string): Promise<boolean> {
+  const { spawn } = await import("node:child_process");
+  let command = "";
+  let cmdArgs: string[] = [];
+
+  if (process.platform === "darwin") {
+    command = "open";
+    cmdArgs = [url];
+  } else if (process.platform === "win32") {
+    command = "cmd";
+    cmdArgs = ["/c", "start", "", url];
+  } else {
+    command = "xdg-open";
+    cmdArgs = [url];
+  }
+
+  return await new Promise<boolean>((resolve) => {
+    const child = spawn(command, cmdArgs, { stdio: "ignore" });
+    child.on("error", () => resolve(false));
+    child.on("close", (code) => resolve(code === 0));
+  });
+}
+
+async function sendToTelegram(message: string, contact?: string): Promise<{ url: string; opened: boolean }> {
+  const url = buildTelegramUrl(message, contact);
+  const opened = await openExternalUrl(url);
+  return { url, opened };
+}
+
+async function interactiveFeedback(useConvex: boolean): Promise<void> {
   const stdin = process.stdin;
   const stdout = process.stdout;
 
@@ -85,32 +166,73 @@ async function interactiveFeedback(): Promise<void> {
   const contact = await ask(`  ${DIM}Contact (email/X handle, optional):${RESET} `);
   reader.close();
 
-  stdout.write(`\n  ${DIM}Sending...${RESET}`);
-  const ok = await submitFeedback(message.trim(), contact.trim() || undefined);
-
-  if (ok) {
-    console.log(`\r  ${GREEN}${BOLD}Sent!${RESET} ${DIM}Thanks for the feedback.${RESET}\n`);
-  } else {
-    console.log(`\r  ${RED}Failed to send.${RESET} ${DIM}Try again or open an issue at github.com/sendaifun/solana-new-cli${RESET}\n`);
+  const cleanedContact = contact.trim() || undefined;
+  if (useConvex) {
+    stdout.write(`\n  ${DIM}Sending to Convex...${RESET}`);
+    const ok = await submitFeedback(message.trim(), cleanedContact);
+    if (ok) {
+      console.log(`\r  ${GREEN}${BOLD}Sent!${RESET} ${DIM}Thanks for the feedback.${RESET}\n`);
+    } else {
+      console.log(`\r  ${RED}Failed to send.${RESET} ${DIM}Try again or open an issue at github.com/sendaifun/solana-new-cli${RESET}\n`);
+    }
+    return;
   }
+
+  stdout.write(`\n  ${DIM}Opening Telegram...${RESET}`);
+  const result = await sendToTelegram(message.trim(), cleanedContact);
+  const status = result.opened ? "Opened" : "Generated";
+  console.log(`\r  ${GREEN}${BOLD}${status}!${RESET} ${DIM}Send your feedback to @${TELEGRAM_USERNAME}.${RESET}`);
+  console.log(`  ${CYAN}${result.url}${RESET}\n`);
 }
 
 export async function cmdFeedback(args: string[], agent: boolean): Promise<void> {
-  // Agent mode: solana-new feedback "message" [--contact "x"]
+  if (args.includes("--help") || args.includes("-h")) {
+    console.log("Usage: solana-new feedback \"your message\" [--contact email] [--convex]");
+    console.log("Default route: Telegram @scriptscrypt");
+    console.log("Use --convex to submit through the Convex backend.");
+    return;
+  }
+
+  const input = parseFeedbackArgs(args);
+
+  // Agent mode: solana-new feedback "message" [--contact "x"] [--convex]
   if (agent || !process.stdin.isTTY) {
-    const message = args.filter((a) => !a.startsWith("--")).join(" ");
-    if (!message.trim()) {
-      console.log("Usage: solana-new feedback \"your message\" [--contact email]");
+    if (!input.message.trim()) {
+      console.log("Usage: solana-new feedback \"your message\" [--contact email] [--convex]");
       return;
     }
-    const contactIdx = args.indexOf("--contact");
-    const contact = contactIdx >= 0 ? args[contactIdx + 1] : undefined;
 
-    const ok = await submitFeedback(message.trim(), contact);
-    console.log(ok ? "Feedback sent. Thanks!" : "Failed to send feedback.");
+    if (input.useConvex) {
+      const ok = await submitFeedback(input.message, input.contact);
+      console.log(ok ? "Feedback sent to Convex. Thanks!" : "Failed to send feedback to Convex.");
+      return;
+    }
+
+    const url = buildTelegramUrl(input.message, input.contact);
+    console.log(`Telegram link: ${url}`);
+    return;
+  }
+
+  if (input.message) {
+    if (input.useConvex) {
+      process.stdout.write(`\n  ${DIM}Sending to Convex...${RESET}`);
+      const ok = await submitFeedback(input.message, input.contact);
+      if (ok) {
+        console.log(`\r  ${GREEN}${BOLD}Sent!${RESET} ${DIM}Thanks for the feedback.${RESET}\n`);
+      } else {
+        console.log(`\r  ${RED}Failed to send.${RESET} ${DIM}Try again or open an issue at github.com/sendaifun/solana-new-cli${RESET}\n`);
+      }
+      return;
+    }
+
+    process.stdout.write(`\n  ${DIM}Opening Telegram...${RESET}`);
+    const result = await sendToTelegram(input.message, input.contact);
+    const status = result.opened ? "Opened" : "Generated";
+    console.log(`\r  ${GREEN}${BOLD}${status}!${RESET} ${DIM}Send your feedback to @${TELEGRAM_USERNAME}.${RESET}`);
+    console.log(`  ${CYAN}${result.url}${RESET}\n`);
     return;
   }
 
   // Interactive mode
-  await interactiveFeedback();
+  await interactiveFeedback(input.useConvex);
 }

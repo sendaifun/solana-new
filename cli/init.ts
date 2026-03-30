@@ -28,7 +28,10 @@ interface SkillEntry {
 
 function discoverSkills(): SkillEntry[] {
   const root = getSkillsRoot();
-  const phases = ["idea", "build", "launch"];
+  const phases = readdirSync(root, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .sort();
   const skills: SkillEntry[] = [];
 
   for (const phase of phases) {
@@ -46,18 +49,18 @@ function discoverSkills(): SkillEntry[] {
 function installSkillsGlobal(agent: boolean): { installed: string[]; skipped: string[] } {
   const claudeSkillsDir = join(homedir(), ".claude", "skills");
   const codexSkillsDir = join(homedir(), ".codex", "skills");
+  const skillTargets = [claudeSkillsDir, codexSkillsDir];
   const skills = discoverSkills();
   const installed: string[] = [];
   const skipped: string[] = [];
 
   for (const skill of skills) {
-    // Install to Claude Code
-    const claudeDest = join(claudeSkillsDir, skill.name);
-    if (existsSync(claudeDest)) {
-      skipped.push(skill.name);
-    } else {
-      mkdirSync(claudeDest, { recursive: true });
-      cpSync(skill.srcDir, claudeDest, {
+    let installedForAny = false;
+    for (const target of skillTargets) {
+      const dest = join(target, skill.name);
+      if (existsSync(dest)) continue;
+      mkdirSync(dest, { recursive: true });
+      cpSync(skill.srcDir, dest, {
         recursive: true,
         filter: (src) => {
           // Skip generated artifacts (HTML reports, JSON packs, etc.)
@@ -66,24 +69,10 @@ function installSkillsGlobal(agent: boolean): { installed: string[]; skipped: st
           return true;
         },
       });
-      installed.push(skill.name);
+      installedForAny = true;
     }
-
-    // Also install to Codex if .codex directory exists
-    if (existsSync(join(homedir(), ".codex"))) {
-      const codexDest = join(codexSkillsDir, skill.name);
-      if (!existsSync(codexDest)) {
-        mkdirSync(codexDest, { recursive: true });
-        cpSync(skill.srcDir, codexDest, {
-          recursive: true,
-          filter: (src) => {
-            const base = src.split("/").pop() ?? "";
-            if (base.match(/^(idea-shortlist|idea-deep-dive|research-pack|research-worksheet)-\d/)) return false;
-            return true;
-          },
-        });
-      }
-    }
+    if (installedForAny) installed.push(skill.name);
+    else skipped.push(skill.name);
   }
 
   // Install data to _data/ (skills/data/* + cli/data/ catalogs)
@@ -92,10 +81,7 @@ function installSkillsGlobal(agent: boolean): { installed: string[]; skipped: st
   const cliDataRootDist = join(__dirname, "data");
   const catalogSrc = existsSync(cliDataRoot) ? cliDataRoot : cliDataRootDist;
 
-  const targets = [join(claudeSkillsDir, "_data")];
-  if (existsSync(join(homedir(), ".codex"))) {
-    targets.push(join(codexSkillsDir, "_data"));
-  }
+  const targets = [join(claudeSkillsDir, "_data"), join(codexSkillsDir, "_data")];
 
   for (const dest of targets) {
     if (existsSync(dest)) continue;
@@ -125,7 +111,7 @@ function installSkillsGlobal(agent: boolean): { installed: string[]; skipped: st
 function generateProjectClaudeMd(): string {
   let md = `# Solana Project — Colosseum Hackathon\n\n`;
   md += `## Your Journey: Idea → Build → Launch\n\n`;
-  md += `16 skills are pre-loaded. Just ask naturally.\n\n`;
+  md += `Journey skills are pre-loaded. Just ask naturally.\n\n`;
 
   md += `### Phase 1: Idea — Discovery & Planning\n`;
   md += `- "What should I build on Solana for the Colosseum hackathon?" — discover and rank ideas\n`;
@@ -173,7 +159,7 @@ export async function cmdInit(args: string[], flags: Record<string, string | boo
     console.log(`solana-new init — ${total} skills (Colosseum hackathon)`);
     console.log(``);
     if (installed.length > 0) {
-      console.log(`Installed ${installed.length} skills to ~/.claude/skills/:`);
+      console.log(`Installed ${installed.length} skills to ~/.claude/skills and ~/.codex/skills:`);
       for (const s of installed) console.log(`  + ${s}`);
     }
     if (skipped.length > 0) {
@@ -181,7 +167,7 @@ export async function cmdInit(args: string[], flags: Record<string, string | boo
       for (const s of skipped) console.log(`  = ${s}`);
     }
     console.log(``);
-    console.log(`Ready. Ask Claude Code:`);
+    console.log(`Ready. Ask Codex or Claude:`);
     console.log(`  "What should I build in crypto?"     → Idea phase`);
     console.log(`  "Help me build the MVP"              → Build phase`);
     console.log(`  "Deploy to mainnet"                  → Launch phase`);
@@ -204,9 +190,7 @@ export async function cmdInit(args: string[], flags: Record<string, string | boo
 
     console.log(`  ${BOLD}Skills installed to:${RESET}`);
     console.log(`    ${CYAN}~/.claude/skills/${RESET}  ${DIM}(Claude Code)${RESET}`);
-    if (existsSync(join(homedir(), ".codex"))) {
-      console.log(`    ${CYAN}~/.codex/skills/${RESET}  ${DIM}(Codex)${RESET}`);
-    }
+    console.log(`    ${CYAN}~/.codex/skills/${RESET}  ${DIM}(Codex)${RESET}`);
     console.log(``);
   }
 
@@ -222,9 +206,9 @@ export async function cmdInit(args: string[], flags: Record<string, string | boo
   }
 
   if (!agent) {
-    console.log(`  ${YELLOW}${BOLD}Launch Claude Code:${RESET}`);
-    console.log(`  ${MAGENTA}$ solana-new ship${RESET}  ${DIM}pick a skill → opens Claude Code with prompt${RESET}`);
-    console.log(`  ${MAGENTA}$ claude "What should I build in crypto?"${RESET}`);
+    console.log(`  ${YELLOW}${BOLD}Launch Codex or Claude:${RESET}`);
+    console.log(`  ${MAGENTA}$ solana-new ship${RESET}  ${DIM}pick a skill → opens your available agent CLI${RESET}`);
+    console.log(`  ${MAGENTA}$ codex "What should I build in crypto?"${RESET} ${DIM}(or claude "...")${RESET}`);
     console.log(``);
   }
 }

@@ -1,10 +1,10 @@
-import { execSync } from "node:child_process";
 import { existsSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { homedir } from "node:os";
 import { getToken } from "./copilot-auth.js";
 import { verifyToken } from "./copilot-client.js";
+import { detectAgentCliPaths, getAgentCliInstallHelp } from "./agent-cli.js";
 import { RESET, DIM, BOLD, GREEN, RED, YELLOW } from "./colors.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -20,7 +20,10 @@ function getSkillsRoot(): string {
 function discoverExpectedSkills(): string[] {
   const root = getSkillsRoot();
   if (!root) return [];
-  const phases = ["idea", "build", "launch"];
+  const phases = readdirSync(root, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .sort();
   const skills: string[] = [];
   for (const phase of phases) {
     const phaseDir = join(root, phase);
@@ -46,13 +49,23 @@ export async function cmdDoctor(agent: boolean): Promise<void> {
     detail: major >= 20 ? `${nodeVersion} (>= 20.0.0)` : `${nodeVersion} — requires >= 20.0.0`,
   });
 
-  // 2. Claude Code installed
-  let claudePath = "";
-  try {
-    claudePath = execSync("which claude", { encoding: "utf8", timeout: 5000 }).trim();
-    checks.push({ label: "Claude Code", status: "pass", detail: `installed (${claudePath})` });
-  } catch {
-    checks.push({ label: "Claude Code", status: "fail", detail: "not found — npm i -g @anthropic-ai/claude-code" });
+  // 2. Agent CLI installed (Codex or Claude)
+  const agentPaths = detectAgentCliPaths();
+  const agentParts: string[] = [];
+  if (agentPaths.codex) agentParts.push(`codex (${agentPaths.codex})`);
+  if (agentPaths.claude) agentParts.push(`claude (${agentPaths.claude})`);
+  if (agentParts.length > 0) {
+    checks.push({
+      label: "Agent CLI",
+      status: "pass",
+      detail: `installed: ${agentParts.join(", ")}`,
+    });
+  } else {
+    checks.push({
+      label: "Agent CLI",
+      status: "fail",
+      detail: `not found — ${getAgentCliInstallHelp()}`,
+    });
   }
 
   // 3. Copilot token
@@ -75,18 +88,23 @@ export async function cmdDoctor(agent: boolean): Promise<void> {
   // 4. Skills installed
   const expected = discoverExpectedSkills();
   const claudeSkillsDir = join(homedir(), ".claude", "skills");
-  const installed = expected.filter((s) => existsSync(join(claudeSkillsDir, s)));
-  const missing = expected.filter((s) => !existsSync(join(claudeSkillsDir, s)));
+  const codexSkillsDir = join(homedir(), ".codex", "skills");
+  const installedInEither = expected.filter((s) => existsSync(join(claudeSkillsDir, s)) || existsSync(join(codexSkillsDir, s)));
+  const missing = expected.filter((s) => !existsSync(join(claudeSkillsDir, s)) && !existsSync(join(codexSkillsDir, s)));
 
   if (expected.length === 0) {
     checks.push({ label: "Skills", status: "warn", detail: "could not discover expected skills" });
   } else if (missing.length === 0) {
-    checks.push({ label: "Skills", status: "pass", detail: `${installed.length}/${expected.length} installed` });
+    checks.push({
+      label: "Skills",
+      status: "pass",
+      detail: `${installedInEither.length}/${expected.length} installed (checked ~/.claude/skills + ~/.codex/skills)`,
+    });
   } else {
     checks.push({
       label: "Skills",
       status: "warn",
-      detail: `${installed.length}/${expected.length} installed (missing: ${missing.join(", ")})`,
+      detail: `${installedInEither.length}/${expected.length} installed (missing: ${missing.join(", ")})`,
     });
   }
 

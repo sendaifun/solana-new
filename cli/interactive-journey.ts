@@ -5,6 +5,11 @@ import {
   ALT_SCREEN_ON, ALT_SCREEN_OFF, CURSOR_HIDE, CURSOR_SHOW, CLEAR_SCREEN,
   GRADIENT_SOLANA_DOT_NEW,
 } from "./colors.js";
+import {
+  detectPreferredAgentCli,
+  getAgentCliDisplay,
+  getAgentCliInstallHelp,
+} from "./agent-cli.js";
 
 interface JourneyPhase {
   label: string;
@@ -102,13 +107,13 @@ const PHASES: JourneyPhase[] = [
   },
 ];
 
-function buildScreen(selectedPhase: number, selectedSkill: number, rows: number): string[] {
+function buildScreen(selectedPhase: number, selectedSkill: number, rows: number, agentLabel: string): string[] {
   const lines: string[] = [];
 
   lines.push("");
   lines.push(`  ${GRADIENT_SOLANA_DOT_NEW}  ${BOLD}Developer Journey${RESET}  ${DIM}Idea \u2192 Build \u2192 Launch${RESET}`);
   lines.push("");
-  lines.push(`  ${DIM}Select a prompt and press Enter to launch Claude Code with solana-new cli.${RESET}`);
+  lines.push(`  ${DIM}Select a prompt and press Enter to launch ${agentLabel} with solana-new cli.${RESET}`);
   lines.push("");
 
   for (let p = 0; p < PHASES.length; p++) {
@@ -134,7 +139,7 @@ function buildScreen(selectedPhase: number, selectedSkill: number, rows: number)
     lines.push("");
   }
 
-  const footer = [`  ${BOLD}enter${RESET} ${DIM}launch claude${RESET}  ${BOLD}\u2191\u2193${RESET} ${DIM}navigate${RESET}  ${DIM}q/esc quit${RESET}`];
+  const footer = [`  ${BOLD}enter${RESET} ${DIM}launch ${agentLabel.toLowerCase()}${RESET}  ${BOLD}\u2191\u2193${RESET} ${DIM}navigate${RESET}  ${DIM}q/esc quit${RESET}`];
   while (lines.length < rows - footer.length) lines.push("");
   lines.push(...footer);
 
@@ -149,6 +154,8 @@ export async function interactiveJourney(opts: { yolo?: boolean } = {}): Promise
 
   let selectedPhase = 0;
   let selectedSkill = 0;
+  const preferredCli = detectPreferredAgentCli();
+  const agentLabel = getAgentCliDisplay(preferredCli);
 
   stdin.setRawMode(true);
   stdin.resume();
@@ -160,7 +167,7 @@ export async function interactiveJourney(opts: { yolo?: boolean } = {}): Promise
   function getRows(): number { return stdout.rows || 24; }
 
   function draw() {
-    const screen = buildScreen(selectedPhase, selectedSkill, getRows());
+    const screen = buildScreen(selectedPhase, selectedSkill, getRows(), agentLabel);
     stdout.write(`${CLEAR_SCREEN}${screen.join("\n")}`);
   }
 
@@ -179,20 +186,28 @@ export async function interactiveJourney(opts: { yolo?: boolean } = {}): Promise
       stdout.write(ALT_SCREEN_OFF);
     }
 
-    function launchClaude(prompt: string) {
+    function launchAgent(prompt: string) {
       cleanup();
+
+      if (!preferredCli) {
+        console.log(`\n  No supported agent CLI found.`);
+        console.log(`  Install one: ${getAgentCliInstallHelp()}`);
+        console.log(`  Then run: codex "${prompt}"  (or claude "${prompt}")\n`);
+        resolve();
+        return;
+      }
 
       if (opts.yolo) {
         // Yolo mode: send the prompt directly
-        console.log(`\n  Launching Claude Code (yolo mode)...\n`);
-        const child = spawn("claude", [prompt], { stdio: "inherit" });
+        console.log(`\n  Launching ${agentLabel} (yolo mode)...\n`);
+        const child = spawn(preferredCli, [prompt], { stdio: "inherit" });
         child.on("close", () => resolve());
         child.on("error", (err) => {
           if ((err as NodeJS.ErrnoException).code === "ENOENT") {
-            console.log(`  Claude Code not found. Install it: npm i -g @anthropic-ai/claude-code`);
-            console.log(`  Then run: claude "${prompt}"\n`);
+            console.log(`  ${agentLabel} not found. Install it: ${getAgentCliInstallHelp()}`);
+            console.log(`  Then run: ${preferredCli} "${prompt}"\n`);
           } else {
-            console.error(`  Failed to launch Claude Code: ${err.message}\n`);
+            console.error(`  Failed to launch ${agentLabel}: ${err.message}\n`);
           }
           resolve();
         });
@@ -202,18 +217,18 @@ export async function interactiveJourney(opts: { yolo?: boolean } = {}): Promise
       // Default: copy prompt to clipboard so user can paste, review, and edit before sending
       try {
         execSync("pbcopy", { input: prompt });
-        console.log(`\n  Prompt copied to clipboard — paste (⌘V) into Claude Code, edit if needed, then send.\n`);
+        console.log(`\n  Prompt copied to clipboard — paste (⌘V) into ${agentLabel}, edit if needed, then send.\n`);
       } catch {
         console.log(`\n  Prompt:\n\n${prompt}\n`);
       }
-      const child = spawn("claude", [], { stdio: "inherit" });
+      const child = spawn(preferredCli, [], { stdio: "inherit" });
       child.on("close", () => resolve());
       child.on("error", (err) => {
         if ((err as NodeJS.ErrnoException).code === "ENOENT") {
-          console.log(`  Claude Code not found. Install it: npm i -g @anthropic-ai/claude-code`);
-          console.log(`  Then run: claude "${prompt}"\n`);
+          console.log(`  ${agentLabel} not found. Install it: ${getAgentCliInstallHelp()}`);
+          console.log(`  Then run: ${preferredCli} "${prompt}"\n`);
         } else {
-          console.error(`  Failed to launch Claude Code: ${err.message}\n`);
+          console.error(`  Failed to launch ${agentLabel}: ${err.message}\n`);
         }
         resolve();
       });
@@ -225,7 +240,7 @@ export async function interactiveJourney(opts: { yolo?: boolean } = {}): Promise
 
       if (key === "\r" || key === "\n") {
         const skill = PHASES[selectedPhase].skills[selectedSkill];
-        launchClaude(skill.prompt);
+        launchAgent(skill.prompt);
         return;
       }
 

@@ -1,6 +1,6 @@
 # Skills — Idea to Production
 
-10 Claude Code skills that take a new Solana developer from "what should I build?" to a shipped, pitched product.
+10 Codex/Claude skills that take a new Solana developer from "what should I build?" to a shipped, pitched product.
 
 ```
   IDEA                    BUILD                   LAUNCH
@@ -57,21 +57,29 @@ idea-context.json ──> scaffold-project reads it to pick the right stack
 build-context.json ──> deploy-to-mainnet reads it to verify readiness
 ```
 
-You can skip phases or run skills independently — each one gracefully handles missing context by interviewing you instead.
+You can invoke skills directly, but dependency-sensitive skills now gate on missing context and route you to the correct prerequisite order.
+
+Recommended execution order for best results:
+
+1. `solana-new copilot start "your idea"` (creates idea context)
+2. `scaffold-project` (creates build context)
+3. `build-with-claude`
+4. `review-and-iterate`
+5. Launch skills (`deploy-to-mainnet`, `create-pitch-deck`, `submit-to-hackathon`)
 
 ## Getting Started
 
 All skills are **auto-installed** when you run:
 
 ```bash
-solana-new init              # Install all skills to ~/.claude/skills/
-solana-new journey           # Pick a skill → launches Claude Code with prompt
+solana-new init              # Install all skills to ~/.claude/skills/ and ~/.codex/skills/
+solana-new journey           # Pick a skill → launches Codex/Claude with prompt
 ```
 
 Or just:
 
 ```bash
-claude "What should I build in crypto?"
+codex "What should I build in crypto?"   # or: claude "..."
 ```
 
 ## Adding a New Skill
@@ -90,7 +98,7 @@ To add a new skill:
 1. Create `skills/<phase>/<skill-name>/SKILL.md` with frontmatter (`name`, `description`)
 2. Add `references/` with 2-4 decision framework markdown files
 3. Add `agents/openai.yaml` with display name and default prompt
-4. Run `solana-new init` to install it to `~/.claude/skills/`
+4. Run `solana-new init` to install it to `~/.claude/skills/` and `~/.codex/skills/`
 
 The skill auto-discovers — no registration needed. Just put it in the right phase folder.
 

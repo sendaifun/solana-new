@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { spawn } from "node:child_process";
 import type { Recommendation } from "./interactive-onboarding.js";
 import type { LandscapeData } from "./copilot-client.js";
+import { normalizeAgentCommand } from "./agent-cli.js";
 import {
   RESET, DIM, BOLD, CYAN, GREEN, YELLOW, MAGENTA, RED,
   GRADIENT_SOLANA_DOT_NEW, COMPETITION_HIGH, COMPETITION_MEDIUM,
@@ -73,7 +74,7 @@ function parseMcpForSettings(name: string, setup: string): { key: string; comman
   if (setup.startsWith("npx ")) {
     return { key, command: "npx", args: setup.slice(4).split(/\s+/) };
   }
-  const match = setup.match(/^claude mcp add (\S+)\s+(.+)/);
+  const match = setup.match(/^(?:claude|codex) mcp add (\S+)\s+(.+)/);
   if (match) {
     const parts = match[2].split(/\s+/);
     return { key: match[1], command: parts[0], args: parts.slice(1) };
@@ -153,7 +154,7 @@ function generateClaudeMd(input: WorkspaceSetupInput, projectName: string, selec
   }
 
   if (mcps.length > 0) {
-    md += `## MCP Servers\nConfigured in \`.claude/settings.json\` for this project.\n`;
+    md += `## MCP Servers\nConfigured in \`.claude/settings.json\` and \`codex.json\` for this project.\n`;
     for (const m of mcps) {
       md += `- ${m.label}\n`;
     }
@@ -193,7 +194,7 @@ function generateClaudeMd(input: WorkspaceSetupInput, projectName: string, selec
   }
 
   md += `## Ecosystem Commands\n`;
-  md += `- \`solana-new idea "your idea"\` \u2014 landscape + gap analysis\n`;
+  md += `- \`solana-new copilot start "your idea"\` \u2014 landscape + gap analysis\n`;
   md += `- \`solana-new search <query>\` \u2014 find repos, skills, MCPs\n`;
   md += `- \`solana-new skills\` \u2014 browse available skills\n`;
   md += `- \`solana-new journey\` \u2014 Idea \u2192 Build \u2192 Launch guide\n`;
@@ -305,7 +306,7 @@ function buildSetupScreen(
   }
 
   lines.push("");
-  lines.push(`  ${DIM}Also generates:${RESET} ${DIM}CLAUDE.md \u00b7 .cursorrules \u00b7 codex-instructions.md \u00b7 .env.example${RESET}`);
+  lines.push(`  ${DIM}Also generates:${RESET} ${DIM}CLAUDE.md \u00b7 .cursorrules \u00b7 codex-instructions.md \u00b7 codex.json \u00b7 .env.example${RESET}`);
 
   const footer = [`  ${BOLD}enter${RESET} ${DIM}install${RESET}  ${DIM}space toggle${RESET}  ${DIM}esc cancel${RESET}`];
   while (lines.length < rows - footer.length) lines.push("");
@@ -378,7 +379,7 @@ function buildDoneScreen(
   if (parts.length > 0) {
     lines.push(`  ${BOLD}Installed:${RESET}  ${parts.join(" \u00b7 ")}`);
   }
-  lines.push(`  ${BOLD}Generated:${RESET}  ${DIM}CLAUDE.md \u00b7 .cursorrules \u00b7 codex-instructions.md \u00b7 .env.example${RESET}`);
+  lines.push(`  ${BOLD}Generated:${RESET}  ${DIM}CLAUDE.md \u00b7 .cursorrules \u00b7 codex-instructions.md \u00b7 codex.json \u00b7 .env.example${RESET}`);
   lines.push("");
   lines.push(`  ${YELLOW}${BOLD}Start your journey — just ask:${RESET}`);
   lines.push(`  ${DIM}"What should I build in crypto?"${RESET}           ${DIM}Idea${RESET}`);
@@ -409,7 +410,7 @@ export async function interactiveWorkspaceSetup(input: WorkspaceSetupInput): Pro
     { label: "Validate Idea", command: "npx skills add sendaifun/solana-new/skills/idea/validate-idea" },
     { label: "Competitive Landscape", command: "npx skills add sendaifun/solana-new/skills/idea/competitive-landscape" },
     { label: "Scaffold Project", command: "npx skills add sendaifun/solana-new/skills/build/scaffold-project" },
-    { label: "Build with Claude", command: "npx skills add sendaifun/solana-new/skills/build/build-with-claude" },
+    { label: "Build with Codex/Claude", command: "npx skills add sendaifun/solana-new/skills/build/build-with-claude" },
     { label: "Review & Iterate", command: "npx skills add sendaifun/solana-new/skills/build/review-and-iterate" },
     { label: "Deploy to Mainnet", command: "npx skills add sendaifun/solana-new/skills/launch/deploy-to-mainnet" },
     { label: "Create Pitch Deck", command: "npx skills add sendaifun/solana-new/skills/launch/create-pitch-deck" },
@@ -437,7 +438,7 @@ export async function interactiveWorkspaceSetup(input: WorkspaceSetupInput): Pro
     }
   }
   for (const m of rec.mcps) {
-    items.push({ kind: "mcp", label: m.name, command: m.setup, selected: true });
+    items.push({ kind: "mcp", label: m.name, command: normalizeAgentCommand(m.setup), selected: true });
   }
   for (const r of rec.repos) {
     items.push({ kind: "repo", label: r.name, command: r.command, selected: true });
@@ -549,7 +550,7 @@ export async function interactiveWorkspaceSetup(input: WorkspaceSetupInput): Pro
         draw();
       }
 
-      // Step: Configure MCPs in .claude/settings.json
+      // Step: Configure MCPs in project MCP config files
       const mcpConfigs: Record<string, { command: string; args: string[] }> = {};
       for (const mcp of selectedMcps) {
         installSteps[stepIdx].status = "running";
@@ -563,14 +564,16 @@ export async function interactiveWorkspaceSetup(input: WorkspaceSetupInput): Pro
         draw();
       }
 
-      if (Object.keys(mcpConfigs).length > 0) {
-        const claudeDir = join(projectDir, ".claude");
-        mkdirSync(claudeDir, { recursive: true });
-        writeFileSync(
-          join(claudeDir, "settings.json"),
-          JSON.stringify({ mcpServers: mcpConfigs }, null, 2) + "\n",
-        );
-      }
+      const claudeDir = join(projectDir, ".claude");
+      mkdirSync(claudeDir, { recursive: true });
+      writeFileSync(
+        join(claudeDir, "settings.json"),
+        JSON.stringify({ mcpServers: mcpConfigs }, null, 2) + "\n",
+      );
+      writeFileSync(
+        join(projectDir, "codex.json"),
+        JSON.stringify({ mcpServers: mcpConfigs }, null, 2) + "\n",
+      );
 
       // Step: Generate config files
       installSteps[stepIdx].status = "running";

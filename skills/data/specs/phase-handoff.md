@@ -149,6 +149,9 @@ When a skill updates an existing context file:
 
 If a skill expects a context file that doesn't exist:
 
-1. Do NOT fail. Instead, interview the user for the minimum required context.
-2. Recommend running the prior phase skill, but don't block.
-3. Create the context file with whatever information is gathered.
+1. First, tell the user which prerequisite skill should run and why.
+2. Provide exact next-step order (for example: `solana-new copilot start "your idea"` → `scaffold-project` → `build-with-claude`).
+3. By default, block dependency-sensitive actions (`deploy-to-mainnet`) until prerequisites are satisfied.
+4. For non-blocking actions (pitch/submission), proceed via interview only if the user explicitly wants to continue.
+5. When proceeding without full context, label unknown values as assumptions/TBD (never fabricate).
+6. Create or repair the context file with gathered data before continuing.

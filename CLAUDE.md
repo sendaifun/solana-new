@@ -15,14 +15,13 @@ pnpm dev              # run CLI via tsx (no build needed)
 ## Commands
 
 ```bash
-solana-new init                                   # install journey skills → open Claude Code → go
-solana-new journey                                # Idea → Build → Launch TUI
-solana-new start                                  # guided onboarding + landscape + workspace setup
-solana-new idea [text]                            # free-form idea — landscape + gap analysis
+solana-new init                                   # install journey skills → open Codex/Claude → go
+solana-new ship                                   # Idea → Build → Launch TUI
+solana-new copilot start [text]                   # guided onboarding + free-form idea analysis
+solana-new copilot [token]                        # manage Copilot token + settings
 solana-new search [query]                         # find repos, skills, MCPs
 solana-new repos [--search <q>]                   # browse or filter repos
 solana-new skills [--search <q>]                  # browse or filter skills
-solana-new config [token]                         # manage Copilot token + settings
 ```
 
 Add `--agent` to any command for machine-readable plaintext output (for Claude Code / Codex).
@@ -59,8 +58,8 @@ Skills live in `skills/<phase>/<skill-name>/`. To add a new skill, create a fold
 ```
 cli/
   index.ts                  Command dispatcher, agent output, help
-  init.ts                   Auto-install skills to ~/.claude/skills/
-  interactive-journey.ts    Idea → Build → Launch TUI (launches Claude Code)
+  init.ts                   Auto-install skills to ~/.claude/skills/ and ~/.codex/skills/
+  interactive-journey.ts    Idea → Build → Launch TUI (launches Codex/Claude)
   interactive-onboarding.ts Category → recommendation → workspace setup
   workspace-setup.ts        Clone repos, install skills, configure MCPs
   interactive-search.ts     Repos TUI

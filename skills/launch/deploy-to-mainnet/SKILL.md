@@ -18,6 +18,20 @@ Take a devnet-tested Solana project and prepare it for mainnet deployment. Run t
 5. Write a deployment report HTML artifact.
 6. Update `.solana-new/build-context.json` with deployment status.
 
+## Dependency Gate (Required)
+
+This skill should not run as the first launch action.
+
+1. Require `.solana-new/build-context.json`.
+2. Require `build_status.tests_passing = true` and `build_status.devnet_deployed = true`.
+3. If either is missing/false, stop and redirect with exact order:
+   - `solana-new copilot start "your idea"`
+   - `scaffold-project`
+   - `build-with-claude`
+   - `review-and-iterate`
+   - then `deploy-to-mainnet`
+4. Only continue without this context if the user explicitly insists and accepts deployment risk.
+
 ## Non-Negotiables
 
 - Never deploy a program that hasn't been tested on devnet first. Block and redirect.
@@ -27,6 +41,7 @@ Take a devnet-tested Solana project and prepare it for mainnet deployment. Run t
 - If the project has a program, discuss upgrade authority management before deploying.
 - Environment variables must be production-ready (real API keys, mainnet RPC, etc.).
 - Always write a local HTML artifact with the deployment checklist and results.
+- Never treat missing dependency context as a soft warning; block and redirect by default.
 
 ## Phase Handoff
 

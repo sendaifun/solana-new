@@ -5,21 +5,32 @@ CLI tool to discover the Solana ecosystem and build products — 59 repos, 71 sk
 ## Quick Start
 
 ```bash
-npx solana-new init         # install 17 journey skills → ready for Claude Code
-npx solana-new ship         # pick a prompt → launches Claude Code
+npx solana-new init         # install 17 journey skills → ready for Codex/Claude
+npx solana-new ship         # pick a prompt → launches your available agent CLI
+```
+
+One-shot bootstrap (installs `solana-new`, Codex/Claude CLIs if missing, and initializes skills):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/sendaifun/solana-new/main/install.sh | bash
+```
+
+Local equivalent:
+
+```bash
+bash ./install.sh
 ```
 
 ## Commands
 
 ```
-solana-new init                                   Install journey skills to Claude Code
+solana-new init                                   Install journey skills to Codex/Claude
 solana-new ship                                   Idea → Build → Launch TUI
-solana-new start                                  Guided onboarding + landscape + workspace setup
-solana-new idea [text]                            Free-form idea — landscape + gap analysis
+solana-new copilot start [text]                   Guided onboarding + free-form idea analysis
+solana-new copilot [token]                        Manage Copilot token + settings
 solana-new search [query]                         Find repos, skills, MCPs
 solana-new repos [--search <q>]                   Browse or filter repos
 solana-new skills [--search <q>]                  Browse or filter skills
-solana-new copilot [token]                        Manage Copilot token + settings
 solana-new feedback [message]                     Send feedback to the team
 solana-new completion [bash|zsh]                  Generate shell completions
 ```
@@ -59,7 +70,7 @@ Add `--agent` to any command for machine-readable plaintext output (for Claude C
 | `create-pitch-deck` | "Create a pitch deck" |
 | `submit-to-hackathon` | "Prepare my hackathon submission" |
 
-Skills live in `skills/<phase>/<skill-name>/`. Run `solana-new init` to install them to `~/.claude/skills/`.
+Skills live in `skills/<phase>/<skill-name>/`. Run `solana-new init` to install them to `~/.claude/skills/` and `~/.codex/skills/`.
 
 ## What's Indexed
 
@@ -69,7 +80,7 @@ Skills live in `skills/<phase>/<skill-name>/`. Run `solana-new init` to install 
 | **Skills** | 71 | 15 official from solana.com + 56 community (Jupiter, Drift, Orca, Helius, QEDGen, etc.) |
 | **MCPs** | 49 | Helius, Jupiter, Phantom, Orca, Chainstack, openSVM, security, DAO, multi-chain |
 
-Catalog data is also installed to `~/.claude/skills/_data/catalogs/` so skills can search it at runtime.
+Catalog data is also installed to `~/.claude/skills/_data/catalogs/` and `~/.codex/skills/_data/catalogs/` so skills can search it at runtime.
 
 ## Interactive TUI
 
@@ -127,7 +138,9 @@ Get your deployment URLs from [dashboard.convex.dev](https://dashboard.convex.de
 
 ### Convex Backend
 
-Feedback is stored in Convex. Schema and mutations are in `convex/`.
+`solana-new feedback` defaults to Telegram (`@scriptscrypt`) with prefilled message text.
+Convex feedback is still available via `solana-new feedback "message" --convex`.
+Schema and mutations remain in `convex/`.
 
 ```bash
 npx convex dev --once       # push functions to dev
@@ -139,14 +152,14 @@ npx convex deploy           # push functions to prod
 ```
 cli/
   index.ts                  Command dispatcher, agent output, help
-  init.ts                   Auto-install skills to ~/.claude/skills/
-  interactive-journey.ts    Idea → Build → Launch TUI (launches Claude Code)
+  init.ts                   Auto-install skills to ~/.claude/skills/ and ~/.codex/skills/
+  interactive-journey.ts    Idea → Build → Launch TUI (launches Codex/Claude)
   interactive-onboarding.ts Category → recommendation → workspace setup
   interactive-search.ts     Repos, Skills, MCPs TUI
   interactive-skills.ts     Skills TUI
   interactive-mcps.ts       MCPs TUI
   interactive-universal.ts  Universal search TUI (combines all)
-  feedback.ts               Send feedback to Convex
+  feedback.ts               Telegram-first feedback + optional Convex fallback
   completion.ts             Shell completion generation
   banner.ts                 ASCII art banner
   data/

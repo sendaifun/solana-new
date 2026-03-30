@@ -4,6 +4,7 @@ import {
   verifyToken, fetchLandscape, fetchExploreData,
   type LandscapeData, type ExploreData, type ClusterInfo,
 } from "./copilot-client.js";
+import { normalizeAgentCommand } from "./agent-cli.js";
 import {
   RESET, DIM, BOLD, CYAN, GREEN, YELLOW, MAGENTA, BLUE, RED,
   GRADIENT_SOLANA_DOT_NEW, COMPETITION_HIGH, COMPETITION_MEDIUM,
@@ -53,7 +54,7 @@ const CURATED: Category[] = [
   ]},
   { label: "AI Agents", subcategories: [
     { label: "AI agent (TypeScript)", description: "Build an AI agent with Solana Agent Kit", query: "AI agent autonomous on-chain Solana",
-      recommendation: { skills: [{ name: "Solana Agent Kit Skill", install: "npx skills add https://github.com/sendaifun/skills/tree/main/skills/solana-agent-kit" }], mcps: [{ name: "Solana Agent Kit MCP", setup: "npm install @solana-agent-kit/adapter-mcp" }, { name: "Helius MCP", setup: "claude mcp add helius npx helius-mcp@latest" }], repos: [{ name: "create-solana-agent", command: "npx create-solana-agent" }], tip: "create-solana-agent is the fastest way to start." } },
+      recommendation: { skills: [{ name: "Solana Agent Kit Skill", install: "npx skills add https://github.com/sendaifun/skills/tree/main/skills/solana-agent-kit" }], mcps: [{ name: "Solana Agent Kit MCP", setup: "npm install @solana-agent-kit/adapter-mcp" }, { name: "Helius MCP", setup: "codex mcp add helius npx helius-mcp@latest" }], repos: [{ name: "create-solana-agent", command: "npx create-solana-agent" }], tip: "create-solana-agent is the fastest way to start." } },
     { label: "Telegram / Discord bot", description: "Solana-powered social bot with wallet", query: "telegram discord bot Solana wallet trading",
       recommendation: { skills: [{ name: "Solana Agent Kit Skill", install: "npx skills add https://github.com/sendaifun/skills/tree/main/skills/solana-agent-kit" }], mcps: [], repos: [{ name: "sak-telegram-bot", command: "git clone https://github.com/sendaifun/solana-agent-kit.git && cd solana-agent-kit/examples/social/tg-bot-starter" }], tip: "Includes single-user, multi-user, and group chat variants." } },
     { label: "Agent with embedded wallet", description: "AI agent with Phantom wallet auth", query: "AI agent embedded wallet signing Phantom",
@@ -83,13 +84,13 @@ const CURATED: Category[] = [
     { label: "Oracle / price feeds", description: "Pyth, Switchboard for on-chain data", query: "price feed oracle Pyth Switchboard",
       recommendation: { skills: [{ name: "Pyth Skill", install: "npx skills add https://github.com/sendaifun/skills/tree/main/skills/pyth" }, { name: "Switchboard Skill", install: "npx skills add https://github.com/sendaifun/skills/tree/main/skills/switchboard" }], mcps: [], repos: [{ name: "pyth-sdk", command: "git clone https://github.com/pyth-network/pyth-sdk-rs.git" }], tip: "Pyth for price feeds. Switchboard for VRF + custom feeds." } },
     { label: "DePIN infrastructure", description: "Decentralized physical infrastructure", query: "DePIN physical infrastructure sensor IoT",
-      recommendation: { skills: [{ name: "Helius Build Skill", install: "npx skills add https://github.com/helius-labs/core-ai/tree/main/helius-skills/helius" }], mcps: [{ name: "Helius MCP", setup: "claude mcp add helius npx helius-mcp@latest" }], repos: [], tip: "DePIN needs reliable indexing. Helius DAS API + webhooks for device state." } },
+      recommendation: { skills: [{ name: "Helius Build Skill", install: "npx skills add https://github.com/helius-labs/core-ai/tree/main/helius-skills/helius" }], mcps: [{ name: "Helius MCP", setup: "codex mcp add helius npx helius-mcp@latest" }], repos: [], tip: "DePIN needs reliable indexing. Helius DAS API + webhooks for device state." } },
     { label: "Real-world assets (RWA)", description: "Tokenize real-world assets", query: "RWA real world asset tokenization",
       recommendation: { skills: [{ name: "Light Protocol Skill", install: "npx skills add https://github.com/sendaifun/skills/tree/main/skills/light-protocol" }], mcps: [], repos: [], tip: "Light Protocol for ZK compressed accounts — ideal for compliant tokenization." } },
   ]},
   { label: "Infrastructure", subcategories: [
     { label: "RPC, indexing & webhooks", description: "Full Helius toolchain", query: "RPC infrastructure API webhooks indexing DAS",
-      recommendation: { skills: [{ name: "Helius Build Skill", install: "npx skills add https://github.com/helius-labs/core-ai/tree/main/helius-skills/helius" }], mcps: [{ name: "Helius MCP", setup: "claude mcp add helius npx helius-mcp@latest" }], repos: [{ name: "helius-core-ai", command: "git clone https://github.com/helius-labs/core-ai.git" }], tip: "Helius MCP has 60+ tools. Install helius-cli: npm i -g helius-cli" } },
+      recommendation: { skills: [{ name: "Helius Build Skill", install: "npx skills add https://github.com/helius-labs/core-ai/tree/main/helius-skills/helius" }], mcps: [{ name: "Helius MCP", setup: "codex mcp add helius npx helius-mcp@latest" }], repos: [{ name: "helius-core-ai", command: "git clone https://github.com/helius-labs/core-ai.git" }], tip: "Helius MCP has 60+ tools. Install helius-cli: npm i -g helius-cli" } },
     { label: "Token analytics & forensics", description: "Explore wallets, transactions, on-chain data", query: "transaction analytics explorer wallet",
       recommendation: { skills: [{ name: "CoinGecko Skill", install: "npx skills add https://github.com/sendaifun/skills/tree/main/skills/coingecko" }], mcps: [{ name: "DexScreener MCP", setup: "npx -y @opensvm/dexscreener-mcp-server" }], repos: [], tip: "DexScreener for real-time pair data." } },
     { label: "NFTs & compressed assets", description: "Mint, compress, manage digital assets", query: "NFT Metaplex Core compressed cNFT",
@@ -116,6 +117,13 @@ const TAG_TO_SKILL: Record<string, { name: string; install: string }> = {
   anchor: { name: "Programs with Anchor", install: "npx skills add https://github.com/solana-foundation/solana-dev-skill" },
   compression: { name: "Light Protocol Skill", install: "npx skills add https://github.com/sendaifun/skills/tree/main/skills/light-protocol" },
 };
+
+function normalizeRecommendation(rec: Recommendation): Recommendation {
+  return {
+    ...rec,
+    mcps: rec.mcps.map((m) => ({ ...m, setup: normalizeAgentCommand(m.setup) })),
+  };
+}
 
 // --- Matching logic ---
 
@@ -303,7 +311,7 @@ function buildRecommendationScreen(
   rows: number,
 ): string[] {
   const lines: string[] = [];
-  const rec = sub.recommendation;
+  const rec = normalizeRecommendation(sub.recommendation);
   lines.push("");
   lines.push(`  ${GRADIENT_SOLANA_DOT_NEW}  ${BOLD}${sub.label}${RESET}`);
   lines.push("");
@@ -634,7 +642,7 @@ export async function interactiveOnboarding(prefilledIdea?: string): Promise<Onb
               action: "setup",
               subcategoryLabel: sub.label,
               subcategoryDescription: sub.description,
-              recommendation: sub.recommendation,
+              recommendation: normalizeRecommendation(sub.recommendation),
               landscapeData,
               ideaText: query,
               winnerSkills,

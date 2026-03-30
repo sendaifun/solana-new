@@ -19,6 +19,21 @@ Prepare a complete, optimized hackathon submission. Write the project descriptio
 6. Create a demo script using [references/demo-video-script.md](references/demo-video-script.md).
 7. Write a submission HTML artifact with all content ready to copy-paste.
 
+## Dependency Gate (Required)
+
+Hackathon submissions depend on prior phase outputs.
+
+1. Preferred prerequisites:
+   - `idea-context.json` from `solana-new copilot start`
+   - `build-context.json` from `scaffold-project` and `build-with-claude`
+2. If missing, give the user exact order first:
+   - `solana-new copilot start "your idea"`
+   - `scaffold-project`
+   - `build-with-claude`
+   - `review-and-iterate`
+   - `submit-to-hackathon`
+3. If user proceeds without context, continue via interview but label unknowns as `TBD`.
+
 ## Non-Negotiables
 
 - The submission must have a working demo link. No exceptions.
@@ -28,6 +43,7 @@ Prepare a complete, optimized hackathon submission. Write the project descriptio
 - Demo video script must be under 3 minutes.
 - Do not exaggerate traction or features. Judges verify.
 - Always write a local HTML artifact with the complete submission.
+- Never fabricate deployment status, traction, or judges-track alignment when context is missing.
 
 ## Resources
 

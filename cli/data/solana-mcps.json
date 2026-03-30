@@ -6,7 +6,7 @@
       "repo": "solana-foundation/solana-mcp-official",
       "description": "Official Solana Developer MCP serving up-to-date documentation, account queries, transaction analysis, and CPI generation",
       "category": "infrastructure",
-      "setup_command": "claude mcp add --transport http solana-mcp-server https://mcp.solana.com/mcp",
+      "setup_command": "codex mcp add --transport http solana-mcp-server https://mcp.solana.com/mcp",
       "url": "https://github.com/solana-foundation/solana-mcp-official",
       "keywords": ["solana", "foundation", "official", "documentation", "rpc", "anchor", "cpi"]
     },
@@ -46,7 +46,7 @@
       "repo": "helius-labs/core-ai",
       "description": "Official Helius AI tooling — 60+ tools across 10 domains for querying Solana, sending transactions, managing webhooks, wallet analysis",
       "category": "infrastructure",
-      "setup_command": "claude mcp add helius npx helius-mcp@latest",
+      "setup_command": "codex mcp add helius npx helius-mcp@latest",
       "url": "https://github.com/helius-labs/core-ai",
       "keywords": ["helius", "rpc", "infrastructure", "wallet", "asset", "transaction", "webhook", "streaming", "compression", "das"]
     },
@@ -136,7 +136,7 @@
       "repo": "blueprint-infrastructure/solentic-mcp",
       "description": "Native Solana staking infrastructure for AI agents — 18 MCP tools, 21 REST endpoints, 13 A2A skills",
       "category": "defi",
-      "setup_command": "claude mcp add --transport http solentic https://solentic.theblueprint.xyz/mcp",
+      "setup_command": "codex mcp add --transport http solentic https://solentic.theblueprint.xyz/mcp",
       "url": "https://github.com/blueprint-infrastructure/solentic-mcp",
       "keywords": ["staking", "defi", "blueprint", "a2a", "agents", "validator", "delegate"]
     },

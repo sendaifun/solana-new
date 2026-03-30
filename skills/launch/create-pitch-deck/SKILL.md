@@ -19,6 +19,20 @@ Generate a structured pitch deck tailored to the audience (VCs, hackathon judges
 6. Adapt the deck using [references/investor-audience-guide.md](references/investor-audience-guide.md).
 7. Write a pitch deck HTML artifact with all slide content and speaking notes.
 
+## Dependency Gate (Required)
+
+This skill depends on journey context for quality output.
+
+1. Preferred prerequisites:
+   - `.solana-new/idea-context.json`
+   - `.solana-new/build-context.json`
+2. If either file is missing, tell the user the recommended order first:
+   - `solana-new copilot start "your idea"`
+   - `scaffold-project`
+   - `build-with-claude`
+   - `create-pitch-deck`
+3. If user wants to proceed immediately, continue via interview, but clearly mark assumptions.
+
 ## Non-Negotiables
 
 - Lead with the problem, not the technology. No one cares about Solana until they care about the problem.
@@ -28,6 +42,7 @@ Generate a structured pitch deck tailored to the audience (VCs, hackathon judges
 - Token slides (if applicable) must be honest about utility vs. speculation.
 - Tailor language to the audience — VCs want different things than hackathon judges.
 - Always write a local HTML artifact.
+- Never pretend metrics/context exist. If missing, mark as "assumed" or "TBD".
 
 ## Resources
 

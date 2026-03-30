@@ -16,6 +16,7 @@ import { interactiveWorkspaceSetup } from "./workspace-setup.js";
 import { getToken, saveToken, readConfig } from "./copilot-auth.js";
 import { verifyToken } from "./copilot-client.js";
 import { renderBanner } from "./banner.js";
+import { detectPreferredAgentCli, normalizeAgentCommand } from "./agent-cli.js";
 import { RESET, DIM, BOLD, CYAN, GREEN, YELLOW, RED, GRADIENT_SOLANA_DASH_NEW } from "./colors.js";
 
 // Read version from package.json
@@ -107,15 +108,16 @@ function agentOutput(label: string, items: any[], fields: string[]): void {
     console.log(parts.join("  "));
 
     if (descField) console.log(`  ${String(item[descField] ?? "")}`);
-    if (cmdField) console.log(`  ${String(item[cmdField] ?? "")}`);
+    if (cmdField) console.log(`  ${normalizeAgentCommand(String(item[cmdField] ?? ""))}`);
     console.log("");
   }
 }
 
 async function runShell(command: string, label: string, verb = "Running"): Promise<void> {
   const { spawn } = await import("node:child_process");
-  console.log(`\n  ${verb} ${label}...\n  $ ${command}\n`);
-  const child = spawn("sh", ["-c", command], { stdio: "inherit" });
+  const normalized = normalizeAgentCommand(command);
+  console.log(`\n  ${verb} ${label}...\n  $ ${normalized}\n`);
+  const child = spawn("sh", ["-c", normalized], { stdio: "inherit" });
   await new Promise<void>((resolve, reject) => {
     child.on("close", (code) => {
       if (code === 0) resolve();
@@ -281,49 +283,23 @@ async function cmdSkills(args: string[]): Promise<void> {
   for (const s of allItems) console.log(`  ${s.slug}  [${s.kind}]  ${s.description}`);
 }
 
-async function cmdStart(args: string[]): Promise<void> {
-  const { flags } = parseFlags(args);
+async function cmdCopilotStart(args: string[], flags: Record<string, string | boolean>): Promise<void> {
   if (flags.help === true) {
-    printSubcommandHelp("start", "Guided onboarding + landscape + workspace setup", "solana-new start", [
+    printSubcommandHelp("copilot start", "Onboarding + idea analysis + workspace setup", "solana-new copilot start [text]", [
       `${BOLD}--agent${RESET}   Machine-readable output`,
     ]);
     return;
   }
-  warnUnknownFlags(flags, []);
-
-  if (flags.agent === true) {
-    agentOnboarding();
-    return;
-  }
-  const result = await interactiveOnboarding();
-  if (result.action === "setup") {
-    await interactiveWorkspaceSetup({
-      subcategoryLabel: result.subcategoryLabel,
-      subcategoryDescription: result.subcategoryDescription,
-      recommendation: result.recommendation,
-      landscapeData: result.landscapeData,
-      ideaText: result.ideaText,
-      winnerSkills: result.winnerSkills,
-    });
-  }
-}
-
-async function cmdIdea(args: string[]): Promise<void> {
-  const { flags, positional } = parseFlags(args);
-  if (flags.help === true) {
-    printSubcommandHelp("idea", "Free-form idea — landscape + gap analysis", "solana-new idea [text]", [
-      `${BOLD}--agent${RESET}   Machine-readable output`,
-    ]);
-    return;
-  }
-  warnUnknownFlags(flags, []);
-
+  const { positional } = parseFlags(args);
   const isAgent = flags.agent !== undefined;
   const agentValue = typeof flags.agent === "string" ? flags.agent : "";
   const query = [agentValue, ...positional].join(" ").trim();
 
   if (isAgent) {
-    if (!query) { console.log('Usage: solana-new idea --agent "your idea"'); return; }
+    if (!query) {
+      agentOnboarding();
+      return;
+    }
     await agentIdea(query);
     return;
   }
@@ -355,8 +331,12 @@ async function verifyAndSave(token: string): Promise<boolean> {
 
 async function cmdConfig(args: string[]): Promise<void> {
   const { flags, positional } = parseFlags(args);
+  if (flags.help === true && positional[0] === "start") {
+    return cmdCopilotStart(positional.slice(1), flags);
+  }
   if (flags.help === true) {
     printSubcommandHelp("copilot", "Manage Copilot token + settings", "solana-new copilot [token]", [
+      `${BOLD}start${RESET} [text]   Guided onboarding + free-form idea analysis`,
       `${BOLD}token${RESET}          Update token (interactive)`,
       `${BOLD}token${RESET} <pat>    Set token directly`,
     ]);
@@ -410,8 +390,13 @@ async function cmdConfig(args: string[]): Promise<void> {
     return;
   }
 
+  if (sub === "start") {
+    return cmdCopilotStart(positional.slice(1), flags);
+  }
+
   console.log(`\n  ${BOLD}Usage:${RESET}`);
   console.log(`    solana-new copilot              Show current config`);
+  console.log(`    solana-new copilot start [text] Guided onboarding + idea analysis`);
   console.log(`    solana-new copilot token         Update Copilot token (interactive)`);
   console.log(`    solana-new copilot token <pat>   Set Copilot token directly\n`);
 }
@@ -419,47 +404,50 @@ async function cmdConfig(args: string[]): Promise<void> {
 // --- Ship ---
 
 function shipAgent(): void {
+  const agentCli = detectPreferredAgentCli() ?? "codex";
+  const agentHint = `${agentCli} (or ${agentCli === "codex" ? "claude" : "codex"})`;
   console.log(`Solana Developer Journey — Idea → Build → Launch (Colosseum Hackathon)`);
+  console.log(`Use agent CLI: ${agentHint}`);
   console.log(``);
   console.log(`Phase 1: Idea — Discovery & Planning`);
   console.log(`  find-next-crypto-idea    Discover Solana project ideas for hackathon`);
-  console.log(`    claude "What should I build on Solana for the Colosseum hackathon?"`);
+  console.log(`    ${agentCli} "What should I build on Solana for the Colosseum hackathon?"`);
   console.log(`  validate-idea            Stress-test with on-chain demand signals`);
-  console.log(`    claude "Validate this Solana project idea — is it worth building?"`);
+  console.log(`    ${agentCli} "Validate this Solana project idea — is it worth building?"`);
   console.log(`  competitive-landscape    Map existing Solana protocols and gaps`);
-  console.log(`    claude "Who are my competitors in the Solana ecosystem?"`);
+  console.log(`    ${agentCli} "Who are my competitors in the Solana ecosystem?"`);
   console.log(`  defillama-research       Research Solana DeFi opportunities via TVL data`);
-  console.log(`    claude "Show me DeFi opportunities on Solana using TVL data"`);
+  console.log(`    ${agentCli} "Show me DeFi opportunities on Solana using TVL data"`);
   console.log(``);
   console.log(`Phase 2: Build — Solana Implementation`);
   console.log(`  scaffold-project         Anchor + SDK project setup`);
-  console.log(`    claude "Scaffold my Solana project with Anchor and the right stack"`);
+  console.log(`    ${agentCli} "Scaffold my Solana project with Anchor and the right stack"`);
   console.log(`  build-with-claude        Guided MVP with Anchor programs + client`);
-  console.log(`    claude "Help me build the Solana MVP step by step"`);
+  console.log(`    ${agentCli} "Help me build the Solana MVP step by step"`);
   console.log(`  build-defi-protocol      DeFi protocol — AMM, lending, vault`);
-  console.log(`    claude "Build a DeFi protocol on Solana — AMM, lending, or vault"`);
+  console.log(`    ${agentCli} "Build a DeFi protocol on Solana — AMM, lending, or vault"`);
   console.log(`  build-blinks             Solana Actions / Blinks`);
-  console.log(`    claude "Build a Solana Action / Blink for shareable transactions"`);
+  console.log(`    ${agentCli} "Build a Solana Action / Blink for shareable transactions"`);
   console.log(`  launch-token             SPL token mint + distribution`);
-  console.log(`    claude "Launch an SPL token on Solana with metadata and distribution"`);
+  console.log(`    ${agentCli} "Launch an SPL token on Solana with metadata and distribution"`);
   console.log(`  build-data-pipeline      Indexer, webhook, analytics`);
-  console.log(`    claude "Build a Solana data pipeline — indexer, webhook, or analytics"`);
+  console.log(`    ${agentCli} "Build a Solana data pipeline — indexer, webhook, or analytics"`);
   console.log(`  build-mobile             Mobile dApp with React Native`);
-  console.log(`    claude "Build a Solana mobile app with React Native"`);
+  console.log(`    ${agentCli} "Build a Solana mobile app with React Native"`);
   console.log(`  debug-program            Debug failing programs / transactions`);
-  console.log(`    claude "Debug my failing Solana program or transaction"`);
+  console.log(`    ${agentCli} "Debug my failing Solana program or transaction"`);
   console.log(`  review-and-iterate       Security audit for Anchor programs`);
-  console.log(`    claude "Review my Solana program for security and production readiness"`);
+  console.log(`    ${agentCli} "Review my Solana program for security and production readiness"`);
   console.log(``);
   console.log(`Phase 3: Launch — Hackathon Submission`);
   console.log(`  deploy-to-mainnet        Mainnet deployment + program verification`);
-  console.log(`    claude "Deploy my Solana program to mainnet"`);
+  console.log(`    ${agentCli} "Deploy my Solana program to mainnet"`);
   console.log(`  create-pitch-deck        Pitch deck for Colosseum judges`);
-  console.log(`    claude "Create a pitch deck for Colosseum hackathon judges"`);
+  console.log(`    ${agentCli} "Create a pitch deck for Colosseum hackathon judges"`);
   console.log(`  submit-to-hackathon      Optimized hackathon submission`);
-  console.log(`    claude "Prepare my Colosseum hackathon submission"`);
+  console.log(`    ${agentCli} "Prepare my Colosseum hackathon submission"`);
   console.log(``);
-  console.log(`Skills auto-installed to ~/.claude/skills/ via: solana-new init`);
+  console.log(`Skills auto-installed to ~/.claude/skills and ~/.codex/skills via: solana-new init`);
   console.log(`Select and launch directly: solana-new ship`);
 }
 
@@ -467,7 +455,7 @@ async function cmdShip(args: string[]): Promise<void> {
   const { flags } = parseFlags(args);
   if (flags.help === true) {
     printSubcommandHelp("ship", "Idea → Build → Launch guide", "solana-new ship [--yolo]", [
-      `${BOLD}--yolo${RESET}    Send prompt directly to Claude Code (skip review)`,
+      `${BOLD}--yolo${RESET}    Send prompt directly to your agent CLI (Codex/Claude)`,
       `${BOLD}--agent${RESET}   Machine-readable output`,
     ]);
     return;
@@ -492,7 +480,8 @@ async function cmdShip(args: string[]): Promise<void> {
 
 // --- Help ---
 
-function printUsage(): void {
+function printUsage(opts: { includeUtilities?: boolean } = {}): void {
+  const includeUtilities = opts.includeUtilities === true;
   const sn = GRADIENT_SOLANA_DASH_NEW;
   const CMD_COL = 9;
   const ARG_COL = 15;
@@ -507,31 +496,32 @@ function printUsage(): void {
 
   console.log(`  ${BOLD}Get Started${RESET}`);
   console.log("");
-  row(`${BOLD}init${RESET}`,       "",                             "Install skills \u2192 open Claude Code \u2192 go");
+  row(`${BOLD}init${RESET}`,       "",                             "Install skills \u2192 open Codex/Claude \u2192 go");
   row(`${BOLD}ship${RESET}`,       `${DIM}[--yolo]${RESET}`,      "Idea \u2192 Build \u2192 Launch guide");
   console.log("");
   console.log(`  ${BOLD}Discover${RESET}  ${DIM}\u2014 explore the Solana ecosystem${RESET}`);
   console.log("");
-  row(`${BOLD}start${RESET}`,      "",                             "Guided onboarding + landscape + workspace setup");
-  row(`${BOLD}idea${RESET}`,       `${DIM}[text]${RESET}`,         "Free-form idea \u2014 landscape + gap analysis");
   row(`${BOLD}search${RESET}`,     `${DIM}[query]${RESET}`,        "Find repos, skills, MCPs");
   row(`${BOLD}repos${RESET}`,      `${DIM}[--search <q>]${RESET}`, "Browse / filter repos");
   row(`${BOLD}skills${RESET}`,     `${DIM}[--search <q>]${RESET}`, "Browse / filter skills");
   console.log("");
   console.log(`  ${BOLD}Colosseum Copilot${RESET}`);
   console.log("");
+  row(`${BOLD}copilot${RESET}`,    `${DIM}start [text]${RESET}`,   "Guided onboarding + free-form idea analysis");
   row(`${BOLD}copilot${RESET}`,    `${DIM}[token]${RESET}`,        "Manage Copilot token + settings");
   console.log("");
-  console.log(`  ${BOLD}Utilities${RESET}`);
-  console.log("");
-  row(`${BOLD}feedback${RESET}`,    `${DIM}[message]${RESET}`,        "Send feedback to the team");
-  row(`${BOLD}doctor${RESET}`,     "",                             "Check environment setup");
-  row(`${BOLD}uninstall${RESET}`,  "",                             "Remove installed skills");
-  row(`${BOLD}completion${RESET}`, `${DIM}[bash|zsh]${RESET}`,     "Generate shell completions");
-  console.log("");
-  console.log(`  ${DIM}All commands support ${BOLD}--agent${RESET}${DIM} for machine-readable output${RESET}`);
-  console.log(`  ${DIM}Use ${BOLD}--no-color${RESET}${DIM} or ${BOLD}NO_COLOR=1${RESET}${DIM} to disable colors${RESET}`);
-  console.log("");
+  if (includeUtilities) {
+    console.log(`  ${BOLD}Utilities${RESET}`);
+    console.log("");
+    row(`${BOLD}feedback${RESET}`,    `${DIM}[message]${RESET}`,        "Send feedback to the team");
+    row(`${BOLD}doctor${RESET}`,     "",                             "Check environment setup");
+    row(`${BOLD}uninstall${RESET}`,  "",                             "Remove installed skills");
+    row(`${BOLD}completion${RESET}`, `${DIM}[bash|zsh]${RESET}`,     "Generate shell completions");
+    console.log("");
+    console.log(`  ${DIM}All commands support ${BOLD}--agent${RESET}${DIM} for machine-readable output${RESET}`);
+    console.log(`  ${DIM}Use ${BOLD}--no-color${RESET}${DIM} or ${BOLD}NO_COLOR=1${RESET}${DIM} to disable colors${RESET}`);
+    console.log("");
+  }
 }
 
 // --- Main ---
@@ -547,13 +537,11 @@ async function main(): Promise<void> {
 
   if (!command || command === "--help" || command === "-h") {
     await renderBanner();
-    printUsage();
+    printUsage({ includeUtilities: command === "--help" || command === "-h" });
     return;
   }
 
   if (command === "init") { const { flags } = parseFlags(args); return cmdInit(args, flags); }
-  if (command === "start") return cmdStart(args);
-  if (command === "idea" || command === "landscape") return cmdIdea(args);
   if (command === "ship") return cmdShip(args);
   if (command === "search") return cmdSearch(args);
   if (command === "repos") return cmdRepos(args);
@@ -572,11 +560,17 @@ async function main(): Promise<void> {
   if (command === "feedback") {
     const { flags } = parseFlags(args);
     const { cmdFeedback } = await import("./feedback.js");
-    return cmdFeedback(args.filter((a) => !a.startsWith("--")), flags.agent === true);
+    return cmdFeedback(args, flags.agent === true);
   }
   if (command === "completion") {
     const { cmdCompletion } = await import("./completion.js");
     return cmdCompletion(args);
+  }
+
+  if (command === "start" || command === "idea" || command === "landscape") {
+    console.error(`Command "${command}" was removed. Use: solana-new copilot start [text]`);
+    process.exitCode = 1;
+    return;
   }
 
   // Unknown command → search

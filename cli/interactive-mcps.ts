@@ -1,3 +1,5 @@
+import { normalizeAgentCommand } from "./agent-cli.js";
+
 const RESET = "\x1b[0m";
 const DIM = "\x1b[2m";
 const BOLD = "\x1b[1m";
@@ -38,6 +40,7 @@ export interface McpsData {
 export function buildMcpsIndex(data: McpsData): McpItem[] {
   return data.mcps.map((m) => ({
     ...m,
+    setup_command: normalizeAgentCommand(m.setup_command),
     keywords: [
       m.id,
       ...m.id.split("-"),
