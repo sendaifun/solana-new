@@ -1,0 +1,4 @@
+interface:
+  display_name: "Solana Security Audit"
+  short_description: "Sealevel-specific security audit for Solana programs"
+  default_prompt: "Run a deep security audit on my Solana program. Check for missing signer checks, PDA collisions, CPI reentrancy, and arithmetic issues."

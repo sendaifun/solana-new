@@ -1,0 +1,4 @@
+interface:
+  display_name: "Solana Retro"
+  short_description: "Sprint retrospective with on-chain metrics"
+  default_prompt: "Run a sprint retrospective. Show me what we shipped, how the program is performing on-chain, and what we should focus on next."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Solana QA"
+  short_description: "Systematic QA testing for Solana dApps and programs"
+  default_prompt: "Run QA tests on my Solana project. Test wallet flows, transaction signing, error handling, and verify everything works on devnet."

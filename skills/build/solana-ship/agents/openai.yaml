@@ -1,0 +1,4 @@
+interface:
+  display_name: "Solana Ship"
+  short_description: "Full release engineering workflow for Solana projects"
+  default_prompt: "Ship my Solana project. Run tests, check security, and create a PR with everything documented."

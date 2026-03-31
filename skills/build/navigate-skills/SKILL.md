@@ -29,7 +29,7 @@ Catalog data may be in either location:
 
 Read these files to answer the user's questions accurately.
 
-## Installed Journey Skills (16)
+## Installed Journey Skills (22)
 
 These are the skills installed by `solana-new init`. The user can trigger them by asking naturally:
 
@@ -53,6 +53,12 @@ These are the skills installed by `solana-new init`. The user can trigger them b
 | `build-mobile` | "Build a Solana mobile app" |
 | `debug-program` | "Debug my program" |
 | `review-and-iterate` | "Review my code for security" |
+| `solana-security-audit` | "Security audit my Solana program" |
+| `solana-qa` | "QA test my dApp" |
+| `solana-benchmark` | "Benchmark my CU usage" |
+| `solana-canary` | "Monitor my deployed program" |
+| `solana-retro` | "Sprint retro" |
+| `solana-ship` | "Ship my Solana project" |
 | `navigate-skills` | "What skills do I have?" (this skill) |
 
 ### Phase 3: Launch
@@ -72,7 +78,15 @@ Use this exact order:
 2. `scaffold-project`
 3. `build-with-claude`
 4. `review-and-iterate`
-5. Launch skills:
+5. Sprint workflow (optional, in order):
+   - `solana-security-audit` — deep security audit
+   - `solana-qa` — systematic QA testing
+   - `solana-benchmark` — CU optimization
+   - `solana-ship` — tests → security gate → PR
+6. Post-deploy:
+   - `solana-canary` — monitor program health
+   - `solana-retro` — sprint retrospective
+7. Launch skills:
    - `deploy-to-mainnet`
    - `create-pitch-deck`
    - `submit-to-hackathon`

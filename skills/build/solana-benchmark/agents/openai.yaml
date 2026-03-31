@@ -1,0 +1,4 @@
+interface:
+  display_name: "Solana Benchmark"
+  short_description: "Compute unit optimization and transaction size analysis"
+  default_prompt: "Benchmark my Solana program's compute unit usage. Profile each instruction, find CU hotspots, and recommend optimizations."

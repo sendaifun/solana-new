@@ -1,0 +1,4 @@
+interface:
+  display_name: "Solana Canary"
+  short_description: "Post-deploy monitoring and health checks for Solana programs"
+  default_prompt: "Monitor my deployed Solana program's health. Check transaction success rates, account state, and alert me if anything looks wrong."

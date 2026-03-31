@@ -27,7 +27,7 @@ Add `--agent` to any command for machine-readable plaintext output (for Claude C
 
 ## Journey Skills (auto-installed via `solana-new init`)
 
-10 skills across 3 phases — user just asks naturally, right skill activates.
+16 skills across 3 phases — user just asks naturally, right skill activates.
 
 | Phase | Skill | Trigger Prompt |
 |-------|-------|---------------|
@@ -38,6 +38,12 @@ Add `--agent` to any command for machine-readable plaintext output (for Claude C
 | Build | `scaffold-project` | "Scaffold my project" |
 | Build | `build-with-claude` | "Help me build the MVP" |
 | Build | `review-and-iterate` | "Review my code" |
+| Build | `solana-security-audit` | "Security audit my Solana program" |
+| Build | `solana-qa` | "QA test my dApp" |
+| Build | `solana-benchmark` | "Benchmark my CU usage" |
+| Build | `solana-canary` | "Monitor my deployed program" |
+| Build | `solana-retro` | "Sprint retro" |
+| Build | `solana-ship` | "Ship my Solana project" |
 | Launch | `deploy-to-mainnet` | "Deploy to mainnet" |
 | Launch | `create-pitch-deck` | "Create a pitch deck" |
 | Launch | `submit-to-hackathon` | "Prepare my hackathon submission" |
@@ -72,7 +78,7 @@ cli/
     solana-mcps.json        49 MCP servers
 skills/
   idea/                     Discovery & planning skills (4 skills)
-  build/                    Implementation skills (10 skills)
+  build/                    Implementation skills (16 skills)
   launch/                   Go-to-market skills (3 skills)
   data/                     Datasets, catalogs, phase handoff spec
 ```
