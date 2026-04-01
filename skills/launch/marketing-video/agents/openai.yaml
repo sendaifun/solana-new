@@ -1,0 +1,4 @@
+name: marketing-video
+display_name: "Marketing Video — Remotion + Renoise"
+description: "Create marketing videos for your Solana project using code-driven (Remotion) and AI-generated (Renoise) approaches"
+default_prompt: "Create a marketing video for my Solana project"

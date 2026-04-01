@@ -1,4 +1,5 @@
 import { execSync } from "node:child_process";
+import { ENV_AGENT } from "./branding.js";
 
 export type AgentCli = "codex" | "claude";
 
@@ -21,7 +22,7 @@ const AGENT_META: Record<AgentCli, AgentCliMeta> = {
 let cachedPaths: Record<AgentCli, string> | null = null;
 
 function resolvePreferredOrder(): AgentCli[] {
-  const envPreferred = (process.env.SOLANA_NEW_AGENT || "").toLowerCase();
+  const envPreferred = (process.env[ENV_AGENT] || "").toLowerCase();
   if (envPreferred === "claude") return ["claude", "codex"];
   if (envPreferred === "codex") return ["codex", "claude"];
   return ["codex", "claude"];

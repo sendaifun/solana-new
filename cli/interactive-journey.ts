@@ -1,10 +1,11 @@
 import process from "node:process";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { spawn, execSync } from "node:child_process";
 import {
   RESET, DIM, BOLD, CYAN, GREEN, YELLOW, MAGENTA,
   ALT_SCREEN_ON, ALT_SCREEN_OFF, CURSOR_HIDE, CURSOR_SHOW, CLEAR_SCREEN,
-  GRADIENT_SOLANA_DOT_NEW,
 } from "./colors.js";
+import { GRADIENT_PRODUCT, BINARY_NAME, CONTEXT_DIR_NAME } from "./branding.js";
 import {
   type AgentCli,
   detectPreferredAgentCli,
@@ -12,6 +13,47 @@ import {
   getAgentMeta,
   getAgentCliInstallHelp,
 } from "./agent-cli.js";
+
+// --- Phase auto-detection ---
+// Detects where the user is in the Idea → Build → Launch journey
+// based on files in the current working directory.
+
+function detectPhase(): number {
+  const cwd = process.cwd();
+  const contextDir = `${cwd}/${CONTEXT_DIR_NAME}`;
+
+  // Launch signals: has deployment artifacts or mainnet config
+  if (existsSync(`${contextDir}/build-context.json`)) {
+    try {
+      const ctx = JSON.parse(readFileSync(`${contextDir}/build-context.json`, "utf8"));
+      if (ctx?.build_status?.devnet_deployed) return 2; // Launch
+    } catch { /* ignore */ }
+  }
+  if (existsSync(`${cwd}/Anchor.toml`)) {
+    try {
+      const anchor = readFileSync(`${cwd}/Anchor.toml`, "utf8");
+      if (anchor.includes("[programs.mainnet]")) return 2; // Launch
+    } catch { /* ignore */ }
+  }
+
+  // Build signals: has project files
+  const buildSignals = [
+    "package.json", "Anchor.toml", "Cargo.toml",
+    "programs", "src", "app", "tests",
+  ];
+  const hasBuildFiles = buildSignals.some((f) => existsSync(`${cwd}/${f}`));
+
+  // Check if dir has any meaningful files (not just .git)
+  if (hasBuildFiles) return 1; // Build
+
+  // Check if directory is not empty (has files beyond dotfiles)
+  try {
+    const entries = readdirSync(cwd).filter((e) => !e.startsWith("."));
+    if (entries.length > 0) return 1; // Build — has some files
+  } catch { /* ignore */ }
+
+  return 0; // Idea — empty directory
+}
 
 interface JourneyPhase {
   label: string;
@@ -105,6 +147,11 @@ const PHASES: JourneyPhase[] = [
         prompt: "Prepare my Colosseum hackathon submission",
         description: "Optimized project description + 3-min demo script",
       },
+      {
+        name: "marketing-video",
+        prompt: "Create a marketing video for my Solana project",
+        description: "Remotion for code-driven videos + Renoise for AI-generated content",
+      },
     ],
   },
 ];
@@ -113,9 +160,9 @@ function buildScreen(selectedPhase: number, selectedSkill: number, rows: number,
   const lines: string[] = [];
 
   lines.push("");
-  lines.push(`  ${GRADIENT_SOLANA_DOT_NEW}  ${BOLD}Developer Journey${RESET}  ${DIM}Idea \u2192 Build \u2192 Launch${RESET}`);
+  lines.push(`  ${GRADIENT_PRODUCT}  ${BOLD}Developer Journey${RESET}  ${DIM}Idea \u2192 Build \u2192 Launch${RESET}`);
   lines.push("");
-  lines.push(`  ${DIM}Select a prompt and press Enter to launch ${agentLabel} with solana-new cli.${RESET}`);
+  lines.push(`  ${DIM}Select a prompt and press Enter to launch ${agentLabel} with ${BINARY_NAME}.${RESET}`);
   lines.push("");
 
   for (let p = 0; p < PHASES.length; p++) {
@@ -154,7 +201,7 @@ export async function interactiveJourney(opts: { yolo?: boolean; agentCli?: Agen
 
   if (!stdin.isTTY) return;
 
-  let selectedPhase = 0;
+  let selectedPhase = detectPhase();
   let selectedSkill = 0;
   const preferredCli = opts.agentCli ?? detectPreferredAgentCli();
   const agentLabel = getAgentCliDisplay(preferredCli);

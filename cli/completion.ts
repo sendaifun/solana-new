@@ -1,22 +1,27 @@
+import { BINARY_NAME } from "./branding.js";
+
 const COMMANDS = ["init", "ship", "search", "repos", "skills", "copilot", "feedback", "doctor", "uninstall", "completion"];
 
-const BASH_SCRIPT = `
-# solana-new bash completion
-_solana_new() {
+function bashScript(): string {
+  return `
+# ${BINARY_NAME} bash completion
+_${BINARY_NAME.replace(/-/g, "_")}() {
   local cur="\${COMP_WORDS[COMP_CWORD]}"
   local commands="${COMMANDS.join(" ")}"
   COMPREPLY=( $(compgen -W "$commands --help --version --agent --no-color" -- "$cur") )
 }
-complete -o default -F _solana_new solana-new
+complete -o default -F _${BINARY_NAME.replace(/-/g, "_")} ${BINARY_NAME}
 `.trim();
+}
 
-const ZSH_SCRIPT = `
-# solana-new zsh completion
-_solana_new() {
+function zshScript(): string {
+  return `
+# ${BINARY_NAME} zsh completion
+_${BINARY_NAME.replace(/-/g, "_")}() {
   local -a commands
   commands=(
     'init:Install skills to Codex/Claude'
-    'ship:Idea → Build → Launch guide'
+    'ship:Idea → Build → Launch sprint'
     'search:Find repos, skills, MCPs'
     'repos:Browse / filter repos'
     'skills:Browse / filter skills'
@@ -33,7 +38,7 @@ _solana_new() {
 
   case "$state" in
     cmds)
-      _describe -t commands 'solana-new command' commands
+      _describe -t commands '${BINARY_NAME} command' commands
       ;;
     args)
       case "\${words[1]}" in
@@ -56,16 +61,17 @@ _solana_new() {
       ;;
   esac
 }
-compdef _solana_new solana-new
+compdef _${BINARY_NAME.replace(/-/g, "_")} ${BINARY_NAME}
 `.trim();
+}
 
 export function cmdCompletion(args: string[]): void {
   const shell = args.find((a) => a === "bash" || a === "zsh")
     || (process.env.SHELL?.includes("zsh") ? "zsh" : "bash");
 
   if (shell === "zsh") {
-    console.log(ZSH_SCRIPT);
+    console.log(zshScript());
   } else {
-    console.log(BASH_SCRIPT);
+    console.log(bashScript());
   }
 }

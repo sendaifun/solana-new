@@ -6,6 +6,7 @@ import { getToken } from "./copilot-auth.js";
 import { verifyToken } from "./copilot-client.js";
 import { detectAgentCliPaths, getAgentCliInstallHelp } from "./agent-cli.js";
 import { RESET, DIM, BOLD, GREEN, RED, YELLOW } from "./colors.js";
+import { BINARY_NAME } from "./branding.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -71,14 +72,14 @@ export async function cmdDoctor(agent: boolean): Promise<void> {
   // 3. Copilot token
   const token = getToken();
   if (!token) {
-    checks.push({ label: "Copilot token", status: "warn", detail: "not set — solana-new copilot --token" });
+    checks.push({ label: "Copilot token", status: "warn", detail: `not set — ${BINARY_NAME} copilot --token` });
   } else {
     try {
       const valid = await verifyToken(token);
       checks.push({
         label: "Copilot token",
         status: valid ? "pass" : "fail",
-        detail: valid ? "valid" : "invalid — solana-new copilot --token",
+        detail: valid ? "valid" : `invalid — ${BINARY_NAME} copilot --token`,
       });
     } catch {
       checks.push({ label: "Copilot token", status: "warn", detail: "could not verify (network error)" });
@@ -110,20 +111,20 @@ export async function cmdDoctor(agent: boolean): Promise<void> {
 
   // Output
   if (agent) {
-    console.log("solana-new doctor\n");
+    console.log(`${BINARY_NAME} doctor\n`);
     for (const c of checks) {
       const icon = c.status === "pass" ? "OK" : c.status === "warn" ? "WARN" : "FAIL";
       console.log(`[${icon}] ${c.label}: ${c.detail}`);
     }
     const hasIssues = checks.some((c) => c.status !== "pass");
     if (hasIssues) {
-      console.log("\nRun solana-new init to install missing skills.");
+      console.log(`\nRun ${BINARY_NAME} init to install missing skills.`);
     }
     return;
   }
 
   console.log("");
-  console.log(`  ${BOLD}solana-new doctor${RESET}`);
+  console.log(`  ${BOLD}${BINARY_NAME} doctor${RESET}`);
   console.log("");
 
   const COL = 16;
@@ -137,7 +138,7 @@ export async function cmdDoctor(agent: boolean): Promise<void> {
   const hasIssues = checks.some((c) => c.status !== "pass");
   if (hasIssues) {
     console.log("");
-    if (missing.length > 0) console.log(`  ${DIM}Run ${BOLD}solana-new init${RESET}${DIM} to install missing skills.${RESET}`);
+    if (missing.length > 0) console.log(`  ${DIM}Run ${BOLD}${BINARY_NAME} init${RESET}${DIM} to install missing skills.${RESET}`);
   }
   console.log("");
 }

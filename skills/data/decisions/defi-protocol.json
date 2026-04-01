@@ -1,0 +1,127 @@
+{
+  "name": "DeFi Protocol Selection",
+  "description": "Choose the right Solana DeFi protocol for your use case",
+  "version": "1.0",
+  "tree": {
+    "question": "What DeFi operation do you need?",
+    "branches": {
+      "Swap tokens (buy/sell)": {
+        "question": "Are you building a trading UI or integrating swaps into your app?",
+        "branches": {
+          "Trading UI / best price across all DEXes": {
+            "recommendation": "jupiter",
+            "rationale": "Jupiter is the #1 Solana DEX aggregator. Routes across all DEXes for best price. 70%+ of Solana swap volume goes through Jupiter.",
+            "install": "npm install @jup-ag/api (or use REST API directly)",
+            "api": "GET https://api.jup.ag/quote?inputMint=SOL&outputMint=USDC&amount=1000000000",
+            "repo": "jupiter-nextjs-example",
+            "mcp": "jupiter-mcp",
+            "skill": "Jupiter Skill"
+          },
+          "Build on top of a specific AMM pool": {
+            "question": "Do you need concentrated liquidity (active management, higher capital efficiency)?",
+            "branches": {
+              "Yes — concentrated liquidity": {
+                "recommendation": "orca-whirlpools",
+                "rationale": "Orca Whirlpools are the leading concentrated liquidity pools on Solana. Best for protocols that need precise price ranges.",
+                "install": "npm install @orca-so/whirlpools-sdk",
+                "repo": "whirlpools",
+                "mcp": "orca-dex-mcp",
+                "skill": "Orca Whirlpools Skill"
+              },
+              "No — constant product AMM (simpler)": {
+                "recommendation": "raydium",
+                "rationale": "Raydium CP-Swap for standard AMM pools. Simpler to integrate, less active management needed.",
+                "install": "npm install @raydium-io/raydium-sdk-v2",
+                "repo": "raydium-cp-swap",
+                "mcp": null,
+                "skill": "Raydium CP-Swap Skill"
+              }
+            }
+          }
+        }
+      },
+      "Provide liquidity (earn fees)": {
+        "question": "Do you want to actively manage your position?",
+        "branches": {
+          "Yes — active management for higher returns": {
+            "recommendation": "orca-whirlpools",
+            "rationale": "Concentrated liquidity on Orca Whirlpools. Higher capital efficiency but requires monitoring and rebalancing.",
+            "install": "npm install @orca-so/whirlpools-sdk",
+            "repo": "whirlpools",
+            "risk": "Impermanent loss is amplified in concentrated ranges. Must rebalance when price moves outside your range."
+          },
+          "No — passive, set and forget": {
+            "recommendation": "meteora",
+            "rationale": "Meteora DLMM pools auto-compound. Lower returns than concentrated liquidity but zero maintenance.",
+            "install": "Use Meteora SDK or app.meteora.ag",
+            "repo": null,
+            "skill": "Meteora Skill",
+            "risk": "Standard impermanent loss applies. Lower returns than active management."
+          }
+        }
+      },
+      "Lending / Borrowing": {
+        "question": "Do you want the best rate across protocols or to integrate a single protocol?",
+        "branches": {
+          "Best rate aggregation": {
+            "recommendation": "lulo",
+            "rationale": "Lulo automatically routes deposits to the highest-yielding lending protocol (Kamino, Marginfi, Solend, etc.).",
+            "install": "Use Lulo SDK or API",
+            "mcp": null,
+            "skill": "Lulo Lending Aggregator Skill"
+          },
+          "Single protocol integration": {
+            "recommendation": "kamino",
+            "rationale": "Kamino Finance is the largest Solana lending protocol by TVL. Well-documented, audited, active development.",
+            "install": "npm install @kamino-finance/klend-sdk",
+            "repo": null,
+            "skill": "Kamino Lending Skill",
+            "alternative": "Marginfi — second largest, also well-audited. Use if you need cross-margin."
+          }
+        }
+      },
+      "Perpetual futures / Leverage": {
+        "recommendation": "drift",
+        "rationale": "Drift is the leading Solana perps DEX. Supports perpetual futures, spot margin, and prediction markets.",
+        "install": "npm install @drift-labs/sdk",
+        "repo": null,
+        "mcp": null,
+        "skill": "Drift Perpetuals Skill",
+        "alternative": "Flash Trade — simpler perps, oracle-based pricing. Lower liquidity but easier integration."
+      },
+      "Liquid staking": {
+        "question": "Do you need to swap between LST types or just stake SOL?",
+        "branches": {
+          "Stake SOL for an LST": {
+            "recommendation": "marinade",
+            "rationale": "Marinade (mSOL) is the most liquid Solana LST. Best DeFi integrations. Also offers native staking via Marinade Native.",
+            "install": "npm install @marinade.finance/marinade-ts-sdk",
+            "repo": "marinade-liquid-staking",
+            "skill": "Marinade Staking Skill",
+            "alternative": "Jito (jitoSOL) — earns MEV rewards on top of staking yield. Higher APY but more complex."
+          },
+          "Swap between LST types (mSOL ↔ jitoSOL ↔ bSOL)": {
+            "recommendation": "sanctum",
+            "rationale": "Sanctum is the LST liquidity layer. Swap between any LST types with minimal slippage.",
+            "install": "Use Sanctum API or app.sanctum.so",
+            "repo": null,
+            "skill": "Sanctum LST Skill"
+          }
+        }
+      },
+      "Vault / Yield strategy": {
+        "recommendation": "glam",
+        "rationale": "GLAM Protocol for structured vaults. Build Goldman Sachs-style investment products on-chain.",
+        "install": "Use GLAM SDK",
+        "repo": null,
+        "mcp": null,
+        "skill": "GLAM Protocol Skill"
+      },
+      "Token launch / Bonding curve": {
+        "recommendation": "pump-fun-or-raydium",
+        "rationale": "Pump.fun for meme/community token launches with bonding curve. Raydium for direct LP launch.",
+        "see_also": "Use the launch-token skill for detailed guidance."
+      }
+    }
+  }
+}

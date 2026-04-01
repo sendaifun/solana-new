@@ -10,7 +10,7 @@ How to search the solana-new catalogs for competitive intelligence.
 | Skills | 66 | `~/.claude/skills/_data/catalogs/solana-skills.json` |
 | MCPs | 49 | `~/.claude/skills/_data/catalogs/solana-mcps.json` |
 
-These are installed automatically by `solana-new init` alongside the skills.
+These are installed automatically by `superstack init` alongside the skills.
 
 ## How to Search
 

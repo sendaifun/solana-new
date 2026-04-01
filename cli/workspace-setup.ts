@@ -6,10 +6,11 @@ import type { LandscapeData } from "./copilot-client.js";
 import { normalizeAgentCommand } from "./agent-cli.js";
 import {
   RESET, DIM, BOLD, CYAN, GREEN, YELLOW, MAGENTA, RED,
-  GRADIENT_SOLANA_DOT_NEW, COMPETITION_HIGH, COMPETITION_MEDIUM,
+  COMPETITION_HIGH, COMPETITION_MEDIUM,
   ALT_SCREEN_ON, ALT_SCREEN_OFF, CURSOR_HIDE, CURSOR_SHOW, CLEAR_SCREEN,
   padFooter, toKebabSlug,
 } from "./colors.js";
+import { GRADIENT_PRODUCT, BINARY_NAME, CONTEXT_DIR_NAME } from "./branding.js";
 
 // --- Types ---
 
@@ -119,7 +120,7 @@ function generateJourneySection(): string {
   md += `| "Create a pitch deck" | 12-slide framework tailored to your audience |\n`;
   md += `| "Prepare my hackathon submission" | Optimized description + 3-min demo script |\n\n`;
 
-  md += `> Each phase writes to \`.solana-new/\` so the next phase picks up context automatically.\n`;
+  md += `> Each phase writes to \`.${CONTEXT_DIR_NAME}/\` so the next phase picks up context automatically.\n`;
   md += `> You can skip phases or jump around \u2014 skills handle missing context gracefully.\n\n`;
 
   return md;
@@ -194,10 +195,10 @@ function generateClaudeMd(input: WorkspaceSetupInput, projectName: string, selec
   }
 
   md += `## Ecosystem Commands\n`;
-  md += `- \`solana-new copilot "your idea"\` \u2014 landscape + gap analysis\n`;
-  md += `- \`solana-new search <query>\` \u2014 find repos, skills, MCPs\n`;
-  md += `- \`solana-new skills\` \u2014 browse available skills\n`;
-  md += `- \`solana-new ship\` \u2014 Idea \u2192 Build \u2192 Launch guide\n`;
+  md += `- \`${BINARY_NAME} copilot "your idea"\` \u2014 landscape + gap analysis\n`;
+  md += `- \`${BINARY_NAME} search <query>\` \u2014 find repos, skills, MCPs\n`;
+  md += `- \`${BINARY_NAME} skills\` \u2014 browse available skills\n`;
+  md += `- \`${BINARY_NAME} ship\` \u2014 Idea \u2192 Build \u2192 Launch guide\n`;
 
   return md;
 }
@@ -279,7 +280,7 @@ function buildSetupScreen(
   const lines: string[] = [];
 
   lines.push("");
-  lines.push(`  ${GRADIENT_SOLANA_DOT_NEW}  ${BOLD}Setup workspace${RESET}`);
+  lines.push(`  ${GRADIENT_PRODUCT}  ${BOLD}Setup workspace${RESET}`);
   lines.push("");
   lines.push(`  ${BOLD}Project:${RESET} ${CYAN}./${projectName}${RESET}`);
   lines.push("");
@@ -323,7 +324,7 @@ function buildInstallingScreen(
   const lines: string[] = [];
 
   lines.push("");
-  lines.push(`  ${GRADIENT_SOLANA_DOT_NEW}  ${BOLD}Setting up ${projectName}${RESET}`);
+  lines.push(`  ${GRADIENT_PRODUCT}  ${BOLD}Setting up ${projectName}${RESET}`);
   lines.push("");
 
   for (const step of steps) {
@@ -361,7 +362,7 @@ function buildDoneScreen(
   const lines: string[] = [];
 
   lines.push("");
-  lines.push(`  ${GRADIENT_SOLANA_DOT_NEW}  ${GREEN}${BOLD}Ready!${RESET}`);
+  lines.push(`  ${GRADIENT_PRODUCT}  ${GREEN}${BOLD}Ready!${RESET}`);
   lines.push("");
   lines.push(`  ${BOLD}cd ${projectName}${RESET}`);
   lines.push("");

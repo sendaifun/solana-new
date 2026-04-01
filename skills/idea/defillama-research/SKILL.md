@@ -3,6 +3,8 @@ name: defillama-research
 description: Research DeFi protocols and market opportunities using DefiLlama data. Use when a user says "show me TVL data", "which protocols are growing", "DeFi market research", "what should I build in DeFi", "find DeFi opportunities", "analyze protocol TVL", or "which chains are trending". Uses TVL as a trust metric to suggest protocols worth building on or integrating with.
 ---
 
+> **Wrong skill?** See [SKILL_ROUTER.md](../../SKILL_ROUTER.md) for all available skills.
+
 # DefiLlama Research
 
 ## Overview
@@ -38,7 +40,7 @@ Use DefiLlama's API to research the DeFi landscape on Solana and across chains. 
 
 This skill is **Phase 1 (Idea)** in the Idea → Build → Launch journey.
 
-After research, update `.solana-new/idea-context.json` with a `defi_research` field containing:
+After research, update `.superstack/idea-context.json` with a `defi_research` field containing:
 - `top_protocols`: array of { name, tvl, tvl_change_7d, category, chain }
 - `opportunities`: array of identified gaps or underserved niches
 - `recommended_integrations`: protocols with SDKs/APIs worth building on
@@ -53,6 +55,27 @@ See `../../../data/specs/phase-handoff.md` for the full JSON contract.
 - [references/defillama-api-guide.md](references/defillama-api-guide.md)
 - [references/tvl-as-trust-metric.md](references/tvl-as-trust-metric.md)
 - [references/defi-opportunity-framework.md](references/defi-opportunity-framework.md)
+
+## Quick Start
+
+```bash
+# Ask for DeFi data:
+#   "Show me DeFi opportunities on Solana"
+#   "Which Solana protocols are growing fastest?"
+#   "Find underserved DeFi niches on Solana"
+
+# Key DefiLlama API endpoints:
+# GET https://api.llama.fi/v2/chains                    — All chains TVL
+# GET https://api.llama.fi/protocols                     — All protocols
+# GET https://api.llama.fi/overview/dexs/solana          — Solana DEX volume
+# GET https://api.llama.fi/overview/fees/solana           — Solana fee revenue
+```
+
+## Decision Points
+
+- **Which DeFi category to build in?** See `../../data/decisions/defi-protocol.json` for protocol selection.
+- **TVL growing but revenue flat?** Protocol likely has unsustainable incentives — not a good model to copy.
+- **Small TVL + fast growth?** Best opportunity zone. Build the protocol or build tools for it.
 
 ### datasets/
 

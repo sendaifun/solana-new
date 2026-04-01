@@ -3,6 +3,7 @@ import { readFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { RESET, DIM, BOLD, GREEN, RED, CYAN } from "./colors.js";
+import { BINARY_NAME, GITHUB_REPO, PRODUCT_NAME } from "./branding.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -101,7 +102,7 @@ function parseFeedbackArgs(args: string[]): FeedbackInput {
 
 function buildTelegramText(message: string, contact?: string): string {
   const lines = [
-    `Feedback for solana-new v${getVersion()} (${process.platform}-${process.arch})`,
+    `Feedback for ${PRODUCT_NAME} v${getVersion()} (${process.platform}-${process.arch})`,
     "",
     message.trim(),
   ];
@@ -147,7 +148,7 @@ async function interactiveFeedback(useConvex: boolean): Promise<void> {
   const stdin = process.stdin;
   const stdout = process.stdout;
 
-  stdout.write(`\n  ${BOLD}${CYAN}solana-new feedback${RESET}\n\n`);
+  stdout.write(`\n  ${BOLD}${CYAN}${BINARY_NAME} feedback${RESET}\n\n`);
   stdout.write(`  ${DIM}Tell us what you think — bugs, ideas, anything.${RESET}\n\n`);
 
   const rl = await import("node:readline");
@@ -173,7 +174,7 @@ async function interactiveFeedback(useConvex: boolean): Promise<void> {
     if (ok) {
       console.log(`\r  ${GREEN}${BOLD}Sent!${RESET} ${DIM}Thanks for the feedback.${RESET}\n`);
     } else {
-      console.log(`\r  ${RED}Failed to send.${RESET} ${DIM}Try again or open an issue at github.com/sendaifun/solana-new-cli${RESET}\n`);
+      console.log(`\r  ${RED}Failed to send.${RESET} ${DIM}Try again or open an issue at github.com/${GITHUB_REPO}${RESET}\n`);
     }
     return;
   }
@@ -187,7 +188,7 @@ async function interactiveFeedback(useConvex: boolean): Promise<void> {
 
 export async function cmdFeedback(args: string[], agent: boolean): Promise<void> {
   if (args.includes("--help") || args.includes("-h")) {
-    console.log("Usage: solana-new feedback \"your message\" [--contact email] [--convex]");
+    console.log(`Usage: ${BINARY_NAME} feedback "your message" [--contact email] [--convex]`);
     console.log("Default route: Telegram @scriptscrypt");
     console.log("Use --convex to submit through the Convex backend.");
     return;
@@ -195,10 +196,10 @@ export async function cmdFeedback(args: string[], agent: boolean): Promise<void>
 
   const input = parseFeedbackArgs(args);
 
-  // Agent mode: solana-new feedback "message" [--contact "x"] [--convex]
+  // Agent mode: ${BINARY_NAME} feedback "message" [--contact "x"] [--convex]
   if (agent || !process.stdin.isTTY) {
     if (!input.message.trim()) {
-      console.log("Usage: solana-new feedback \"your message\" [--contact email] [--convex]");
+      console.log(`Usage: ${BINARY_NAME} feedback "your message" [--contact email] [--convex]`);
       return;
     }
 
@@ -220,7 +221,7 @@ export async function cmdFeedback(args: string[], agent: boolean): Promise<void>
       if (ok) {
         console.log(`\r  ${GREEN}${BOLD}Sent!${RESET} ${DIM}Thanks for the feedback.${RESET}\n`);
       } else {
-        console.log(`\r  ${RED}Failed to send.${RESET} ${DIM}Try again or open an issue at github.com/sendaifun/solana-new-cli${RESET}\n`);
+        console.log(`\r  ${RED}Failed to send.${RESET} ${DIM}Try again or open an issue at github.com/${GITHUB_REPO}${RESET}\n`);
       }
       return;
     }

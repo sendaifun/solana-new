@@ -1,0 +1,132 @@
+#!/usr/bin/env bash
+# superstack setup — gstack-style one-command installation
+# Usage: git clone <repo> ~/.claude/skills/superstack && cd ~/.claude/skills/superstack && ./setup
+set -euo pipefail
+
+# --- Branding (single source of truth for bash) ---
+PRODUCT_NAME="superstack"
+SKILL_DIR_NAME="superstack"
+
+# --- Colors ---
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+CYAN='\033[0;36m'
+BOLD='\033[1m'
+DIM='\033[2m'
+RESET='\033[0m'
+
+log()  { printf "\n  ${GREEN}▸${RESET} %s\n" "$1"; }
+warn() { printf "  ${YELLOW}!${RESET} %s\n" "$1"; }
+fail() { printf "\n  ${RED}✗${RESET} %s\n\n" "$1" >&2; exit 1; }
+ok()   { printf "  ${GREEN}✓${RESET} %s\n" "$1"; }
+
+has_cmd() { command -v "$1" >/dev/null 2>&1; }
+
+# --- Banner ---
+printf "\n"
+printf "  ${CYAN}${BOLD} ___ _   _ ___ ___ ___ ___ _____ _   ___ _  __${RESET}\n"
+printf "  ${CYAN}${BOLD}/ __| | | | _ \\ __| _ \\ __|_   _/_\\ / __| |/ /${RESET}\n"
+printf "  ${CYAN}${BOLD}\\__ \\ |_| |  _/ _||   /__ \\ | |/ _ \\ (__| ' < ${RESET}\n"
+printf "  ${CYAN}${BOLD}|___/\\___/|_| |___|_|_\\___/ |_/_/ \\_\\___|_|\\_\\\\${RESET}\n"
+printf "  ${DIM}Ship on Solana — skills, repos, MCPs${RESET}\n\n"
+
+# --- Prerequisites ---
+log "Checking prerequisites..."
+
+if ! has_cmd node; then
+  fail "Node.js is required (>= 20). Install from https://nodejs.org"
+fi
+
+NODE_MAJOR=$(node -e "console.log(process.versions.node.split('.')[0])")
+if [ "$NODE_MAJOR" -lt 20 ]; then
+  fail "Node.js >= 20 required (found v$(node -v)). Update: https://nodejs.org"
+fi
+ok "Node.js $(node -v)"
+
+if ! has_cmd npm; then
+  fail "npm is required. Install Node.js from https://nodejs.org"
+fi
+ok "npm $(npm -v)"
+
+# --- Detect agent CLI ---
+AGENT_CLI=""
+if has_cmd claude; then
+  AGENT_CLI="claude"
+  ok "Claude Code found"
+elif has_cmd codex; then
+  AGENT_CLI="codex"
+  ok "Codex found"
+else
+  warn "No agent CLI found (codex or claude). Install one:"
+  printf "    ${DIM}npm i -g @anthropic-ai/claude-code${RESET}\n"
+  printf "    ${DIM}npm i -g @openai/codex${RESET}\n"
+fi
+
+# --- Install dependencies ---
+log "Installing dependencies..."
+npm install --prefer-offline --no-audit --no-fund 2>/dev/null || npm install
+
+# --- Build ---
+log "Building..."
+npm run build 2>/dev/null || {
+  warn "Build failed, trying with npx tsx directly..."
+}
+
+# --- Install skills ---
+log "Installing skills to ~/.claude/skills/ and ~/.codex/skills/..."
+
+mkdir -p "$HOME/.claude/skills" "$HOME/.codex/skills"
+
+if [ -f "dist/cli/index.js" ]; then
+  node dist/cli/index.js init --agent
+else
+  npx tsx cli/index.ts init --agent
+fi
+
+# --- Telemetry opt-in ---
+printf "\n"
+printf "  ${BOLD}Telemetry${RESET} ${DIM}(helps us improve ${PRODUCT_NAME})${RESET}\n"
+printf "  ${DIM}We track skill usage counts only — no code, no file paths, no PII.${RESET}\n"
+printf "  ${DIM}Options: off (default), anonymous, community${RESET}\n\n"
+
+# Default to off, don't prompt in non-interactive
+if [ -t 0 ]; then
+  printf "  Enable telemetry? [off/anonymous/community]: "
+  read -r TELEMETRY_CHOICE </dev/tty || TELEMETRY_CHOICE="off"
+  TELEMETRY_CHOICE="${TELEMETRY_CHOICE:-off}"
+else
+  TELEMETRY_CHOICE="off"
+fi
+
+# Save telemetry preference
+CONFIG_DIR="$HOME/.${PRODUCT_NAME}"
+mkdir -p "$CONFIG_DIR"
+if [ -f "$CONFIG_DIR/config.json" ]; then
+  # Update existing config (simple jq-less approach)
+  node -e "
+    const fs = require('fs');
+    const p = '$CONFIG_DIR/config.json';
+    const c = JSON.parse(fs.readFileSync(p, 'utf8'));
+    c.telemetryTier = '$TELEMETRY_CHOICE';
+    fs.writeFileSync(p, JSON.stringify(c, null, 2) + '\n');
+  " 2>/dev/null || true
+else
+  echo "{\"telemetryTier\":\"$TELEMETRY_CHOICE\"}" > "$CONFIG_DIR/config.json"
+fi
+ok "Telemetry: $TELEMETRY_CHOICE"
+
+# --- Done ---
+printf "\n"
+printf "  ${GREEN}${BOLD}Setup complete!${RESET}\n\n"
+
+if [ -n "$AGENT_CLI" ]; then
+  printf "  ${BOLD}Get started:${RESET}\n"
+  printf "    ${CYAN}${AGENT_CLI} \"What should I build on Solana?\"${RESET}\n"
+  printf "    ${DIM}or run: ${PRODUCT_NAME} ship${RESET}\n"
+else
+  printf "  ${BOLD}Install an agent CLI, then:${RESET}\n"
+  printf "    ${CYAN}codex \"What should I build on Solana?\"${RESET}\n"
+  printf "    ${DIM}or: claude \"What should I build on Solana?\"${RESET}\n"
+fi
+printf "\n"

@@ -3,6 +3,8 @@ name: competitive-landscape
 description: Map the competitive landscape for a crypto product idea. Use when a user says "who are my competitors", "map the competitive landscape", "what exists in this space", "show me similar projects", or "competitive analysis". Leverages solana-new's catalogs of 59 repos, 66 skills, and 49 MCPs.
 ---
 
+> **Wrong skill?** See [SKILL_ROUTER.md](../../SKILL_ROUTER.md) for all available skills.
+
 # Competitive Landscape
 
 ## Overview
@@ -11,7 +13,7 @@ Map every relevant competitor, substitute, and adjacent project for a given cryp
 
 ## Workflow
 
-1. Check for `.solana-new/idea-context.json` in the workspace. If found, use the chosen idea's domain. If not, ask the user what space to analyze.
+1. Check for `.superstack/idea-context.json` in the workspace. If found, use the chosen idea's domain. If not, ask the user what space to analyze.
 2. Read [references/landscape-mapping.md](references/landscape-mapping.md) for the mapping methodology.
 3. Search the solana-new ecosystem catalogs as described in [references/ecosystem-catalog-guide.md](references/ecosystem-catalog-guide.md).
 4. Assess defensibility using [references/moat-analysis.md](references/moat-analysis.md).
@@ -32,7 +34,7 @@ Map every relevant competitor, substitute, and adjacent project for a given cryp
 
 This skill is **Phase 1 (Idea)** in the Idea → Build → Launch journey. After mapping the landscape:
 
-1. Update `.solana-new/idea-context.json` with a `landscape` field containing:
+1. Update `.superstack/idea-context.json` with a `landscape` field containing:
    - `direct_competitors`: array of { name, url, status, strength, weakness }
    - `substitutes`: array of { name, approach, why_users_stay }
    - `dead_projects`: array of { name, why_failed }
@@ -40,6 +42,27 @@ This skill is **Phase 1 (Idea)** in the Idea → Build → Launch journey. After
    - `moat_type`: identified moat category
    - `differentiation`: recommended angle
 2. See `../../../data/specs/phase-handoff.md` for the full JSON contract.
+
+## Quick Start
+
+```bash
+# Ask about competitors for your specific idea:
+#   "Who are my competitors for agent payments on Solana?"
+#   "Map the competitive landscape for DeFi lending"
+#   "What exists in the Solana staking space?"
+
+# The skill will search:
+# - 59 repos in cli/data/clonable-repos.json
+# - 71 skills in cli/data/solana-skills.json
+# - 49 MCPs in cli/data/solana-mcps.json
+# - DefiLlama, GitHub, and crypto Twitter
+```
+
+## Decision Points
+
+- **Saturated market?** If crowdedness = "saturated" (>5 direct competitors), look for underserved angle or niche.
+- **Which data sources?** Use DefiLlama for TVL/protocol data. Use GitHub for development activity. Use Twitter/X for community sentiment.
+- **Dead project found?** Check WHY it died — technical failure, market timing, or team issues. The idea might still be valid.
 
 ## Resources
 

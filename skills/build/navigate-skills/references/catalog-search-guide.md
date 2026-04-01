@@ -2,7 +2,7 @@
 
 ## File Locations
 
-When installed via `solana-new init`, catalog data is at:
+When installed via `superstack init`, catalog data is at:
 ```
 ~/.claude/skills/_data/catalogs/clonable-repos.json
 ~/.claude/skills/_data/catalogs/solana-skills.json

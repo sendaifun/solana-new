@@ -44,9 +44,9 @@ export function gradientLine(text: string): string {
   }).join("") + RESET;
 }
 
-// Pre-computed gradient strings (cached — never recomputed)
-export const GRADIENT_SOLANA_DOT_NEW = gradientLine("solana.new");
-export const GRADIENT_SOLANA_DASH_NEW = gradientLine("solana-new");
+// Legacy gradient aliases — import from branding.ts for new code
+// Kept for backward compat during migration; re-export from branding
+export { GRADIENT_PRODUCT as GRADIENT_SOLANA_DOT_NEW, GRADIENT_PRODUCT_DASH as GRADIENT_SOLANA_DASH_NEW } from "./branding.js";
 
 // Competition thresholds
 export const COMPETITION_HIGH = 30;

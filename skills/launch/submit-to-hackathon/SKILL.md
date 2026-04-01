@@ -3,6 +3,8 @@ name: submit-to-hackathon
 description: Prepare and optimize a hackathon submission for a Solana project. Use when a user says "submit to hackathon", "prepare my submission", "hackathon entry", "write project description", "demo video", or "help me win the hackathon". Reads all prior phase context if available.
 ---
 
+> **Wrong skill?** See [SKILL_ROUTER.md](../../SKILL_ROUTER.md) for all available skills.
+
 # Submit to Hackathon
 
 ## Overview
@@ -11,7 +13,7 @@ Prepare a complete, optimized hackathon submission. Write the project descriptio
 
 ## Workflow
 
-1. Check for `.solana-new/idea-context.json` and `.solana-new/build-context.json`. Use all available context.
+1. Check for `.superstack/idea-context.json` and `.superstack/build-context.json`. Use all available context.
 2. If no context, interview: What did you build? What hackathon? Which track/prize?
 3. Read [references/hackathon-submission-guide.md](references/hackathon-submission-guide.md) for formatting and requirements.
 4. Read [references/judging-criteria.md](references/judging-criteria.md) to optimize for what judges look for.
@@ -19,20 +21,9 @@ Prepare a complete, optimized hackathon submission. Write the project descriptio
 6. Create a demo script using [references/demo-video-script.md](references/demo-video-script.md).
 7. Write a submission HTML artifact with all content ready to copy-paste.
 
-## Dependency Gate (Required)
+## Prior Context (Optional — never block on this)
 
-Hackathon submissions depend on prior phase outputs.
-
-1. Preferred prerequisites:
-   - `idea-context.json` from `solana-new copilot`
-   - `build-context.json` from `scaffold-project` and `build-with-claude`
-2. If missing, give the user exact order first:
-   - `solana-new copilot "your idea"`
-   - `scaffold-project`
-   - `build-with-claude`
-   - `review-and-iterate`
-   - `submit-to-hackathon`
-3. If user proceeds without context, continue via interview but label unknowns as `TBD`.
+If `.superstack/idea-context.json` or `.superstack/build-context.json` exist, use them to enrich the submission. If they don't exist, **proceed immediately** — interview the user about their project. Do NOT redirect to other commands.
 
 ## Non-Negotiables
 
@@ -52,3 +43,29 @@ Hackathon submissions depend on prior phase outputs.
 - [references/hackathon-submission-guide.md](references/hackathon-submission-guide.md)
 - [references/demo-video-script.md](references/demo-video-script.md)
 - [references/judging-criteria.md](references/judging-criteria.md)
+
+## Quick Start
+
+```bash
+# This skill creates a submission artifact (HTML) with all content ready to copy-paste.
+# Ask:
+#   "Prepare my Colosseum hackathon submission"
+#   "Help me write a hackathon project description"
+#   "Create a 3-minute demo script"
+
+# Make sure before submitting:
+# 1. Demo is live (devnet OK)
+solana program show <PROGRAM_ID> --url devnet  # Verify deployed
+
+# 2. Code is on GitHub (public repo)
+git remote -v  # Should show GitHub URL
+
+# 3. README has setup instructions
+head -30 README.md  # Should have Quick Start section
+```
+
+## Decision Points
+
+- **Which track?** Pick the least competitive track that fits. DeFi tracks are overcrowded. Infrastructure and tooling have fewer entries.
+- **Demo on devnet or mainnet?** Devnet is fine for hackathons. Makes it easier for judges to test without spending real SOL.
+- **Video vs live demo?** Record a video (safer — no live bugs). Keep under 3 minutes. Show the actual product, not slides.

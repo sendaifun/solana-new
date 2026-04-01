@@ -1,10 +1,11 @@
 {
-  "name": "solana-new",
-  "version": "0.1.0",
+  "name": "superstack",
+  "version": "0.2.0",
   "private": true,
-  "description": "Discover the Solana ecosystem — repos, skills, and MCP servers",
+  "description": "Ship on Solana — Idea to Launch. Skills, repos, MCPs.",
   "type": "module",
   "bin": {
+    "superstack": "./dist/cli/index.js",
     "solana-new": "./dist/cli/index.js"
   },
   "files": [
@@ -18,7 +19,8 @@
   "scripts": {
     "build": "tsc -p tsconfig.json && chmod +x dist/cli/index.js",
     "dev": "tsx cli/index.ts",
-    "postinstall": "node dist/cli/index.js init --agent 2>/dev/null || true"
+    "postinstall": "node dist/cli/index.js init --agent 2>/dev/null || true",
+    "setup": "./setup"
   },
   "devDependencies": {
     "@types/node": "^22.13.14",

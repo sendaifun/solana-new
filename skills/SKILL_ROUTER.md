@@ -1,0 +1,70 @@
+# Skill Router
+
+> **For AI agents**: If the user's request doesn't match this skill, find the right one below and switch.
+
+## Idea Phase — Discovery & Planning
+
+| Trigger | Skill | When to use |
+|---------|-------|-------------|
+| "what should I build", "crypto ideas", "project ideas" | `find-next-crypto-idea` | User has no idea yet, needs discovery |
+| "validate this idea", "is this worth building" | `validate-idea` | User has an idea, needs stress-testing |
+| "who are my competitors", "competitive analysis" | `competitive-landscape` | User wants to map existing players |
+| "DeFi opportunities", "TVL data", "DefiLlama" | `defillama-research` | User wants DeFi market data |
+
+## Build Phase — Solana Implementation
+
+| Trigger | Skill | When to use |
+|---------|-------|-------------|
+| "scaffold", "set up project", "initialize" | `scaffold-project` | Starting from scratch, need project structure |
+| "help me build", "build the MVP", "guide me" | `build-with-claude` | Step-by-step implementation guidance |
+| "DeFi protocol", "AMM", "lending", "vault", "DEX" | `build-defi-protocol` | Building DeFi-specific programs |
+| "blink", "Solana Action", "shareable transaction" | `build-blinks` | Building Actions/Blinks |
+| "launch token", "SPL token", "memecoin", "pump.fun" | `launch-token` | Token creation and distribution |
+| "data pipeline", "indexer", "webhook", "analytics" | `build-data-pipeline` | On-chain data infrastructure |
+| "mobile app", "React Native", "mobile wallet" | `build-mobile` | Mobile dApp development |
+| "debug", "error", "transaction failed", "stuck" | `debug-program` | Diagnosing program failures |
+| "review", "audit", "security", "production ready" | `review-and-iterate` | Code review and security audit |
+| "security audit", "signer check", "PDA security" | `solana-security-audit` | Deep Sealevel security analysis |
+| "QA", "test my dApp", "test wallet flow" | `solana-qa` | Systematic QA testing |
+| "benchmark", "compute units", "CU", "optimize" | `solana-benchmark` | CU optimization and TX analysis |
+| "monitor", "canary", "post-deploy", "health check" | `solana-canary` | Post-deploy monitoring |
+| "retro", "sprint review", "what did we ship" | `solana-retro` | Sprint retrospective |
+| "ship it", "release", "create PR", "merge" | `solana-ship` | Full release workflow |
+| "marketing video", "promo video", "Remotion" | `marketing-video` | Code-driven + AI video production |
+
+## Launch Phase — Go to Market
+
+| Trigger | Skill | When to use |
+|---------|-------|-------------|
+| "deploy to mainnet", "go to production" | `deploy-to-mainnet` | Mainnet deployment checklist |
+| "pitch deck", "slides", "investor presentation" | `create-pitch-deck` | Pitch deck creation |
+| "hackathon submission", "submit", "demo video" | `submit-to-hackathon` | Hackathon submission prep |
+| "marketing video", "deck review", "product video" | `marketing-video` | Video content creation |
+
+## Decision Trees (shared across skills)
+
+For "which X should I use?" questions, read these JSON files:
+
+| Question | Decision Tree |
+|----------|--------------|
+| Which wallet SDK? | `data/decisions/wallet-selection.json` |
+| Which RPC provider? | `data/decisions/rpc-selection.json` |
+| Which DeFi protocol? | `data/decisions/defi-protocol.json` |
+| Which test framework? | `data/decisions/testing-framework.json` |
+| SPL Token vs Token-2022? | `data/decisions/token-standard.json` |
+
+## Shared Runbooks
+
+| Topic | Runbook |
+|-------|---------|
+| RPC + wallet setup | `data/runbooks/rpc-wallet-guide.md` |
+| Deploy devnet → mainnet | `data/runbooks/deploy-runbook.md` |
+| Security audit checklist | `data/runbooks/security-checklist.md` |
+
+## How to use this router
+
+1. Read the user's request
+2. Match against the trigger phrases above
+3. If this skill doesn't match, tell the user: "This looks like a [X] task. Let me use the [skill-name] skill instead."
+4. For "which X should I use?" questions, check the decision trees above
+5. Load the correct SKILL.md and follow its instructions

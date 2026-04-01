@@ -3,6 +3,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { homedir } from "node:os";
 import { RESET, DIM, BOLD, RED } from "./colors.js";
+import { BINARY_NAME } from "./branding.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -70,7 +71,7 @@ export function cmdUninstall(agent: boolean): void {
         console.log("  ~/.codex/skills:");
         for (const s of removedCodex) console.log(`    - ${s}`);
       }
-      console.log("\nRun solana-new init to reinstall.");
+      console.log(`\nRun ${BINARY_NAME} init to reinstall.`);
     }
     return;
   }
@@ -92,7 +93,7 @@ export function cmdUninstall(agent: boolean): void {
       console.log("");
     }
     console.log("");
-    console.log(`  ${DIM}Run ${BOLD}solana-new init${RESET}${DIM} to reinstall.${RESET}`);
+    console.log(`  ${DIM}Run ${BOLD}${BINARY_NAME} init${RESET}${DIM} to reinstall.${RESET}`);
   }
   console.log("");
 }

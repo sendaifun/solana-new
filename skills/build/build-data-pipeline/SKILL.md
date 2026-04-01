@@ -3,6 +3,8 @@ name: build-data-pipeline
 description: Guide a developer through building a Solana data pipeline or indexer. Use when a user says "build an indexer", "data pipeline", "analytics", "track transactions", "monitor wallets", "webhook", "index accounts", or "real-time data". Reads build-context.json from a prior scaffold phase if available.
 ---
 
+> **Wrong skill?** See [SKILL_ROUTER.md](../../SKILL_ROUTER.md) for all available skills.
+
 # Build Data Pipeline
 
 ## Overview
@@ -11,7 +13,7 @@ Guide the user through building a data pipeline that ingests, transforms, and st
 
 ## Workflow
 
-1. Check for `.solana-new/build-context.json`. If found, use stack decisions. If not, ask: what data do you need (transactions, account state, token transfers, program events)? Real-time, historical, or both?
+1. Check for `.superstack/build-context.json`. If found, use stack decisions. If not, ask: what data do you need (transactions, account state, token transfers, program events)? Real-time, historical, or both?
 2. Read [references/indexing-patterns.md](references/indexing-patterns.md) to select the right ingestion method.
 3. Read [references/data-storage.md](references/data-storage.md) to design the storage schema.
 4. Implement in milestones:
@@ -36,8 +38,8 @@ Guide the user through building a data pipeline that ingests, transforms, and st
 
 This skill is **Phase 2 (Build)** in the Idea → Build → Launch journey.
 
-**Reads**: `.solana-new/build-context.json`
-**Updates**: `.solana-new/build-context.json` with:
+**Reads**: `.superstack/build-context.json`
+**Updates**: `.superstack/build-context.json` with:
 - `pipeline.ingestion_method`: "webhook" | "websocket" | "geyser" | "rpc-polling"
 - `pipeline.data_types`: string[] (e.g., ["transactions", "account-state", "token-transfers"])
 - `pipeline.storage`: "postgresql" | "redis" | "custom"
@@ -46,6 +48,32 @@ This skill is **Phase 2 (Build)** in the Idea → Build → Launch journey.
 When updating, **deep-merge** — don't overwrite existing fields.
 
 See `../../data/specs/phase-handoff.md` for the full JSON contract.
+
+## Quick Start
+
+```bash
+# Fastest: Helius webhooks (no infrastructure needed)
+# 1. Get Helius API key from helius.dev
+# 2. Create webhook:
+curl -X POST https://api.helius.xyz/v0/webhooks?api-key=YOUR_KEY \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "webhookURL": "https://your-app.com/webhook",
+    "transactionTypes": ["TRANSFER"],
+    "accountAddresses": ["YOUR_PROGRAM_ID"]
+  }'
+
+# For WebSocket (real-time, more control):
+# Use: solana logs <PROGRAM_ID> --url mainnet-beta
+# Or: @solana/web3.js Connection.onLogs()
+```
+
+## Decision Points
+
+- **Which ingestion method?** Webhooks (simplest, Helius) → WebSocket (real-time) → Geyser (highest throughput) → Polling (last resort).
+- **Which RPC?** See `../../data/decisions/rpc-selection.json` — Helius required for webhooks and DAS API.
+- **Database?** PostgreSQL for relational data + transactions. Redis for caching + real-time state. SQLite for small/local indexers.
+- **Hosting?** Railway or Fly.io for webhook receivers. AWS/GCP for Geyser plugins.
 
 ## Resources
 

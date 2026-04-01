@@ -3,6 +3,8 @@ name: build-with-claude
 description: Guide a developer through building their Solana MVP step by step using Claude Code. Use when a user says "help me build this", "start the MVP", "guide me through implementation", "what should I build first", or "walk me through the code". Reads build-context.json from a prior scaffold phase if available.
 ---
 
+> **Wrong skill?** See [SKILL_ROUTER.md](../../SKILL_ROUTER.md) for all available skills.
+
 # Build with Claude
 
 ## Overview
@@ -11,7 +13,7 @@ Guide the user through implementing their Solana MVP feature by feature. Break t
 
 ## Workflow
 
-1. Check for `.solana-new/build-context.json`. If found, use the stack and architecture decisions. If not, ask what they've set up and what they want to build.
+1. Check for `.superstack/build-context.json`. If found, use the stack and architecture decisions. If not, ask what they've set up and what they want to build.
 2. Read [references/skill-mcp-usage-guide.md](references/skill-mcp-usage-guide.md) to understand what tools are available BEFORE building.
 3. Read [references/dev-environment-setup.md](references/dev-environment-setup.md) to ensure the dev environment is ready.
 4. Read [references/solana-dev-patterns.md](references/solana-dev-patterns.md) for implementation patterns.
@@ -24,33 +26,26 @@ Guide the user through implementing their Solana MVP feature by feature. Break t
 7. When stuck, consult [references/error-recovery-guide.md](references/error-recovery-guide.md).
 8. After MVP is complete, run through [references/testing-checklist.md](references/testing-checklist.md).
 
-## Dependency Gate (Required)
+## Prior Context (Optional — never block on this)
 
-This skill depends on scaffold output.
-
-1. If `.solana-new/build-context.json` is missing:
-   - Tell the user: "Run `scaffold-project` first (or `solana-new copilot \"your idea\"` → `scaffold-project`)."
-   - Explain that `build-with-claude` needs stack/repo/MCP decisions from scaffold.
-2. If `build-context.json` exists but `stack` is missing, redirect to `scaffold-project`.
-3. Only proceed without scaffold context if the user explicitly asks to continue anyway.
-4. If proceeding, create/repair `.solana-new/build-context.json` with minimum required `stack` and `build_status` fields before coding.
+If `.superstack/build-context.json` exists, use the stack and architecture decisions. If it doesn't exist, **proceed immediately** — ask the user what they've set up and what they want to build. Do NOT redirect to scaffold-project or any other command.
 
 ## Non-Negotiables
 
+- **Never block on missing context files.** Always proceed by asking the user directly.
 - Never write more than 1 milestone of code before testing. Ship small, verify often.
 - Always test on devnet before suggesting mainnet.
 - If the user is stuck for more than 2 attempts at the same problem, step back and try a different approach.
 - Use the installed skills and MCPs — they exist to help. Don't reinvent what a skill already provides.
 - Keep explanations short. The user is here to build, not read essays.
-- Update `.solana-new/build-context.json` as milestones are completed.
-- Never silently continue when dependency context is missing. Redirect with exact next-skill order.
+- Optionally update `.superstack/build-context.json` as milestones are completed.
 
 ## Phase Handoff
 
 This skill is **Phase 2 (Build)** in the Idea → Build → Launch journey.
 
-**Reads**: `.solana-new/build-context.json` (from scaffold-project)
-**Updates**: `.solana-new/build-context.json` with:
+**Reads**: `.superstack/build-context.json` (from scaffold-project)
+**Updates**: `.superstack/build-context.json` with:
 - `build_status.milestones`: array of completed milestones
 - `build_status.mvp_complete`: boolean
 - `build_status.tests_passing`: boolean
@@ -62,6 +57,32 @@ When MVP is complete and tests pass, tell the user to proceed to **review-and-it
 When updating `build-context.json`, **deep-merge** with existing content — don't overwrite fields from prior phases.
 
 See `../../data/specs/phase-handoff.md` for the full JSON contract.
+
+## Quick Start
+
+```bash
+# Verify dev environment
+solana --version       # >= 1.18
+anchor --version       # >= 0.30
+node --version         # >= 20
+
+# Start local validator for testing
+solana-test-validator   # Or: surfpool --fork devnet (for real account data)
+
+# Build and test
+anchor build && anchor test
+
+# Deploy to devnet when ready
+anchor deploy --provider.cluster devnet
+```
+
+## Decision Points
+
+- **Which RPC for development?** See `../../data/decisions/rpc-selection.json` — use devnet public or Helius free.
+- **Which wallet for testing?** Use file keypair: `solana-keygen new --outfile test-wallet.json`
+- **When to move from local to devnet?** After all unit tests pass locally. Devnet for integration tests.
+- **Surfpool vs solana-test-validator?** Use Surfpool when you need real mainnet account state (DeFi, existing programs). Use test-validator for isolated testing.
+- **Full runbook:** See `../../data/runbooks/rpc-wallet-guide.md`
 
 ## Resources
 

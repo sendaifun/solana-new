@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import { homedir } from "node:os";
 import { spawn } from "node:child_process";
 import { RESET, DIM, BOLD, CYAN, GREEN, YELLOW, MAGENTA } from "./colors.js";
+import { BINARY_NAME, PRODUCT_NAME, CONTEXT_DIR_NAME } from "./branding.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -128,20 +129,21 @@ function generateProjectClaudeMd(): string {
   md += `- "Build a Solana data pipeline" — indexer, webhook, analytics\n`;
   md += `- "Build a Solana mobile app" — React Native + mobile wallet adapter\n`;
   md += `- "Debug my failing Solana program" — diagnose program errors and failed TXs\n`;
-  md += `- "Review my Solana program for security" — audit for exploits and best practices\n\n`;
+  md += `- "Review my Solana program for security" — audit for exploits and best practices\n`;
+  md += `- "Create a marketing video" — Remotion + Renoise video production\n\n`;
 
   md += `### Phase 3: Launch — Hackathon Submission\n`;
   md += `- "Deploy my Solana program to mainnet" — pre-flight checklist + verification\n`;
   md += `- "Create a pitch deck for Colosseum judges" — 12-slide hackathon framework\n`;
   md += `- "Prepare my Colosseum hackathon submission" — optimized for judges\n\n`;
 
-  md += `> Each phase writes context to \`.solana-new/\` so the next phase picks up automatically.\n\n`;
+  md += `> Each phase writes context to \`.${PRODUCT_NAME}/\` so the next phase picks up automatically.\n\n`;
 
   md += `## Ecosystem\n`;
-  md += `- \`solana-new search <query>\` — find repos, skills, MCPs\n`;
-  md += `- \`solana-new repos\` — 59 cloneable Solana repos\n`;
-  md += `- \`solana-new skills\` — 66 ecosystem skills\n`;
-  md += `- \`solana-new mcps\` — 49 MCP servers\n`;
+  md += `- \`${BINARY_NAME} search <query>\` — find repos, skills, MCPs\n`;
+  md += `- \`${BINARY_NAME} repos\` — 59 cloneable Solana repos\n`;
+  md += `- \`${BINARY_NAME} skills\` — 66 ecosystem skills\n`;
+  md += `- \`${BINARY_NAME} mcps\` — 49 MCP servers\n`;
 
   return md;
 }
@@ -156,7 +158,7 @@ export async function cmdInit(args: string[], flags: Record<string, string | boo
 
   if (agent) {
     // Machine-readable output for Claude Code / Codex
-    console.log(`solana-new init — ${total} skills (Colosseum hackathon)`);
+    console.log(`${BINARY_NAME} init — ${total} skills (Colosseum hackathon)`);
     console.log(``);
     if (installed.length > 0) {
       console.log(`Installed ${installed.length} skills to ~/.claude/skills and ~/.codex/skills:`);
@@ -174,7 +176,7 @@ export async function cmdInit(args: string[], flags: Record<string, string | boo
   } else {
     // Human-friendly output
     console.log(``);
-    console.log(`  ${BOLD}solana-new init${RESET}`);
+    console.log(`  ${BOLD}${BINARY_NAME} init${RESET}`);
     console.log(``);
 
     if (installed.length > 0) {
@@ -207,7 +209,7 @@ export async function cmdInit(args: string[], flags: Record<string, string | boo
 
   if (!agent) {
     console.log(`  ${YELLOW}${BOLD}Launch Codex or Claude:${RESET}`);
-    console.log(`  ${MAGENTA}$ solana-new ship${RESET}  ${DIM}pick a skill → opens your available agent CLI${RESET}`);
+    console.log(`  ${MAGENTA}$ ${BINARY_NAME} ship${RESET}  ${DIM}pick a skill → opens your available agent CLI${RESET}`);
     console.log(`  ${MAGENTA}$ codex "What should I build in crypto?"${RESET} ${DIM}(or claude "...")${RESET}`);
     console.log(``);
   }

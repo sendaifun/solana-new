@@ -15,6 +15,9 @@
   },
   "include": [
     "cli/index.ts",
+    "cli/branding.ts",
+    "cli/telemetry.ts",
+    "cli/interactive-journey.ts",
     "cli/interactive-search.ts",
     "cli/interactive-skills.ts",
     "cli/interactive-mcps.ts",

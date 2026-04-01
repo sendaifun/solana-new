@@ -7,10 +7,11 @@ import {
 import { normalizeAgentCommand } from "./agent-cli.js";
 import {
   RESET, DIM, BOLD, CYAN, GREEN, YELLOW, MAGENTA, BLUE, RED,
-  GRADIENT_SOLANA_DOT_NEW, COMPETITION_HIGH, COMPETITION_MEDIUM,
+  COMPETITION_HIGH, COMPETITION_MEDIUM,
   ALT_SCREEN_ON, ALT_SCREEN_OFF, CURSOR_HIDE, CURSOR_SHOW, CLEAR_SCREEN,
   padFooter, insightBox,
 } from "./colors.js";
+import { GRADIENT_PRODUCT, BINARY_NAME } from "./branding.js";
 
 // --- Types ---
 
@@ -182,7 +183,7 @@ function buildExploreScreen(
 ): string[] {
   const lines: string[] = [];
   lines.push("");
-  lines.push(`  ${GRADIENT_SOLANA_DOT_NEW}  ${BOLD}What do you want to build on Solana?${RESET}`);
+  lines.push(`  ${GRADIENT_PRODUCT}  ${BOLD}What do you want to build on Solana?${RESET}`);
   lines.push("");
 
   // Text input
@@ -249,7 +250,7 @@ function buildExploreScreen(
 function buildLandscapeScreen(title: string, data: LandscapeData | null, loading: boolean, rows: number): string[] {
   const lines: string[] = [];
   lines.push("");
-  lines.push(`  ${GRADIENT_SOLANA_DOT_NEW}  ${BOLD}Landscape: ${title.length > 40 ? title.slice(0, 37) + "..." : title}${RESET}`);
+  lines.push(`  ${GRADIENT_PRODUCT}  ${BOLD}Landscape: ${title.length > 40 ? title.slice(0, 37) + "..." : title}${RESET}`);
   lines.push("");
 
   if (loading) {
@@ -313,7 +314,7 @@ function buildRecommendationScreen(
   const lines: string[] = [];
   const rec = normalizeRecommendation(sub.recommendation);
   lines.push("");
-  lines.push(`  ${GRADIENT_SOLANA_DOT_NEW}  ${BOLD}${sub.label}${RESET}`);
+  lines.push(`  ${GRADIENT_PRODUCT}  ${BOLD}${sub.label}${RESET}`);
   lines.push("");
 
   if (rec.skills.length > 0) {
@@ -388,7 +389,7 @@ export function agentOnboarding(): void {
 
 export async function agentIdea(query: string): Promise<void> {
   const token = getToken();
-  if (!token) { console.log("Colosseum Copilot token not set. Run: solana-new config token"); return; }
+  if (!token) { console.log(`Colosseum Copilot token not set. Run: ${BINARY_NAME} config token`); return; }
   console.log(`Analyzing: "${query}"\n`);
   const data = await fetchLandscape(token, query);
   if (data.search) {
@@ -440,7 +441,7 @@ export async function interactiveOnboarding(prefilledIdea?: string): Promise<Onb
       if (valid) { saveToken(entered); copilotToken = entered; console.log(`\r  ${GREEN}Token verified and saved.${RESET}          `); }
       else { console.log(`\r  ${YELLOW}Invalid token.${RESET}                    `); markTokenPrompted(); }
       console.log("");
-    } else { markTokenPrompted(); console.log(`  ${DIM}Run solana-new config token to add later.${RESET}\n`); }
+    } else { markTokenPrompted(); console.log(`  ${DIM}Run ${BINARY_NAME} config token to add later.${RESET}\n`); }
   }
 
   stdin.setRawMode(true);
@@ -485,7 +486,7 @@ export async function interactiveOnboarding(prefilledIdea?: string): Promise<Onb
         const matches = matchedSubs.map(m => ({ sub: m.sub, catLabel: m.catLabel }));
         const mLines: string[] = [];
         mLines.push("");
-        mLines.push(`  ${GRADIENT_SOLANA_DOT_NEW}  ${BOLD}Matched recommendations${RESET}`);
+        mLines.push(`  ${GRADIENT_PRODUCT}  ${BOLD}Matched recommendations${RESET}`);
         mLines.push("");
         mLines.push(`  ${DIM}Your idea:${RESET} ${query.length > 55 ? query.slice(0, 52) + "..." : query}`);
         mLines.push("");

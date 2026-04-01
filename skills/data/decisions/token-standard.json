@@ -1,0 +1,59 @@
+{
+  "name": "Token Standard Selection",
+  "description": "Choose between SPL Token and Token-2022 for your Solana token",
+  "version": "1.0",
+  "tree": {
+    "question": "Do you need any of these advanced features?",
+    "branches": {
+      "Transfer fees (tax on every transfer)": {
+        "recommendation": "token-2022",
+        "rationale": "Token-2022 has native transfer fee extension. Fee is enforced at the protocol level — can't be bypassed.",
+        "extension": "TransferFeeConfig",
+        "setup": "spl-token create-token --program-id TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb --enable-transfer-fee <fee_bps> <max_fee>",
+        "tradeoffs": "Some DEXes don't fully support transfer-fee tokens yet. Jupiter does. Raydium does. Orca partial."
+      },
+      "Confidential transfers (hidden amounts)": {
+        "recommendation": "token-2022",
+        "rationale": "Token-2022 confidential transfers use zero-knowledge proofs to hide transfer amounts. Only sender and receiver see the amount.",
+        "extension": "ConfidentialTransferMint + ConfidentialTransferAccount",
+        "setup": "Complex setup — use the Confidential Transfers official skill for guidance.",
+        "tradeoffs": "Experimental. Limited DEX support. Higher compute cost per transfer."
+      },
+      "Interest-bearing token (accruing yield)": {
+        "recommendation": "token-2022",
+        "rationale": "Token-2022 interest-bearing extension tracks accrued interest without rebasing. Good for yield-bearing tokens.",
+        "extension": "InterestBearingConfig",
+        "tradeoffs": "Interest is display-only — doesn't actually mint new tokens. You handle the underlying yield."
+      },
+      "Non-transferable token (soulbound)": {
+        "recommendation": "token-2022",
+        "rationale": "Token-2022 non-transferable extension makes tokens soulbound. Good for credentials, achievements, reputation.",
+        "extension": "NonTransferable",
+        "tradeoffs": "Cannot be listed on any DEX (by design). No secondary market."
+      },
+      "On-chain metadata (no Metaplex dependency)": {
+        "recommendation": "token-2022",
+        "rationale": "Token-2022 metadata extension stores name, symbol, URI directly on the mint account. No separate Metaplex metadata account needed.",
+        "extension": "TokenMetadata",
+        "setup": "spl-token create-token --program-id TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb\nspl-token initialize-metadata <mint> 'My Token' 'TKN' 'https://arweave.net/metadata.json'",
+        "tradeoffs": "Simpler than Metaplex but less ecosystem tooling. Metaplex has better indexer/marketplace support."
+      },
+      "None — just a standard fungible token": {
+        "recommendation": "spl-token",
+        "rationale": "Standard SPL Token (Token program). Maximum compatibility with all DEXes, wallets, and tools. The safe default.",
+        "setup": "spl-token create-token\nspl-token create-account <mint>\nspl-token mint <mint> <amount>",
+        "metadata": "Add Metaplex metadata: use @metaplex-foundation/mpl-token-metadata for name, symbol, image.",
+        "tradeoffs": "No advanced features. Need Metaplex for metadata (separate account, extra rent)."
+      },
+      "NFT or semi-fungible token": {
+        "recommendation": "metaplex-core",
+        "rationale": "Metaplex Core is the latest NFT standard. Simpler than legacy Metaplex (single account vs. multiple). Supports collections, plugins, royalties.",
+        "install": "npm install @metaplex-foundation/mpl-core",
+        "setup": "Use Metaplex Umi framework to create assets.",
+        "repo": "mpl-core",
+        "tradeoffs": "Newer standard — some marketplaces may not support it yet. Legacy Metaplex (Token Metadata) has wider support."
+      }
+    }
+  },
+  "compatibility_note": "SPL Token works everywhere. Token-2022 works on Jupiter, Raydium, Phantom, Solflare. Check specific DEX/wallet support before choosing Token-2022 extensions."
+}

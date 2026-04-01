@@ -1,12 +1,12 @@
 # Phase Handoff Specification
 
-Defines the JSON contracts that skills write to `.solana-new/` in the project workspace. Each phase's output is the next phase's input.
+Defines the JSON contracts that skills write to `.superstack/` in the project workspace. Each phase's output is the next phase's input.
 
 ## File Locations
 
 ```
 <project-root>/
-  .solana-new/
+  .superstack/
     idea-context.json       # Written by Phase 1 (Idea) skills
     build-context.json      # Written by Phase 2 (Build) skills
 ```
@@ -93,7 +93,7 @@ Written by: `scaffold-project`, `build-with-claude`, `review-and-iterate`
 {
   "phase": "build",
   "completed_at": "2026-03-28T18:00:00Z",
-  "idea_context_ref": ".solana-new/idea-context.json",
+  "idea_context_ref": ".superstack/idea-context.json",
   "stack": {
     "template": "next-anchor",
     "skills_installed": ["solana-agent-kit", "jupiter", "helius"],
@@ -147,11 +147,10 @@ When a skill updates an existing context file:
 
 ## Missing Context
 
-If a skill expects a context file that doesn't exist:
+Context files are **optional enhancements, not gates**. If a skill expects a context file that doesn't exist:
 
-1. First, tell the user which prerequisite skill should run and why.
-2. Provide exact next-step order (for example: `solana-new copilot "your idea"` → `scaffold-project` → `build-with-claude`).
-3. By default, block dependency-sensitive actions (`deploy-to-mainnet`) until prerequisites are satisfied.
-4. For non-blocking actions (pitch/submission), proceed via interview only if the user explicitly wants to continue.
+1. **Proceed immediately.** Ask the user directly for the information you need.
+2. Do NOT redirect the user to run other commands first.
+3. Do NOT warn about missing files or print dependency chains.
+4. If you gather enough context through conversation, optionally write the context file for future skills.
 5. When proceeding without full context, label unknown values as assumptions/TBD (never fabricate).
-6. Create or repair the context file with gathered data before continuing.

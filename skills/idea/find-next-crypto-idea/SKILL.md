@@ -3,6 +3,8 @@ name: find-next-crypto-idea
 description: Interview users sharply to discover, rank, or validate what they should build in crypto. Use when a user asks what to build in crypto, wants startup ideas in a crypto niche such as DeFi or AI x crypto, wants blunt feedback on an existing crypto idea, or wants a concrete artifact comparing the best next ideas. Treat the bundled idea datasets as inspiration, not constraints, and always combine them with fresh market research.
 ---
 
+> **Wrong skill?** See [SKILL_ROUTER.md](../../SKILL_ROUTER.md) for all available skills.
+
 # Find Next Crypto Idea
 
 ## Overview
@@ -70,7 +72,7 @@ Interview the user until there is real clarity, not just enthusiasm. Generate th
 
 This skill is **Phase 1 (Idea)** in the Idea → Build → Launch journey. After the user picks a winner from the shortlist:
 
-1. Write `.solana-new/idea-context.json` in the project workspace with:
+1. Write `.superstack/idea-context.json` in the project workspace with:
    - `phase`: `"idea"`
    - `completed_at`: ISO timestamp
    - `chosen_idea`: slug, name, one_liner, why_crypto, scores, competitors, mvp_checklist, gtm
@@ -79,6 +81,22 @@ This skill is **Phase 1 (Idea)** in the Idea → Build → Launch journey. After
    - `scaffold-project` — set up workspace with the right stack
    - `build-with-claude` — guided MVP implementation
 3. See `../../../data/specs/phase-handoff.md` for the full JSON contract.
+
+## Quick Start
+
+```bash
+# Just ask naturally — this skill activates automatically
+# Example prompts:
+#   "What should I build in crypto?"
+#   "I'm interested in DeFi x AI — what are the gaps?"
+#   "Give me 3 Solana project ideas for a hackathon"
+```
+
+## Decision Points
+
+- **Fresh ideas vs. validate existing?** If user has an idea already, redirect to `validate-idea` skill instead.
+- **Which niche?** See `../../data/ideas/` for 114+ curated ideas from YC, a16z, Alliance, Superteam.
+- **DeFi-specific?** Redirect to `defillama-research` skill for data-driven DeFi discovery.
 
 ## Resources
 

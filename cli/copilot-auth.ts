@@ -1,8 +1,9 @@
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
+import { CONFIG_DIR_NAME } from "./branding.js";
 
-const CONFIG_DIR = join(homedir(), ".solana-new");
+const CONFIG_DIR = join(homedir(), CONFIG_DIR_NAME);
 const CONFIG_FILE = join(CONFIG_DIR, "config.json");
 
 interface Config {

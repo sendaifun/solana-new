@@ -2,8 +2,9 @@ import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 import { homedir } from "node:os";
 import { RESET, DIM, BOLD, CYAN, YELLOW } from "./colors.js";
+import { CONFIG_DIR_NAME, NPM_PACKAGE } from "./branding.js";
 
-const CACHE_DIR = join(homedir(), ".solana-new");
+const CACHE_DIR = join(homedir(), CONFIG_DIR_NAME);
 const CACHE_FILE = join(CACHE_DIR, "update-check.json");
 const CHECK_INTERVAL_MS = 24 * 60 * 60 * 1000; // 24 hours
 
@@ -51,7 +52,7 @@ export async function checkForUpdate(currentVersion: string): Promise<void> {
   try {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 3000);
-    const res = await fetch("https://registry.npmjs.org/solana-new/latest", {
+    const res = await fetch(`https://registry.npmjs.org/${NPM_PACKAGE}/latest`, {
       signal: controller.signal,
     });
     clearTimeout(timeout);
@@ -75,6 +76,6 @@ export async function checkForUpdate(currentVersion: string): Promise<void> {
 
 function printNotice(current: string, latest: string): void {
   console.log(`  ${YELLOW}Update available:${RESET} ${DIM}${current}${RESET} → ${BOLD}${CYAN}${latest}${RESET}`);
-  console.log(`  ${DIM}Run: npm i -g solana-new${RESET}`);
+  console.log(`  ${DIM}Run: npm i -g ${NPM_PACKAGE}${RESET}`);
   console.log("");
 }

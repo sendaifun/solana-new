@@ -3,6 +3,8 @@ name: deploy-to-mainnet
 description: Guide a Solana project from devnet to mainnet production deployment. Use when a user says "deploy to mainnet", "go to production", "deployment checklist", "prepare for launch", "mainnet deployment", or "ship it". Reads build-context.json from a prior build phase if available.
 ---
 
+> **Wrong skill?** See [SKILL_ROUTER.md](../../SKILL_ROUTER.md) for all available skills.
+
 # Deploy to Mainnet
 
 ## Overview
@@ -11,44 +13,32 @@ Take a devnet-tested Solana project and prepare it for mainnet deployment. Run t
 
 ## Workflow
 
-1. Check for `.solana-new/build-context.json`. If found, verify the build status (tests passing, devnet deployed). If not, ask the user about their current state.
+1. Check for `.superstack/build-context.json`. If found, verify the build status (tests passing, devnet deployed). If not, ask the user about their current state.
 2. Run through [references/deployment-checklist.md](references/deployment-checklist.md) item by item.
 3. Help configure production RPC using [references/rpc-provider-guide.md](references/rpc-provider-guide.md).
 4. If deploying a program, follow [references/program-upgrade-guide.md](references/program-upgrade-guide.md).
 5. Write a deployment report HTML artifact.
-6. Update `.solana-new/build-context.json` with deployment status.
+6. Update `.superstack/build-context.json` with deployment status.
 
-## Dependency Gate (Required)
+## Prior Context (Optional — never block on this)
 
-This skill should not run as the first launch action.
-
-1. Require `.solana-new/build-context.json`.
-2. Require `build_status.tests_passing = true` and `build_status.devnet_deployed = true`.
-3. If either is missing/false, stop and redirect with exact order:
-   - `solana-new copilot "your idea"`
-   - `scaffold-project`
-   - `build-with-claude`
-   - `review-and-iterate`
-   - then `deploy-to-mainnet`
-4. Only continue without this context if the user explicitly insists and accepts deployment risk.
+If `.superstack/build-context.json` exists, check build status and warn if tests aren't passing or devnet hasn't been tested. If it doesn't exist, **proceed immediately** — ask the user: "Have you tested on devnet?" and go from there.
 
 ## Non-Negotiables
 
-- Never deploy a program that hasn't been tested on devnet first. Block and redirect.
+- **Never block on missing context files.** Ask the user directly instead.
+- Ask "Have you tested on devnet?" — if no, recommend it but don't refuse to proceed.
 - Never deploy with a devnet RPC URL. Verify the endpoint.
 - Always check that private keys are not committed to git before deployment.
-- Always verify the deployment on-chain after it completes (check program data, test a transaction).
+- Always verify the deployment on-chain after it completes.
 - If the project has a program, discuss upgrade authority management before deploying.
-- Environment variables must be production-ready (real API keys, mainnet RPC, etc.).
-- Always write a local HTML artifact with the deployment checklist and results.
-- Never treat missing dependency context as a soft warning; block and redirect by default.
 
 ## Phase Handoff
 
 This skill is **Phase 3 (Launch)** in the Idea → Build → Launch journey.
 
-**Reads**: `.solana-new/build-context.json` (from Phase 2)
-**Updates**: `.solana-new/build-context.json` with:
+**Reads**: `.superstack/build-context.json` (from Phase 2)
+**Updates**: `.superstack/build-context.json` with:
 - `build_status.mainnet_deployed`: true
 - `build_status.mainnet_program_id`: string (if applicable)
 - `build_status.deployment_date`: ISO timestamp
@@ -63,3 +53,31 @@ See `../../../data/specs/phase-handoff.md` for the full JSON contract.
 - [references/deployment-checklist.md](references/deployment-checklist.md)
 - [references/rpc-provider-guide.md](references/rpc-provider-guide.md)
 - [references/program-upgrade-guide.md](references/program-upgrade-guide.md)
+
+## Quick Start
+
+```bash
+# Full deploy runbook: see ../../data/runbooks/deploy-runbook.md
+
+# Quick version:
+anchor build
+solana config set --url "https://mainnet.helius-rpc.com/?api-key=YOUR_KEY"
+solana balance  # Need ~5 SOL
+
+# Pre-flight
+grep -rn "devnet" src/ app/ --include="*.ts" --include="*.rs" | grep -v test  # Should be 0 results
+sha256sum target/deploy/my_program.so  # Save build hash
+
+# Deploy
+anchor deploy --provider.cluster mainnet-beta
+
+# Verify
+solana program show <PROGRAM_ID>
+```
+
+## Decision Points
+
+- **Which RPC for mainnet?** See `../../data/decisions/rpc-selection.json` — NEVER use public RPC for deployment. Helius paid tier minimum.
+- **Upgrade authority:** Keep for first 3 months. Transfer to Squads multisig when stable. Freeze only when fully audited.
+- **Full checklist:** See `../../data/runbooks/deploy-runbook.md` for complete pre-flight + post-deploy verification.
+- **Wallet strategy:** See `../../data/runbooks/rpc-wallet-guide.md` — dedicated mainnet keypair, never reuse devnet key.

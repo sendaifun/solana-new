@@ -10,6 +10,8 @@ trigger:
   - "help me navigate"
 ---
 
+> **Wrong skill?** See [SKILL_ROUTER.md](../../SKILL_ROUTER.md) for all available skills.
+
 # Navigate Skills — Solana Ecosystem Skill Router
 
 You are a skill navigator. Help the user discover the right skill, repo, or MCP server for their task. You have access to the full solana-new catalog data.
@@ -31,7 +33,7 @@ Read these files to answer the user's questions accurately.
 
 ## Installed Journey Skills (16)
 
-These are the skills installed by `solana-new init`. The user can trigger them by asking naturally:
+These are the skills installed by `superstack init`. The user can trigger them by asking naturally:
 
 ### Phase 1: Idea
 | Skill | Trigger |
@@ -68,7 +70,7 @@ When a user invokes a downstream skill directly, route them to the required pred
 
 Use this exact order:
 
-1. `solana-new copilot "your idea"` (or prompt: "What should I build in crypto?")
+1. `superstack copilot "your idea"` (or prompt: "What should I build in crypto?")
 2. `scaffold-project`
 3. `build-with-claude`
 4. `review-and-iterate`
@@ -79,9 +81,9 @@ Use this exact order:
 
 Context dependencies:
 
-- `scaffold-project` expects `.solana-new/idea-context.json` (or will create it from user interview).
-- `build-with-claude` expects `.solana-new/build-context.json` from scaffold.
-- `review-and-iterate` expects `.solana-new/build-context.json`.
+- `scaffold-project` expects `.superstack/idea-context.json` (or will create it from user interview).
+- `build-with-claude` expects `.superstack/build-context.json` from scaffold.
+- `review-and-iterate` expects `.superstack/build-context.json`.
 - Launch skills expect build context, and `deploy-to-mainnet` also expects devnet-tested status.
 
 If dependency context is missing, do not pretend it exists. Tell the user the exact next skill to run and why.

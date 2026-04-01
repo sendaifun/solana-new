@@ -50,7 +50,7 @@ Deploy to production, pitch to investors, and submit to hackathons.
 
 ## How Phases Connect
 
-Each phase writes structured JSON to `.solana-new/` in your project directory. The next phase reads it automatically.
+Each phase writes structured JSON to `.superstack/` in your project directory. The next phase reads it automatically.
 
 ```
 idea-context.json ──> scaffold-project reads it to pick the right stack
@@ -61,7 +61,7 @@ You can invoke skills directly, but dependency-sensitive skills now gate on miss
 
 Recommended execution order for best results:
 
-1. `solana-new copilot "your idea"` (creates idea context)
+1. `superstack copilot "your idea"` (creates idea context)
 2. `scaffold-project` (creates build context)
 3. `build-with-claude`
 4. `review-and-iterate`
@@ -73,7 +73,7 @@ All skills are **auto-installed** when you run:
 
 ```bash
 solana-new init              # Install all skills to ~/.claude/skills/ and ~/.codex/skills/
-solana-new ship           # Pick a skill → launches Codex/Claude with prompt
+superstack ship           # Pick a skill → launches Codex/Claude with prompt
 ```
 
 Or just:
@@ -98,7 +98,7 @@ To add a new skill:
 1. Create `skills/<phase>/<skill-name>/SKILL.md` with frontmatter (`name`, `description`)
 2. Add `references/` with 2-4 decision framework markdown files
 3. Add `agents/openai.yaml` with display name and default prompt
-4. Run `solana-new init` to install it to `~/.claude/skills/` and `~/.codex/skills/`
+4. Run `superstack init` to install it to `~/.claude/skills/` and `~/.codex/skills/`
 
 The skill auto-discovers — no registration needed. Just put it in the right phase folder.
 
