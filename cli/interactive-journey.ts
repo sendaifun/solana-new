@@ -81,7 +81,7 @@ const PHASES: JourneyPhase[] = [
     color: YELLOW,
     skills: [
       {
-        name: "solana-foundation",
+        name: "solana-beginner",
         prompt: "I'm new to Solana — teach me the fundamentals",
         description: "Solana architecture, ecosystem overview, why build here",
       },

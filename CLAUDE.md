@@ -36,7 +36,7 @@ Add `--agent` to any command for machine-readable plaintext output (for Claude C
 
 | Phase | Skill | Trigger Prompt |
 |-------|-------|---------------|
-| Learn | `solana-foundation` | "I'm new to Solana — teach me" |
+| Learn | `solana-beginner` | "I'm new to Solana — teach me" |
 | Learn | `learn` | "What have we learned?" |
 | Idea | `find-next-crypto-idea` | "What should I build in crypto?" |
 | Idea | `validate-idea` | "Validate this idea" |
@@ -106,7 +106,7 @@ cli/
     solana-mcps.json        49 MCP servers
 skills/
   SKILL_ROUTER.md           Shared routing table — AI auto-corrects wrong skill
-  idea/                     Discovery & planning skills (6 skills, includes solana-foundation, learn)
+  idea/                     Discovery & planning skills (6 skills, includes solana-beginner, learn)
   build/                    Implementation skills (14 skills, includes virtual-solana-incubator, roast-my-product, product-review, cso)
   launch/                   Go-to-market skills (4 skills, includes marketing-video)
   data/

@@ -6,7 +6,7 @@
 
 | Trigger | Skill | When to use |
 |---------|-------|-------------|
-| "what is Solana", "why Solana", "new to Solana", "Solana basics", "EVM to Solana" | `solana-foundation` | User is new, needs fundamentals |
+| "what is Solana", "why Solana", "new to Solana", "Solana basics", "EVM to Solana" | `solana-beginner` | User is new, needs fundamentals |
 | "what have we learned", "show learnings", "prune learnings", "export learnings" | `learn` | User wants to review past learnings |
 
 ## Idea Phase — Discovery & Planning

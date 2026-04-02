@@ -1,5 +1,5 @@
 ---
-name: solana-foundation
+name: solana-beginner
 description: Teach Solana fundamentals to developers new to the ecosystem. Use when a user says "what is Solana", "why Solana", "new to Solana", "explain Solana to me", "Solana basics", "EVM to Solana", "getting started with Solana", or "Solana fundamentals". Adapts to user's background — EVM devs, backend devs, or complete beginners.
 ---
 

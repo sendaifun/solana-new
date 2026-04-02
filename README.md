@@ -51,7 +51,6 @@ superstack skills [--search <q>]                  Browse or filter skills
 superstack copilot [text] [--token [pat]]         Onboarding + idea analysis + token settings
 superstack doctor                                 Check environment setup
 superstack feedback [message]                     Send feedback to the team
-superstack completion [bash|zsh]                   Generate shell completions
 ```
 
 Add `--agent` to any command for machine-readable plaintext output (for Claude Code / Codex).
@@ -63,7 +62,7 @@ Add `--agent` to any command for machine-readable plaintext output (for Claude C
 ### Phase 0: Learn — Solana Fundamentals
 | Skill | Trigger |
 |-------|---------|
-| `solana-foundation` | "I'm new to Solana — teach me the fundamentals" |
+| `solana-beginner` | "I'm new to Solana — teach me the fundamentals" |
 | `learn` | "What have we learned across sessions?" |
 
 ### Phase 1: Idea — Discovery & Planning
@@ -102,21 +101,21 @@ Add `--agent` to any command for machine-readable plaintext output (for Claude C
 
 Skills live in `skills/<phase>/<skill-name>/`. Run `superstack init` to install them to `~/.claude/skills/` and `~/.codex/skills/`.
 
-## Solana Knowledge Base
+## What's Indexed
 
-6 comprehensive reference docs covering everything on solana.com, plus the full Cookbook index. Skills reference these automatically.
+superstack ships with a curated catalog of Solana ecosystem resources and a comprehensive knowledge base.
 
-| Doc | Covers |
-|-----|--------|
-| `01-what-and-why-solana.md` | Ecosystem, institutional adoption, network metrics, why Solana |
-| `02-what-makes-solana-unique.md` | PoH, SVM, 8 innovations, Rust, vs EVM comparison |
-| `03-contract-level.md` | Accounts, programs, PDAs, CPIs, Anchor, fees, compute units |
-| `04-protocols-and-sdks.md` | Jupiter, Helius, Orca, Metaplex, wallets, developer tools |
-| `05-app-layer-consumer.md` | Client SDKs, React, Actions/Blinks, mobile, Solana Pay |
-| `06-opensource-research.md` | Courses, community, grants, hackathons, GitHub repos |
-| `cookbook-index.md` | All 25+ Solana Cookbook recipes indexed with URLs |
+| Catalog | Count | Description |
+|---------|-------|-------------|
+| **Repos** | 59 | Solana official, Metaplex, Orca, Raydium, Jupiter, SendAI, community |
+| **Skills** | 71 | 15 official from solana.com + 56 community (Jupiter, Drift, Helius, etc.) |
+| **MCPs** | 49 | Helius, Jupiter, Phantom, Orca, Chainstack, openSVM, security, DAO |
+| **Knowledge Docs** | 7 | Covers everything on solana.com — architecture, programs, SDKs, DeFi protocols, app layer, open-source research, plus the full Cookbook index |
+| **Decision Trees** | 5 | Wallet, RPC, DeFi protocol, testing framework, and token standard selection |
+| **Runbooks** | 3 | RPC + wallet setup, deploy devnet → mainnet, security audit checklist |
+| **Curated Ideas** | 114+ | From YC, a16z, Alliance, and Superteam |
 
-Located in `skills/data/solana-knowledge/`.
+Knowledge docs and decision trees are in `skills/data/` — skills reference them automatically so you don't need to look them up manually.
 
 ## Context & Learnings
 
@@ -131,41 +130,48 @@ Each phase writes context to `.superstack/` as markdown so the next phase picks 
 
 Use `/learn` to view, search, prune, or export project learnings across sessions.
 
-## What's Indexed
+## Telemetry
 
-| Catalog | Count | Description |
-|---------|-------|-------------|
-| **Repos** | 59 | Solana official, Metaplex, Orca, Raydium, Jupiter, SendAI, community |
-| **Skills** | 71 | 15 official from solana.com + 56 community (Jupiter, Drift, Helius, etc.) |
-| **MCPs** | 49 | Helius, Jupiter, Phantom, Orca, Chainstack, openSVM, security, DAO |
+superstack collects **anonymous, privacy-first** usage telemetry to understand which skills are popular and where things break. No code, no file paths, no PII — ever.
 
-## Interactive TUI
+### Three tiers
 
-All browse commands open a full-screen interactive search:
+| Tier | What's collected | Default? |
+|------|-----------------|----------|
+| `off` | Nothing at all | **Yes** |
+| `anonymous` | Skill name, phase, command, success/failure, duration, platform, CLI version | No |
+| `community` | Same as anonymous + a random installation UUID (to count unique installs) | No |
 
-- Type to filter results in real-time
-- `↑↓` to navigate, `Enter` to clone/install
-- `Shift+D` to toggle descriptions
-- `Esc` to quit
-
-## Agent Mode
-
-Add `--agent` for machine-readable output, optimized for Claude Code and Codex:
+### How to change your tier
 
 ```bash
-superstack ship --agent
-superstack repos --search defi --agent
-superstack skills --agent
+# Check current setting
+cat ~/.superstack/config.json
+
+# Or set it programmatically in config.json:
+# { "telemetryTier": "anonymous" }
 ```
 
-## Shell Completions
+### How it works
 
-```bash
-# zsh (add to ~/.zshrc)
-eval "$(superstack completion zsh)"
+- Events are buffered locally in `~/.superstack/telemetry.jsonl`
+- Background sync to Convex (fire-and-forget, 3s timeout)
+- All collection fails silently — telemetry never crashes the CLI
+- No tracking cookies, no browser fingerprinting, no IP logging
 
-# bash (add to ~/.bashrc)
-eval "$(superstack completion bash)"
+### What an event looks like
+
+```json
+{
+  "skill": "scaffold-project",
+  "phase": "build",
+  "command": "ship",
+  "status": "success",
+  "durationMs": 4200,
+  "version": "0.4.0",
+  "platform": "darwin-arm64",
+  "timestamp": 1712150400000
+}
 ```
 
 ## Development
@@ -208,3 +214,7 @@ convex/
   feedback.ts               Submit mutation
   telemetry.ts              Skill usage tracking
 ```
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for setup instructions, how to add skills/repos/MCPs, code conventions, and submitting PRs.

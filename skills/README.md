@@ -5,7 +5,7 @@
 ```
   LEARN                   IDEA                    BUILD                        LAUNCH
   ────────────────────    ────────────────────    ────────────────────────     ────────────────────
-  solana-foundation       find-next-crypto-idea   scaffold-project             deploy-to-mainnet
+  solana-beginner       find-next-crypto-idea   scaffold-project             deploy-to-mainnet
   learn                   validate-idea           build-with-claude            create-pitch-deck
                           competitive-landscape   virtual-solana-incubator     submit-to-hackathon
                           defillama-research      build-defi-protocol          marketing-video
@@ -29,7 +29,7 @@ Understand Solana before you build. Adaptive teaching based on your background.
 
 | Skill | What It Does | Example Prompt |
 |-------|-------------|----------------|
-| `solana-foundation` | Teach Solana fundamentals adapted to your background (EVM dev, beginner, backend) | "I'm new to Solana — teach me" |
+| `solana-beginner` | Teach Solana fundamentals adapted to your background (EVM dev, beginner, backend) | "I'm new to Solana — teach me" |
 | `learn` | Review, search, prune, and export project learnings across sessions | "What have we learned?" |
 
 ### Phase 1: Idea — Discovery & Planning
@@ -157,7 +157,7 @@ skills/
     specs/
       phase-handoff.md                   # Context contract between phases
   idea/
-    solana-foundation/                   # Solana fundamentals (adaptive)
+    solana-beginner/                   # Solana fundamentals (adaptive)
     learn/                               # Project learnings manager
     find-next-crypto-idea/               # Interview + rank crypto ideas
     validate-idea/                       # Validation sprint
