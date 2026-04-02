@@ -32,23 +32,29 @@ Add `--agent` to any command for machine-readable plaintext output (for Claude C
 
 ## Journey Skills (auto-installed via `superstack init`)
 
-18 skills across 3 phases — user just asks naturally, right skill activates.
+24 skills across 4 phases — user just asks naturally, right skill activates.
 
 | Phase | Skill | Trigger Prompt |
 |-------|-------|---------------|
+| Learn | `solana-foundation` | "I'm new to Solana — teach me" |
+| Learn | `learn` | "What have we learned?" |
 | Idea | `find-next-crypto-idea` | "What should I build in crypto?" |
 | Idea | `validate-idea` | "Validate this idea" |
 | Idea | `competitive-landscape` | "Who are my competitors?" |
 | Idea | `defillama-research` | "Show me DeFi opportunities on Solana" |
 | Build | `scaffold-project` | "Scaffold my project" |
 | Build | `build-with-claude` | "Help me build the MVP" |
+| Build | `virtual-solana-incubator` | "Deep dive into Solana and Rust" |
 | Build | `build-defi-protocol` | "Build a DeFi protocol" |
 | Build | `build-data-pipeline` | "Build an indexer" |
 | Build | `build-mobile` | "Build a mobile app" |
 | Build | `build-blinks` | "Build a Solana Action" |
 | Build | `launch-token` | "Launch a token" |
-| Build | `debug-program` | "Debug my program" |
+| Build | `roast-my-product` | "Roast my product — be brutal" |
+| Build | `product-review` | "Review my product's UX" |
 | Build | `review-and-iterate` | "Review my code" |
+| Build | `cso` | "Run a security audit" |
+| Build | `debug-program` | "Debug my program" |
 | Launch | `deploy-to-mainnet` | "Deploy to mainnet" |
 | Launch | `create-pitch-deck` | "Create a pitch deck" |
 | Launch | `submit-to-hackathon` | "Prepare my hackathon submission" |
@@ -86,7 +92,7 @@ cli/
   index.ts                  Command dispatcher, agent output, help
   telemetry.ts              Skill usage tracking (Convex + local JSONL)
   init.ts                   Auto-install skills to ~/.claude/skills/ and ~/.codex/skills/
-  interactive-journey.ts    Idea → Build → Launch TUI with phase auto-detection
+  interactive-journey.ts    Learn → Idea → Build → Launch TUI with phase auto-detection
   interactive-onboarding.ts Category → recommendation → workspace setup
   workspace-setup.ts        Clone repos, install skills, configure MCPs
   interactive-search.ts     Repos TUI
@@ -100,12 +106,13 @@ cli/
     solana-mcps.json        49 MCP servers
 skills/
   SKILL_ROUTER.md           Shared routing table — AI auto-corrects wrong skill
-  idea/                     Discovery & planning skills (4 skills)
-  build/                    Implementation skills (10 skills)
+  idea/                     Discovery & planning skills (6 skills, includes solana-foundation, learn)
+  build/                    Implementation skills (14 skills, includes virtual-solana-incubator, roast-my-product, product-review, cso)
   launch/                   Go-to-market skills (4 skills, includes marketing-video)
   data/
     decisions/              5 decision tree JSONs (wallet, RPC, DeFi, testing, token)
     runbooks/               3 runbooks (RPC+wallet, deploy, security)
+    solana-knowledge/       6 knowledge area docs + cookbook index (covers all of solana.com)
     specs/                  Phase handoff JSON contracts
     ideas/                  114+ curated ideas from YC, a16z, Alliance, Superteam
     defi/                   DefiLlama OpenAPI spec

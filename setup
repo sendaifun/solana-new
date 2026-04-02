@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
-# superstack setup — gstack-style one-command installation
-# Usage: git clone <repo> ~/.claude/skills/superstack && cd ~/.claude/skills/superstack && ./setup
+# superstack setup — one-command installation
+# Step 1: git clone https://github.com/sendaifun/solana-new-cli.git ~/.claude/skills/superstack && cd ~/.claude/skills/superstack && ./setup
+# Step 2 (optional): superstack vendor  OR  ./setup --vendor  (copies into your repo for team sharing)
 set -euo pipefail
 
 # --- Branding (single source of truth for bash) ---
 PRODUCT_NAME="superstack"
-SKILL_DIR_NAME="superstack"
+GITHUB_REPO="sendaifun/solana-new-cli"
+GITHUB_URL="https://github.com/${GITHUB_REPO}.git"
 
 # --- Colors ---
 RED='\033[0;31m'
@@ -23,13 +25,71 @@ ok()   { printf "  ${GREEN}✓${RESET} %s\n" "$1"; }
 
 has_cmd() { command -v "$1" >/dev/null 2>&1; }
 
+# --- Parse flags ---
+VENDOR_MODE=false
+for arg in "$@"; do
+  case "$arg" in
+    --vendor) VENDOR_MODE=true ;;
+  esac
+done
+
+# --- Vendor mode: copy into current project repo ---
+if [ "$VENDOR_MODE" = true ]; then
+  # Find the superstack source — either the directory this script lives in,
+  # or the global install at ~/.claude/skills/
+  SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+  VENDOR_DEST=".claude/skills/${PRODUCT_NAME}"
+
+  # Check if this script is inside the superstack repo (has skills/ dir)
+  if [ -d "$SCRIPT_DIR/skills" ]; then
+    SKILL_SRC="$SCRIPT_DIR"
+  elif [ -d "$HOME/.claude/skills/find-next-crypto-idea" ]; then
+    # Skills are installed individually — copy them all
+    SKILL_SRC="$HOME/.claude/skills"
+  else
+    fail "${PRODUCT_NAME} not installed yet. Run ./setup first (without --vendor)."
+  fi
+
+  printf "\n"
+  printf "  ${BOLD}Step 2: Add to Your Repo${RESET}\n"
+  printf "  ${DIM}Share ${PRODUCT_NAME} with your team — real files get committed to your repo.${RESET}\n"
+  printf "  ${DIM}Teammates just run: cd .claude/skills/${PRODUCT_NAME} && ./setup${RESET}\n\n"
+
+  mkdir -p "$VENDOR_DEST"
+
+  if [ -d "$SCRIPT_DIR/skills" ]; then
+    # Copying from the repo itself — copy the whole thing
+    cp -Rf "$SCRIPT_DIR"/* "$VENDOR_DEST"/ 2>/dev/null || true
+    cp -f "$SCRIPT_DIR"/setup "$VENDOR_DEST"/setup 2>/dev/null || true
+    # Strip .git and node_modules (avoid nested repos and bloat)
+    rm -rf "$VENDOR_DEST/.git" "$VENDOR_DEST/node_modules" "$VENDOR_DEST/dist"
+  else
+    # Copying from installed skills
+    cp -Rf "$SKILL_SRC"/* "$VENDOR_DEST"/ 2>/dev/null || true
+    cp -f "$0" "$VENDOR_DEST/setup" 2>/dev/null || true
+  fi
+  chmod +x "$VENDOR_DEST/setup" 2>/dev/null || true
+
+  ok "Copied to ${VENDOR_DEST}/"
+  ok "Stripped .git, node_modules, dist (vendored as plain files)"
+  printf "\n"
+  printf "  ${BOLD}Next:${RESET}\n"
+  printf "    ${CYAN}git add .claude/skills/${PRODUCT_NAME}${RESET}\n"
+  printf "    ${CYAN}git commit -m \"add ${PRODUCT_NAME} skills\"${RESET}\n"
+  printf "\n"
+  printf "  ${DIM}Teammates clone your repo, then run:${RESET}\n"
+  printf "    ${CYAN}cd .claude/skills/${PRODUCT_NAME} && ./setup${RESET}\n"
+  printf "\n"
+  exit 0
+fi
+
 # --- Banner ---
 printf "\n"
 printf "  ${CYAN}${BOLD} ___ _   _ ___ ___ ___ ___ _____ _   ___ _  __${RESET}\n"
 printf "  ${CYAN}${BOLD}/ __| | | | _ \\ __| _ \\ __|_   _/_\\ / __| |/ /${RESET}\n"
 printf "  ${CYAN}${BOLD}\\__ \\ |_| |  _/ _||   /__ \\ | |/ _ \\ (__| ' < ${RESET}\n"
 printf "  ${CYAN}${BOLD}|___/\\___/|_| |___|_|_\\___/ |_/_/ \\_\\___|_|\\_\\\\${RESET}\n"
-printf "  ${DIM}Ship on Solana — skills, repos, MCPs${RESET}\n\n"
+printf "  ${DIM}Ship on Solana — Idea to Launch${RESET}\n\n"
 
 # --- Prerequisites ---
 log "Checking prerequisites..."
@@ -54,24 +114,34 @@ AGENT_CLI=""
 if has_cmd claude; then
   AGENT_CLI="claude"
   ok "Claude Code found"
-elif has_cmd codex; then
-  AGENT_CLI="codex"
+fi
+if has_cmd codex; then
+  [ -n "$AGENT_CLI" ] && AGENT_CLI="${AGENT_CLI}+codex" || AGENT_CLI="codex"
   ok "Codex found"
-else
-  warn "No agent CLI found (codex or claude). Install one:"
+fi
+if [ -z "$AGENT_CLI" ]; then
+  warn "No agent CLI found (claude or codex). Install one:"
   printf "    ${DIM}npm i -g @anthropic-ai/claude-code${RESET}\n"
   printf "    ${DIM}npm i -g @openai/codex${RESET}\n"
 fi
 
 # --- Install dependencies ---
 log "Installing dependencies..."
-npm install --prefer-offline --no-audit --no-fund 2>/dev/null || npm install
+if has_cmd pnpm && [ -f "pnpm-lock.yaml" ]; then
+  pnpm install --frozen-lockfile 2>/dev/null || pnpm install
+elif has_cmd npm; then
+  npm install --prefer-offline --no-audit --no-fund 2>/dev/null || npm install
+else
+  fail "npm or pnpm is required"
+fi
 
 # --- Build ---
 log "Building..."
-npm run build 2>/dev/null || {
-  warn "Build failed, trying with npx tsx directly..."
-}
+if has_cmd pnpm; then
+  pnpm build 2>/dev/null || warn "Build failed, trying with npx tsx directly..."
+else
+  npm run build 2>/dev/null || warn "Build failed, trying with npx tsx directly..."
+fi
 
 # --- Install skills ---
 log "Installing skills to ~/.claude/skills/ and ~/.codex/skills/..."
@@ -103,7 +173,6 @@ fi
 CONFIG_DIR="$HOME/.${PRODUCT_NAME}"
 mkdir -p "$CONFIG_DIR"
 if [ -f "$CONFIG_DIR/config.json" ]; then
-  # Update existing config (simple jq-less approach)
   node -e "
     const fs = require('fs');
     const p = '$CONFIG_DIR/config.json';
@@ -116,17 +185,33 @@ else
 fi
 ok "Telemetry: $TELEMETRY_CHOICE"
 
+# --- What gets installed ---
+printf "\n"
+printf "  ${CYAN}┌─────────────────────────────────────────────────────────────────┐${RESET}\n"
+printf "  ${CYAN}│${RESET} ${BOLD}What gets installed:${RESET} Skills (Markdown prompts) in               ${CYAN}│${RESET}\n"
+printf "  ${CYAN}│${RESET} ~/.claude/skills/ and ~/.codex/skills/. Decision trees,         ${CYAN}│${RESET}\n"
+printf "  ${CYAN}│${RESET} runbooks, and catalog data. Nothing touches your PATH.          ${CYAN}│${RESET}\n"
+printf "  ${CYAN}└─────────────────────────────────────────────────────────────────┘${RESET}\n"
+
 # --- Done ---
 printf "\n"
 printf "  ${GREEN}${BOLD}Setup complete!${RESET}\n\n"
 
+printf "  ${BOLD}Step 1: Get started${RESET}\n"
 if [ -n "$AGENT_CLI" ]; then
-  printf "  ${BOLD}Get started:${RESET}\n"
-  printf "    ${CYAN}${AGENT_CLI} \"What should I build on Solana?\"${RESET}\n"
-  printf "    ${DIM}or run: ${PRODUCT_NAME} ship${RESET}\n"
+  printf "    ${CYAN}${PRODUCT_NAME} ship${RESET}  ${DIM}— pick a skill, opens your agent CLI${RESET}\n"
+  printf "    ${CYAN}claude \"What should I build on Solana?\"${RESET}\n"
 else
-  printf "  ${BOLD}Install an agent CLI, then:${RESET}\n"
+  printf "    ${DIM}Install an agent CLI first, then:${RESET}\n"
+  printf "    ${CYAN}${PRODUCT_NAME} ship${RESET}\n"
   printf "    ${CYAN}codex \"What should I build on Solana?\"${RESET}\n"
-  printf "    ${DIM}or: claude \"What should I build on Solana?\"${RESET}\n"
 fi
+printf "\n"
+
+printf "  ${BOLD}Step 2: Add to Your Repo ${DIM}(Optional)${RESET}\n"
+printf "  ${DIM}Share ${PRODUCT_NAME} with your team — teammates just run setup once.${RESET}\n\n"
+printf "    ${CYAN}./setup --vendor${RESET}\n"
+printf "\n"
+printf "  ${DIM}This copies skills into .claude/skills/${PRODUCT_NAME}/ in your project.${RESET}\n"
+printf "  ${DIM}Commit it, and teammates get everything when they clone your repo.${RESET}\n"
 printf "\n"

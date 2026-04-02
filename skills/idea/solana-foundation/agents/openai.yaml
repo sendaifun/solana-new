@@ -1,0 +1,4 @@
+interface:
+  display_name: "Solana Foundation"
+  short_description: "Learn Solana fundamentals adapted to your background"
+  default_prompt: "I'm new to Solana — teach me the fundamentals. Start by asking about my background."

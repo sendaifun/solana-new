@@ -1,0 +1,4 @@
+interface:
+  display_name: "Chief Security Officer"
+  short_description: "Infrastructure-first security audit with OWASP Top 10"
+  default_prompt: "Run a security audit on this project. Start by asking what scope I want."

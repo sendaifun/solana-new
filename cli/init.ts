@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, cpSync, writeFileSync, readdirSync } from "node:fs";
+import { existsSync, mkdirSync, cpSync, writeFileSync, readdirSync, rmSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { homedir } from "node:os";
@@ -82,7 +82,15 @@ function installSkillsGlobal(agent: boolean): { installed: string[]; skipped: st
   const cliDataRootDist = join(__dirname, "data");
   const catalogSrc = existsSync(cliDataRoot) ? cliDataRoot : cliDataRootDist;
 
-  const targets = [join(claudeSkillsDir, "_data"), join(codexSkillsDir, "_data")];
+  // Install to "data/" so SKILL.md relative paths (../../data/decisions/) resolve correctly
+  const targets = [join(claudeSkillsDir, "data"), join(codexSkillsDir, "data")];
+
+  // Clean up legacy _data/ if it exists
+  for (const legacy of [join(claudeSkillsDir, "_data"), join(codexSkillsDir, "_data")]) {
+    if (existsSync(legacy)) {
+      rmSync(legacy, { recursive: true, force: true });
+    }
+  }
 
   for (const dest of targets) {
     if (existsSync(dest)) continue;
@@ -111,8 +119,12 @@ function installSkillsGlobal(agent: boolean): { installed: string[]; skipped: st
 
 function generateProjectClaudeMd(): string {
   let md = `# Solana Project — Colosseum Hackathon\n\n`;
-  md += `## Your Journey: Idea → Build → Launch\n\n`;
+  md += `## Your Journey: Learn → Idea → Build → Launch\n\n`;
   md += `Journey skills are pre-loaded. Just ask naturally.\n\n`;
+
+  md += `### Phase 0: Learn — Solana Fundamentals\n`;
+  md += `- "I'm new to Solana — teach me the fundamentals" — ecosystem, architecture, why Solana\n`;
+  md += `- "What have we learned across sessions?" — review, search, export project learnings\n\n`;
 
   md += `### Phase 1: Idea — Discovery & Planning\n`;
   md += `- "What should I build on Solana for the Colosseum hackathon?" — discover and rank ideas\n`;
@@ -123,26 +135,30 @@ function generateProjectClaudeMd(): string {
   md += `### Phase 2: Build — Solana Implementation\n`;
   md += `- "Scaffold my Solana project with Anchor" — Anchor + SDK project setup\n`;
   md += `- "Help me build the Solana MVP step by step" — guided implementation\n`;
+  md += `- "Deep dive into Solana architecture and Rust" — technical bootcamp\n`;
   md += `- "Build a DeFi protocol on Solana" — AMM, lending, vault with CPIs and PDAs\n`;
   md += `- "Build a Solana Action / Blink" — shareable transaction links\n`;
   md += `- "Launch an SPL token on Solana" — token mint, metadata, distribution\n`;
   md += `- "Build a Solana data pipeline" — indexer, webhook, analytics\n`;
   md += `- "Build a Solana mobile app" — React Native + mobile wallet adapter\n`;
-  md += `- "Debug my failing Solana program" — diagnose program errors and failed TXs\n`;
+  md += `- "Roast my product — be harsh" — brutal product critique\n`;
+  md += `- "Review my product's UX" — onboarding, flows, feature completeness\n`;
   md += `- "Review my Solana program for security" — audit for exploits and best practices\n`;
-  md += `- "Create a marketing video" — Remotion + Renoise video production\n\n`;
+  md += `- "Run a CSO security audit" — infrastructure, secrets, deps, OWASP\n`;
+  md += `- "Debug my failing Solana program" — diagnose program errors and failed TXs\n\n`;
 
-  md += `### Phase 3: Launch — Hackathon Submission\n`;
+  md += `### Phase 3: Launch — Go to Market\n`;
   md += `- "Deploy my Solana program to mainnet" — pre-flight checklist + verification\n`;
   md += `- "Create a pitch deck for Colosseum judges" — 12-slide hackathon framework\n`;
-  md += `- "Prepare my Colosseum hackathon submission" — optimized for judges\n\n`;
+  md += `- "Prepare my Colosseum hackathon submission" — optimized for judges\n`;
+  md += `- "Create a marketing video" — Remotion + Renoise video production\n\n`;
 
-  md += `> Each phase writes context to \`.${PRODUCT_NAME}/\` so the next phase picks up automatically.\n\n`;
+  md += `> Each phase writes context to \`.${PRODUCT_NAME}/\` as markdown so the next phase picks up automatically.\n\n`;
 
   md += `## Ecosystem\n`;
   md += `- \`${BINARY_NAME} search <query>\` — find repos, skills, MCPs\n`;
   md += `- \`${BINARY_NAME} repos\` — 59 cloneable Solana repos\n`;
-  md += `- \`${BINARY_NAME} skills\` — 66 ecosystem skills\n`;
+  md += `- \`${BINARY_NAME} skills\` — 71 ecosystem skills\n`;
   md += `- \`${BINARY_NAME} mcps\` — 49 MCP servers\n`;
 
   return md;

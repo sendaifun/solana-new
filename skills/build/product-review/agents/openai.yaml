@@ -1,0 +1,4 @@
+interface:
+  display_name: "Product Review"
+  short_description: "Structured product quality evaluation"
+  default_prompt: "Review my product's quality and user experience. Start by asking what I'm building and who it's for."

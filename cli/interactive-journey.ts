@@ -15,7 +15,7 @@ import {
 } from "./agent-cli.js";
 
 // --- Phase auto-detection ---
-// Detects where the user is in the Idea → Build → Launch journey
+// Detects where the user is in the Learn → Idea → Build → Launch journey
 // based on files in the current working directory.
 
 function detectPhase(): number {
@@ -23,16 +23,23 @@ function detectPhase(): number {
   const contextDir = `${cwd}/${CONTEXT_DIR_NAME}`;
 
   // Launch signals: has deployment artifacts or mainnet config
+  if (existsSync(`${contextDir}/build-context.md`)) {
+    try {
+      const ctx = readFileSync(`${contextDir}/build-context.md`, "utf8");
+      if (ctx.includes("Devnet deployed | Yes") || ctx.includes("devnet_deployed: true")) return 3; // Launch
+    } catch { /* ignore */ }
+  }
+  // Fallback: check JSON for backwards compat
   if (existsSync(`${contextDir}/build-context.json`)) {
     try {
       const ctx = JSON.parse(readFileSync(`${contextDir}/build-context.json`, "utf8"));
-      if (ctx?.build_status?.devnet_deployed) return 2; // Launch
+      if (ctx?.build_status?.devnet_deployed) return 3; // Launch
     } catch { /* ignore */ }
   }
   if (existsSync(`${cwd}/Anchor.toml`)) {
     try {
       const anchor = readFileSync(`${cwd}/Anchor.toml`, "utf8");
-      if (anchor.includes("[programs.mainnet]")) return 2; // Launch
+      if (anchor.includes("[programs.mainnet]")) return 3; // Launch
     } catch { /* ignore */ }
   }
 
@@ -44,15 +51,20 @@ function detectPhase(): number {
   const hasBuildFiles = buildSignals.some((f) => existsSync(`${cwd}/${f}`));
 
   // Check if dir has any meaningful files (not just .git)
-  if (hasBuildFiles) return 1; // Build
+  if (hasBuildFiles) return 2; // Build
 
   // Check if directory is not empty (has files beyond dotfiles)
   try {
     const entries = readdirSync(cwd).filter((e) => !e.startsWith("."));
-    if (entries.length > 0) return 1; // Build — has some files
+    if (entries.length > 0) return 2; // Build — has some files
   } catch { /* ignore */ }
 
-  return 0; // Idea — empty directory
+  // Check if idea context exists → Idea phase
+  if (existsSync(`${contextDir}/idea-context.md`) || existsSync(`${contextDir}/idea-context.json`)) {
+    return 1; // Idea
+  }
+
+  return 0; // Learn — empty directory, new user
 }
 
 interface JourneyPhase {
@@ -64,8 +76,25 @@ interface JourneyPhase {
 
 const PHASES: JourneyPhase[] = [
   {
-    label: "Idea — Discovery & Planning",
+    label: "Learn — Solana Fundamentals",
     icon: "◆",
+    color: YELLOW,
+    skills: [
+      {
+        name: "solana-foundation",
+        prompt: "I'm new to Solana — teach me the fundamentals",
+        description: "Solana architecture, ecosystem overview, why build here",
+      },
+      {
+        name: "learn",
+        prompt: "What have we learned across sessions?",
+        description: "Review, search, and manage project learnings",
+      },
+    ],
+  },
+  {
+    label: "Idea — Discovery & Planning",
+    icon: "◇",
     color: YELLOW,
     skills: [
       {
@@ -92,7 +121,7 @@ const PHASES: JourneyPhase[] = [
   },
   {
     label: "Build — Solana Implementation",
-    icon: "◇",
+    icon: "◈",
     color: CYAN,
     skills: [
       {
@@ -104,6 +133,11 @@ const PHASES: JourneyPhase[] = [
         name: "build-with-claude",
         prompt: "Help me build the Solana MVP step by step",
         description: "Guided implementation with Anchor programs + client SDK",
+      },
+      {
+        name: "virtual-solana-incubator",
+        prompt: "Deep dive into Solana architecture and Rust patterns",
+        description: "Structured bootcamp: SVM, PDAs, CPIs, Rust for Solana",
       },
       {
         name: "build-defi-protocol",
@@ -121,15 +155,35 @@ const PHASES: JourneyPhase[] = [
         description: "Mobile wallet adapter, transaction signing, mobile dApp",
       },
       {
+        name: "roast-my-product",
+        prompt: "Roast my product — be harsh, find every weakness",
+        description: "Brutal product critique: value prop, UX, crypto necessity",
+      },
+      {
+        name: "product-review",
+        prompt: "Review my product's quality and user experience",
+        description: "UX flows, onboarding, feature completeness evaluation",
+      },
+      {
         name: "review-and-iterate",
         prompt: "Review my Solana program for security and production readiness",
         description: "Audit Anchor program for exploits, overflows, and best practices",
       },
+      {
+        name: "cso",
+        prompt: "Run a Chief Security Officer audit on my project",
+        description: "Infrastructure-first security: secrets, deps, CI/CD, OWASP",
+      },
+      {
+        name: "debug-program",
+        prompt: "Debug my failing Solana program or transaction",
+        description: "Diagnose program errors, failed TXs, and instruction issues",
+      },
     ],
   },
   {
-    label: "Launch — Hackathon Submission",
-    icon: "◈",
+    label: "Launch — Go to Market",
+    icon: "◆",
     color: GREEN,
     skills: [
       {
@@ -160,7 +214,7 @@ function buildScreen(selectedPhase: number, selectedSkill: number, rows: number,
   const lines: string[] = [];
 
   lines.push("");
-  lines.push(`  ${GRADIENT_PRODUCT}  ${BOLD}Developer Journey${RESET}  ${DIM}Idea \u2192 Build \u2192 Launch${RESET}`);
+  lines.push(`  ${GRADIENT_PRODUCT}  ${BOLD}Developer Journey${RESET}  ${DIM}Learn \u2192 Idea \u2192 Build \u2192 Launch${RESET}`);
   lines.push("");
   lines.push(`  ${DIM}Select a prompt and press Enter to launch ${agentLabel} with ${BINARY_NAME}.${RESET}`);
   lines.push("");

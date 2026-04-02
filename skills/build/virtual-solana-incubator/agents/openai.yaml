@@ -1,0 +1,4 @@
+interface:
+  display_name: "Virtual Solana Incubator"
+  short_description: "Deep technical Solana bootcamp with exercises"
+  default_prompt: "I want to deeply learn Solana development — assess my level and start the bootcamp."

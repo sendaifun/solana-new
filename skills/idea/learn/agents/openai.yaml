@@ -1,0 +1,4 @@
+interface:
+  display_name: "Project Learnings"
+  short_description: "Review, search, and manage project learnings"
+  default_prompt: "Show me what we've learned across sessions on this project."

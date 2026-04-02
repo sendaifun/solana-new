@@ -1,17 +1,36 @@
-# Skills — Idea to Production
+# Skills — Learn to Launch
 
-10 Codex/Claude skills that take a new Solana developer from "what should I build?" to a shipped, pitched product.
+24 Codex/Claude skills that take a Solana developer from "what is Solana?" to a shipped, pitched product. Every skill interviews you first — never assumes.
 
 ```
-  IDEA                    BUILD                   LAUNCH
-  ─────────────────────   ─────────────────────   ─────────────────────
-  find-next-crypto-idea   scaffold-project        deploy-to-mainnet
-  validate-idea           build-with-claude       create-pitch-deck
-  competitive-landscape   review-and-iterate      submit-to-hackathon
-  defillama-research
+  LEARN                   IDEA                    BUILD                        LAUNCH
+  ────────────────────    ────────────────────    ────────────────────────     ────────────────────
+  solana-foundation       find-next-crypto-idea   scaffold-project             deploy-to-mainnet
+  learn                   validate-idea           build-with-claude            create-pitch-deck
+                          competitive-landscape   virtual-solana-incubator     submit-to-hackathon
+                          defillama-research      build-defi-protocol          marketing-video
+                                                  build-data-pipeline
+                                                  build-mobile
+                                                  build-blinks
+                                                  launch-token
+                                                  roast-my-product
+                                                  product-review
+                                                  review-and-iterate
+                                                  cso
+                                                  debug-program
+                                                  navigate-skills
 ```
 
 ## The Journey
+
+### Phase 0: Learn — Solana Fundamentals
+
+Understand Solana before you build. Adaptive teaching based on your background.
+
+| Skill | What It Does | Example Prompt |
+|-------|-------------|----------------|
+| `solana-foundation` | Teach Solana fundamentals adapted to your background (EVM dev, beginner, backend) | "I'm new to Solana — teach me" |
+| `learn` | Review, search, prune, and export project learnings across sessions | "What have we learned?" |
 
 ### Phase 1: Idea — Discovery & Planning
 
@@ -21,22 +40,33 @@ Find what to build, validate it's worth building, and research the market.
 |-------|-------------|----------------|
 | `find-next-crypto-idea` | Interview you to discover and rank crypto startup ideas | "What should I build in crypto?" |
 | `validate-idea` | Stress-test an idea with a structured validation sprint | "Is this idea worth building?" |
-| `competitive-landscape` | Map competitors, substitutes, and opportunities | "Who are my competitors in this space?" |
+| `competitive-landscape` | Map competitors, substitutes, and opportunities | "Who are my competitors?" |
 | `defillama-research` | Research DeFi protocols and opportunities using real-time TVL data | "Show me DeFi opportunities on Solana" |
 
-**Output**: `idea-context.json` with your chosen idea, validation results, competitive landscape, and DeFi market data.
+**Output**: `.superstack/idea-context.md` with your chosen idea, scores, validation, and landscape.
 
 ### Phase 2: Build — Implementation
 
-Set up your workspace, build the MVP, and get it reviewed.
+Set up your workspace, build the MVP, review it, and get it roasted.
 
 | Skill | What It Does | Example Prompt |
 |-------|-------------|----------------|
 | `scaffold-project` | Set up workspace with the right repo, skills, and MCPs | "Scaffold my project" |
 | `build-with-claude` | Guide you through MVP implementation step by step | "Help me build this" |
+| `virtual-solana-incubator` | Deep technical bootcamp: SVM, Rust, PDAs, CPIs | "Deep dive into Solana and Rust" |
+| `build-defi-protocol` | Guided DeFi build with CPIs, PDAs, and token math | "Build a DeFi protocol" |
+| `build-data-pipeline` | Index accounts, track transactions, real-time data | "Build an indexer" |
+| `build-mobile` | React Native + mobile wallet adapter | "Build a mobile app" |
+| `build-blinks` | Solana Actions and shareable transaction links | "Build a Blink" |
+| `launch-token` | Token mint, metadata, distribution | "Launch a token" |
+| `roast-my-product` | Brutal product critique — find every weakness | "Roast my product" |
+| `product-review` | Balanced UX/quality evaluation with improvement roadmap | "Review my product's UX" |
 | `review-and-iterate` | Code review for quality, security, and production readiness | "Review my code" |
+| `cso` | Infrastructure-first security audit: secrets, deps, CI/CD, OWASP | "Run a security audit" |
+| `debug-program` | Diagnose program errors and failed transactions | "Debug my program" |
+| `navigate-skills` | Browse all installed skills, repos, and MCPs | "What skills do I have?" |
 
-**Output**: `build-context.json` with your stack, build status, and review scores.
+**Output**: `.superstack/build-context.md` with your stack, milestones, and review scores.
 
 ### Phase 3: Launch — Go to Market
 
@@ -46,40 +76,51 @@ Deploy to production, pitch to investors, and submit to hackathons.
 |-------|-------------|----------------|
 | `deploy-to-mainnet` | Pre-flight checklist and guided mainnet deployment | "Deploy to mainnet" |
 | `create-pitch-deck` | Structured pitch deck for VCs, hackathons, or grants | "Create a pitch deck" |
-| `submit-to-hackathon` | Optimized hackathon submission with demo script | "Prepare my hackathon submission" |
+| `submit-to-hackathon` | Optimized hackathon submission with demo script | "Prepare my submission" |
+| `marketing-video` | Code-driven (Remotion) + AI-generated (Renoise) videos | "Create a marketing video" |
 
 ## How Phases Connect
 
-Each phase writes structured JSON to `.superstack/` in your project directory. The next phase reads it automatically.
+Each phase writes markdown context to `.superstack/` in your project directory. The next phase reads it automatically.
 
 ```
-idea-context.json ──> scaffold-project reads it to pick the right stack
-build-context.json ──> deploy-to-mainnet reads it to verify readiness
+idea-context.md ──> scaffold-project reads it to pick the right stack
+build-context.md ──> deploy-to-mainnet reads it to verify readiness
+learnings.md ──> all skills read/write learnings (/learn to manage)
 ```
 
-You can invoke skills directly, but dependency-sensitive skills now gate on missing context and route you to the correct prerequisite order.
+Context files are **optional, not gates**. Every skill proceeds immediately if context is missing — it just asks you directly instead.
 
-Recommended execution order for best results:
+## Solana Knowledge Base
 
-1. `superstack copilot "your idea"` (creates idea context)
-2. `scaffold-project` (creates build context)
-3. `build-with-claude`
-4. `review-and-iterate`
-5. Launch skills (`deploy-to-mainnet`, `create-pitch-deck`, `submit-to-hackathon`)
+6 reference docs in `data/solana-knowledge/` covering all of solana.com:
+
+| Doc | Covers |
+|-----|--------|
+| `01-what-and-why-solana.md` | Ecosystem, institutional adoption, network metrics |
+| `02-what-makes-solana-unique.md` | PoH, SVM, 8 innovations, Rust, vs EVM |
+| `03-contract-level.md` | Accounts, programs, PDAs, CPIs, Anchor, fees |
+| `04-protocols-and-sdks.md` | Jupiter, Helius, Orca, Metaplex, wallets, tools |
+| `05-app-layer-consumer.md` | Client SDKs, React, Actions/Blinks, mobile, Solana Pay |
+| `06-opensource-research.md` | Courses, community, grants, hackathons, repos |
+| `cookbook-index.md` | All 25+ Solana Cookbook recipes with URLs |
+
+Skills reference these automatically based on what you're learning or building.
 
 ## Getting Started
 
 All skills are **auto-installed** when you run:
 
 ```bash
-solana-new init              # Install all skills to ~/.claude/skills/ and ~/.codex/skills/
+superstack init           # Install all skills to ~/.claude/skills/ and ~/.codex/skills/
 superstack ship           # Pick a skill → launches Codex/Claude with prompt
 ```
 
-Or just:
+Or just ask directly:
 
 ```bash
-codex "What should I build in crypto?"   # or: claude "..."
+claude "What should I build in crypto?"
+codex "Help me build a DeFi protocol on Solana"
 ```
 
 ## Adding a New Skill
@@ -88,76 +129,58 @@ Skills live in the phase folder where they contribute most:
 
 ```
 skills/
-  idea/       ← discovery, research, validation
-  build/      ← scaffolding, implementation, review
-  launch/     ← deployment, pitching, submissions
+  idea/       ← discovery, research, validation, learning
+  build/      ← scaffolding, implementation, review, security
+  launch/     ← deployment, pitching, submissions, marketing
 ```
 
 To add a new skill:
 
 1. Create `skills/<phase>/<skill-name>/SKILL.md` with frontmatter (`name`, `description`)
-2. Add `references/` with 2-4 decision framework markdown files
+2. Add `references/` with methodology and framework markdown files
 3. Add `agents/openai.yaml` with display name and default prompt
-4. Run `superstack init` to install it to `~/.claude/skills/` and `~/.codex/skills/`
+4. Run `superstack init` to install it
 
 The skill auto-discovers — no registration needed. Just put it in the right phase folder.
-
-## Example: Full Journey
-
-```
-You: "What should I build in crypto?"
-     → find-next-crypto-idea interviews you, produces ranked shortlist
-
-You: "Show me DeFi opportunities on Solana"
-     → defillama-research pulls TVL data, identifies gaps and trends
-
-You: "Validate the agent payments idea"
-     → validate-idea stress-tests it, produces go/no-go report
-
-You: "Who are my competitors?"
-     → competitive-landscape maps the space, finds gaps
-
-You: "Scaffold my project"
-     → scaffold-project sets up workspace with Solana Agent Kit + Jupiter
-
-You: "Help me build the MVP"
-     → build-with-claude guides you through 4 milestones
-
-You: "Review my code"
-     → review-and-iterate audits for security and quality, suggests fixes
-
-You: "Deploy to mainnet"
-     → deploy-to-mainnet runs pre-flight, configures Helius, deploys
-
-You: "Create a pitch deck for Colosseum"
-     → create-pitch-deck generates 12-slide content with speaking notes
-
-You: "Prepare my hackathon submission"
-     → submit-to-hackathon writes description, demo script, submission
-```
 
 ## Directory Structure
 
 ```
 skills/
-  README.md
+  SKILL_ROUTER.md                        # Routing table — AI auto-corrects wrong skill
   data/
-    ideas/                             # Idea datasets (Superteam, a16z, YC, Alliance)
-    defi/                              # DeFi datasets (DefiLlama API spec)
-    raw-html/                          # Raw HTML source pages
+    solana-knowledge/                    # 6 knowledge area docs + cookbook index
+    ideas/                               # 114+ curated ideas (YC, a16z, Alliance, Superteam)
+    defi/                                # DefiLlama API spec
+    decisions/                           # 5 decision tree JSONs
+    runbooks/                            # 3 shared runbooks
     specs/
-      phase-handoff.md                 # JSON contract between phases
+      phase-handoff.md                   # Context contract between phases
   idea/
-    find-next-crypto-idea/             # Interview + rank crypto ideas
-    validate-idea/                     # Validation sprint
-    competitive-landscape/             # Competitor mapping
-    defillama-research/                # DeFi market research via TVL data
+    solana-foundation/                   # Solana fundamentals (adaptive)
+    learn/                               # Project learnings manager
+    find-next-crypto-idea/               # Interview + rank crypto ideas
+    validate-idea/                       # Validation sprint
+    competitive-landscape/               # Competitor mapping
+    defillama-research/                  # DeFi market research
   build/
-    scaffold-project/                  # Workspace setup
-    build-with-claude/                 # Guided MVP implementation
-    review-and-iterate/                # Code review + security audit
+    scaffold-project/                    # Workspace setup
+    build-with-claude/                   # Guided MVP implementation
+    virtual-solana-incubator/            # Deep technical bootcamp
+    build-defi-protocol/                 # DeFi protocol builder
+    build-data-pipeline/                 # Indexer / webhook / analytics
+    build-mobile/                        # React Native mobile app
+    build-blinks/                        # Solana Actions & Blinks
+    launch-token/                        # Token launch
+    roast-my-product/                    # Brutal product critique
+    product-review/                      # UX/quality evaluation
+    review-and-iterate/                  # Code review + security
+    cso/                                 # Infrastructure security audit
+    debug-program/                       # Program error diagnosis
+    navigate-skills/                     # Meta skill browser
   launch/
-    deploy-to-mainnet/                 # Production deployment
-    create-pitch-deck/                 # Pitch deck generator
-    submit-to-hackathon/               # Hackathon submission builder
+    deploy-to-mainnet/                   # Production deployment
+    create-pitch-deck/                   # Pitch deck generator
+    submit-to-hackathon/                 # Hackathon submission
+    marketing-video/                     # Video production
 ```

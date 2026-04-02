@@ -2,6 +2,13 @@
 
 > **For AI agents**: If the user's request doesn't match this skill, find the right one below and switch.
 
+## Learn Phase — Solana Fundamentals
+
+| Trigger | Skill | When to use |
+|---------|-------|-------------|
+| "what is Solana", "why Solana", "new to Solana", "Solana basics", "EVM to Solana" | `solana-foundation` | User is new, needs fundamentals |
+| "what have we learned", "show learnings", "prune learnings", "export learnings" | `learn` | User wants to review past learnings |
+
 ## Idea Phase — Discovery & Planning
 
 | Trigger | Skill | When to use |
@@ -24,6 +31,10 @@
 | "mobile app", "React Native", "mobile wallet" | `build-mobile` | Mobile dApp development |
 | "debug", "error", "transaction failed", "stuck" | `debug-program` | Diagnosing program failures |
 | "review", "audit", "security", "production ready" | `review-and-iterate` | Code review and security audit |
+| "Solana incubator", "teach me Rust", "SVM deep dive", "Solana bootcamp" | `virtual-solana-incubator` | Deep technical Solana learning |
+| "roast my product", "harsh feedback", "be brutal", "what sucks" | `roast-my-product` | Harsh product critique |
+| "product review", "UX review", "is my product good", "onboarding review" | `product-review` | Product quality evaluation |
+| "security audit infrastructure", "CSO", "threat model", "OWASP" | `cso` | Infrastructure-first security audit |
 | "security audit", "signer check", "PDA security" | `solana-security-audit` | Deep Sealevel security analysis |
 | "QA", "test my dApp", "test wallet flow" | `solana-qa` | Systematic QA testing |
 | "benchmark", "compute units", "CU", "optimize" | `solana-benchmark` | CU optimization and TX analysis |

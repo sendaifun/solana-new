@@ -1,0 +1,4 @@
+interface:
+  display_name: "Roast My Product"
+  short_description: "Brutal product critique — find every weakness"
+  default_prompt: "Roast my product — be harsh and find every weakness. Start by asking what I'm building."
