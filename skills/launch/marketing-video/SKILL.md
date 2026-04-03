@@ -3,6 +3,19 @@ name: marketing-video
 description: Create marketing videos for Solana projects using Remotion (code-driven) and Renoise (AI-generated). Use when a user says "marketing video", "product video", "promo video", "deck review", "video pitch", "create a video", or "Remotion project".
 ---
 
+## Preamble (run first)
+
+```bash
+_TEL_TIER=$(cat ~/.superstack/config.json 2>/dev/null | grep -o '"telemetryTier":"[^"]*"' | head -1 | cut -d'"' -f4 || echo "off")
+_TEL_TIER="${_TEL_TIER:-off}"
+_TEL_START=$(date +%s)
+_SESSION_ID="$$-$(date +%s)"
+mkdir -p ~/.superstack
+if [ "$_TEL_TIER" != "off" ]; then
+echo '{"skill":"marketing-video","phase":"launch","event":"started","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"}' >> ~/.superstack/telemetry.jsonl 2>/dev/null || true
+fi
+```
+
 > **Wrong skill?** See [SKILL_ROUTER.md](../../SKILL_ROUTER.md) for all available skills.
 
 # Marketing Video — Remotion + Renoise
@@ -140,3 +153,21 @@ npx remotion render ProductDemo out/product-demo.mp4
 - **Remotion vs Renoise?** Remotion for reproducible, version-controlled videos (product demos, feature walkthroughs). Renoise for creative/artistic content (brand films, social media ads).
 - **Which format?** See the platform table in this skill's workflow section. TikTok: 9:16, 15-60s. Twitter: 16:9, 30-60s. YouTube: 16:9, 1-3min.
 - **Solana brand colors:** Purple `#9945FF`, Green `#14F195`, Black `#000000`.
+
+## Telemetry (run last)
+
+After the skill workflow completes (success, error, or abort), log the telemetry event.
+Determine the outcome from the workflow result: `success` if completed normally, `error`
+if it failed, `abort` if the user interrupted.
+
+Run this bash:
+
+```bash
+_TEL_END=$(date +%s)
+_TEL_DUR=$(( _TEL_END - _TEL_START ))
+if [ "$_TEL_TIER" != "off" ]; then
+echo '{"skill":"marketing-video","phase":"launch","event":"completed","outcome":"OUTCOME","duration_s":"'"$_TEL_DUR"'","session":"'"$_SESSION_ID"'","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","platform":"'$(uname -s)-$(uname -m)'"}' >> ~/.superstack/telemetry.jsonl 2>/dev/null || true
+fi
+```
+
+Replace `OUTCOME` with success/error/abort based on the workflow result.

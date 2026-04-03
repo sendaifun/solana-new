@@ -19,6 +19,7 @@ import { renderBanner } from "./banner.js";
 import { detectPreferredAgentCli, normalizeAgentCommand, type AgentCli } from "./agent-cli.js";
 import { RESET, DIM, BOLD, CYAN, GREEN, YELLOW, RED } from "./colors.js";
 import { BINARY_NAME, PRODUCT_NAME, GRADIENT_PRODUCT_DASH, CONFIG_DIR_NAME } from "./branding.js";
+import { trackEvent } from "./telemetry.js";
 
 // Read version from package.json
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -566,8 +567,22 @@ async function main(): Promise<void> {
     return;
   }
 
-  if (command === "init") { const { flags } = parseFlags(args); return cmdInit(args, flags); }
-  if (command === "ship") return cmdShip(args);
+  if (command === "init") {
+    const { flags } = parseFlags(args);
+    const start = Date.now();
+    try {
+      await cmdInit(args, flags);
+      trackEvent({ skill: "init", command: "init", status: "success", durationMs: Date.now() - start });
+    } catch (err) {
+      trackEvent({ skill: "init", command: "init", status: "failure", durationMs: Date.now() - start, errorClass: err instanceof Error ? err.constructor.name : "Unknown" });
+      throw err;
+    }
+    return;
+  }
+  if (command === "ship") {
+    trackEvent({ skill: "ship", command: "ship", status: "success" });
+    return cmdShip(args);
+  }
   if (command === "search") return cmdSearch(args);
   if (command === "repos") return cmdRepos(args);
   if (command === "skills") return cmdSkills(args);

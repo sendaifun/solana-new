@@ -3,6 +3,19 @@ name: deploy-to-mainnet
 description: Guide a Solana project from devnet to mainnet production deployment. Use when a user says "deploy to mainnet", "go to production", "deployment checklist", "prepare for launch", "mainnet deployment", or "ship it". Reads build-context.json from a prior build phase if available.
 ---
 
+## Preamble (run first)
+
+```bash
+_TEL_TIER=$(cat ~/.superstack/config.json 2>/dev/null | grep -o '"telemetryTier":"[^"]*"' | head -1 | cut -d'"' -f4 || echo "off")
+_TEL_TIER="${_TEL_TIER:-off}"
+_TEL_START=$(date +%s)
+_SESSION_ID="$$-$(date +%s)"
+mkdir -p ~/.superstack
+if [ "$_TEL_TIER" != "off" ]; then
+echo '{"skill":"deploy-to-mainnet","phase":"launch","event":"started","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"}' >> ~/.superstack/telemetry.jsonl 2>/dev/null || true
+fi
+```
+
 > **Wrong skill?** See [SKILL_ROUTER.md](../../SKILL_ROUTER.md) for all available skills.
 
 # Deploy to Mainnet
@@ -81,3 +94,21 @@ solana program show <PROGRAM_ID>
 - **Upgrade authority:** Keep for first 3 months. Transfer to Squads multisig when stable. Freeze only when fully audited.
 - **Full checklist:** See `../../data/runbooks/deploy-runbook.md` for complete pre-flight + post-deploy verification.
 - **Wallet strategy:** See `../../data/runbooks/rpc-wallet-guide.md` — dedicated mainnet keypair, never reuse devnet key.
+
+## Telemetry (run last)
+
+After the skill workflow completes (success, error, or abort), log the telemetry event.
+Determine the outcome from the workflow result: `success` if completed normally, `error`
+if it failed, `abort` if the user interrupted.
+
+Run this bash:
+
+```bash
+_TEL_END=$(date +%s)
+_TEL_DUR=$(( _TEL_END - _TEL_START ))
+if [ "$_TEL_TIER" != "off" ]; then
+echo '{"skill":"deploy-to-mainnet","phase":"launch","event":"completed","outcome":"OUTCOME","duration_s":"'"$_TEL_DUR"'","session":"'"$_SESSION_ID"'","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","platform":"'$(uname -s)-$(uname -m)'"}' >> ~/.superstack/telemetry.jsonl 2>/dev/null || true
+fi
+```
+
+Replace `OUTCOME` with success/error/abort based on the workflow result.

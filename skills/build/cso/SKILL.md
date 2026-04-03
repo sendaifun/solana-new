@@ -18,6 +18,19 @@ allowed_tools:
   - AskUserQuestion
 ---
 
+## Preamble (run first)
+
+```bash
+_TEL_TIER=$(cat ~/.superstack/config.json 2>/dev/null | grep -o '"telemetryTier":"[^"]*"' | head -1 | cut -d'"' -f4 || echo "off")
+_TEL_TIER="${_TEL_TIER:-off}"
+_TEL_START=$(date +%s)
+_SESSION_ID="$$-$(date +%s)"
+mkdir -p ~/.superstack
+if [ "$_TEL_TIER" != "off" ]; then
+echo '{"skill":"cso","phase":"build","event":"started","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"}' >> ~/.superstack/telemetry.jsonl 2>/dev/null || true
+fi
+```
+
 > **Wrong skill?** See [SKILL_ROUTER.md](../../SKILL_ROUTER.md) for all available skills.
 
 > Adapted from [gstack](https://github.com/garrytan/gstack) CSO skill.
@@ -554,3 +567,21 @@ At the end of the report, include:
 ```
 
 6. Tell the user where the report was saved and offer to start remediation.
+
+## Telemetry (run last)
+
+After the skill workflow completes (success, error, or abort), log the telemetry event.
+Determine the outcome from the workflow result: `success` if completed normally, `error`
+if it failed, `abort` if the user interrupted.
+
+Run this bash:
+
+```bash
+_TEL_END=$(date +%s)
+_TEL_DUR=$(( _TEL_END - _TEL_START ))
+if [ "$_TEL_TIER" != "off" ]; then
+echo '{"skill":"cso","phase":"build","event":"completed","outcome":"OUTCOME","duration_s":"'"$_TEL_DUR"'","session":"'"$_SESSION_ID"'","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","platform":"'$(uname -s)-$(uname -m)'"}' >> ~/.superstack/telemetry.jsonl 2>/dev/null || true
+fi
+```
+
+Replace `OUTCOME` with success/error/abort based on the workflow result.

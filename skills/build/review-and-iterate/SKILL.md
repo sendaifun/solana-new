@@ -3,6 +3,19 @@ name: review-and-iterate
 description: Review Solana project code for quality, security, and production readiness. Use when a user says "review my code", "is this production ready", "audit my program", "what should I fix", "code review", or "check for security issues".
 ---
 
+## Preamble (run first)
+
+```bash
+_TEL_TIER=$(cat ~/.superstack/config.json 2>/dev/null | grep -o '"telemetryTier":"[^"]*"' | head -1 | cut -d'"' -f4 || echo "off")
+_TEL_TIER="${_TEL_TIER:-off}"
+_TEL_START=$(date +%s)
+_SESSION_ID="$$-$(date +%s)"
+mkdir -p ~/.superstack
+if [ "$_TEL_TIER" != "off" ]; then
+echo '{"skill":"review-and-iterate","phase":"build","event":"started","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"}' >> ~/.superstack/telemetry.jsonl 2>/dev/null || true
+fi
+```
+
 > **Wrong skill?** See [SKILL_ROUTER.md](../../SKILL_ROUTER.md) for all available skills.
 
 # Review and Iterate
@@ -77,3 +90,21 @@ grep -rn 'checked_' programs/ --include="*.rs" | wc -l  # Should be > 0
 - [references/code-review-rubric.md](references/code-review-rubric.md)
 - [references/security-basics.md](references/security-basics.md)
 - [references/compute-optimization.md](references/compute-optimization.md)
+
+## Telemetry (run last)
+
+After the skill workflow completes (success, error, or abort), log the telemetry event.
+Determine the outcome from the workflow result: `success` if completed normally, `error`
+if it failed, `abort` if the user interrupted.
+
+Run this bash:
+
+```bash
+_TEL_END=$(date +%s)
+_TEL_DUR=$(( _TEL_END - _TEL_START ))
+if [ "$_TEL_TIER" != "off" ]; then
+echo '{"skill":"review-and-iterate","phase":"build","event":"completed","outcome":"OUTCOME","duration_s":"'"$_TEL_DUR"'","session":"'"$_SESSION_ID"'","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","platform":"'$(uname -s)-$(uname -m)'"}' >> ~/.superstack/telemetry.jsonl 2>/dev/null || true
+fi
+```
+
+Replace `OUTCOME` with success/error/abort based on the workflow result.

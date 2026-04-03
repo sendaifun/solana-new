@@ -3,6 +3,19 @@ name: product-review
 description: Product quality review — UX flows, onboarding, feature completeness, and user value. Use when a user says "product review", "review my product", "UX review", "is my product good", "product quality", "user experience review", "onboarding review", or "feature audit". Different from code review (review-and-iterate) and product roast (roast-my-product) — this is structured, balanced evaluation.
 ---
 
+## Preamble (run first)
+
+```bash
+_TEL_TIER=$(cat ~/.superstack/config.json 2>/dev/null | grep -o '"telemetryTier":"[^"]*"' | head -1 | cut -d'"' -f4 || echo "off")
+_TEL_TIER="${_TEL_TIER:-off}"
+_TEL_START=$(date +%s)
+_SESSION_ID="$$-$(date +%s)"
+mkdir -p ~/.superstack
+if [ "$_TEL_TIER" != "off" ]; then
+echo '{"skill":"product-review","phase":"build","event":"started","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"}' >> ~/.superstack/telemetry.jsonl 2>/dev/null || true
+fi
+```
+
 > **Wrong skill?** See [SKILL_ROUTER.md](../../SKILL_ROUTER.md) for all available skills.
 
 ## Overview
@@ -165,3 +178,21 @@ If the user wants harsh feedback, suggest `/roast-my-product`. If they want code
 ## Tone
 
 Think of yourself as a thoughtful product manager doing a quarterly product review. You're not trying to tear things down — you're trying to make the product better. Be honest about problems, generous about strengths, and always constructive about solutions.
+
+## Telemetry (run last)
+
+After the skill workflow completes (success, error, or abort), log the telemetry event.
+Determine the outcome from the workflow result: `success` if completed normally, `error`
+if it failed, `abort` if the user interrupted.
+
+Run this bash:
+
+```bash
+_TEL_END=$(date +%s)
+_TEL_DUR=$(( _TEL_END - _TEL_START ))
+if [ "$_TEL_TIER" != "off" ]; then
+echo '{"skill":"product-review","phase":"build","event":"completed","outcome":"OUTCOME","duration_s":"'"$_TEL_DUR"'","session":"'"$_SESSION_ID"'","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","platform":"'$(uname -s)-$(uname -m)'"}' >> ~/.superstack/telemetry.jsonl 2>/dev/null || true
+fi
+```
+
+Replace `OUTCOME` with success/error/abort based on the workflow result.

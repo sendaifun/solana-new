@@ -6,6 +6,7 @@ import {
   ALT_SCREEN_ON, ALT_SCREEN_OFF, CURSOR_HIDE, CURSOR_SHOW, CLEAR_SCREEN,
 } from "./colors.js";
 import { GRADIENT_PRODUCT, BINARY_NAME, CONTEXT_DIR_NAME } from "./branding.js";
+import { trackSkill } from "./telemetry.js";
 import {
   type AgentCli,
   detectPreferredAgentCli,
@@ -289,13 +290,15 @@ export async function interactiveJourney(opts: { yolo?: boolean; agentCli?: Agen
       stdout.write(ALT_SCREEN_OFF);
     }
 
-    function launchAgent(prompt: string) {
+    function launchAgent(prompt: string, skillName: string, phaseLabel: string) {
       cleanup();
+      const tracker = trackSkill(skillName, phaseLabel, { agentCli: preferredCli ?? undefined, command: "ship" });
 
       if (!preferredCli) {
         console.log(`\n  No supported agent CLI found.`);
         console.log(`  Install one: ${getAgentCliInstallHelp()}`);
         console.log(`  Then run: codex "${prompt}"  (or claude "${prompt}")\n`);
+        tracker.finish("failure", "no_agent_cli");
         resolve();
         return;
       }
@@ -304,7 +307,7 @@ export async function interactiveJourney(opts: { yolo?: boolean; agentCli?: Agen
         // Yolo mode: send the prompt directly
         console.log(`\n  Launching ${agentLabel} (yolo mode)...\n`);
         const child = spawn(preferredCli, [prompt], { stdio: "inherit" });
-        child.on("close", () => resolve());
+        child.on("close", (code) => { tracker.finish(code === 0 ? "success" : "failure"); resolve(); });
         child.on("error", (err) => {
           if ((err as NodeJS.ErrnoException).code === "ENOENT") {
             const installHint = getAgentMeta(preferredCli).installHint;
@@ -313,6 +316,7 @@ export async function interactiveJourney(opts: { yolo?: boolean; agentCli?: Agen
           } else {
             console.error(`  Failed to launch ${agentLabel}: ${err.message}\n`);
           }
+          tracker.finish("failure", (err as NodeJS.ErrnoException).code ?? "spawn_error");
           resolve();
         });
         return;
@@ -326,7 +330,7 @@ export async function interactiveJourney(opts: { yolo?: boolean; agentCli?: Agen
         console.log(`\n  Prompt:\n\n${prompt}\n`);
       }
       const child = spawn(preferredCli, [], { stdio: "inherit" });
-      child.on("close", () => resolve());
+      child.on("close", () => { tracker.finish("success"); resolve(); });
       child.on("error", (err) => {
         if ((err as NodeJS.ErrnoException).code === "ENOENT") {
           const installHint = getAgentMeta(preferredCli).installHint;
@@ -335,6 +339,7 @@ export async function interactiveJourney(opts: { yolo?: boolean; agentCli?: Agen
         } else {
           console.error(`  Failed to launch ${agentLabel}: ${err.message}\n`);
         }
+        tracker.finish("failure", (err as NodeJS.ErrnoException).code ?? "spawn_error");
         resolve();
       });
     }
@@ -345,7 +350,8 @@ export async function interactiveJourney(opts: { yolo?: boolean; agentCli?: Agen
 
       if (key === "\r" || key === "\n") {
         const skill = PHASES[selectedPhase].skills[selectedSkill];
-        launchAgent(skill.prompt);
+        const phaseLabel = PHASES[selectedPhase].label.split(" — ")[0].toLowerCase();
+        launchAgent(skill.prompt, skill.name, phaseLabel);
         return;
       }
 
