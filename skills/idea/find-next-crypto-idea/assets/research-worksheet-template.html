@@ -6,137 +6,165 @@
     <title>__TITLE__</title>
     <style>
       :root {
-        --bg: #f3efe6;
-        --paper: #fffaf3;
-        --ink: #16110d;
-        --muted: #60564b;
-        --line: rgba(22, 17, 13, 0.12);
-        --accent: #b44d1d;
-        --accent-soft: rgba(180, 77, 29, 0.1);
+        --bg: #181c22;
+        --surface: #222831;
+        --surface-2: #2a3040;
+        --border: rgba(221, 221, 221, 0.08);
+        --text: #DDDDDD;
+        --text-muted: #7a8494;
+        --accent: #30475E;
+        --accent-soft: rgba(48, 71, 94, 0.2);
+        --radius: 12px;
+        --radius-lg: 16px;
       }
 
-      * {
-        box-sizing: border-box;
-      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
 
       body {
-        margin: 0;
-        font-family: "Iowan Old Style", "Palatino Linotype", serif;
-        color: var(--ink);
-        background:
-          radial-gradient(circle at top right, rgba(180, 77, 29, 0.12), transparent 24%),
-          linear-gradient(180deg, #faf7f0 0%, var(--bg) 100%);
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif;
+        color: var(--text);
+        background: var(--bg);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
       }
 
       .shell {
-        width: min(1120px, calc(100vw - 32px));
+        width: min(1100px, calc(100vw - 48px));
         margin: 0 auto;
-        padding: 28px 0 48px;
-      }
-
-      .hero,
-      .card {
-        background: rgba(255, 250, 243, 0.94);
-        border: 1px solid var(--line);
-        border-radius: 24px;
+        padding: 40px 0 64px;
       }
 
       .hero {
-        padding: 24px;
-        margin-bottom: 20px;
+        padding: 32px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        margin-bottom: 24px;
       }
 
       .hero h1 {
-        margin: 0 0 8px;
-        font-size: clamp(2rem, 4vw, 3.1rem);
-        line-height: 0.95;
+        font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+        margin-bottom: 8px;
       }
 
       .hero p {
-        margin: 0;
-        max-width: 62ch;
-        color: var(--muted);
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        max-width: 60ch;
       }
 
       .meta {
         display: flex;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 8px;
         margin-top: 16px;
       }
 
       .chip {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 12px;
         border-radius: 999px;
-        padding: 8px 12px;
-        background: var(--accent-soft);
-        color: var(--accent);
-        font-size: 0.9rem;
-      }
-
-      .grid {
-        display: grid;
-        gap: 18px;
+        background: rgba(48, 71, 94, 0.25);
+        color: #DDDDDD;
+        font-size: 0.8rem;
+        font-weight: 500;
+        border: 1px solid rgba(48, 71, 94, 0.4);
       }
 
       .idea {
-        padding: 20px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 24px;
+        margin-bottom: 16px;
       }
 
       .idea h2 {
-        margin: 0 0 6px;
-        font-family: "Avenir Next Condensed", "Franklin Gothic Medium", sans-serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        margin-bottom: 4px;
       }
 
-      .idea p {
-        margin: 0 0 14px;
-        color: var(--muted);
+      .idea > p {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        margin-bottom: 16px;
       }
 
       .columns {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 14px;
+        gap: 12px;
       }
 
       .block {
         padding: 14px;
-        border-radius: 18px;
-        border: 1px solid var(--line);
-        background: var(--paper);
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        background: var(--surface-2);
       }
 
       .block h3 {
-        margin: 0 0 8px;
-        font-size: 1rem;
-        font-family: "Avenir Next Condensed", "Franklin Gothic Medium", sans-serif;
+        font-size: 0.72rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-muted);
+        margin-bottom: 10px;
       }
 
       ul {
-        margin: 0;
-        padding-left: 18px;
+        padding-left: 16px;
       }
 
       li {
         margin: 0 0 8px;
+        font-size: 0.88rem;
       }
 
       a {
-        color: var(--accent);
+        color: #F05454;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
       }
 
       .note {
-        margin-top: 14px;
-        padding: 14px;
-        border-radius: 16px;
-        border: 1px dashed var(--line);
-        color: var(--muted);
-        background: rgba(22, 17, 13, 0.02);
+        margin-top: 16px;
+        padding: 12px 14px;
+        border-radius: var(--radius);
+        border: 1px dashed rgba(255, 255, 255, 0.1);
+        color: var(--text-muted);
+        background: var(--surface-2);
+        font-size: 0.84rem;
       }
 
-      @media (max-width: 860px) {
-        .columns {
-          grid-template-columns: 1fr;
-        }
+      .note strong {
+        color: #F05454;
+      }
+
+      .footer-note {
+        margin-top: 32px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+        color: var(--text-muted);
+        font-size: 0.8rem;
+        text-align: center;
+      }
+
+      .footer-note span {
+        color: #F05454;
+      }
+
+      @media (max-width: 768px) {
+        .columns { grid-template-columns: 1fr; }
       }
     </style>
   </head>
@@ -147,7 +175,10 @@
         <p id="subtitle"></p>
         <div class="meta" id="meta"></div>
       </section>
-      <section class="grid" id="ideas"></section>
+      <section id="ideas"></section>
+      <p class="footer-note">
+        Generated by <span>superstack</span> &middot; Click highest-signal queries first
+      </p>
     </main>
 
     <script>
@@ -193,15 +224,15 @@
 
       const root = document.getElementById("ideas");
       (PACK.ideas || []).forEach((idea) => {
-        const card = el("article", "card idea");
+        const card = el("article", "idea");
         card.appendChild(el("h2", "", idea.name || "Untitled idea"));
         card.appendChild(el("p", "", idea.one_liner || ""));
 
         const cols = el("div", "columns");
         [
-          ["X queries", idea.search_plan?.x || []],
-          ["GitHub queries", idea.search_plan?.github || []],
-          ["Web queries", idea.search_plan?.web || []]
+          ["X Queries", idea.search_plan?.x || []],
+          ["GitHub Queries", idea.search_plan?.github || []],
+          ["Web Queries", idea.search_plan?.web || []]
         ].forEach(([label, items]) => {
           const block = el("section", "block");
           block.appendChild(el("h3", "", label));

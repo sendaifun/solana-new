@@ -234,12 +234,11 @@ The Foundation runs an active grants program funding:
 
 ## Getting Started
 
-If you are ready to start building, use superstack:
+If you are ready to start building, install superstack skills and ask Claude:
 
 ```bash
-superstack ship          # Idea to launch sprint
-superstack init          # Install journey skills
-superstack copilot       # Onboarding and idea analysis
+curl -fsSL https://solana-new-cli.vercel.app/setup.sh | bash
+claude "/find-next-crypto-idea What should I build?"
 ```
 
 For deeper technical details, see:

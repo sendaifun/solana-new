@@ -1,186 +1,357 @@
 # Remotion Quickstart Reference
 
+Based on the [official Remotion skills repo](https://github.com/remotion-dev/skills) — 30 rule modules covering every aspect of programmatic video creation.
+
 ## Installation
 ```bash
 npx create-video@latest my-video
 cd my-video && npm install
 ```
 
-## Project structure
+## Project Structure
 ```
 my-video/
   src/
-    Root.tsx          # Register all compositions
-    MyComposition.tsx # A single video composition
+    Root.tsx          # Register all compositions here
+    ProductDemo.tsx   # Main product demo composition
+    SocialClip.tsx    # Vertical social media clip
+    TwitterClip.tsx   # Twitter/X optimized clip
+  public/             # Static assets (screenshots, logos)
   remotion.config.ts  # Remotion config
   package.json
 ```
 
-## Key concepts
+## Key Concepts
 
-### Composition
-A video component registered with metadata (width, height, fps, duration):
+### Composition — A Video Component
 ```tsx
 import { Composition } from "remotion";
 export const RemotionRoot = () => (
-  <Composition id="MyVideo" component={MyVideo}
-    durationInFrames={150} fps={30} width={1920} height={1080} />
+  <>
+    <Composition id="ProductDemo" component={ProductDemo}
+      durationInFrames={900} fps={30} width={1920} height={1080} />
+    <Composition id="SocialClip" component={SocialClip}
+      durationInFrames={450} fps={30} width={1080} height={1920} />
+    <Composition id="TwitterClip" component={TwitterClip}
+      durationInFrames={450} fps={30} width={1920} height={1080} />
+    <Composition id="SquareClip" component={SquareClip}
+      durationInFrames={450} fps={30} width={1080} height={1080} />
+  </>
 );
 ```
 
-### Sequence
-Time-based sections within a composition:
+### Sequence — Time-Based Sections
 ```tsx
 import { Sequence } from "remotion";
 <Sequence from={0} durationInFrames={90}>
-  <IntroSlide />
+  <HookSlide />
 </Sequence>
-<Sequence from={90} durationInFrames={60}>
+<Sequence from={90} durationInFrames={300} premountFor={30}>
   <DemoSlide />
 </Sequence>
 ```
 
-### useCurrentFrame / interpolate
-Animation primitives:
+### useCurrentFrame + interpolate — Animation Primitives
 ```tsx
 import { useCurrentFrame, interpolate } from "remotion";
 const frame = useCurrentFrame();
-const opacity = interpolate(frame, [0, 30], [0, 1]);
+const opacity = interpolate(frame, [0, 30], [0, 1], { extrapolateRight: "clamp" });
+const y = interpolate(frame, [0, 30], [40, 0], { extrapolateRight: "clamp" });
 ```
 
-### Img / Video / Audio
-Media components with proper loading:
+### spring — Natural Motion
 ```tsx
-import { Img, staticFile } from "remotion";
+import { spring, useVideoConfig } from "remotion";
+const { fps } = useVideoConfig();
+const scale = spring({ frame, fps, config: { damping: 200 } });
+```
+
+### Media Components (ALWAYS use Remotion components, never native HTML)
+```tsx
+import { Img, Video, Audio, staticFile } from "remotion";
 <Img src={staticFile("screenshot.png")} />
+<Video src={staticFile("demo.mp4")} startFrom={30} endAt={300} />
+<Audio src={staticFile("voiceover.mp3")} volume={0.8} />
 ```
 
 ## Rendering
 ```bash
 npx remotion studio          # Preview in browser
-npx remotion render MyVideo  # Render to out/MyVideo.mp4
-npx remotion render MyVideo --codec h264 --image-format jpeg
+npx remotion render ProductDemo out/product-demo.mp4
+npx remotion render SocialClip out/social-clip.mp4
+npx remotion render ProductDemo out/hq.mp4 --codec h264 --crf 18
 ```
 
-## Social media formats
+## Social Media Formats
 ```tsx
-// Landscape (YouTube, Twitter)
+// Landscape — YouTube, Twitter, landing page, hackathon
 <Composition width={1920} height={1080} fps={30} />
 
-// Portrait (TikTok, Reels)
+// Portrait — TikTok, Instagram Reels, YouTube Shorts
 <Composition width={1080} height={1920} fps={30} />
 
-// Square (Instagram)
+// Square — Instagram Feed
 <Composition width={1080} height={1080} fps={30} />
 ```
 
 ## Solana Product Demo Template
 
+Complete template with 5 scenes, Solana branding, and spring animations:
+
 ```tsx
-import { AbsoluteFill, Sequence, useCurrentFrame, interpolate, Img, staticFile } from "remotion";
+import {
+  AbsoluteFill, Sequence, useCurrentFrame, useVideoConfig,
+  interpolate, spring, Img, staticFile
+} from "remotion";
+import { TransitionSeries, linearTiming } from "@remotion/transitions";
+import { fade } from "@remotion/transitions/fade";
+import { slide } from "@remotion/transitions/slide";
 
 // Solana brand colors
-const SOLANA_PURPLE = "#9945FF";
-const SOLANA_GREEN = "#14F195";
-const SOLANA_BLACK = "#000000";
+const COLORS = {
+  purple: "#9945FF",
+  green: "#14F195",
+  black: "#000000",
+  darkPurple: "#7B3FE4",
+  darkGray: "#19161C",
+};
 
 export const ProductDemo: React.FC = () => {
   return (
-    <AbsoluteFill style={{ backgroundColor: SOLANA_BLACK }}>
-      {/* Scene 1: Logo + Tagline (0-90 frames = 3s) */}
-      <Sequence from={0} durationInFrames={90}>
-        <LogoReveal />
-      </Sequence>
+    <TransitionSeries>
+      {/* Scene 1: Hook — Bold metric (3s) */}
+      <TransitionSeries.Sequence durationInFrames={90}>
+        <HookScene metric="$2.1M" subtitle="settled in 30 days. Zero bank accounts." />
+      </TransitionSeries.Sequence>
 
-      {/* Scene 2: Problem Statement (90-240 = 5s) */}
-      <Sequence from={90} durationInFrames={150}>
-        <ProblemSlide text="Solana agents can't pay each other on-chain" />
-      </Sequence>
+      <TransitionSeries.Transition
+        presentation={slide({ direction: "from-right" })}
+        timing={linearTiming({ durationInFrames: 15 })}
+      />
 
-      {/* Scene 3: Solution Demo / Screenshots (240-690 = 15s) */}
-      <Sequence from={240} durationInFrames={450}>
-        <DemoSequence />
-      </Sequence>
+      {/* Scene 2: Problem (5s) */}
+      <TransitionSeries.Sequence durationInFrames={150}>
+        <ProblemScene text="AI agents can't pay each other without a human co-signer." />
+      </TransitionSeries.Sequence>
 
-      {/* Scene 4: Metrics / Social Proof (690-840 = 5s) */}
-      <Sequence from={690} durationInFrames={150}>
-        <MetricsSlide
+      <TransitionSeries.Transition
+        presentation={fade()}
+        timing={linearTiming({ durationInFrames: 15 })}
+      />
+
+      {/* Scene 3: Demo / Screenshots (14s) */}
+      <TransitionSeries.Sequence durationInFrames={420}>
+        <DemoScene />
+      </TransitionSeries.Sequence>
+
+      <TransitionSeries.Transition
+        presentation={fade()}
+        timing={linearTiming({ durationInFrames: 15 })}
+      />
+
+      {/* Scene 4: Metrics / Social Proof (5s) */}
+      <TransitionSeries.Sequence durationInFrames={150}>
+        <MetricsScene
           metrics={[
             { label: "Transactions", value: "50K+" },
             { label: "Agents Connected", value: "120" },
             { label: "Avg Settlement", value: "<400ms" },
           ]}
         />
-      </Sequence>
+      </TransitionSeries.Sequence>
 
-      {/* Scene 5: CTA (840-930 = 3s) */}
-      <Sequence from={840} durationInFrames={90}>
-        <CTASlide url="yourproject.com" programId="AbC123..." />
-      </Sequence>
+      <TransitionSeries.Transition
+        presentation={fade()}
+        timing={linearTiming({ durationInFrames: 10 })}
+      />
+
+      {/* Scene 5: CTA (3s) */}
+      <TransitionSeries.Sequence durationInFrames={90}>
+        <CTAScene url="yourproject.com" />
+      </TransitionSeries.Sequence>
+    </TransitionSeries>
+  );
+};
+
+// --- Scene Components ---
+
+const HookScene: React.FC<{ metric: string; subtitle: string }> = ({ metric, subtitle }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+
+  const metricScale = spring({ frame, fps, config: { damping: 12, stiffness: 100 } });
+  const subtitleOpacity = interpolate(frame, [20, 40], [0, 1], { extrapolateRight: "clamp" });
+  const subtitleY = interpolate(frame, [20, 40], [20, 0], { extrapolateRight: "clamp" });
+
+  return (
+    <AbsoluteFill style={{
+      backgroundColor: COLORS.black,
+      justifyContent: "center",
+      alignItems: "center",
+    }}>
+      <div style={{
+        fontSize: 144,
+        fontWeight: 900,
+        color: COLORS.green,
+        fontFamily: "Inter, sans-serif",
+        transform: `scale(${metricScale})`,
+      }}>
+        {metric}
+      </div>
+      <div style={{
+        fontSize: 36,
+        color: "white",
+        opacity: subtitleOpacity,
+        transform: `translateY(${subtitleY}px)`,
+        fontFamily: "Inter, sans-serif",
+        marginTop: 20,
+      }}>
+        {subtitle}
+      </div>
     </AbsoluteFill>
   );
 };
 
-// Animated text component
-const AnimatedText: React.FC<{ text: string; delay?: number }> = ({ text, delay = 0 }) => {
+const ProblemScene: React.FC<{ text: string }> = ({ text }) => {
   const frame = useCurrentFrame();
-  const opacity = interpolate(frame - delay, [0, 20], [0, 1], { extrapolateRight: "clamp" });
-  const y = interpolate(frame - delay, [0, 20], [30, 0], { extrapolateRight: "clamp" });
+  const opacity = interpolate(frame, [0, 30], [0, 1], { extrapolateRight: "clamp" });
 
   return (
-    <div style={{
-      opacity,
-      transform: `translateY(${y}px)`,
-      color: "white",
-      fontSize: 48,
-      fontWeight: 700,
-      fontFamily: "Inter, sans-serif",
+    <AbsoluteFill style={{
+      backgroundColor: COLORS.black,
+      justifyContent: "center",
+      alignItems: "center",
+      padding: 100,
     }}>
-      {text}
-    </div>
+      <div style={{
+        fontSize: 56,
+        fontWeight: 700,
+        color: "white",
+        textAlign: "center",
+        opacity,
+        fontFamily: "Inter, sans-serif",
+        lineHeight: 1.3,
+      }}>
+        {text}
+      </div>
+    </AbsoluteFill>
   );
 };
 
-// Register all compositions in Root.tsx:
-export const RemotionRoot: React.FC = () => (
-  <>
-    <Composition id="ProductDemo" component={ProductDemo}
-      durationInFrames={930} fps={30} width={1920} height={1080} />
-    <Composition id="SocialClip" component={SocialClip}
-      durationInFrames={450} fps={30} width={1080} height={1920} />
-    <Composition id="TwitterClip" component={TwitterClip}
-      durationInFrames={300} fps={30} width={1920} height={1080} />
-  </>
-);
+const MetricsScene: React.FC<{ metrics: { label: string; value: string }[] }> = ({ metrics }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+
+  return (
+    <AbsoluteFill style={{
+      backgroundColor: COLORS.black,
+      justifyContent: "center",
+      alignItems: "center",
+    }}>
+      <div style={{ display: "flex", gap: 80 }}>
+        {metrics.map((m, i) => {
+          const s = spring({ frame: frame - i * 10, fps, config: { damping: 15, stiffness: 100 } });
+          return (
+            <div key={m.label} style={{
+              textAlign: "center",
+              transform: `scale(${s})`,
+              opacity: s,
+            }}>
+              <div style={{
+                fontSize: 72, fontWeight: 900, color: COLORS.green,
+                fontFamily: "Inter, sans-serif",
+              }}>
+                {m.value}
+              </div>
+              <div style={{
+                fontSize: 24, color: "rgba(255,255,255,0.7)", marginTop: 8,
+                fontFamily: "Inter, sans-serif",
+              }}>
+                {m.label}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+const CTAScene: React.FC<{ url: string }> = ({ url }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const scale = spring({ frame, fps, config: { damping: 200 } });
+
+  return (
+    <AbsoluteFill style={{
+      backgroundColor: COLORS.black,
+      justifyContent: "center",
+      alignItems: "center",
+    }}>
+      <div style={{ transform: `scale(${scale})`, textAlign: "center" }}>
+        <div style={{
+          fontSize: 48, fontWeight: 800, color: COLORS.green,
+          fontFamily: "Inter, sans-serif",
+        }}>
+          Try it now
+        </div>
+        <div style={{
+          fontSize: 32, color: "white", marginTop: 16,
+          fontFamily: "Inter, sans-serif",
+        }}>
+          {url}
+        </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
 ```
 
 ## Social Clip Template (Vertical — TikTok/Reels)
 
 ```tsx
 export const SocialClip: React.FC = () => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+
   return (
-    <AbsoluteFill style={{ backgroundColor: SOLANA_BLACK }}>
-      {/* Hook in first 3 seconds */}
+    <AbsoluteFill style={{ backgroundColor: COLORS.black }}>
+      {/* Hook in first 1 second — pattern interrupt */}
       <Sequence from={0} durationInFrames={90}>
-        <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>
-          <AnimatedText text="POV: Your Solana app" delay={0} />
-          <AnimatedText text="just got 10x faster ⚡" delay={15} />
+        <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", padding: 40 }}>
+          <AnimatedText text="POV: Your Solana app" delay={0} size={56} />
+          <AnimatedText text="just got 10x faster" delay={15} size={56} color={COLORS.green} />
         </AbsoluteFill>
       </Sequence>
 
       {/* Quick demo (3-12s) */}
-      <Sequence from={90} durationInFrames={270}>
-        <Img src={staticFile("demo-screenshot.png")}
-          style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+      <Sequence from={90} durationInFrames={270} premountFor={30}>
+        <AbsoluteFill>
+          <Img src={staticFile("demo-screenshot.png")}
+            style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+          {/* Animated annotation pointing to key feature */}
+          <Sequence from={30}>
+            <AnnotationArrow x={540} y={800} label="One-click swap" />
+          </Sequence>
+          <Sequence from={90}>
+            <AnnotationArrow x={540} y={1200} label="< 400ms" />
+          </Sequence>
+        </AbsoluteFill>
       </Sequence>
 
       {/* CTA (12-15s) */}
       <Sequence from={360} durationInFrames={90}>
         <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>
-          <div style={{ color: SOLANA_GREEN, fontSize: 64, fontWeight: 800 }}>
-            Try it now 👇
+          <div style={{
+            color: COLORS.green, fontSize: 64, fontWeight: 800,
+            fontFamily: "Inter, sans-serif",
+          }}>
+            Try it now
           </div>
-          <div style={{ color: "white", fontSize: 32, marginTop: 20 }}>
+          <div style={{
+            color: "white", fontSize: 32, marginTop: 20,
+            fontFamily: "Inter, sans-serif",
+          }}>
             link in bio
           </div>
         </AbsoluteFill>
@@ -190,11 +361,41 @@ export const SocialClip: React.FC = () => {
 };
 ```
 
+## Utility Components
+
+### AnimatedText (reusable fade+slide)
+```tsx
+const AnimatedText: React.FC<{
+  text: string; delay?: number; size?: number; color?: string;
+}> = ({ text, delay = 0, size = 48, color = "white" }) => {
+  const frame = useCurrentFrame();
+  const opacity = interpolate(frame - delay, [0, 20], [0, 1], { extrapolateRight: "clamp" });
+  const y = interpolate(frame - delay, [0, 20], [30, 0], { extrapolateRight: "clamp" });
+
+  return (
+    <div style={{
+      opacity: Math.max(0, opacity),
+      transform: `translateY(${Math.max(0, y)}px)`,
+      color,
+      fontSize: size,
+      fontWeight: 700,
+      fontFamily: "Inter, sans-serif",
+    }}>
+      {text}
+    </div>
+  );
+};
+```
+
 ## Tips for Solana Videos
 
 1. **Show real data** — Fetch live TVL, transaction counts, or token prices using `@solana/web3.js` in your compositions
 2. **Record your terminal** — Screen recordings of `anchor test` passing or `solana deploy` succeeding are powerful
 3. **Use Solana Explorer** — Link to your program on explorer.solana.com for credibility
-4. **QR codes** — Use a QR code library to embed your program ID or website URL in the CTA frame
+4. **QR codes** — Use a QR code library (`qrcode` npm package) to embed your program ID or website URL in the CTA frame
 5. **Consistent branding** — Solana purple `#9945FF` + green `#14F195` on black `#000` is the standard palette
-6. **Keep it short** — 30s for Twitter, 15-60s for TikTok, 1-3min max for YouTube
+6. **Keep it short** — 15-30s for social, 30-60s for Twitter, 60-90s for landing page, 1-3min for demos
+7. **Captions always** — 85% of social video is watched muted. Add text overlays or use TikTok-style captions.
+8. **Sound effects** — Use `@remotion/sfx` for whoosh on transitions, ding on metric reveals
+9. **Premount** — Always premount heavy sequences to avoid blank frames during rendering
+10. **Parametrize** — Use Zod schemas so the same template works for different projects

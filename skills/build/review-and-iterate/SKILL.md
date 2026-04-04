@@ -98,7 +98,7 @@ See `../../data/specs/phase-handoff.md` for the full JSON contract.
 
 ```bash
 # Run the full security checklist:
-# See ../../data/runbooks/security-checklist.md for exact commands
+# See ../../data/guides/security-checklist.md for exact commands
 
 # Quick checks:
 grep -rn '\.unwrap()' programs/ --include="*.rs" | grep -v test  # Potential panics
@@ -108,9 +108,9 @@ grep -rn 'checked_' programs/ --include="*.rs" | wc -l  # Should be > 0
 
 ## Decision Points
 
-- **Security audit depth:** See `../../data/runbooks/security-checklist.md` — P0 (must fix), P1 (fix before mainnet), P2 (fix before TVL), P3 (best practice).
-- **Formal verification needed?** Use QEDGen for programs handling >$1M TVL. See `../../data/decisions/testing-framework.json`.
-- **Which test framework?** See `../../data/decisions/testing-framework.json` — Trident for fuzz testing before mainnet.
+- **Security audit depth:** See `../../data/guides/security-checklist.md` — P0 (must fix), P1 (fix before mainnet), P2 (fix before TVL), P3 (best practice).
+- **Formal verification needed?** Use QEDGen for programs handling >$1M TVL.
+- **Which test framework?** Trident for fuzz testing before mainnet. Surfpool for mainnet-state testing, LiteSVM for fast unit tests.
 
 ## Resources
 

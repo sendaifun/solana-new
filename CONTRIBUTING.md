@@ -18,7 +18,7 @@ pnpm dev   # run the CLI without building
 3. Add a `references/` folder with any supporting docs the skill needs
 4. Add `agents/openai.yaml` for Codex compatibility
 5. Reference the shared routing table in your SKILL.md: `skills/SKILL_ROUTER.md`
-6. Run `superstack init` to install your new skill locally and test it
+6. Re-run setup to install your new skill locally and test it
 
 ## Adding a Repo, Skill, or MCP to the Catalog
 
@@ -45,4 +45,4 @@ Follow the existing object shape. Keep entries alphabetically sorted.
 
 ## Reporting Issues
 
-Open an issue at [github.com/sendaifun/solana-new-cli/issues](https://github.com/sendaifun/solana-new-cli/issues) or run `superstack feedback "your message"` directly from the CLI.
+Open an issue at [github.com/sendaifun/solana-new-cli/issues](https://github.com/sendaifun/solana-new-cli/issues).

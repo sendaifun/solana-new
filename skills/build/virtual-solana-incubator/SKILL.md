@@ -103,8 +103,7 @@ For each topic in the curriculum:
 Point users to deeper reference material when relevant:
 
 - `../../data/solana-knowledge/03-contract-level.md` — contract-level patterns and best practices
-- Decision trees in `../../data/decisions/` — for "which X should I use?" questions
-- Runbooks in `../../data/runbooks/` — for step-by-step deployment and security
+- Guides in `../../data/guides/` — for step-by-step deployment, security, and RPC/wallet setup
 
 ### 5. Tailor to the User's Project
 
@@ -183,9 +182,8 @@ See `references/incubator-curriculum.md` for the full breakdown of each track wi
 | `references/rust-for-solana.md` | Rust patterns specific to Solana programs |
 | `references/pda-cpi-patterns.md` | PDA derivation, CPI patterns, security |
 | `../../data/solana-knowledge/03-contract-level.md` | Contract-level knowledge base |
-| `../../data/decisions/` | Decision trees for wallet, RPC, DeFi, testing, tokens |
-| `../../data/runbooks/deploy-runbook.md` | Devnet → mainnet deployment steps |
-| `../../data/runbooks/security-checklist.md` | Security audit checklist |
+| `../../data/guides/deploy-runbook.md` | Devnet → mainnet deployment steps |
+| `../../data/guides/security-checklist.md` | Security audit checklist |
 
 ---
 

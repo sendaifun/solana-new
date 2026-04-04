@@ -99,7 +99,7 @@ See `../../../data/specs/phase-handoff.md` for the full JSON contract.
 ## Quick Start
 
 ```bash
-# Full deploy runbook: see ../../data/runbooks/deploy-runbook.md
+# Full deploy runbook: see ../../data/guides/deploy-runbook.md
 
 # Quick version:
 anchor build
@@ -119,10 +119,10 @@ solana program show <PROGRAM_ID>
 
 ## Decision Points
 
-- **Which RPC for mainnet?** See `../../data/decisions/rpc-selection.json` — NEVER use public RPC for deployment. Helius paid tier minimum.
+- **Which RPC for mainnet?** NEVER use public RPC for deployment. Helius paid tier minimum.
 - **Upgrade authority:** Keep for first 3 months. Transfer to Squads multisig when stable. Freeze only when fully audited.
-- **Full checklist:** See `../../data/runbooks/deploy-runbook.md` for complete pre-flight + post-deploy verification.
-- **Wallet strategy:** See `../../data/runbooks/rpc-wallet-guide.md` — dedicated mainnet keypair, never reuse devnet key.
+- **Full checklist:** See `../../data/guides/deploy-runbook.md` for complete pre-flight + post-deploy verification.
+- **Wallet strategy:** See `../../data/guides/rpc-wallet-guide.md` — dedicated mainnet keypair, never reuse devnet key.
 
 ## Telemetry (run last)
 

@@ -1,6 +1,6 @@
 # RPC & Wallet Setup Guide
 
-Shared reference for all superstack skills. Read `../decisions/rpc-selection.json` and `../decisions/wallet-selection.json` for decision trees.
+Shared reference for all superstack skills.
 
 ## RPC Setup (do this first)
 

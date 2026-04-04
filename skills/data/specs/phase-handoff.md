@@ -98,9 +98,8 @@ Example:
 ## Source Reports
 
 - idea-shortlist-20260328-120000.html
-- idea-deep-dive-20260328-130000.html
-- validation-report-20260328-140000.html
-- landscape-20260328-150000.html
+- validation-report-20260328-140000.md
+- landscape-20260328-150000.md
 ```
 
 ### Field Rules

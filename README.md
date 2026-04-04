@@ -1,61 +1,26 @@
 # superstack
 
-Everything a Solana developer needs — 24 journey skills, 59 repos, 71 ecosystem skills, 49 MCP servers. Agent-first CLI: `superstack ship`.
+Everything a Solana developer needs — 24 journey skills, 59 repos, 71 ecosystem skills, 49 MCP servers.
 
-## Install in Two Steps
+## Install
 
 Requirements: [Claude Code](https://claude.ai/code) or [Codex](https://openai.com/codex), Git, and Node.js 20+.
 
-### Step 1: Install on Your Machine
-
-Open Claude Code and paste this command. Claude will handle the rest.
-
 ```bash
-git clone https://github.com/sendaifun/solana-new-cli.git ~/.claude/skills/superstack && cd ~/.claude/skills/superstack && ./setup
+curl -fsSL https://solana-new-cli.vercel.app/setup.sh | bash
 ```
 
-### Step 2: Add to Your Repo (Optional)
-
-Share superstack with your team. Real files get committed to your repo — teammates just run setup once.
-
-```bash
-./setup --vendor
-```
-
-This copies skills into `.claude/skills/superstack/` in your project. Commit it, and teammates get everything when they clone your repo.
-
-**What gets installed:** Skills (Markdown prompts) in `~/.claude/skills/` and `~/.codex/skills/`, decision trees, runbooks, Solana knowledge base, and catalog data. Nothing touches your PATH or runs in the background.
+**What gets installed:** Skills (Markdown prompts) in `~/.claude/skills/` and `~/.codex/skills/`, Solana knowledge base, guides, and catalog data. Nothing touches your PATH or runs in the background.
 
 ## Quick Start
 
 ```bash
-superstack ship                          # pick a skill → launches Claude/Codex
-superstack init                          # install 24 journey skills
-claude "What should I build on Solana?"  # or codex "..."
+claude "/find-next-crypto-idea What should I build on Solana?"
+claude "/scaffold-project Set up my workspace"
+claude "/deploy-to-mainnet Ship it"
 ```
 
-Or bootstrap everything in one command (installs superstack, Claude/Codex CLIs if missing, and initializes skills):
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/sendaifun/solana-new-cli/main/install.sh | bash
-```
-
-## Commands
-
-```
-superstack ship [--yolo] [--codex|--claude]       Learn → Idea → Build → Launch TUI
-superstack init                                   Install journey skills to Claude/Codex
-superstack search [query]                         Find repos, skills, MCPs
-superstack repos [--search <q>]                   Browse or filter repos
-superstack skills [--search <q>]                  Browse or filter skills
-superstack copilot [text] [--token [pat]]         Onboarding + idea analysis + token settings
-superstack doctor                                 Check environment setup
-superstack feedback [message]                     Send feedback to the team
-```
-
-Add `--agent` to any command for machine-readable plaintext output (for Claude Code / Codex).
-
-## Journey Skills (auto-installed via `superstack init`)
+## Journey Skills
 
 23 skills across 4 phases — user just asks naturally, right skill activates. Every skill interviews you first (via AskUserQuestion) and never assumes.
 
@@ -98,11 +63,11 @@ Add `--agent` to any command for machine-readable plaintext output (for Claude C
 | `submit-to-hackathon` | "Prepare my hackathon submission" |
 | `marketing-video` | "Create a marketing video" |
 
-Skills live in `skills/<phase>/<skill-name>/`. Run `superstack init` to install them to `~/.claude/skills/` and `~/.codex/skills/`.
+Skills live in `skills/<phase>/<skill-name>/`.
 
 ## What's Indexed
 
-superstack ships with a curated catalog of Solana ecosystem resources and a comprehensive knowledge base.
+Ships with a curated catalog of Solana ecosystem resources and a comprehensive knowledge base.
 
 | Catalog | Count | Description |
 |---------|-------|-------------|
@@ -110,11 +75,10 @@ superstack ships with a curated catalog of Solana ecosystem resources and a comp
 | **Skills** | 71 | 15 official from solana.com + 56 community (Jupiter, Drift, Helius, etc.) |
 | **MCPs** | 49 | Helius, Jupiter, Phantom, Orca, Chainstack, openSVM, security, DAO |
 | **Knowledge Docs** | 7 | Covers everything on solana.com — architecture, programs, SDKs, DeFi protocols, app layer, open-source research, plus the full Cookbook index |
-| **Decision Trees** | 5 | Wallet, RPC, DeFi protocol, testing framework, and token standard selection |
-| **Runbooks** | 3 | RPC + wallet setup, deploy devnet → mainnet, security audit checklist |
+| **Guides** | 3+ | RPC + wallet setup, deploy devnet to mainnet, security audit checklist, curated ideas |
 | **Curated Ideas** | 114+ | From YC, a16z, Alliance, and Superteam |
 
-Knowledge docs and decision trees are in `skills/data/` — skills reference them automatically so you don't need to look them up manually.
+Knowledge docs and guides are in `skills/data/` — skills reference them automatically so you don't need to look them up manually.
 
 ## Context & Learnings
 
@@ -179,7 +143,6 @@ cat ~/.superstack/config.json
 pnpm install          # install deps
 pnpm build            # compile TypeScript → dist/
 pnpm dev              # run CLI via tsx (no build needed)
-./setup               # one-command install
 ```
 
 ## Project Structure
@@ -190,9 +153,6 @@ cli/
   index.ts                  Command dispatcher, agent output, help
   telemetry.ts              Skill usage tracking (Convex + local JSONL)
   init.ts                   Auto-install skills to ~/.claude/skills/ and ~/.codex/skills/
-  interactive-journey.ts    Learn → Idea → Build → Launch TUI with phase auto-detection
-  interactive-onboarding.ts Category → recommendation → workspace setup
-  interactive-search.ts     Repos, Skills, MCPs TUI
   data/
     clonable-repos.json     59 repos catalog
     solana-skills.json      71 skills catalog
@@ -204,8 +164,7 @@ skills/
   launch/                   Go-to-market skills (4 skills)
   data/
     solana-knowledge/       6 knowledge area docs + cookbook index
-    decisions/              5 decision tree JSONs (wallet, RPC, DeFi, testing, token)
-    runbooks/               3 runbooks (RPC+wallet, deploy, security)
+    guides/                 Shared guides (RPC+wallet, deploy, security, curated ideas)
     specs/                  Phase handoff contracts
     ideas/                  114+ curated ideas from YC, a16z, Alliance, Superteam
 convex/

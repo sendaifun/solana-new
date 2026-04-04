@@ -2,11 +2,11 @@
 
 ## File Locations
 
-When installed via `superstack init`, catalog data is at:
+After setup, catalog data is at:
 ```
-~/.claude/skills/_data/catalogs/clonable-repos.json
-~/.claude/skills/_data/catalogs/solana-skills.json
-~/.claude/skills/_data/catalogs/solana-mcps.json
+~/.claude/skills/data/catalogs/clonable-repos.json
+~/.claude/skills/data/catalogs/solana-skills.json
+~/.claude/skills/data/catalogs/solana-mcps.json
 ```
 
 ## Repo Categories

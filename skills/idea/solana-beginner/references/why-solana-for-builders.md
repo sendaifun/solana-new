@@ -49,8 +49,8 @@ On Ethereum's L2 ecosystem, composing across Arbitrum + Base + Optimism requires
 ## Ecosystem Maturity
 
 - **$5B+ DeFi TVL** across Jupiter, Kamino, Marinade, Jito, Drift, and dozens of others.
-- **Institutional adoption:** Circle (USDC native on Solana), PayPal (PYUSD), Visa integrations.
-- **59+ open-source repos** you can fork and build on (see `superstack repos`).
+- **Institutional adoption:** Circle (USDC native on Solana), PayPal (PYUSD), Visa, Shopify integrations.
+- **59+ open-source repos** you can fork and build on.
 - **49+ MCP servers** for AI-native development.
 - Battle-tested in production with millions of daily active users.
 
@@ -95,4 +95,4 @@ No chain is perfect. Here's what you should know:
 1. Install Solana CLI: `sh -c "$(curl -sSfL https://release.anza.xyz/stable/install)"`
 2. Install Anchor: `cargo install avm --git https://github.com/solana-foundation/anchor --locked && avm update`
 3. Create a project: `anchor init my-project`
-4. Or use `superstack init` to get set up with skills, repos, and tools automatically.
+4. Or install superstack skills: `curl -fsSL https://solana-new-cli.vercel.app/setup.sh | bash`
