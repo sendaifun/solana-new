@@ -109,17 +109,16 @@ Skills reference these automatically based on what you're learning or building.
 
 ## Getting Started
 
-All skills are **auto-installed** when you run:
+Install skills:
 
 ```bash
-superstack init           # Install all skills to ~/.claude/skills/ and ~/.codex/skills/
-superstack ship           # Pick a skill → launches Codex/Claude with prompt
+curl -fsSL https://solana-new-cli.vercel.app/setup.sh | bash
 ```
 
-Or just ask directly:
+Then ask directly:
 
 ```bash
-claude "What should I build in crypto?"
+claude "/find-next-crypto-idea What should I build in crypto?"
 codex "Help me build a DeFi protocol on Solana"
 ```
 
@@ -139,7 +138,7 @@ To add a new skill:
 1. Create `skills/<phase>/<skill-name>/SKILL.md` with frontmatter (`name`, `description`)
 2. Add `references/` with methodology and framework markdown files
 3. Add `agents/openai.yaml` with display name and default prompt
-4. Run `superstack init` to install it
+4. Re-run setup to install it
 
 The skill auto-discovers — no registration needed. Just put it in the right phase folder.
 
@@ -152,8 +151,7 @@ skills/
     solana-knowledge/                    # 6 knowledge area docs + cookbook index
     ideas/                               # 114+ curated ideas (YC, a16z, Alliance, Superteam)
     defi/                                # DefiLlama API spec
-    decisions/                           # 5 decision tree JSONs
-    runbooks/                            # 3 shared runbooks
+    guides/                              # Shared guides (RPC, deploy, security)
     specs/
       phase-handoff.md                   # Context contract between phases
   idea/

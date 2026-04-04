@@ -105,9 +105,9 @@ cd solana-mobile-dapp-scaffold && npm install
 
 ## Decision Points
 
-- **Which wallet SDK?** See `../../data/decisions/wallet-selection.json` — Mobile Wallet Adapter for React Native, Kotlin SDK for native Android.
+- **Which wallet SDK?** Mobile Wallet Adapter for React Native, Kotlin SDK for native Android.
 - **React Native vs Native?** React Native for faster development + code sharing with web. Native for best performance + platform features.
-- **Which RPC?** See `../../data/decisions/rpc-selection.json` — mobile apps should use paid RPC (Helius) for reliability.
+- **Which RPC?** Mobile apps should use paid RPC (Helius) for reliability.
 
 ## Resources
 

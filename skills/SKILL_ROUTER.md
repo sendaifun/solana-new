@@ -52,30 +52,18 @@
 | "hackathon submission", "submit", "demo video" | `submit-to-hackathon` | Hackathon submission prep |
 | "marketing video", "deck review", "product video" | `marketing-video` | Video content creation |
 
-## Decision Trees (shared across skills)
-
-For "which X should I use?" questions, read these JSON files:
-
-| Question | Decision Tree |
-|----------|--------------|
-| Which wallet SDK? | `data/decisions/wallet-selection.json` |
-| Which RPC provider? | `data/decisions/rpc-selection.json` |
-| Which DeFi protocol? | `data/decisions/defi-protocol.json` |
-| Which test framework? | `data/decisions/testing-framework.json` |
-| SPL Token vs Token-2022? | `data/decisions/token-standard.json` |
-
-## Shared Runbooks
+## Shared Guides
 
 | Topic | Runbook |
 |-------|---------|
-| RPC + wallet setup | `data/runbooks/rpc-wallet-guide.md` |
-| Deploy devnet → mainnet | `data/runbooks/deploy-runbook.md` |
-| Security audit checklist | `data/runbooks/security-checklist.md` |
+| RPC + wallet setup | `data/guides/rpc-wallet-guide.md` |
+| Deploy devnet → mainnet | `data/guides/deploy-runbook.md` |
+| Security audit checklist | `data/guides/security-checklist.md` |
 
 ## How to use this router
 
 1. Read the user's request
 2. Match against the trigger phrases above
 3. If this skill doesn't match, tell the user: "This looks like a [X] task. Let me use the [skill-name] skill instead."
-4. For "which X should I use?" questions, check the decision trees above
+4. For "which X should I use?" questions, check the shared guides in `data/guides/`
 5. Load the correct SKILL.md and follow its instructions

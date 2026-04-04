@@ -115,7 +115,7 @@ See `../../../data/specs/phase-handoff.md` for the full JSON contract.
 
 ## Decision Points
 
-- **Which DeFi category to build in?** See `../../data/decisions/defi-protocol.json` for protocol selection.
+- **Which DeFi category to build in?** AMM, lending, perps, staking, yield — pick based on TVL gaps and growth trends.
 - **TVL growing but revenue flat?** Protocol likely has unsustainable incentives — not a good model to copy.
 - **Small TVL + fast growth?** Best opportunity zone. Build the protocol or build tools for it.
 

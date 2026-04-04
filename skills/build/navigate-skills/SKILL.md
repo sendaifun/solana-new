@@ -62,8 +62,8 @@ You are a skill navigator. Help the user discover the right skill, repo, or MCP 
 
 Catalog data may be in either location:
 
-- `~/.codex/skills/_data/catalogs/`
-- `~/.claude/skills/_data/catalogs/`
+- `~/.codex/skills/data/catalogs/`
+- `~/.claude/skills/data/catalogs/`
 
 | File | What it contains |
 |------|-----------------|
@@ -75,7 +75,7 @@ Read these files to answer the user's questions accurately.
 
 ## Installed Journey Skills (16)
 
-These are the skills installed by `superstack init`. The user can trigger them by asking naturally:
+These are the installed skills. The user can trigger them by asking naturally:
 
 ### Phase 1: Idea
 | Skill | Trigger |
@@ -112,7 +112,7 @@ When a user invokes a downstream skill directly, route them to the required pred
 
 Use this exact order:
 
-1. `superstack copilot "your idea"` (or prompt: "What should I build in crypto?")
+1. `/find-next-crypto-idea` (or prompt: "What should I build in crypto?")
 2. `scaffold-project`
 3. `build-with-claude`
 4. `review-and-iterate`
@@ -155,7 +155,7 @@ When recommending a community skill from the catalog, always suggest the `npx sk
 ## Search Strategy
 
 When searching catalogs:
-1. Read the relevant JSON file from available catalog path (`~/.codex/skills/_data/catalogs/` first, fallback to `~/.claude/skills/_data/catalogs/`)
+1. Read the relevant JSON file from available catalog path (`~/.codex/skills/data/catalogs/` first, fallback to `~/.claude/skills/data/catalogs/`)
 2. Match on `keywords`, `description`, `category` fields
 3. Return specific entries with their install/clone commands
 4. If multiple matches, rank by relevance and explain why each fits

@@ -113,7 +113,7 @@ curl -X POST https://api.helius.xyz/v0/webhooks?api-key=YOUR_KEY \
 ## Decision Points
 
 - **Which ingestion method?** Webhooks (simplest, Helius) → WebSocket (real-time) → Geyser (highest throughput) → Polling (last resort).
-- **Which RPC?** See `../../data/decisions/rpc-selection.json` — Helius required for webhooks and DAS API.
+- **Which RPC?** Helius required for webhooks and DAS API.
 - **Database?** PostgreSQL for relational data + transactions. Redis for caching + real-time state. SQLite for small/local indexers.
 - **Hosting?** Railway or Fly.io for webhook receivers. AWS/GCP for Geyser plugins.
 

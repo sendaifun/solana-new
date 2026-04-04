@@ -2,35 +2,25 @@
 
 ## What This Is
 
-CLI tool to ship on Solana — Idea to Launch. 59 repos, 71 skills, 49 MCP servers. Agent-first, single command: `superstack ship`.
+Skills and knowledge base to ship on Solana — Idea to Launch. 24 journey skills, 59 repos, 71 ecosystem skills, 49 MCP servers.
 
-> **Branding**: All brand strings live in `cli/branding.ts`. Change ONE file to rebrand everything.
-
-## Quick Reference
+## Install
 
 ```bash
-pnpm install          # install deps
-pnpm build            # compile TypeScript → dist/
-pnpm dev              # run CLI via tsx (no build needed)
-./setup               # gstack-style one-command install
+curl -fsSL https://solana-new-cli.vercel.app/setup.sh | bash
 ```
 
-## Commands
+## Usage
+
+Users invoke skills directly via Claude Code:
 
 ```bash
-superstack                                        # minimal screen — just "run superstack ship"
-superstack ship [--yolo] [--codex|--claude]       # Idea → Build → Launch sprint (auto-detects phase)
-superstack --help                                 # show all commands
-superstack init                                   # install journey skills → open Codex/Claude → go
-superstack copilot [text] [--token [pat]]         # onboarding + idea analysis + token settings
-superstack search [query]                         # find repos, skills, MCPs
-superstack repos [--search <q>]                   # browse or filter repos
-superstack skills [--search <q>]                  # browse or filter skills
+claude "/find-next-crypto-idea What should I build?"
+claude "/scaffold-project Set up my workspace"
+claude "/deploy-to-mainnet Ship it"
 ```
 
-Add `--agent` to any command for machine-readable plaintext output (for Claude Code / Codex).
-
-## Journey Skills (auto-installed via `superstack init`)
+## Journey Skills
 
 24 skills across 4 phases — user just asks naturally, right skill activates.
 
@@ -60,21 +50,14 @@ Add `--agent` to any command for machine-readable plaintext output (for Claude C
 | Launch | `submit-to-hackathon` | "Prepare my hackathon submission" |
 | Launch | `marketing-video` | "Create a marketing video" |
 
-Skills live in `skills/<phase>/<skill-name>/`. To add a new skill, create a folder with `SKILL.md` + `references/` + `agents/openai.yaml` and run `superstack init`.
+Skills live in `skills/<phase>/<skill-name>/`. To add a new skill, create a folder with `SKILL.md` + `references/` + `agents/openai.yaml`.
 
 **Skill routing**: `skills/SKILL_ROUTER.md` is a shared routing table. Each SKILL.md references it so the AI can auto-correct if the wrong skill is invoked.
 
-**Decision trees** (for "which X should I use?" questions):
-- `skills/data/decisions/wallet-selection.json` — Privy vs Unified Adapter vs Phantom vs Keypair
-- `skills/data/decisions/rpc-selection.json` — Helius vs QuickNode vs Triton vs public
-- `skills/data/decisions/defi-protocol.json` — Jupiter vs Orca vs Raydium vs Drift vs Kamino
-- `skills/data/decisions/testing-framework.json` — Surfpool vs LiteSVM vs Mollusk vs Bankrun
-- `skills/data/decisions/token-standard.json` — SPL Token vs Token-2022
-
-**Shared runbooks** (step-by-step commands):
-- `skills/data/runbooks/rpc-wallet-guide.md` — RPC + wallet setup for dev and production
-- `skills/data/runbooks/deploy-runbook.md` — Deploy devnet → mainnet with verification
-- `skills/data/runbooks/security-checklist.md` — P0-P3 security audit with exact grep commands
+**Shared guides** (step-by-step commands):
+- `skills/data/guides/rpc-wallet-guide.md` — RPC + wallet setup for dev and production
+- `skills/data/guides/deploy-runbook.md` — Deploy devnet → mainnet with verification
+- `skills/data/guides/security-checklist.md` — P0-P3 security audit with exact grep commands
 
 ## What's Indexed
 
@@ -92,14 +75,6 @@ cli/
   index.ts                  Command dispatcher, agent output, help
   telemetry.ts              Skill usage tracking (Convex + local JSONL)
   init.ts                   Auto-install skills to ~/.claude/skills/ and ~/.codex/skills/
-  interactive-journey.ts    Learn → Idea → Build → Launch TUI with phase auto-detection
-  interactive-onboarding.ts Category → recommendation → workspace setup
-  workspace-setup.ts        Clone repos, install skills, configure MCPs
-  interactive-search.ts     Repos TUI
-  interactive-skills.ts     Skills TUI
-  interactive-mcps.ts       MCPs TUI
-  interactive-universal.ts  Universal search TUI (combines all)
-  banner.ts                 ASCII art banner
   data/
     clonable-repos.json     59 repos (Solana official, SendAI, Metaplex, DeFi, etc.)
     solana-skills.json      71 skills (15 official + 56 community)
@@ -110,8 +85,7 @@ skills/
   build/                    Implementation skills (14 skills, includes virtual-solana-incubator, roast-my-product, product-review, cso)
   launch/                   Go-to-market skills (4 skills, includes marketing-video)
   data/
-    decisions/              5 decision tree JSONs (wallet, RPC, DeFi, testing, token)
-    runbooks/               3 runbooks (RPC+wallet, deploy, security)
+    guides/                 Shared guides (RPC+wallet, deploy, security, curated ideas)
     solana-knowledge/       6 knowledge area docs + cookbook index (covers all of solana.com)
     specs/                  Phase handoff JSON contracts
     ideas/                  114+ curated ideas from YC, a16z, Alliance, Superteam
@@ -120,7 +94,7 @@ convex/
   schema.ts                 Feedback + telemetry tables
   feedback.ts               Feedback submission mutation
   telemetry.ts              Skill usage tracking mutation + queries
-setup                       gstack-style one-command install script
+setup                       One-command install script
 ```
 
 ## Conventions
@@ -128,9 +102,7 @@ setup                       gstack-style one-command install script
 - **ESM-only**: All imports use `.js` extensions (NodeNext module resolution)
 - **Strict TypeScript**: strict mode, no implicit any
 - **No runtime deps**: Only devDependencies (tsx, typescript, @types/node) + convex
-- **Agent-first**: Designed for agent consumption, TUI is secondary
-- **`--agent` for machines**: Compact plaintext output, no ANSI colors
-- **`--search` for filtering**: Static output when `--search` flag is passed
+- **Agent-first**: Designed for agent consumption
 - **Single source of truth**: All branding in `cli/branding.ts`
 
 <!-- convex-ai-start -->

@@ -34,14 +34,14 @@ Use the local datasets as pattern libraries, not as proof that a market still ma
 
 ## Raw Sources
 
-Only open raw HTML when the normalized JSON clearly lost context:
+Only open raw markdown when the normalized JSON clearly lost context:
 
-- `../../../data/raw-html/alliance-ideas.html`
-- `../../../data/raw-html/yc-crypto-companies.html`
-- `../../../data/raw-html/yc-crypto-companies-p2.html`
-- `../../../data/raw-html/yc-requests-for-startups.html`
-- `../../../data/raw-html/a16z-state-of-crypto-2025.html`
-- `../../../data/raw-html/a16z-big-ideas-2025.html`
+- `../../../data/guides/alliance-ideas.md`
+- `../../../data/guides/yc-crypto-companies.md`
+- `../../../data/guides/yc-crypto-companies-p2.md`
+- `../../../data/guides/yc-requests-for-startups.md`
+- `../../../data/guides/a16z-state-of-crypto-2025.md`
+- `../../../data/guides/a16z-big-ideas-2025.md`
 
 ## Live Sources
 

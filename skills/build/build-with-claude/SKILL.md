@@ -120,11 +120,11 @@ anchor deploy --provider.cluster devnet
 
 ## Decision Points
 
-- **Which RPC for development?** See `../../data/decisions/rpc-selection.json` — use devnet public or Helius free.
+- **Which RPC for development?** Use devnet public or Helius free.
 - **Which wallet for testing?** Use file keypair: `solana-keygen new --outfile test-wallet.json`
 - **When to move from local to devnet?** After all unit tests pass locally. Devnet for integration tests.
 - **Surfpool vs solana-test-validator?** Use Surfpool when you need real mainnet account state (DeFi, existing programs). Use test-validator for isolated testing.
-- **Full runbook:** See `../../data/runbooks/rpc-wallet-guide.md`
+- **Full runbook:** See `../../data/guides/rpc-wallet-guide.md`
 
 ## Resources
 

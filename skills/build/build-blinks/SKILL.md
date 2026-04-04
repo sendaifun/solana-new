@@ -112,7 +112,7 @@ npm start  # Server on port 3000
 
 ## Decision Points
 
-- **Which RPC for building transactions?** See `../../data/decisions/rpc-selection.json` — Helius for production (fast tx confirmation).
+- **Which RPC for building transactions?** Helius for production (fast tx confirmation).
 - **Blink vs traditional UI?** Use Blinks for: single-action flows (donate, mint, swap). Use traditional UI for: multi-step flows, complex forms.
 - **Where to host?** Vercel, Railway, or any Node.js host. Must support HTTPS. Add CORS headers for unfurl clients.
 

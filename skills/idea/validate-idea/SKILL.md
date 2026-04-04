@@ -97,7 +97,7 @@ This skill is **Phase 1 (Idea)** in the Idea → Build → Launch journey. After
 ## Decision Points
 
 - **No idea yet?** Redirect to `find-next-crypto-idea` first.
-- **Which RPC for testing demand?** See `../../data/decisions/rpc-selection.json` — use Helius free tier for any on-chain research.
+- **Which RPC for testing demand?** Use Helius free tier for any on-chain research.
 - **Go vs. no-go threshold:** Score ≥ 8/15 across founder-fit + MVP-speed + distribution + market-pull + revenue = Go. Below 6 = strong No-go.
 
 ## Resources

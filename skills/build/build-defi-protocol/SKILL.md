@@ -110,11 +110,11 @@ anchor test --skip-local-validator
 
 ## Decision Points
 
-- **Which DeFi category?** See `../../data/decisions/defi-protocol.json` — AMM, lending, perps, staking, yield.
+- **Which DeFi category?** AMM, lending, perps, staking, yield.
 - **Which oracle?** Pyth for crypto price feeds (fastest, widest coverage). Switchboard for custom data feeds or non-crypto data.
-- **Which token standard?** See `../../data/decisions/token-standard.json` — SPL Token for simple fungible, Token-2022 for transfer fees.
+- **Which token standard?** SPL Token for simple fungible, Token-2022 for transfer fees.
 - **Single deployer vs multisig?** Use Squads multisig for any program handling >$10k TVL.
-- **Security checklist:** See `../../data/runbooks/security-checklist.md` — mandatory before mainnet.
+- **Security checklist:** See `../../data/guides/security-checklist.md` — mandatory before mainnet.
 
 ## Resources
 

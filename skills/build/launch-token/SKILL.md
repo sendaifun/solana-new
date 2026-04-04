@@ -111,10 +111,10 @@ spl-token create-token --program-id TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb 
 
 ## Decision Points
 
-- **Which token standard?** See `../../data/decisions/token-standard.json` — SPL Token (default) vs Token-2022 (transfer fees, confidential).
+- **Which token standard?** SPL Token (default) vs Token-2022 (transfer fees, confidential).
 - **Which launch mechanism?** Pump.fun (community/meme), direct LP on Raydium (DeFi tokens), Token-2022 (utility tokens with fees).
 - **Freeze authority?** Revoke for community trust. Keep for regulated tokens. Use Squads multisig for compromise.
-- **Security:** Run `../../data/runbooks/security-checklist.md` checks before launch. Use rug-check MCP to verify your own token.
+- **Security:** Run `../../data/guides/security-checklist.md` checks before launch. Use rug-check MCP to verify your own token.
 
 ## Resources
 
