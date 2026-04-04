@@ -104,8 +104,8 @@ Based on the user's answers, read the appropriate references:
 For all users, walk through relevant sections of `references/ecosystem-map.md`:
 
 - If they want to build DeFi → highlight Jupiter, Orca, Drift, Kamino
-- If they want NFTs → highlight Metaplex, Tensor, Magic Eden
-- If they want payments → highlight Solana Pay, USDC, PayPal PYUSD
+- If they want NFTs → highlight Metaplex, Magic Eden
+- If they want payments → highlight USDC, PayPal PYUSD, Sphere, Helio
 - If they want AI → highlight Solana Agent Kit, GOAT SDK
 - If they're just exploring → give a high-level tour of all categories
 
@@ -137,7 +137,7 @@ When the user is ready to move forward, point them to:
    - 400ms block times (not "fast")
    - ~$0.00025 per transaction (not "cheap")
    - 65,000 TPS theoretical throughput (not "high throughput")
-   - ~$1B+ DeFi TVL (not "significant TVL")
+   - ~$5B+ DeFi TVL (not "significant TVL")
    - Sub-second finality (not "quick confirmation")
 
 5. **Don't be a shill.** Acknowledge trade-offs honestly:
@@ -177,7 +177,7 @@ This context helps downstream skills (like `/find-next-crypto-idea` or `/scaffol
 
 **Backend dev with a project idea:**
 > "I'm a Go developer and I want to build a payments app on Solana."
-> → Brief Solana overview emphasizing the systems design, then deep-dive on Solana Pay and USDC, then point to `/scaffold-project`.
+> → Brief Solana overview emphasizing the systems design, then deep-dive on USDC and payment tools (Sphere, Helio), then point to `/scaffold-project`.
 
 ## Telemetry (run last)
 
