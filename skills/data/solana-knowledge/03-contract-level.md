@@ -652,25 +652,22 @@ anchor test                    # run tests with local validator
 anchor test --skip-local-validator  # use existing validator
 ```
 
-### bankrun (Fast Unit Tests)
+### LiteSVM (Fast Unit Tests — Rust & TypeScript)
 
-[solana-bankrun](https://github.com/kevinheavey/solana-bankrun) runs tests against a lightweight BanksServer without a full validator. Much faster startup.
+[LiteSVM](https://github.com/LiteSVM/litesvm) is a fast, lightweight SVM simulator for both Rust and TypeScript tests. Replaces the deprecated `solana-bankrun` package.
 
 ```typescript
-import { start } from "solana-bankrun";
-import { PublicKey, Transaction } from "@solana/web3.js";
+// TypeScript — npm install litesvm
+import { LiteSVM } from "litesvm";
 
-const context = await start([
-  { name: "my_program", programId: MY_PROGRAM_ID },
-], []);
+const svm = new LiteSVM();
+svm.addProgramFromFile(MY_PROGRAM_ID, "target/deploy/my_program.so");
 
-const client = context.banksClient;
-const payer = context.payer;
+const payer = svm.generateKeypair();
+svm.airdrop(payer.publicKey, 1_000_000_000n);
 ```
 
-### LiteSVM (Rust Unit Tests)
-
-[LiteSVM](https://github.com/LiteSVM/litesvm) is a fast, lightweight SVM simulator for Rust-based unit tests.
+### LiteSVM (Rust)
 
 ```rust
 use litesvm::LiteSVM;
@@ -713,21 +710,21 @@ assert!(!result.program_result.is_err());
 
 ### Surfpool (Real-Time Testing)
 
-[Surfpool](https://github.com/txtx/surfpool) proxies mainnet state locally, so you can test against real data without deploying.
+[Surfpool](https://github.com/solana-foundation/surfpool) proxies mainnet state locally, so you can test against real data without deploying.
 
 ### Testing Strategy
 
 | Stage | Tool | Speed | Fidelity |
 |-------|------|-------|----------|
 | Unit (Rust) | LiteSVM or Mollusk | Very fast | Program-level |
-| Unit (TS) | bankrun | Fast | Transaction-level |
+| Unit (TS) | LiteSVM | Fast | Transaction-level |
 | Integration | anchor test | Moderate | Full validator |
 | Staging | Devnet | Slow | Real network |
 | Real-time | Surfpool | Moderate | Mainnet state |
 
 Recommended approach:
 1. **LiteSVM / Mollusk** for rapid iteration on program logic
-2. **bankrun** for TypeScript client testing
+2. **LiteSVM** for TypeScript client testing
 3. **anchor test** for full integration tests
 4. **Devnet** for final validation before mainnet
 

@@ -81,7 +81,7 @@ Duration: 6 weeks at ~5 hours/week.
 
 ### Week 6: Testing and Deployment
 
-**Concepts**: `anchor test`, bankrun, local validator, devnet deployment, program upgrades, IDL publishing.
+**Concepts**: `anchor test`, LiteSVM, local validator, devnet deployment, program upgrades, IDL publishing.
 
 **Code Walkthrough**: Full test suite for the vault program. Deploy to devnet. Verify on Solana Explorer.
 

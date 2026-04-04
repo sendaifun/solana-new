@@ -48,12 +48,12 @@
         }
       },
       "Frontend / dApp (TypeScript)": {
-        "recommendation": "bankrun",
-        "rationale": "Bankrun (solana-bankrun) provides a fast TypeScript test environment. Spins up a lightweight validator in-process for JS/TS tests.",
-        "install": "npm install solana-bankrun",
-        "run": "import { start } from 'solana-bankrun';\nconst context = await start([...programs], [...accounts]);",
-        "when": "TypeScript tests, frontend integration tests, testing with @solana/web3.js.",
-        "tradeoffs": "Less mature than anchor test. Limited documentation."
+        "recommendation": "litesvm",
+        "rationale": "LiteSVM provides a fast, lightweight SVM simulator with TypeScript bindings. Replaces the deprecated solana-bankrun package.",
+        "install": "npm install litesvm",
+        "run": "import { LiteSVM } from 'litesvm';\nconst svm = new LiteSVM();",
+        "when": "TypeScript tests, frontend integration tests, testing with @solana/web3.js or @solana/kit.",
+        "tradeoffs": "Newer ecosystem — check docs for latest API."
       },
       "Fuzz testing (find edge cases automatically)": {
         "recommendation": "trident",

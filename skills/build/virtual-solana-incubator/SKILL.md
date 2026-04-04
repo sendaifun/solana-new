@@ -137,7 +137,7 @@ Every topic must include a hands-on exercise. Examples:
 - Write a counter program with init, increment, and read instructions
 - Implement a PDA vault that stores SOL for each user
 - Build a CPI that transfers tokens using a PDA signer
-- Write tests for a program using bankrun
+- Write tests for a program using LiteSVM
 
 ### Review code with specific feedback
 When the user shares their exercise code, review it thoroughly:
