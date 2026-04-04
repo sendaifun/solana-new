@@ -76,13 +76,13 @@ function installSkillsGlobal(agent: boolean): { installed: string[]; skipped: st
     else skipped.push(skill.name);
   }
 
-  // Install data to _data/ (skills/data/* + cli/data/ catalogs)
+  // Install data (skills/data/* + cli/data/ catalogs)
   const skillsDataRoot = join(getSkillsRoot(), "data");
   const cliDataRoot = join(__dirname, "..", "cli", "data");
   const cliDataRootDist = join(__dirname, "data");
   const catalogSrc = existsSync(cliDataRoot) ? cliDataRoot : cliDataRootDist;
 
-  // Install to "data/" so SKILL.md relative paths (../../data/decisions/) resolve correctly
+  // Install to "data/" so SKILL.md relative paths (../../data/guides/) resolve correctly
   const targets = [join(claudeSkillsDir, "data"), join(codexSkillsDir, "data")];
 
   // Clean up legacy _data/ if it exists
@@ -95,7 +95,7 @@ function installSkillsGlobal(agent: boolean): { installed: string[]; skipped: st
   for (const dest of targets) {
     if (existsSync(dest)) continue;
     mkdirSync(dest, { recursive: true });
-    // Copy skills/data (ideas, defi, specs) — skip raw-html
+    // Copy skills/data (ideas, defi, guides, specs)
     if (existsSync(skillsDataRoot)) {
       cpSync(skillsDataRoot, dest, {
         recursive: true,

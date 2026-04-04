@@ -11,9 +11,7 @@ OUT="$ROOT/public/skills.tar.gz"
 mkdir -p "$ROOT/public"
 
 # Package skills/ directory (idea, build, launch, data, SKILL_ROUTER.md)
-# Exclude raw-html (converted to raw-md)
 tar -czf "$OUT" \
-  --exclude='skills/data/raw-html' \
   -C "$ROOT" \
   skills/idea \
   skills/build \

@@ -158,14 +158,14 @@ else
   printf "\n"
   printf "  ${BOLD}Telemetry${RESET} ${DIM}(helps us improve ${PRODUCT_NAME})${RESET}\n"
   printf "  ${DIM}We track skill usage counts only — no code, no file paths, no PII.${RESET}\n"
-  printf "  ${DIM}Options: off (default), anonymous, community${RESET}\n\n"
+  printf "  ${DIM}Options: anonymous (default), off, community${RESET}\n\n"
 
   if [ -t 0 ]; then
     printf "  Enable telemetry? [off/anonymous/community]: "
-    read -r TELEMETRY_CHOICE </dev/tty || TELEMETRY_CHOICE="off"
+    read -r TELEMETRY_CHOICE </dev/tty || TELEMETRY_CHOICE="anonymous"
     TELEMETRY_CHOICE="${TELEMETRY_CHOICE:-off}"
   else
-    TELEMETRY_CHOICE="off"
+    TELEMETRY_CHOICE="anonymous"
   fi
 
   if [ -f "$CONFIG_DIR/config.json" ] && has_cmd node; then
@@ -174,13 +174,27 @@ else
       const p = '$CONFIG_DIR/config.json';
       const c = JSON.parse(fs.readFileSync(p, 'utf8'));
       c.telemetryTier = '$TELEMETRY_CHOICE';
+      c.convexUrl = 'https://fastidious-fish-811.convex.cloud';
       fs.writeFileSync(p, JSON.stringify(c, null, 2) + '\n');
-    " 2>/dev/null || echo "{\"telemetryTier\":\"$TELEMETRY_CHOICE\"}" > "$CONFIG_DIR/config.json"
+    " 2>/dev/null || echo "{\"telemetryTier\":\"$TELEMETRY_CHOICE\",\"convexUrl\":\"https://fastidious-fish-811.convex.cloud\"}" > "$CONFIG_DIR/config.json"
   else
-    echo "{\"telemetryTier\":\"$TELEMETRY_CHOICE\"}" > "$CONFIG_DIR/config.json"
+    echo "{\"telemetryTier\":\"$TELEMETRY_CHOICE\",\"convexUrl\":\"https://fastidious-fish-811.convex.cloud\"}" > "$CONFIG_DIR/config.json"
   fi
   touch "$CONFIG_DIR/.telemetry-prompted"
   ok "Telemetry: $TELEMETRY_CHOICE"
+fi
+
+# Ensure convexUrl is in config
+if [ -f "$CONFIG_DIR/config.json" ] && ! grep -q "convexUrl" "$CONFIG_DIR/config.json" 2>/dev/null; then
+  if has_cmd node; then
+    node -e "
+      const fs = require('fs');
+      const p = '$CONFIG_DIR/config.json';
+      const c = JSON.parse(fs.readFileSync(p, 'utf8'));
+      c.convexUrl = 'https://fastidious-fish-811.convex.cloud';
+      fs.writeFileSync(p, JSON.stringify(c, null, 2) + '\n');
+    " 2>/dev/null || true
+  fi
 fi
 
 # --- What gets installed ---

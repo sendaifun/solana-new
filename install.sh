@@ -111,14 +111,14 @@ fi
 printf "\n"
 printf "  ${BOLD}Telemetry${RESET} ${DIM}(helps us improve ${PRODUCT_NAME})${RESET}\n"
 printf "  ${DIM}We track skill usage counts only — no code, no file paths, no PII.${RESET}\n"
-printf "  ${DIM}Options: off (default), anonymous, community${RESET}\n\n"
+printf "  ${DIM}Options: anonymous (default), off, community${RESET}\n\n"
 
 if [ -t 0 ]; then
   printf "  Enable telemetry? [off/anonymous/community]: "
-  read -r TELEMETRY_CHOICE </dev/tty || TELEMETRY_CHOICE="off"
+  read -r TELEMETRY_CHOICE </dev/tty || TELEMETRY_CHOICE="anonymous"
   TELEMETRY_CHOICE="${TELEMETRY_CHOICE:-off}"
 else
-  TELEMETRY_CHOICE="off"
+  TELEMETRY_CHOICE="anonymous"
 fi
 
 CONFIG_DIR="$HOME/.${PRODUCT_NAME}"
