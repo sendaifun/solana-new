@@ -104,8 +104,8 @@ See `../../data/specs/phase-handoff.md` for the full JSON contract.
 
 ```bash
 # Verify dev environment
-solana --version       # >= 1.18
-anchor --version       # >= 0.30
+solana --version       # >= 2.0 (Agave)
+anchor --version       # >= 0.30 (1.0.0-rc available)
 node --version         # >= 20
 
 # Start local validator for testing

@@ -9,7 +9,7 @@ Get your local environment ready before writing code.
 | Node.js | 18+ | `nvm install 18` |
 | Rust | latest stable | `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \| sh` |
 | Solana CLI | 2.x+ | `sh -c "$(curl -sSfL https://release.anza.xyz/stable/install)"` |
-| Anchor | 0.30+ | `cargo install --git https://github.com/coral-xyz/anchor avm --force && avm install latest && avm use latest` |
+| Anchor | 0.30+ (1.0.0-rc available) | `cargo install --git https://github.com/solana-foundation/anchor avm --force && avm install latest && avm use latest` |
 
 **Skill:** `compatibility-matrix` (official) — check exact version requirements for your stack
 

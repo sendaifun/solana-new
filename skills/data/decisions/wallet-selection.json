@@ -25,15 +25,15 @@
                 "rationale": "The standard Solana wallet adapter supports 10+ wallet providers. Most Solana dApps use this.",
                 "install": "npm install @solana/wallet-adapter-base @solana/wallet-adapter-react @solana/wallet-adapter-react-ui @solana/wallet-adapter-wallets",
                 "setup": "Wrap app in <ConnectionProvider> + <WalletProvider> + <WalletModalProvider>. Add <WalletMultiButton /> for connect UI.",
-                "repo": "dapp-scaffold",
+                "repo": "https://solana.com/developers/templates",
                 "mcp": null,
                 "tradeoffs": "Users must have a browser extension wallet installed. More wallets = more edge cases to test."
               },
               "No — Phantom only is fine": {
-                "recommendation": "phantom-connect",
-                "rationale": "Direct Phantom integration. Simpler setup, fewer dependencies. 80%+ of Solana users have Phantom.",
-                "install": "npm install @phantom/connect",
-                "setup": "Use createPhantom() for deeplink/popup connection. Works on mobile via deeplinks.",
+                "recommendation": "phantom-browser-sdk",
+                "rationale": "Direct Phantom integration via the Phantom Browser SDK. Simpler setup, fewer dependencies. 80%+ of Solana users have Phantom.",
+                "install": "npm install @phantom/browser-sdk",
+                "setup": "Use createPhantom() from @phantom/browser-sdk for embedded wallet or deeplink connection. For wallet-adapter projects, use new PhantomWalletAdapter() from @solana/wallet-adapter-wallets.",
                 "repo": "sak-phantom-agent",
                 "mcp": "phantom-mcp-server",
                 "tradeoffs": "Only works with Phantom. If Phantom goes down or user prefers Solflare, they can't use your app."
@@ -57,7 +57,7 @@
           "No — ephemeral or file-based keypair is fine": {
             "recommendation": "keypair-file",
             "rationale": "Standard Solana keypair file. Full control, zero vendor dependency. Use for bots, scripts, CLI tools.",
-            "install": "npm install @solana/web3.js",
+            "install": "npm install @solana/kit",
             "setup": "solana-keygen new --outfile agent-wallet.json. Load with Keypair.fromSecretKey().",
             "repo": "solana-agent-kit",
             "mcp": "solana-mcp",
@@ -86,7 +86,7 @@
       "CLI tool / Script": {
         "recommendation": "keypair-file",
         "rationale": "Direct keypair for CLI tools. No UI needed.",
-        "install": "npm install @solana/web3.js (or use solana CLI directly)",
+        "install": "npm install @solana/kit (or use solana CLI directly)",
         "setup": "solana-keygen new --outfile ~/.config/solana/id.json",
         "repo": null,
         "mcp": null,

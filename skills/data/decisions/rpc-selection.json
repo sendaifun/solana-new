@@ -79,7 +79,7 @@
     "helius_free": { "rps": "~30", "das": true, "webhooks": true, "cost": "$0" },
     "helius_developer": { "rps": "~100", "das": true, "webhooks": true, "cost": "$49/mo" },
     "helius_business": { "rps": "~500", "das": true, "webhooks": true, "cost": "$499/mo" },
-    "quicknode": { "rps": "~25-500", "das": false, "webhooks": false, "cost": "$0-299/mo" },
+    "quicknode": { "rps": "~25-500", "das": true, "webhooks": false, "cost": "$0-299/mo" },
     "triton": { "rps": "unlimited", "das": false, "webhooks": false, "cost": "$500+/mo" },
     "public": { "rps": "~10", "das": false, "webhooks": false, "cost": "$0" }
   }

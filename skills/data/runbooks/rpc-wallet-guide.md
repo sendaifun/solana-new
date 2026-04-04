@@ -112,7 +112,7 @@ HELIUS_API_KEY=
 |----------|-----|---------|
 | Web dApp, crypto users | `@solana/wallet-adapter-react` | `npm i @solana/wallet-adapter-react @solana/wallet-adapter-react-ui @solana/wallet-adapter-wallets` |
 | Web dApp, social login | `@privy-io/react-auth` | `npm i @privy-io/react-auth` |
-| Phantom only | `@phantom/connect` | `npm i @phantom/connect` |
-| AI Agent / Bot | `@solana/web3.js` Keypair | `npm i @solana/web3.js` |
+| Phantom only | `@phantom/browser-sdk` | `npm i @phantom/browser-sdk` |
+| AI Agent / Bot | `@solana/kit` Keypair | `npm i @solana/kit` |
 | Agent + persistence | Privy server wallet | `npm i @privy-io/server-auth` |
 | Mobile (React Native) | Mobile Wallet Adapter | `npm i @solana-mobile/mobile-wallet-adapter-protocol` |
