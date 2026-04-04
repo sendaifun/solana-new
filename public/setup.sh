@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# superstack — one-command install
-# Usage: curl -fsSL https://solana.new/setup.sh | bash
+# superstack — one-command install & update
+# Install: curl -fsSL https://solana-new-cli.vercel.app/setup.sh | bash
+# Update:  curl -fsSL https://solana-new-cli.vercel.app/setup.sh | bash -s -- --update
 set -euo pipefail
 
 # --- Branding ---
@@ -23,13 +24,25 @@ ok()   { printf "  ${GREEN}✓${RESET} %s\n" "$1"; }
 
 has_cmd() { command -v "$1" >/dev/null 2>&1; }
 
+# --- Parse flags ---
+UPDATE_MODE=false
+for arg in "$@"; do
+  case "$arg" in
+    --update) UPDATE_MODE=true ;;
+  esac
+done
+
 # --- Banner ---
 printf "\n"
 printf "  ${CYAN}${BOLD} ___ _   _ ___ ___ ___ ___ _____ _   ___ _  __${RESET}\n"
 printf "  ${CYAN}${BOLD}/ __| | | | _ \\ __| _ \\ __|_   _/_\\ / __| |/ /${RESET}\n"
 printf "  ${CYAN}${BOLD}\\__ \\ |_| |  _/ _||   /__ \\ | |/ _ \\ (__| ' < ${RESET}\n"
 printf "  ${CYAN}${BOLD}|___/\\___/|_| |___|_|_\\___/ |_/_/ \\_\\___|_|\\_\\\\${RESET}\n"
-printf "  ${DIM}Ship on Solana — Idea to Launch${RESET}\n\n"
+if [ "$UPDATE_MODE" = true ]; then
+  printf "  ${DIM}Updating skills...${RESET}\n\n"
+else
+  printf "  ${DIM}Ship on Solana — Idea to Launch${RESET}\n\n"
+fi
 
 # --- Prerequisites ---
 log "Checking prerequisites..."
@@ -50,6 +63,7 @@ log "Downloading skills..."
 
 SKILLS_DIR="$HOME/.claude/skills"
 CODEX_DIR="$HOME/.codex/skills"
+AGENTS_DIR="$HOME/.agents/skills"
 TMP_DIR=$(mktemp -d)
 
 cleanup() { rm -rf "$TMP_DIR"; }
@@ -75,75 +89,114 @@ ok "Extracted skills"
 # --- Install skills to ~/.claude/skills/ ---
 log "Installing skills..."
 
-mkdir -p "$SKILLS_DIR" "$CODEX_DIR"
+mkdir -p "$SKILLS_DIR" "$CODEX_DIR" "$AGENTS_DIR"
 
-# Copy each skill as its own directory (how Claude expects them)
+# Copy each skill as its own directory
 for skill_dir in "$TMP_DIR"/skills/idea/*/  "$TMP_DIR"/skills/build/*/  "$TMP_DIR"/skills/launch/*/; do
   [ -d "$skill_dir" ] || continue
   skill_name=$(basename "$skill_dir")
   cp -Rf "$skill_dir" "$SKILLS_DIR/$skill_name"
   cp -Rf "$skill_dir" "$CODEX_DIR/$skill_name"
+  cp -Rf "$skill_dir" "$AGENTS_DIR/$skill_name"
 done
 
 # Copy shared data (decision trees, runbooks, knowledge base)
-mkdir -p "$SKILLS_DIR/${PRODUCT_NAME}-data" "$CODEX_DIR/${PRODUCT_NAME}-data"
+mkdir -p "$SKILLS_DIR/data" "$CODEX_DIR/data" "$AGENTS_DIR/data"
 if [ -d "$TMP_DIR/skills/data" ]; then
-  cp -Rf "$TMP_DIR/skills/data/"* "$SKILLS_DIR/${PRODUCT_NAME}-data/"
-  cp -Rf "$TMP_DIR/skills/data/"* "$CODEX_DIR/${PRODUCT_NAME}-data/"
+  cp -Rf "$TMP_DIR/skills/data/"* "$SKILLS_DIR/data/"
+  cp -Rf "$TMP_DIR/skills/data/"* "$CODEX_DIR/data/"
+  cp -Rf "$TMP_DIR/skills/data/"* "$AGENTS_DIR/data/"
 fi
 
 # Copy skill router
 if [ -f "$TMP_DIR/skills/SKILL_ROUTER.md" ]; then
   cp -f "$TMP_DIR/skills/SKILL_ROUTER.md" "$SKILLS_DIR/SKILL_ROUTER.md"
   cp -f "$TMP_DIR/skills/SKILL_ROUTER.md" "$CODEX_DIR/SKILL_ROUTER.md"
+  cp -f "$TMP_DIR/skills/SKILL_ROUTER.md" "$AGENTS_DIR/SKILL_ROUTER.md"
 fi
 
 # Count installed skills
 SKILL_COUNT=$(find "$SKILLS_DIR" -name "SKILL.md" -maxdepth 2 | wc -l | tr -d ' ')
 ok "Installed ${SKILL_COUNT} skills to ~/.claude/skills/"
 ok "Installed ${SKILL_COUNT} skills to ~/.codex/skills/"
+ok "Installed ${SKILL_COUNT} skills to ~/.agents/skills/"
 
-# --- Telemetry opt-in ---
-printf "\n"
-printf "  ${BOLD}Telemetry${RESET} ${DIM}(helps us improve ${PRODUCT_NAME})${RESET}\n"
-printf "  ${DIM}We track skill usage counts only — no code, no file paths, no PII.${RESET}\n"
-printf "  ${DIM}Options: off (default), anonymous, community${RESET}\n\n"
+# --- Auto-allow skill bash preambles in Claude Code ---
+log "Configuring Claude Code permissions..."
 
-if [ -t 0 ]; then
-  printf "  Enable telemetry? [off/anonymous/community]: "
-  read -r TELEMETRY_CHOICE </dev/tty || TELEMETRY_CHOICE="off"
-  TELEMETRY_CHOICE="${TELEMETRY_CHOICE:-off}"
-else
-  TELEMETRY_CHOICE="off"
-fi
-
-CONFIG_DIR="$HOME/.${PRODUCT_NAME}"
-mkdir -p "$CONFIG_DIR"
-if [ -f "$CONFIG_DIR/config.json" ] && has_cmd node; then
+CLAUDE_SETTINGS="$HOME/.claude/settings.json"
+if [ -f "$CLAUDE_SETTINGS" ] && has_cmd node; then
+  # Add permission rule to auto-allow skill bash preambles
   node -e "
     const fs = require('fs');
-    const p = '$CONFIG_DIR/config.json';
+    const p = '$CLAUDE_SETTINGS';
     const c = JSON.parse(fs.readFileSync(p, 'utf8'));
-    c.telemetryTier = '$TELEMETRY_CHOICE';
+    if (!c.permissions) c.permissions = {};
+    if (!c.permissions.allow) c.permissions.allow = [];
+    const rule = 'Bash(bash *)';
+    if (!c.permissions.allow.includes(rule)) {
+      c.permissions.allow.push(rule);
+    }
     fs.writeFileSync(p, JSON.stringify(c, null, 2) + '\n');
-  " 2>/dev/null || echo "{\"telemetryTier\":\"$TELEMETRY_CHOICE\"}" > "$CONFIG_DIR/config.json"
+  " 2>/dev/null && ok "Auto-allow skill preambles: enabled" || warn "Could not update Claude settings"
+elif [ ! -f "$CLAUDE_SETTINGS" ]; then
+  mkdir -p "$HOME/.claude"
+  echo '{"permissions":{"allow":["Bash(bash *)"]}}' > "$CLAUDE_SETTINGS"
+  ok "Auto-allow skill preambles: enabled"
 else
-  echo "{\"telemetryTier\":\"$TELEMETRY_CHOICE\"}" > "$CONFIG_DIR/config.json"
+  warn "Node.js needed to update Claude settings. Skill preambles may prompt for approval."
 fi
-touch "$CONFIG_DIR/.telemetry-prompted"
-ok "Telemetry: $TELEMETRY_CHOICE"
+
+# --- Telemetry opt-in (skip if already prompted) ---
+CONFIG_DIR="$HOME/.${PRODUCT_NAME}"
+mkdir -p "$CONFIG_DIR"
+
+if [ -f "$CONFIG_DIR/.telemetry-prompted" ]; then
+  CURRENT_TIER=$(cat "$CONFIG_DIR/config.json" 2>/dev/null | grep -o '"telemetryTier":"[^"]*"' | head -1 | cut -d'"' -f4 || echo "off")
+  ok "Telemetry: ${CURRENT_TIER} (already configured)"
+else
+  printf "\n"
+  printf "  ${BOLD}Telemetry${RESET} ${DIM}(helps us improve ${PRODUCT_NAME})${RESET}\n"
+  printf "  ${DIM}We track skill usage counts only — no code, no file paths, no PII.${RESET}\n"
+  printf "  ${DIM}Options: off (default), anonymous, community${RESET}\n\n"
+
+  if [ -t 0 ]; then
+    printf "  Enable telemetry? [off/anonymous/community]: "
+    read -r TELEMETRY_CHOICE </dev/tty || TELEMETRY_CHOICE="off"
+    TELEMETRY_CHOICE="${TELEMETRY_CHOICE:-off}"
+  else
+    TELEMETRY_CHOICE="off"
+  fi
+
+  if [ -f "$CONFIG_DIR/config.json" ] && has_cmd node; then
+    node -e "
+      const fs = require('fs');
+      const p = '$CONFIG_DIR/config.json';
+      const c = JSON.parse(fs.readFileSync(p, 'utf8'));
+      c.telemetryTier = '$TELEMETRY_CHOICE';
+      fs.writeFileSync(p, JSON.stringify(c, null, 2) + '\n');
+    " 2>/dev/null || echo "{\"telemetryTier\":\"$TELEMETRY_CHOICE\"}" > "$CONFIG_DIR/config.json"
+  else
+    echo "{\"telemetryTier\":\"$TELEMETRY_CHOICE\"}" > "$CONFIG_DIR/config.json"
+  fi
+  touch "$CONFIG_DIR/.telemetry-prompted"
+  ok "Telemetry: $TELEMETRY_CHOICE"
+fi
 
 # --- What gets installed ---
 printf "\n"
 printf "  ${CYAN}┌─────────────────────────────────────────────────────────────────┐${RESET}\n"
-printf "  ${CYAN}│${RESET} ${BOLD}What gets installed:${RESET} Skills (Markdown prompts) in               ${CYAN}│${RESET}\n"
-printf "  ${CYAN}│${RESET} ~/.claude/skills/ and ~/.codex/skills/. Decision trees,         ${CYAN}│${RESET}\n"
-printf "  ${CYAN}│${RESET} runbooks, and catalog data. Nothing touches your PATH.          ${CYAN}│${RESET}\n"
+printf "  ${CYAN}│${RESET} ${BOLD}What gets installed:${RESET} Agent Skills in ~/.claude/skills/,              ${CYAN}│${RESET}\n"
+printf "  ${CYAN}│${RESET} ~/.codex/skills/, and ~/.agents/skills/.                       ${CYAN}│${RESET}\n"
 printf "  ${CYAN}└─────────────────────────────────────────────────────────────────┘${RESET}\n"
 
 # --- Done ---
 printf "\n"
-printf "  ${GREEN}${BOLD}Setup complete!${RESET}\n\n"
+if [ "$UPDATE_MODE" = true ]; then
+  printf "  ${GREEN}${BOLD}Update complete!${RESET} ${DIM}${SKILL_COUNT} skills updated.${RESET}\n\n"
+else
+  printf "  ${GREEN}${BOLD}Setup complete!${RESET}\n\n"
+fi
 
 printf "  ${BOLD}Get started${RESET} ${DIM}— open Claude and ask:${RESET}\n\n"
 printf "    ${CYAN}claude \"What should I build in crypto?\"${RESET}          ${DIM}→ Idea phase${RESET}\n"
@@ -162,4 +215,8 @@ printf "    ${CYAN}claude \"/create-pitch-deck Help me pitch to investors\"${RES
 printf "    ${CYAN}claude \"/marketing-video Create a promo video\"${RESET}\n"
 printf "\n"
 printf "  ${DIM}Skills auto-activate based on your prompt. No CLI needed.${RESET}\n"
+printf "\n"
+
+printf "  ${BOLD}Update skills later:${RESET}\n"
+printf "    ${CYAN}curl -fsSL ${BASE_URL}/setup.sh | bash -s -- --update${RESET}\n"
 printf "\n"

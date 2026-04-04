@@ -190,9 +190,8 @@ ok "Telemetry: $TELEMETRY_CHOICE"
 # --- What gets installed ---
 printf "\n"
 printf "  ${CYAN}┌─────────────────────────────────────────────────────────────────┐${RESET}\n"
-printf "  ${CYAN}│${RESET} ${BOLD}What gets installed:${RESET} Skills (Markdown prompts) in               ${CYAN}│${RESET}\n"
-printf "  ${CYAN}│${RESET} ~/.claude/skills/ and ~/.codex/skills/. Decision trees,         ${CYAN}│${RESET}\n"
-printf "  ${CYAN}│${RESET} runbooks, and catalog data. Nothing touches your PATH.          ${CYAN}│${RESET}\n"
+printf "  ${CYAN}│${RESET} ${BOLD}What gets installed:${RESET} Agent Skills in ~/.claude/skills/,              ${CYAN}│${RESET}\n"
+printf "  ${CYAN}│${RESET} ~/.codex/skills/, and ~/.agents/skills/.                       ${CYAN}│${RESET}\n"
 printf "  ${CYAN}└─────────────────────────────────────────────────────────────────┘${RESET}\n"
 
 # --- Done ---
