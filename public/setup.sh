@@ -5,7 +5,7 @@ set -euo pipefail
 
 # --- Branding ---
 PRODUCT_NAME="superstack"
-BASE_URL="https://solana.new"
+BASE_URL="https://solana-new-cli.vercel.app"
 
 # --- Colors ---
 RED='\033[0;31m'
