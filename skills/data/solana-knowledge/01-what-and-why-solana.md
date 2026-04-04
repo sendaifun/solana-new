@@ -61,7 +61,6 @@ Solana has become the chain of choice for institutional deployments. Major enter
 | **PayPal (PYUSD)** | Launched PYUSD stablecoin natively on Solana (in addition to Ethereum) |
 | **Circle (USDC)** | Native USDC on Solana -- one of the largest stablecoin deployments |
 | **Stripe** | Integrated Solana for crypto payouts and USDC transfers |
-| **Shopify** | Solana Pay integration for merchant checkout |
 | **Western Union** | Exploring Solana-based cross-border payment rails |
 | **Fiserv** | Payment infrastructure partnership with Solana ecosystem |
 | **Worldpay** | Enterprise payment processing integration |
@@ -106,15 +105,15 @@ Solana has the broadest application ecosystem of any non-EVM chain:
 ### DeFi
 - **DEX aggregation**: Jupiter (dominant aggregator)
 - **AMMs**: Orca, Raydium, Meteora
-- **Lending**: Kamino, MarginFi, Solend
+- **Lending**: Kamino, MarginFi, Save
 - **Derivatives**: Drift Protocol, Zeta Markets, Phoenix
 - **Liquid staking**: Marinade, Jito, BlazeStake
 
 ### Consumer
 - **Mobile**: Solana Mobile (Saga phone, dApp Store)
 - **Social**: Dialect (messaging), Bonk (community token)
-- **Payments**: Solana Pay, Sphere, Helio
-- **NFTs/Digital collectibles**: Tensor, Magic Eden, Metaplex
+- **Payments**: Sphere, Helio
+- **NFTs/Digital collectibles**: Magic Eden, Metaplex
 
 ### Infrastructure
 - **RPC providers**: Helius, Triton, QuickNode
@@ -124,7 +123,7 @@ Solana has the broadest application ecosystem of any non-EVM chain:
 
 ### Payments
 - **Stablecoins**: USDC (Circle), PYUSD (PayPal), USDT (Tether)
-- **Merchant tools**: Solana Pay, Sphere, Helio, Decaf
+- **Merchant tools**: Sphere, Helio, Decaf
 - **Cross-border**: Bridge integrations for fiat on/off ramps
 
 ### Gaming

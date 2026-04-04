@@ -88,7 +88,7 @@ Web3-specific UX issues that cause users to leave. Check every product against t
 
 **Why users leave**: They can't share what they found. Growth through word-of-mouth is killed.
 
-**The fix**: URL reflects app state. "swap?inputMint=USDC&outputMint=SOL&amount=100" should work. Support Blinks/Actions for shareable transactions.
+**The fix**: URL reflects app state. "swap?inputMint=USDC&outputMint=SOL&amount=100" should work.
 
 ## 12. Loading States Without Explanation
 

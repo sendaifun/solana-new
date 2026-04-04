@@ -208,14 +208,18 @@ describe("my-program", () => {
 });
 ```
 
-### Bankrun (Rust)
+### LiteSVM (Rust)
 
 ```rust
-#[tokio::test]
-async fn test_initialize() {
-    let mut context = ProgramTest::new("my_program", id(), None)
-        .start_with_context()
-        .await;
+use litesvm::LiteSVM;
+
+#[test]
+fn test_initialize() {
+    let mut svm = LiteSVM::new();
+    svm.add_program_from_file(program_id, "target/deploy/my_program.so");
+
+    let user = Keypair::new();
+    svm.airdrop(&user.pubkey(), 1_000_000_000).unwrap();
     // ... build and send transaction
 }
 ```

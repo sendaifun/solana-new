@@ -93,10 +93,11 @@ See `../../data/specs/phase-handoff.md` for the full JSON contract.
 ## Quick Start
 
 ```bash
-# React Native (recommended):
-npx react-native init MySolanaDapp
+# React Native via Expo (recommended):
+npx create-expo-app MySolanaDapp
 cd MySolanaDapp
-npm install @solana-mobile/mobile-wallet-adapter-protocol @solana/web3.js
+npm install @solana-mobile/mobile-wallet-adapter-protocol @solana/web3.js  # @solana/kit for new non-mobile-specific code
+# Note: For non-Expo projects, use: npx @react-native-community/cli init MySolanaDapp
 
 # Or clone the mobile scaffold:
 git clone https://github.com/nickytonline/solana-mobile-dapp-scaffold.git

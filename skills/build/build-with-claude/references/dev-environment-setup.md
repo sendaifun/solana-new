@@ -9,7 +9,7 @@ Get your local environment ready before writing code.
 | Node.js | 18+ | `nvm install 18` |
 | Rust | latest stable | `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \| sh` |
 | Solana CLI | 2.x+ | `sh -c "$(curl -sSfL https://release.anza.xyz/stable/install)"` |
-| Anchor | 0.30+ | `cargo install --git https://github.com/coral-xyz/anchor avm --force && avm install latest && avm use latest` |
+| Anchor | 1.0.0+ | `cargo install avm --git https://github.com/solana-foundation/anchor --locked && avm update` |
 
 **Skill:** `compatibility-matrix` (official) — check exact version requirements for your stack
 
@@ -64,7 +64,7 @@ SOLANA_RPC_URL=https://api.devnet.solana.com
 
 ```bash
 solana --version          # Should show 2.x+
-anchor --version          # Should show 0.30+
+anchor --version          # Should show 1.0.0+
 node --version            # Should show 18+
 solana config get         # Check RPC URL
 solana balance            # Check devnet balance

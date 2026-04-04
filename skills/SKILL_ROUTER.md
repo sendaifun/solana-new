@@ -25,7 +25,6 @@
 | "scaffold", "set up project", "initialize" | `scaffold-project` | Starting from scratch, need project structure |
 | "help me build", "build the MVP", "guide me" | `build-with-claude` | Step-by-step implementation guidance |
 | "DeFi protocol", "AMM", "lending", "vault", "DEX" | `build-defi-protocol` | Building DeFi-specific programs |
-| "blink", "Solana Action", "shareable transaction" | `build-blinks` | Building Actions/Blinks |
 | "launch token", "SPL token", "memecoin", "pump.fun" | `launch-token` | Token creation and distribution |
 | "data pipeline", "indexer", "webhook", "analytics" | `build-data-pipeline` | On-chain data infrastructure |
 | "mobile app", "React Native", "mobile wallet" | `build-mobile` | Mobile dApp development |

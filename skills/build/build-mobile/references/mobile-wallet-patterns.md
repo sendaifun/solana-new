@@ -112,19 +112,19 @@ Phantom Connect provides a higher-level SDK with additional features like social
 ### React Native Setup
 
 ```typescript
-import { PhantomConnect } from "@phantom/connect-sdk";
+import { createPhantom } from "@phantom/browser-sdk";
 
-const phantom = new PhantomConnect({
+const phantom = createPhantom({
   appId: "your-app-id", // Get from Phantom developer portal
-  cluster: "mainnet-beta",
+  chainId: "solana:mainnet",
 });
 
 // Connect
-const connected = await phantom.connect();
+const connected = await phantom.solana.connect();
 console.log("Address:", connected.publicKey.toString());
 
 // Sign transaction
-const signed = await phantom.signTransaction(transaction);
+const signed = await phantom.solana.signTransaction(transaction);
 ```
 
 **Skills:** `phantom-connect-skill` (Phantom Connect SDK — React, React Native, browser, social login, token gating)

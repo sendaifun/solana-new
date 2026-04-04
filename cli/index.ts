@@ -436,8 +436,6 @@ function shipAgent(forcedAgentCli?: AgentCli): void {
   console.log(`    ${agentCli} "Help me build the Solana MVP step by step"`);
   console.log(`  build-defi-protocol      DeFi protocol — AMM, lending, vault`);
   console.log(`    ${agentCli} "Build a DeFi protocol on Solana — AMM, lending, or vault"`);
-  console.log(`  build-blinks             Solana Actions / Blinks`);
-  console.log(`    ${agentCli} "Build a Solana Action / Blink for shareable transactions"`);
   console.log(`  launch-token             SPL token mint + distribution`);
   console.log(`    ${agentCli} "Launch an SPL token on Solana with metadata and distribution"`);
   console.log(`  build-data-pipeline      Indexer, webhook, analytics`);

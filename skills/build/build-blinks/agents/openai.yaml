@@ -1,4 +1,0 @@
-interface:
-  display_name: "Build Blinks"
-  short_description: "Create Solana Actions and shareable Blinks"
-  default_prompt: "Help me build a Solana Blink. I want to create a shareable transaction link that works in wallets and social feeds."

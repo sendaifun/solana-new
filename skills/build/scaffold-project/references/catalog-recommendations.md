@@ -25,10 +25,10 @@ Map the user's idea to specific repos, skills, and MCPs from the solana-new cata
 
 ## Frontend & dApps
 
-**Repos:** `create-solana-dapp` (npx), `dapp-scaffold`, `builderz-scaffold`, `solana-actions`, `solana-action-express`
+**Repos:** `create-solana-dapp` (npx), [official templates](https://solana.com/developers/templates), `builderz-scaffold`
 **Skills:** `frontend-framework-kit` (official), `kit` (official), `kit-web3-interop` (official), `solana-kit-skill`, `phantom-connect-skill`
 **MCPs:** `helius-mcp`, `phantom-mcp-server`
-**Tip:** `npx create-solana-dapp@latest` scaffolds Next.js, React+Vite, or Express. Use Wallet Standard for wallet connection.
+**Tip:** Browse starter templates at https://solana.com/developers/templates. `npx create-solana-dapp@latest` scaffolds Next.js, React+Vite, or Express. Use Wallet Standard for wallet connection.
 
 ## Mobile
 
@@ -68,9 +68,3 @@ Map the user's idea to specific repos, skills, and MCPs from the solana-new cata
 **Repos:** `squads-v4`, `spl-governance`
 **Skills:** `programs-anchor` (official)
 **Tip:** Squads for multisig. SPL Governance for full DAO frameworks.
-
-## Blinks / Actions
-
-**Repos:** `solana-actions`, `solana-action-express`
-**Skills:** `frontend-framework-kit` (official)
-**Tip:** Actions SDK for shareable transactions. Express template for quick backends.

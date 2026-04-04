@@ -72,16 +72,6 @@ Project-based Solana development track with AI-assisted learning.
 
 ---
 
-### Soldev.app -- Aggregated Resources
-
-Central hub that indexes Solana tutorials, courses, and documentation from across the ecosystem.
-
-- **URL:** https://soldev.app
-- **Content:** Tutorials, guides, SDK references, tooling docs
-- **Best for:** Finding the right resource for any specific topic
-
----
-
 ## Official Documentation and References
 
 ### Core Documentation
@@ -105,7 +95,6 @@ Key guides on the official site:
 | Token Extensions (Token-2022) | All extension types with examples |
 | NFTs on Solana | Metadata, collections, compressed NFTs |
 | Add Solana Wallet Adapter | React wallet integration |
-| Solana Actions and Blinks | Building transaction endpoints |
 | Versioned Transactions | v0 transactions and lookup tables |
 | Priority Fees | Compute budget and fee estimation |
 
@@ -139,21 +128,6 @@ Key guides on the official site:
 | Solana Changelog | https://www.youtube.com/playlist?list=PLilwLeBwGuK5-Qri7Pg9zd-Vvhz9kX2-R | Weekly protocol updates (video) |
 | Validated Podcast | https://solana.com/validated | Ecosystem interviews and deep dives |
 | Solana Tech Discord | https://discord.gg/solana-tech | Core protocol development discussion |
-
-### Key Twitter/X Accounts to Follow
-
-| Account | Focus |
-|---------|-------|
-| @solana | Official Solana account |
-| @solanalabs | Solana Labs engineering |
-| @aaboralabs | Anza (validator client team) |
-| @heaborius_dev | Helius -- RPC and infrastructure |
-| @metaplex | NFT standards |
-| @JupiterExchange | Jupiter DEX aggregator |
-| @solaboranamobile | Solana Mobile |
-| @SuperteamDAO | Community and bounties |
-| @armaniferrante | Anchor creator |
-| @redaboracted_noah | Solana educator |
 
 ---
 
@@ -203,7 +177,7 @@ Regional Solana communities across 15+ countries with bounties, grants, and tale
 
 | Repository | Description | URL |
 |------------|-------------|-----|
-| `solana-labs/solana` | Original Solana validator (Labs) | https://github.com/solana-labs/solana |
+| `solana-labs/solana` | Archived — see anza-xyz/agave | https://github.com/solana-labs/solana |
 | `anza-xyz/agave` | Anza's validator client (actively maintained fork) | https://github.com/anza-xyz/agave |
 | `firedancer-io/firedancer` | Jump Crypto's C validator client | https://github.com/firedancer-io/firedancer |
 | `solana-labs/solana-program-library` | SPL programs (Token, Memo, ATA, etc.) | https://github.com/solana-labs/solana-program-library |
@@ -212,9 +186,18 @@ Regional Solana communities across 15+ countries with bounties, grants, and tale
 
 | Repository | Description | URL |
 |------------|-------------|-----|
-| `coral-xyz/anchor` | Anchor framework for Solana programs | https://github.com/coral-xyz/anchor |
-| `solana-labs/solana-web3.js` | Legacy TypeScript SDK | https://github.com/solana-labs/solana-web3.js |
+| `solana-foundation/anchor` | Anchor framework for Solana programs | https://github.com/solana-foundation/anchor |
+| `anza-xyz/solana-web3.js` | Legacy TypeScript SDK (`@solana/kit` is the current package) | https://github.com/anza-xyz/solana-web3.js |
 | `anza-xyz/wallet-adapter` | Wallet adapter for React | https://github.com/anza-xyz/wallet-adapter |
+| `solana-foundation/surfpool` | Local test environment with mainnet state cloning | https://github.com/solana-foundation/surfpool |
+| `solana-foundation/explorer` | Official Solana Explorer (explorer.solana.com) | https://github.com/solana-foundation/explorer |
+| `solana-foundation/kora` | Gasless transactions — pay fees in any token (USDC, BONK, etc.) | https://github.com/solana-foundation/kora |
+| `solana-foundation/mpp-sdk` | Machine Payments Protocol — HTTP 402 payment flow for APIs | https://github.com/solana-foundation/mpp-sdk |
+| `solana-foundation/commerce-kit` | E-commerce SDK — payments, checkout, React components | https://github.com/solana-foundation/commerce-kit |
+| `solana-foundation/token-helpers` | Token account utilities — simplified ATA creation across standards | https://github.com/solana-foundation/token-helpers |
+| `blueshift-gg/doppler` | Ultra-optimized oracle program (21 CU per update) | https://github.com/blueshift-gg/doppler |
+| `blueshift-gg/sbpf` | CLI to scaffold, build, debug, and deploy sBPF assembly programs | https://github.com/blueshift-gg/sbpf |
+| `blueshift-gg/sbpf-linker` | Relink BPF binaries into SBPF V0 format for Solana | https://github.com/blueshift-gg/sbpf-linker |
 | `solana-developers/program-examples` | Example Solana programs | https://github.com/solana-developers/program-examples |
 
 ### NFT and Token
@@ -314,8 +297,7 @@ solana-test-validator \
 
 | Framework | Type | Best For |
 |-----------|------|----------|
-| `bankrun` (solana-bankrun) | Lightweight BanksClient | Fast Anchor tests |
-| `litesvm` | Lightweight SVM | Unit testing programs |
+| `litesvm` | Lightweight SVM simulator (Rust & TS) | Fast unit tests — replaces deprecated bankrun |
 | `mollusk` | Instruction-level testing | Low-level program testing |
 | `surfpool` | Local test environment | Full integration testing |
 | `anchor test` | Built-in Anchor testing | Standard Anchor projects |
@@ -336,8 +318,7 @@ solana-test-validator \
 |----------|-----|----------|
 | Solana Explorer | https://explorer.solana.com | Official, basic |
 | Solscan | https://solscan.io | Most popular, rich UI |
-| Solana FM | https://solana.fm | Parsed account data, IDL support |
-| XRAY | https://xray.helius.xyz | Helius-powered, clean UI |
+| Orb | https://orb.helius.dev | Helius-powered explorer (formerly XRAY) |
 | SolanaBeach | https://solanabeach.io | Validator and epoch data |
 
 ---

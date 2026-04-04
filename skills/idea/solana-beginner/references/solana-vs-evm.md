@@ -26,7 +26,7 @@ On Ethereum, your smart contract **owns its data**. Storage lives inside the con
 | Execution model | Sequential (EVM) | Parallel (Sealevel — non-overlapping accounts run in parallel) |
 | Language | Solidity / Vyper | Rust (native) / Anchor (framework) |
 | Framework | Hardhat / Foundry | Anchor (the Hardhat of Solana) |
-| Testing | Hardhat tests, Foundry fuzz | Bankrun, LiteSVM, Mollusk, Surfpool |
+| Testing | Hardhat tests, Foundry fuzz | LiteSVM, Mollusk, Surfpool |
 | Composability | All on L1, fragmented across L2s | Single global state, everything composable |
 
 ## Account Model Deep Dive
@@ -107,7 +107,7 @@ PDAs are used for:
 | Test | `npx hardhat test` | `anchor test` |
 | Deploy | `npx hardhat deploy` | `anchor deploy` |
 | Local chain | Hardhat node / Anvil | `solana-test-validator` |
-| Explorer | Etherscan | Solscan, Solana Explorer, SolanaFM |
+| Explorer | Etherscan | Solscan, Solana Explorer, Orb (Helius) |
 | Client SDK | ethers.js / viem | @solana/web3.js, @solana/kit |
 | Wallet connect | wagmi / RainbowKit | @solana/wallet-adapter |
 

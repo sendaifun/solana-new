@@ -22,7 +22,7 @@ claude "/deploy-to-mainnet Ship it"
 
 ## Journey Skills
 
-24 skills across 4 phases — user just asks naturally, right skill activates.
+23 skills across 4 phases — user just asks naturally, right skill activates.
 
 | Phase | Skill | Trigger Prompt |
 |-------|-------|---------------|
@@ -38,7 +38,6 @@ claude "/deploy-to-mainnet Ship it"
 | Build | `build-defi-protocol` | "Build a DeFi protocol" |
 | Build | `build-data-pipeline` | "Build an indexer" |
 | Build | `build-mobile` | "Build a mobile app" |
-| Build | `build-blinks` | "Build a Solana Action" |
 | Build | `launch-token` | "Launch a token" |
 | Build | `roast-my-product` | "Roast my product — be brutal" |
 | Build | `product-review` | "Review my product's UX" |

@@ -4,7 +4,7 @@ Common Solana application architectures. Each links to a real starter repo from 
 
 ## Pattern 1: Next.js + Anchor dApp
 
-**Repos:** `create-solana-dapp` (npx), `dapp-scaffold`, `builderz-scaffold`
+**Repos:** `create-solana-dapp` (npx), [official templates](https://solana.com/developers/templates), `builderz-scaffold`
 
 ```
 my-dapp/
@@ -108,25 +108,7 @@ Best for: Analytics, monitoring, research tools, DePIN data.
 **Skills:** `helius-build-skill`
 **MCPs:** `helius-mcp` (webhooks, DAS API), `solscan-mcp`
 
-## Pattern 6: Blinks / Actions
-
-**Repos:** `solana-actions`, `solana-action-express`
-
-```
-my-action/
-  src/
-    actions/              # Action handlers (one per action)
-    utils/                # Solana helpers
-    index.ts              # Express/Hono server
-  actions.json            # Action metadata
-  package.json
-  CLAUDE.md
-```
-
-Best for: Shareable transactions, social payments, gamified interactions.
-**Skills:** `frontend-framework-kit` (official)
-
-## Pattern 7: Mobile App
+## Pattern 6: Mobile App
 
 **Repos:** `solana-mobile-dapp-scaffold`, `solana-kotlin-compose`
 

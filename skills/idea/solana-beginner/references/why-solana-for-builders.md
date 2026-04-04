@@ -41,14 +41,14 @@ On Ethereum's L2 ecosystem, composing across Arbitrum + Base + Optimism requires
 - **Rust** — yes, it's harder than Solidity. But it catches entire categories of bugs at compile time. And the Anchor macros abstract most of the complexity.
 - **Excellent tooling:**
   - `solana-test-validator` for local development
-  - Bankrun / LiteSVM / Surfpool for fast testing
+  - LiteSVM / Mollusk / Surfpool for fast testing
   - Helius for enhanced RPCs and webhooks
-  - Solana Explorer, Solscan, SolanaFM for debugging
+  - Solana Explorer, Solscan, Orb (Helius) for debugging
 - **@solana/web3.js** and the newer **@solana/kit** for TypeScript client development.
 
 ## Ecosystem Maturity
 
-- **$1B+ DeFi TVL** across Jupiter, Kamino, Marinade, Jito, Drift, and dozens of others.
+- **$5B+ DeFi TVL** across Jupiter, Kamino, Marinade, Jito, Drift, and dozens of others.
 - **Institutional adoption:** Circle (USDC native on Solana), PayPal (PYUSD), Visa, Shopify integrations.
 - **59+ open-source repos** you can fork and build on.
 - **49+ MCP servers** for AI-native development.
@@ -93,6 +93,6 @@ No chain is perfect. Here's what you should know:
 ## Getting Started
 
 1. Install Solana CLI: `sh -c "$(curl -sSfL https://release.anza.xyz/stable/install)"`
-2. Install Anchor: `cargo install --git https://github.com/coral-xyz/anchor anchor-cli`
+2. Install Anchor: `cargo install avm --git https://github.com/solana-foundation/anchor --locked && avm update`
 3. Create a project: `anchor init my-project`
 4. Or install superstack skills: `curl -fsSL https://solana-new-cli.vercel.app/setup.sh | bash`

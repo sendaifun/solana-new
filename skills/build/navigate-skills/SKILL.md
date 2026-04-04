@@ -91,7 +91,6 @@ These are the installed skills. The user can trigger them by asking naturally:
 | `scaffold-project` | "Scaffold my project" |
 | `build-with-claude` | "Help me build the MVP" |
 | `build-defi-protocol` | "Build a DeFi protocol" |
-| `build-blinks` | "Build a Solana Action / Blink" |
 | `launch-token` | "Launch an SPL token" |
 | `build-data-pipeline` | "Build an indexer / data pipeline" |
 | `build-mobile` | "Build a Solana mobile app" |

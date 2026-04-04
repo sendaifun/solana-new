@@ -101,7 +101,7 @@ cd my-defi-protocol
 
 # Key dependencies for DeFi:
 cargo add anchor-spl          # SPL token integration
-cargo add pyth-sdk-solana     # Oracle price feeds
+cargo add pyth-solana-receiver-sdk  # Oracle price feeds (Pyth pull model)
 
 # Test with mainnet fork (real liquidity data)
 surfpool --fork mainnet-beta

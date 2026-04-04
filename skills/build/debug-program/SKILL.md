@@ -95,8 +95,8 @@ See `../../data/specs/phase-handoff.md` for the full JSON contract.
 # Step 1: Get the error from transaction signature
 solana confirm -v <TX_SIGNATURE>
 
-# Step 2: Simulate the failing transaction
-solana transaction-simulate <TX_SIGNATURE>  # Or use Anchor's simulate
+# Step 2: Check program logs for the failing transaction
+solana logs <PROGRAM_ID>  # Stream real-time logs (run before reproducing the error)
 
 # Step 3: Check account state
 solana account <ACCOUNT_ADDRESS> --output json

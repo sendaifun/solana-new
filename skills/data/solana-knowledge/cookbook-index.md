@@ -4,6 +4,8 @@
 
 **Base URL:** https://solana.com/developers/cookbook
 
+> **Note:** Code examples below use `@solana/web3.js` v1 (legacy). New projects should use `@solana/kit` — see [05-app-layer-consumer.md](05-app-layer-consumer.md) for current patterns.
+
 ---
 
 ## Development
@@ -15,6 +17,7 @@ Set up a local Solana test validator for development and testing.
 - **URL:** https://solana.com/developers/cookbook/development/start-local-validator
 - **Command:** `solana-test-validator`
 - **Flags:** `--reset` (clean state), `--clone <ADDRESS>` (clone mainnet accounts), `--bpf-program <ADDRESS> <PATH>` (load local programs)
+- **Modern alternative:** For faster startup and built-in mainnet state cloning, see [Surfpool](https://github.com/solana-foundation/surfpool).
 
 ```bash
 # Basic

@@ -175,7 +175,10 @@ await transfer(connection, payer, sourceATA, destATA, owner, amount);
 
 ## Jupiter Swap Integration
 
+> **Note:** The v6 API (`quote-api.jup.ag/v6`) is being sunset. The replacement is the **Ultra API** at `api.jup.ag`. New projects should use the Ultra API. See [Jupiter docs](https://station.jup.ag/docs) for migration guidance.
+
 ```typescript
+// ⚠️ Legacy v6 API — being sunset. Migrate to Ultra API (api.jup.ag) for new projects.
 const quoteUrl = `https://quote-api.jup.ag/v6/quote?inputMint=${inputMint}&outputMint=${outputMint}&amount=${amount}&slippageBps=50`;
 const quote = await fetch(quoteUrl).then(r => r.json());
 

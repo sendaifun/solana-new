@@ -11,7 +11,6 @@
                           defillama-research      build-defi-protocol          marketing-video
                                                   build-data-pipeline
                                                   build-mobile
-                                                  build-blinks
                                                   launch-token
                                                   roast-my-product
                                                   product-review
@@ -57,7 +56,6 @@ Set up your workspace, build the MVP, review it, and get it roasted.
 | `build-defi-protocol` | Guided DeFi build with CPIs, PDAs, and token math | "Build a DeFi protocol" |
 | `build-data-pipeline` | Index accounts, track transactions, real-time data | "Build an indexer" |
 | `build-mobile` | React Native + mobile wallet adapter | "Build a mobile app" |
-| `build-blinks` | Solana Actions and shareable transaction links | "Build a Blink" |
 | `launch-token` | Token mint, metadata, distribution | "Launch a token" |
 | `roast-my-product` | Brutal product critique — find every weakness | "Roast my product" |
 | `product-review` | Balanced UX/quality evaluation with improvement roadmap | "Review my product's UX" |
@@ -101,7 +99,7 @@ Context files are **optional, not gates**. Every skill proceeds immediately if c
 | `02-what-makes-solana-unique.md` | PoH, SVM, 8 innovations, Rust, vs EVM |
 | `03-contract-level.md` | Accounts, programs, PDAs, CPIs, Anchor, fees |
 | `04-protocols-and-sdks.md` | Jupiter, Helius, Orca, Metaplex, wallets, tools |
-| `05-app-layer-consumer.md` | Client SDKs, React, Actions/Blinks, mobile, Solana Pay |
+| `05-app-layer-consumer.md` | Client SDKs, React, mobile |
 | `06-opensource-research.md` | Courses, community, grants, hackathons, repos |
 | `cookbook-index.md` | All 25+ Solana Cookbook recipes with URLs |
 
@@ -168,7 +166,6 @@ skills/
     build-defi-protocol/                 # DeFi protocol builder
     build-data-pipeline/                 # Indexer / webhook / analytics
     build-mobile/                        # React Native mobile app
-    build-blinks/                        # Solana Actions & Blinks
     launch-token/                        # Token launch
     roast-my-product/                    # Brutal product critique
     product-review/                      # UX/quality evaluation

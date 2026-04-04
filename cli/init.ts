@@ -137,7 +137,6 @@ function generateProjectClaudeMd(): string {
   md += `- "Help me build the Solana MVP step by step" — guided implementation\n`;
   md += `- "Deep dive into Solana architecture and Rust" — technical bootcamp\n`;
   md += `- "Build a DeFi protocol on Solana" — AMM, lending, vault with CPIs and PDAs\n`;
-  md += `- "Build a Solana Action / Blink" — shareable transaction links\n`;
   md += `- "Launch an SPL token on Solana" — token mint, metadata, distribution\n`;
   md += `- "Build a Solana data pipeline" — indexer, webhook, analytics\n`;
   md += `- "Build a Solana mobile app" — React Native + mobile wallet adapter\n`;

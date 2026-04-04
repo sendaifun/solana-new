@@ -67,7 +67,7 @@ Show evidence that other people use this: TVL, volume, user count, testimonials,
 
 ## 10. Share-ability & Deep Links
 
-URLs should reflect app state so users can share specific configurations, pools, tokens, or positions. Support Actions/Blinks for shareable transactions.
+URLs should reflect app state so users can share specific configurations, pools, tokens, or positions. Support deep links for shareable state.
 
 **Good**: `app.com/swap?input=USDC&output=SOL&amount=100` opens exactly that swap.
 **Bad**: Every link goes to the homepage. Users can't share what they found.
@@ -105,7 +105,7 @@ When reviewing a product, check each pattern:
 - [ ] Mobile-first (responsive + wallet adapter)
 - [ ] Dual onboarding (crypto-native + newcomer)
 - [ ] Social proof (trust signals visible)
-- [ ] Share-ability (deep links + Blinks)
+- [ ] Share-ability (deep links)
 - [ ] Notifications (relevant alerts)
 - [ ] Empty states (guided, not blank)
 - [ ] Transaction history (readable + linked)

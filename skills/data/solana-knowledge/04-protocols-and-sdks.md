@@ -23,7 +23,7 @@ Jupiter is Solana's dominant swap aggregator, routing trades across every major 
 **Key URLs:**
 - App: https://jup.ag
 - Docs: https://station.jup.ag/docs
-- API: https://quote-api.jup.ag/v6 (swap quotes), https://api.jup.ag (price API)
+- API: https://quote-api.jup.ag/v6 (swap quotes — being sunset), https://api.jup.ag (Ultra API — replacement for v6, also price API)
 - GitHub: https://github.com/jup-ag
 
 **npm packages:**
@@ -212,26 +212,6 @@ Marginfi is a decentralized lending protocol on Solana with risk-isolated pools.
 
 ---
 
-### Tensor -- NFT Marketplace & AMM
-
-Tensor is the leading NFT trading platform on Solana, combining order book and AMM models.
-
-| Feature | Description |
-|---------|-------------|
-| Marketplace | Order book NFT trading |
-| AMM Pools | Automated NFT market making |
-| Compressed NFTs | Full support for cNFTs |
-| Collections API | Collection-level analytics and trading |
-
-**When to use:** When building NFT trading tools, portfolio trackers, or any app that needs NFT pricing data.
-
-**Key URLs:**
-- App: https://www.tensor.trade
-- Docs: https://docs.tensor.trade
-- API: https://tensor.readme.io
-
----
-
 ### Metaplex -- NFT Standard & Tools
 
 Metaplex defines the NFT standards on Solana and provides tools for creation and management.
@@ -340,11 +320,11 @@ Triton provides dedicated RPC infrastructure and Yellowstone gRPC for high-throu
 
 ---
 
-### Solana FM -- Explorer & API
+### Solscan -- Explorer & API
 
-**Key URLs:** https://solana.fm
+**Key URLs:** https://solscan.io
 
-**When to use:** Transaction exploration and parsed account data API.
+**When to use:** Transaction exploration, token analytics, and account data. The most popular Solana explorer.
 
 ---
 
@@ -437,19 +417,6 @@ Multi-chain wallet connection with embedded wallets and social login.
 
 ---
 
-### TipLink -- Disposable Wallets via URL
-
-TipLink creates wallets as shareable URLs, enabling anyone to receive crypto without a wallet.
-
-**When to use:** Airdrops, promotional campaigns, event giveaways, onboarding new users who have no wallet.
-
-**Key URLs:** https://tiplink.io, https://docs.tiplink.io
-
-**npm packages:**
-- `@tiplink/api` -- TypeScript SDK
-
----
-
 ### Phantom SDK -- Direct Phantom Integration
 
 Direct integration with Phantom, the most popular Solana wallet.
@@ -484,9 +451,9 @@ Anchor is the standard framework for writing Solana programs in Rust. Provides a
 **Key URLs:**
 - Docs: https://www.anchor-lang.com
 - Book: https://book.anchor-lang.com
-- GitHub: https://github.com/coral-xyz/anchor
+- GitHub: https://github.com/solana-foundation/anchor
 
-**Install:** `cargo install --git https://github.com/coral-xyz/anchor avm --force && avm install latest && avm use latest`
+**Install:** `cargo install avm --git https://github.com/solana-foundation/anchor --locked && avm update`
 
 **npm packages:**
 - `@coral-xyz/anchor` -- TypeScript client for Anchor programs
@@ -536,13 +503,9 @@ A toolkit that enables AI agents to perform on-chain Solana actions (swap, trans
 
 ---
 
-### Clockwork -- On-Chain Automation
+### On-Chain Automation (Evolving Space)
 
-Clockwork enables cron-like scheduling of on-chain transactions.
-
-**When to use:** Recurring tasks like harvesting yield, rebalancing positions, or periodic payments.
-
-**Key URLs:** https://github.com/clockwork-xyz/clockwork
+> **Note:** On-chain automation on Solana is an evolving space. [Tuk Tuk](https://github.com/clockwork-xyz/tuktuk) provides cron-style scheduled transactions. Other alternatives include custom keeper networks and Jito bundles for MEV-driven automation. Evaluate current options carefully before committing to an approach.
 
 ---
 
@@ -573,7 +536,96 @@ Switchboard provides oracle services for bringing off-chain data on-chain (price
 - GitHub: https://github.com/switchboard-xyz
 
 **npm packages:**
-- `@switchboard-xyz/solana.js` -- Solana SDK
+- `@switchboard-xyz/on-demand` -- Solana SDK (v3)
+
+---
+
+### Doppler -- Ultra-Optimized Oracle (Blueshift)
+
+An oracle program achieving just 21 Compute Units per update — the most efficient oracle on Solana. Supports generic payloads, sequence-based replay protection, and zero external dependencies.
+
+**When to use:** High-frequency price feeds, custom data oracles, or any use case where oracle CU cost matters.
+
+**Key URLs:**
+- GitHub: https://github.com/blueshift-gg/doppler
+
+**Rust crate:**
+- `doppler-sdk` — Oracle SDK for building and submitting updates
+
+---
+
+### SBPF -- sBPF Assembly Toolchain (Blueshift)
+
+CLI tool to scaffold, build, debug, and deploy sBPF assembly programs. Includes a disassembler (ELF → assembly), interactive REPL debugger, and test framework integration (Mollusk or TypeScript).
+
+**When to use:** Writing hand-optimized sBPF assembly programs for maximum performance. Also useful for inspecting compiled program binaries.
+
+**Key URLs:**
+- GitHub: https://github.com/blueshift-gg/sbpf
+- Linker: https://github.com/blueshift-gg/sbpf-linker
+
+**Install:**
+- `cargo install sbpf` — CLI tool
+- `cargo install sbpf-linker` — Relinks BPF binaries into SBPF V0 format
+
+---
+
+### Kora -- Gasless Transactions (Solana Foundation)
+
+Kora is a production-ready signing infrastructure that enables gasless transactions on Solana. Users can pay fees in any token (USDC, BONK, or custom tokens) instead of requiring SOL. Provides a JSON-RPC API, TypeScript SDK, and Rust library with secure key management, rate limiting, and validation rules.
+
+**When to use:** Consumer apps where users shouldn't need SOL for gas. Any app that wants to abstract away transaction fees.
+
+**Key URLs:**
+- GitHub: https://github.com/solana-foundation/kora
+
+**npm packages:**
+- `@solana-foundation/kora` -- TypeScript SDK
+
+---
+
+### MPP SDK -- Machine Payments Protocol (Solana Foundation)
+
+The MPP SDK implements the Machine Payments Protocol, enabling HTTP APIs to accept payments through the `402 Payment Required` flow. Supports native SOL and SPL token transfers with fee sponsorship, split payments, and transaction simulation.
+
+**When to use:** Building paid APIs, metered services, or any HTTP endpoint that accepts crypto payments.
+
+**Key URLs:**
+- GitHub: https://github.com/solana-foundation/mpp-sdk
+
+**npm packages:**
+- `@solana-foundation/mpp-sdk` -- TypeScript SDK
+
+---
+
+### Commerce Kit -- E-Commerce SDK (Solana Foundation)
+
+A comprehensive TypeScript SDK for building e-commerce on Solana. Provides payment primitives, React components, and checkout flows built on `@solana/kit` and Wallet Standard.
+
+**When to use:** Any app that needs payment flows — tips, purchases, cart checkout, merchant integration.
+
+**Key URLs:**
+- GitHub: https://github.com/solana-foundation/commerce-kit
+
+**npm packages:**
+- `@solana-commerce/kit` -- all-in-one SDK
+- `@solana-commerce/react` -- React UI components (payment buttons, checkout)
+- `@solana-commerce/headless` -- framework-agnostic commerce logic
+- `@solana-commerce/connector` -- wallet connection
+
+---
+
+### Token Helpers (Solana Foundation)
+
+Utility library that simplifies token account creation across SPL Token, Token-2022, and Token-ACL. Auto-detects mint types and handles program-specific logic.
+
+**When to use:** Any time you need to create associated token accounts. Replaces manual instruction building with one-liners.
+
+**Key URLs:**
+- GitHub: https://github.com/solana-foundation/token-helpers
+
+**npm packages:**
+- `@solana/token-helpers`
 
 ---
 
@@ -655,7 +707,7 @@ const ix = createInitializeTransferFeeConfigInstruction(
 | Lending / borrowing | Kamino or Marginfi |
 | Liquid staking | Marinade (mSOL) or Jito (jitoSOL) |
 | NFT minting | Metaplex (Bubblegum for scale, Core for new projects) |
-| NFT trading | Tensor |
+| NFT trading | Magic Eden |
 | RPC (default) | Helius |
 | RPC (lowest latency) | Triton |
 | Data streaming | Triton Yellowstone gRPC or QuickNode Streams |
@@ -663,7 +715,12 @@ const ix = createInitializeTransferFeeConfigInstruction(
 | Wallet (consumer app) | Privy |
 | Program framework | Anchor |
 | Program authority | Squads multisig |
-| Oracle data | Switchboard |
+| Oracle data | Switchboard or Doppler (21 CU) |
+| sBPF assembly tooling | sbpf (Blueshift) |
 | AI agents | Solana Agent Kit |
+| Gasless transactions | Kora (Solana Foundation) |
+| Paid API / 402 flow | MPP SDK (Solana Foundation) |
+| E-commerce / payments | Commerce Kit (Solana Foundation) |
+| Token account creation | @solana/token-helpers |
 | Token (simple) | SPL Token |
 | Token (advanced) | Token-2022 |

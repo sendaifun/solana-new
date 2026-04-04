@@ -1,6 +1,10 @@
 # DefiLlama API Guide
 
-Free, no-auth API for DeFi data. Base URL: `https://api.llama.fi`
+Free, no-auth API for DeFi data. Multiple base URLs by category:
+
+- **TVL / protocols / volume / fees**: `https://api.llama.fi`
+- **Yields / pools**: `https://yields.llama.fi`
+- **Stablecoins**: `https://stablecoins.llama.fi`
 
 Full OpenAPI spec: `../../../data/defi/defillama-api.json`
 
@@ -26,30 +30,29 @@ Full OpenAPI spec: `../../../data/defi/defillama-api.json`
 | `GET /overview/fees/{chain}` | Fee/revenue for one chain |
 | `GET /summary/fees/{protocol}` | Fee/revenue for one protocol |
 
-### Yields
+### Yields (base URL: `https://yields.llama.fi`)
 
 | Endpoint | What It Returns |
 |----------|----------------|
 | `GET /pools` | All yield pools with APY, TVL, chain |
 | `GET /chart/{pool}` | Historical yield for one pool |
 
-### Stablecoins
+### Stablecoins (base URL: `https://stablecoins.llama.fi`)
 
 | Endpoint | What It Returns |
 |----------|----------------|
 | `GET /stablecoins` | All stablecoins with market cap, chain breakdown |
 | `GET /stablecoincharts/{chain}` | Stablecoin flows for a chain |
-| `GET /stablecoins/stablecoindominance/{chain}` | Stablecoin market share per chain |
+| `GET /stablecoins/stablecoindominance/{chain}` | Stablecoin market share per chain | **Paid tier only** |
 
 ### Market Intelligence
 
-| Endpoint | What It Returns |
-|----------|----------------|
-| `GET /api/categories` | Protocol categories with aggregate TVL |
-| `GET /api/raises` | Funding rounds for crypto projects |
-| `GET /api/hacks` | Historical hacks and exploits |
-| `GET /api/treasuries` | Protocol treasury holdings |
-| `GET /api/forks` | Fork relationships between protocols |
+| Endpoint | What It Returns | Notes |
+|----------|----------------|-------|
+| `GET /api/categories` | Protocol categories with aggregate TVL | May be unavailable — use `/protocols` and group by `category` field as fallback |
+| `GET /api/raises` | Funding rounds for crypto projects | **Paid tier only** ($300/mo) |
+| `GET /api/hacks` | Historical hacks and exploits | **Paid tier only** ($300/mo) |
+| `GET /api/treasuries` | Protocol treasury holdings | **Paid tier only** ($300/mo) |
 
 ## Filtering for Solana
 
