@@ -8,11 +8,11 @@ Patterns for launching tokens on Solana. Choose the right path based on your tok
 
 Best for: memecoins, community tokens, rapid launches.
 
-Pump.fun uses a bonding curve where the token price increases as supply is purchased. When the market cap hits the graduation threshold (~$69k), liquidity migrates to Raydium automatically.
+Pump.fun uses a bonding curve where the token price increases as supply is purchased. When the market cap hits the graduation threshold (~$69k), liquidity migrates to PumpSwap (Pump.fun's own AMM) automatically.
 
 ```typescript
 // Using the PumpFun SDK (via pumpfun-skill)
-import { PumpFunSDK } from "pumpdotfun-sdk";
+import { PumpFunSDK } from "@pump-fun/pump-sdk";
 
 const sdk = new PumpFunSDK(provider);
 
@@ -36,7 +36,7 @@ const createResults = await sdk.createAndBuy(
 - Virtual reserves start at ~30 SOL / 1B tokens
 - Price = virtual_sol_reserves / virtual_token_reserves
 - As people buy, price rises along the curve
-- At ~$69k market cap, 12k SOL of liquidity migrates to Raydium
+- At ~$69k market cap, ~85 SOL of liquidity migrates to PumpSwap
 - After graduation, the token trades on open DEX markets
 
 **Skills:** `pumpfun-skill` (bonding curve, trading, PumpSwap)

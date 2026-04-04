@@ -106,7 +106,7 @@ npm install @metaplex-foundation/mpl-token-metadata @metaplex-foundation/umi
 spl-token create-token --program-id TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb --enable-transfer-fee 100 1000000
 
 # Pump.fun bonding curve:
-# Use Pump.fun SDK — see references/launch-mechanisms.md
+# Use Pump.fun SDK — see references/token-launch-patterns.md
 ```
 
 ## Decision Points
