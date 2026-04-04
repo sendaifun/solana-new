@@ -63,7 +63,7 @@ How to spot buildable opportunities from DefiLlama data.
 ## Research Workflow
 
 1. **Start broad**: Pull `/v2/chains` to see Solana's position in the ecosystem
-2. **Zoom into categories**: Use `/api/categories` to see which DeFi categories are growing
+2. **Zoom into categories**: Group `/protocols` results by `category` field to see which DeFi categories are growing (the `/api/categories` endpoint may be unavailable)
 3. **Find top protocols**: Filter `/protocols` for Solana, sort by TVL and growth
 4. **Check revenue health**: Cross-reference with `/overview/fees/Solana`
 5. **Spot the gaps**: Compare Solana vs Ethereum data, check for missing tools in solana-new catalogs

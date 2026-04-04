@@ -64,8 +64,8 @@ Use DefiLlama's API to research the DeFi landscape on Solana and across chains. 
    - `/v2/chains` for chain-level TVL
    - `/overview/dexs` for DEX volume data
    - `/overview/fees` for fee/revenue data
-   - `/pools` for yield data
-   - `/stablecoins` for stablecoin flow data
+   - `/pools` for yield data (base URL: `https://yields.llama.fi`)
+   - `/stablecoins` for stablecoin flow data (base URL: `https://stablecoins.llama.fi`)
 6. Analyze and present findings with concrete recommendations.
 
 ## Non-Negotiables
@@ -107,10 +107,13 @@ See `../../../data/specs/phase-handoff.md` for the full JSON contract.
 #   "Find underserved DeFi niches on Solana"
 
 # Key DefiLlama API endpoints:
-# GET https://api.llama.fi/v2/chains                    — All chains TVL
-# GET https://api.llama.fi/protocols                     — All protocols
-# GET https://api.llama.fi/overview/dexs/solana          — Solana DEX volume
-# GET https://api.llama.fi/overview/fees/solana           — Solana fee revenue
+# GET https://api.llama.fi/v2/chains                        — All chains TVL
+# GET https://api.llama.fi/protocols                        — All protocols
+# GET https://api.llama.fi/overview/dexs/solana             — Solana DEX volume
+# GET https://api.llama.fi/overview/fees/solana              — Solana fee revenue
+# GET https://yields.llama.fi/pools                         — All yield pools
+# GET https://stablecoins.llama.fi/stablecoins              — All stablecoins
+# GET https://stablecoins.llama.fi/stablecoincharts/Solana  — Solana stablecoin flows
 ```
 
 ## Decision Points
