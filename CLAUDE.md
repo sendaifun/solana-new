@@ -2,7 +2,7 @@
 
 ## What This Is
 
-Skills and knowledge base to ship on Solana — Idea to Launch. 24 journey skills, 59 repos, 71 ecosystem skills, 49 MCP servers.
+Skills and knowledge base to ship on Solana — Idea to Launch. 25 journey skills, 59 repos, 71 ecosystem skills, 49 MCP servers.
 
 ## Install
 
@@ -22,7 +22,7 @@ claude "/deploy-to-mainnet Ship it"
 
 ## Journey Skills
 
-23 skills across 4 phases — user just asks naturally, right skill activates.
+24 skills across 4 phases — user just asks naturally, right skill activates.
 
 | Phase | Skill | Trigger Prompt |
 |-------|-------|---------------|
@@ -32,6 +32,7 @@ claude "/deploy-to-mainnet Ship it"
 | Idea | `validate-idea` | "Validate this idea" |
 | Idea | `competitive-landscape` | "Who are my competitors?" |
 | Idea | `defillama-research` | "Show me DeFi opportunities on Solana" |
+| Idea | `colosseum-copilot` | "Search Colosseum hackathon projects" |
 | Build | `scaffold-project` | "Scaffold my project" |
 | Build | `build-with-claude` | "Help me build the MVP" |
 | Build | `virtual-solana-incubator` | "Deep dive into Solana and Rust" |

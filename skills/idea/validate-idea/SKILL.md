@@ -103,6 +103,7 @@ This skill is **Phase 1 (Idea)** in the Idea → Build → Launch journey. After
 - **No idea yet?** Redirect to `find-next-crypto-idea` first.
 - **Which RPC for testing demand?** Use Helius free tier for any on-chain research.
 - **Go vs. no-go threshold:** Score ≥ 8/15 across founder-fit + MVP-speed + distribution + market-pull + revenue = Go. Below 6 = strong No-go.
+- **Hackathon precedents?** If the user wants to check whether similar ideas have been tried in Solana hackathons (and what won/lost), suggest `/colosseum-copilot`. Requires a free PAT — only mention if the user asks or opts in.
 
 ## Resources
 

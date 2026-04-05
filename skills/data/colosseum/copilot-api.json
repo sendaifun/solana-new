@@ -1,0 +1,586 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "Colosseum Copilot API",
+    "version": "1.0.0",
+    "description": "Research assistant API for exploring 5,400+ Solana hackathon projects, 65+ curated archive sources (84,000+ documents), and 30 ML-derived clusters. Requires a Personal Access Token (PAT) from https://arena.colosseum.org/copilot"
+  },
+  "servers": [
+    {
+      "url": "https://copilot.colosseum.com/api/v1",
+      "description": "Production"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Personal Access Token (PAT) from arena.colosseum.org/copilot. 90-day expiry. Set via COLOSSEUM_COPILOT_PAT env var or ~/.superstack/config.json copilotToken field."
+      }
+    },
+    "schemas": {
+      "Cohort": {
+        "type": "object",
+        "description": "Filter definition for a group of projects. Empty object {} includes all projects.",
+        "properties": {
+          "hackathons": { "type": "array", "items": { "type": "string" }, "description": "Hackathon slugs" },
+          "trackKeys": { "type": "array", "items": { "type": "string" }, "description": "Track keys (format: hackathonSlug/trackSlug)" },
+          "winnersOnly": { "type": "boolean" },
+          "acceleratorOnly": { "type": "boolean" },
+          "acceleratorBatchKeys": { "type": "array", "items": { "type": "string" } },
+          "prizePlacements": { "type": "array", "items": { "type": "integer" } },
+          "clusterKeys": { "type": "array", "items": { "type": "string" } }
+        }
+      },
+      "ProjectResult": {
+        "type": "object",
+        "properties": {
+          "slug": { "type": "string" },
+          "name": { "type": "string" },
+          "oneLiner": { "type": "string", "nullable": true },
+          "similarity": { "type": "number" },
+          "hackathon": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "slug": { "type": "string" },
+              "startDate": { "type": "string" }
+            }
+          },
+          "tracks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "key": { "type": "string" }
+              }
+            }
+          },
+          "links": {
+            "type": "object",
+            "properties": {
+              "github": { "type": "string", "nullable": true },
+              "demo": { "type": "string", "nullable": true },
+              "presentation": { "type": "string", "nullable": true },
+              "technicalDemo": { "type": "string", "nullable": true },
+              "twitter": { "type": "string", "nullable": true },
+              "colosseum": { "type": "string", "nullable": true }
+            }
+          },
+          "evidence": { "type": "array", "items": { "type": "string" }, "maxItems": 2 },
+          "prize": {
+            "type": "object",
+            "nullable": true,
+            "properties": {
+              "type": { "type": "string" },
+              "name": { "type": "string", "nullable": true },
+              "placement": { "type": "integer", "nullable": true },
+              "amount": { "type": "string", "nullable": true },
+              "trackName": { "type": "string", "nullable": true }
+            }
+          },
+          "metrics": {
+            "type": "object",
+            "properties": {
+              "likesCount": { "type": "integer" },
+              "commentsCount": { "type": "integer" },
+              "updatesCount": { "type": "integer" }
+            }
+          },
+          "team": {
+            "type": "object",
+            "properties": {
+              "count": { "type": "integer" }
+            }
+          },
+          "crowdedness": { "type": "integer", "nullable": true },
+          "tags": {
+            "type": "object",
+            "nullable": true,
+            "properties": {
+              "problemTags": { "type": "array", "items": { "type": "string" } },
+              "solutionTags": { "type": "array", "items": { "type": "string" } },
+              "primitives": { "type": "array", "items": { "type": "string" } },
+              "techStack": { "type": "array", "items": { "type": "string" } },
+              "targetUsers": { "type": "array", "items": { "type": "string" } }
+            }
+          },
+          "cluster": {
+            "type": "object",
+            "nullable": true,
+            "properties": {
+              "key": { "type": "string" },
+              "label": { "type": "string" }
+            }
+          },
+          "accelerator": {
+            "type": "object",
+            "nullable": true,
+            "properties": {
+              "companySlug": { "type": "string", "nullable": true },
+              "companyName": { "type": "string", "nullable": true },
+              "batchKey": { "type": "string" },
+              "batchName": { "type": "string" }
+            }
+          }
+        }
+      },
+      "ArchiveResult": {
+        "type": "object",
+        "properties": {
+          "documentId": { "type": "string", "format": "uuid" },
+          "title": { "type": "string" },
+          "author": { "type": "string", "nullable": true },
+          "source": { "type": "string" },
+          "url": { "type": "string", "nullable": true },
+          "publishedAt": { "type": "string", "nullable": true },
+          "similarity": { "type": "number" },
+          "snippet": { "type": "string" },
+          "chunkIndex": { "type": "integer" }
+        }
+      },
+      "ClusterDetail": {
+        "type": "object",
+        "properties": {
+          "key": { "type": "string" },
+          "label": { "type": "string" },
+          "summary": { "type": "string" },
+          "projectCount": { "type": "integer" },
+          "winnerCount": { "type": "integer" },
+          "representativeProjects": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "slug": { "type": "string" },
+                "name": { "type": "string" },
+                "oneLiner": { "type": "string" },
+                "isWinner": { "type": "boolean" }
+              }
+            }
+          },
+          "topTags": {
+            "type": "object",
+            "properties": {
+              "problemTags": { "type": "array", "items": { "type": "object", "properties": { "tag": { "type": "string" }, "count": { "type": "integer" } } } },
+              "primitives": { "type": "array", "items": { "type": "object", "properties": { "tag": { "type": "string" }, "count": { "type": "integer" } } } },
+              "techStack": { "type": "array", "items": { "type": "object", "properties": { "tag": { "type": "string" }, "count": { "type": "integer" } } } }
+            }
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": { "type": "string" },
+          "code": { "type": "string", "enum": ["INVALID_JSON", "INVALID_QUERY", "BAD_REQUEST", "UNAUTHORIZED", "FORBIDDEN", "NOT_FOUND", "PAYLOAD_TOO_LARGE", "UNSUPPORTED_MEDIA_TYPE", "RATE_LIMITED", "INTERNAL_ERROR", "SERVICE_UNAVAILABLE"] },
+          "retryable": { "type": "boolean" },
+          "requestId": { "type": "string", "description": "Present on 5xx errors only" }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/status": {
+      "get": {
+        "summary": "Authentication preflight check",
+        "responses": {
+          "200": {
+            "description": "Token status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "authenticated": { "type": "boolean" },
+                    "expiresAt": { "type": "string", "format": "date-time" },
+                    "scope": { "type": "string", "example": "colosseum_copilot:read" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/filters": {
+      "get": {
+        "summary": "Discover available filters, hackathons, clusters, and tag vocabularies",
+        "responses": {
+          "200": {
+            "description": "Available filters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "tracks": { "type": "array", "items": { "type": "object", "properties": { "key": { "type": "string" }, "name": { "type": "string" }, "hackathonSlug": { "type": "string" }, "projectCount": { "type": "integer" } } } },
+                    "hackathons": { "type": "array", "items": { "type": "object", "properties": { "slug": { "type": "string" }, "name": { "type": "string" }, "startDate": { "type": "string" }, "projectCount": { "type": "integer" }, "winnerCount": { "type": "integer" } } } },
+                    "acceleratorBatches": { "type": "array", "items": { "type": "object", "properties": { "key": { "type": "string" }, "name": { "type": "string" }, "companyCount": { "type": "integer" } } } },
+                    "prizeTypes": { "type": "array", "items": { "type": "string" } },
+                    "prizePlacements": { "type": "array", "items": { "type": "integer" } },
+                    "problemTags": { "type": "array", "items": { "type": "object", "properties": { "tag": { "type": "string" }, "count": { "type": "integer" } } } },
+                    "solutionTags": { "type": "array", "items": { "type": "object", "properties": { "tag": { "type": "string" }, "count": { "type": "integer" } } } },
+                    "primitives": { "type": "array", "items": { "type": "object", "properties": { "tag": { "type": "string" }, "count": { "type": "integer" } } } },
+                    "techStack": { "type": "array", "items": { "type": "object", "properties": { "tag": { "type": "string" }, "count": { "type": "integer" } } } },
+                    "targetUsers": { "type": "array", "items": { "type": "object", "properties": { "tag": { "type": "string" }, "count": { "type": "integer" } } } },
+                    "clusters": { "type": "array", "items": { "type": "object", "properties": { "key": { "type": "string" }, "label": { "type": "string" }, "projectCount": { "type": "integer" } } } },
+                    "archiveSources": { "type": "array", "items": { "type": "object", "properties": { "key": { "type": "string" }, "label": { "type": "string" }, "documentCount": { "type": "integer" } } } }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search/projects": {
+      "post": {
+        "summary": "Similarity search across 5,400+ hackathon projects",
+        "description": "Recommended limit: 8-12 for projects. Supports vector, text, hybrid, and filter-only search modes.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": { "type": "string", "maxLength": 500, "default": "", "description": "Natural language search query" },
+                  "hackathons": { "type": "array", "items": { "type": "string" }, "maxItems": 10 },
+                  "trackKeys": { "type": "array", "items": { "type": "string" }, "maxItems": 10, "description": "Format: hackathonSlug/trackSlug" },
+                  "limit": { "type": "integer", "default": 10, "maximum": 25 },
+                  "offset": { "type": "integer", "default": 0 },
+                  "diversify": { "type": "boolean", "default": true, "description": "Spread results across clusters" },
+                  "includeFacets": { "type": "boolean", "default": false },
+                  "includeDiagnostics": { "type": "boolean", "default": false },
+                  "filters": {
+                    "type": "object",
+                    "properties": {
+                      "winnersOnly": { "type": "boolean" },
+                      "acceleratorOnly": { "type": "boolean" },
+                      "acceleratorBatchKeys": { "type": "array", "items": { "type": "string" }, "maxItems": 10 },
+                      "prizePlacements": { "type": "array", "items": { "type": "integer" } },
+                      "prizeTypes": { "type": "array", "items": { "type": "string" }, "maxItems": 10 },
+                      "isUniversityProject": { "type": "boolean" },
+                      "isSolanaMobile": { "type": "boolean" },
+                      "techStack": { "type": "array", "items": { "type": "string" }, "maxItems": 10 },
+                      "primitives": { "type": "array", "items": { "type": "string" }, "maxItems": 10 },
+                      "problemTags": { "type": "array", "items": { "type": "string" }, "maxItems": 10 },
+                      "solutionTags": { "type": "array", "items": { "type": "string" }, "maxItems": 10 },
+                      "targetUsers": { "type": "array", "items": { "type": "string" }, "maxItems": 10 },
+                      "clusterKeys": { "type": "array", "items": { "type": "string" }, "maxItems": 10 }
+                    }
+                  },
+                  "facets": { "type": "array", "items": { "type": "string" } },
+                  "facetTopK": { "type": "integer", "default": 8, "minimum": 1, "maximum": 20 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Search results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "results": { "type": "array", "items": { "$ref": "#/components/schemas/ProjectResult" } },
+                    "filtersApplied": { "type": "object" },
+                    "totalFound": { "type": "integer" },
+                    "hasMore": { "type": "boolean" },
+                    "facets": { "type": "object", "description": "Only if includeFacets=true" },
+                    "diagnostics": { "type": "object", "description": "Only if includeDiagnostics=true" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search/archives": {
+      "post": {
+        "summary": "Search 65+ curated archive sources (papers, articles, blog posts)",
+        "description": "Cascading search tiers: vector -> chunk text -> document text. Similarity above 0.4 is a strong match. 0.2-0.4 is worth reading but verify relevance.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["query"],
+                "properties": {
+                  "query": { "type": "string", "minLength": 1, "maxLength": 500 },
+                  "sources": { "type": "array", "items": { "type": "string" }, "maxItems": 20 },
+                  "limit": { "type": "integer", "default": 5, "maximum": 10 },
+                  "offset": { "type": "integer", "default": 0 },
+                  "maxChunksPerDoc": { "type": "integer", "default": 2, "minimum": 1, "maximum": 4 },
+                  "maxDocsPerSource": { "type": "integer", "default": 3, "minimum": 0, "maximum": 10 },
+                  "intent": { "type": "string", "default": "docs", "enum": ["docs", "ideation"] },
+                  "minSimilarity": { "type": "number", "default": 0.2, "minimum": 0, "maximum": 1 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Archive search results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "results": { "type": "array", "items": { "$ref": "#/components/schemas/ArchiveResult" } },
+                    "filtersApplied": { "type": "object" },
+                    "searchTier": { "type": "string", "enum": ["vector", "chunk_text", "doc_text"] },
+                    "totalFound": { "type": "integer" },
+                    "totalMatched": { "type": "integer" },
+                    "hasMore": { "type": "boolean" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/archives/{documentId}": {
+      "get": {
+        "summary": "Fetch paged archive document content",
+        "parameters": [
+          { "name": "documentId", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } },
+          { "name": "offset", "in": "query", "schema": { "type": "integer", "default": 0, "minimum": 0 } },
+          { "name": "maxChars", "in": "query", "schema": { "type": "integer", "default": 8000, "minimum": 200, "maximum": 20000 } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Document content (paged)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "documentId": { "type": "string", "format": "uuid" },
+                    "title": { "type": "string" },
+                    "author": { "type": "string", "nullable": true },
+                    "source": { "type": "string" },
+                    "url": { "type": "string", "nullable": true },
+                    "publishedAt": { "type": "string", "nullable": true },
+                    "content": { "type": "string" },
+                    "restricted": { "type": "boolean" },
+                    "offset": { "type": "integer" },
+                    "maxChars": { "type": "integer" },
+                    "totalChars": { "type": "integer" },
+                    "nextOffset": { "type": "integer", "nullable": true },
+                    "hasMore": { "type": "boolean" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/by-slug/{slug}": {
+      "get": {
+        "summary": "Fetch full project details by slug",
+        "parameters": [
+          { "name": "slug", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Full project details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "slug": { "type": "string" },
+                    "name": { "type": "string" },
+                    "description": { "type": "string", "nullable": true },
+                    "oneLiner": { "type": "string", "nullable": true },
+                    "hackathon": { "type": "object", "properties": { "name": { "type": "string" }, "slug": { "type": "string" }, "startDate": { "type": "string" } } },
+                    "tracks": { "type": "array", "items": { "type": "object", "properties": { "name": { "type": "string" }, "key": { "type": "string" } } } },
+                    "links": { "type": "object", "properties": { "github": { "type": "string", "nullable": true }, "demo": { "type": "string", "nullable": true }, "presentation": { "type": "string", "nullable": true }, "technicalDemo": { "type": "string", "nullable": true }, "twitter": { "type": "string", "nullable": true }, "colosseum": { "type": "string", "nullable": true } } },
+                    "team": { "type": "object", "properties": { "count": { "type": "integer" }, "members": { "type": "array", "items": { "type": "object", "properties": { "displayName": { "type": "string", "nullable": true }, "username": { "type": "string", "nullable": true }, "githubHandle": { "type": "string", "nullable": true }, "twitterHandle": { "type": "string", "nullable": true } } } } } },
+                    "isWinner": { "type": "boolean" },
+                    "accelerator": { "type": "object", "nullable": true },
+                    "createdAt": { "type": "string", "format": "date-time" },
+                    "tags": { "type": "object", "nullable": true },
+                    "cluster": { "type": "object", "nullable": true },
+                    "metrics": { "type": "object" },
+                    "prize": { "type": "object", "nullable": true }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analyze": {
+      "post": {
+        "summary": "Summarize tag/track distributions for a cohort of projects",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["cohort"],
+                "properties": {
+                  "cohort": { "$ref": "#/components/schemas/Cohort" },
+                  "dimensions": { "type": "array", "items": { "type": "string", "enum": ["tracks", "problemTags", "solutionTags", "primitives", "techStack", "targetUsers", "clusters"] } },
+                  "topK": { "type": "integer", "default": 10, "minimum": 1, "maximum": 20 },
+                  "samplePerBucket": { "type": "integer", "default": 2, "minimum": 0, "maximum": 5 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cohort analysis",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "totals": { "type": "object", "properties": { "projects": { "type": "integer" }, "winners": { "type": "integer" } } },
+                    "buckets": { "type": "object", "description": "Keyed by dimension name, each an array of {key, label, count, share, sampleProjectSlugs}" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/compare": {
+      "post": {
+        "summary": "Compare two cohorts across dimensions to find over/under-indexed attributes",
+        "description": "Use cohortA={winnersOnly:true} vs cohortB={} to find what separates winners from the field.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["cohortA", "cohortB"],
+                "properties": {
+                  "cohortA": { "$ref": "#/components/schemas/Cohort" },
+                  "cohortB": { "$ref": "#/components/schemas/Cohort" },
+                  "dimensions": { "type": "array", "items": { "type": "string", "enum": ["tracks", "problemTags", "solutionTags", "primitives", "techStack", "targetUsers", "clusters"] } },
+                  "topK": { "type": "integer", "default": 10, "minimum": 1, "maximum": 20 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Comparison results with lift and delta for each item",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "totalsA": { "type": "object", "properties": { "projects": { "type": "integer" }, "winners": { "type": "integer" } } },
+                    "totalsB": { "type": "object", "properties": { "projects": { "type": "integer" }, "winners": { "type": "integer" } } },
+                    "results": { "type": "object", "description": "Keyed by dimension, each an array of {key, label, countA, shareA, countB, shareB, lift, delta, examplesA, examplesB}" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clusters/{key}": {
+      "get": {
+        "summary": "Fetch cluster details including summary, representative projects, and top tags",
+        "parameters": [
+          { "name": "key", "in": "path", "required": true, "schema": { "type": "string" }, "description": "Cluster key (format: v<N>-c<N>)" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cluster details",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ClusterDetail" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/source-suggestions": {
+      "post": {
+        "summary": "Suggest a new archival source for indexing",
+        "description": "5 requests per hour limit",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["url"],
+                "properties": {
+                  "url": { "type": "string", "format": "uri" },
+                  "name": { "type": "string", "maxLength": 200 },
+                  "reason": { "type": "string", "maxLength": 500 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Suggestion accepted" }
+        }
+      }
+    },
+    "/feedback": {
+      "post": {
+        "summary": "Report issues or suggestions",
+        "description": "10 requests per hour limit",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["category", "message"],
+                "properties": {
+                  "category": { "type": "string", "enum": ["error", "quality", "suggestion", "other"] },
+                  "message": { "type": "string", "maxLength": 5000 },
+                  "severity": { "type": "string", "enum": ["low", "medium", "high", "critical"], "default": "medium" },
+                  "context": { "type": "object", "description": "Structured metadata, max 10KB" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Feedback received" }
+        }
+      }
+    }
+  },
+  "x-rate-limits": {
+    "search": { "limit": "30 req/min", "endpoints": ["/search/projects", "/search/archives"] },
+    "analysis": { "limit": "10 req/min", "endpoints": ["/analyze", "/compare"] },
+    "concurrency": { "limit": "2 in-flight", "endpoints": "all data endpoints" },
+    "source-suggestions": { "limit": "5 req/hr" },
+    "feedback": { "limit": "10 req/hr" }
+  }
+}

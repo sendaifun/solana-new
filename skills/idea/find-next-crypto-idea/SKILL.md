@@ -143,6 +143,7 @@ This skill is **Phase 1 (Idea)** in the Idea → Build → Launch journey. After
 - **Fresh ideas vs. validate existing?** If user has an idea already, redirect to `validate-idea` skill instead.
 - **Which niche?** See `../../data/ideas/` for 114+ curated ideas from YC, a16z, Alliance, Superteam.
 - **DeFi-specific?** Redirect to `defillama-research` skill for data-driven DeFi discovery.
+- **Hackathon data?** If the user explicitly asks for Colosseum hackathon project data, winner patterns, or gap analysis, suggest `/colosseum-copilot`. It requires a free PAT from https://arena.colosseum.org/copilot — only mention if the user asks or opts in.
 
 ## Resources
 

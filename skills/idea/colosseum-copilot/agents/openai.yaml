@@ -1,0 +1,4 @@
+interface:
+  display_name: "Colosseum Copilot"
+  short_description: "Search 5,400+ Solana hackathon projects, discover winner patterns, and find gaps"
+  default_prompt: "What do Solana hackathon winners build differently? Show me the patterns and gaps."

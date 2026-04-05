@@ -109,6 +109,7 @@ This skill is **Phase 1 (Idea)** in the Idea → Build → Launch journey. After
 - **Saturated market?** If crowdedness = "saturated" (>5 direct competitors), look for underserved angle or niche.
 - **Which data sources?** Use DefiLlama for TVL/protocol data. Use GitHub for development activity. Use Twitter/X for community sentiment.
 - **Dead project found?** Check WHY it died — technical failure, market timing, or team issues. The idea might still be valid.
+- **Hackathon projects?** If the user wants to search 6,000+ Solana hackathon submissions for similar projects or winner patterns, suggest `/colosseum-copilot`. Requires a free PAT — only mention if the user asks or opts in.
 
 ## Resources
 

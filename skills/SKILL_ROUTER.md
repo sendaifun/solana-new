@@ -17,6 +17,7 @@
 | "validate this idea", "is this worth building" | `validate-idea` | User has an idea, needs stress-testing |
 | "who are my competitors", "competitive analysis" | `competitive-landscape` | User wants to map existing players |
 | "DeFi opportunities", "TVL data", "DefiLlama" | `defillama-research` | User wants DeFi market data |
+| "colosseum copilot", "hackathon projects", "winner patterns", "gap analysis" | `colosseum-copilot` | User wants Colosseum hackathon data (requires PAT) |
 
 ## Build Phase — Solana Implementation
 
