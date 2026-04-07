@@ -107,7 +107,7 @@ Based on the user's answers, read the appropriate references:
 
 For all users, walk through relevant sections of `references/ecosystem-map.md`:
 
-- If they want to build DeFi → highlight Jupiter, Orca, Drift, Kamino
+- If they want to build DeFi → highlight Jupiter, Orca, Kamino
 - If they want NFTs → highlight Metaplex, Magic Eden
 - If they want payments → highlight USDC, PayPal PYUSD, Sphere, Helio
 - If they want AI → highlight Solana Agent Kit, GOAT SDK

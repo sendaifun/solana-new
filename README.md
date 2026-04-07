@@ -72,7 +72,7 @@ Ships with a curated catalog of Solana ecosystem resources and a comprehensive k
 | Catalog | Count | Description |
 |---------|-------|-------------|
 | **Repos** | 59 | Solana official, Metaplex, Orca, Raydium, Jupiter, SendAI, community |
-| **Skills** | 71 | 15 official from solana.com + 56 community (Jupiter, Drift, Helius, etc.) |
+| **Skills** | 71 | 15 official from solana.com + 56 community (Jupiter, Helius, etc.) |
 | **MCPs** | 49 | Helius, Jupiter, Phantom, Orca, Chainstack, openSVM, security, DAO |
 | **Knowledge Docs** | 7 | Covers everything on solana.com — architecture, programs, SDKs, DeFi protocols, app layer, open-source research, plus the full Cookbook index |
 | **Guides** | 3+ | RPC + wallet setup, deploy devnet to mainnet, security audit checklist, curated ideas |

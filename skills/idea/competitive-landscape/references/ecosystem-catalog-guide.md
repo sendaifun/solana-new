@@ -22,7 +22,7 @@ These are installed automatically alongside the skills.
 
 ### Skills (solana-skills.json)
 - Official skills (15): Solana Foundation maintained
-- Community skills (55+): Protocol-specific (Jupiter, Drift, Orca, etc.)
+- Community skills (55+): Protocol-specific (Jupiter, Orca, Helius, etc.)
 - A skill existing means there's enough demand for guided development in that area
 
 ### MCPs (solana-mcps.json)

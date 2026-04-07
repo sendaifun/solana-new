@@ -106,7 +106,7 @@ Solana has the broadest application ecosystem of any non-EVM chain:
 - **DEX aggregation**: Jupiter (dominant aggregator)
 - **AMMs**: Orca, Raydium, Meteora
 - **Lending**: Kamino, MarginFi, Save
-- **Derivatives**: Drift Protocol, Zeta Markets, Phoenix
+- **Derivatives**: Zeta Markets, Phoenix, Flash Trade
 - **Liquid staking**: Marinade, Jito, BlazeStake
 
 ### Consumer

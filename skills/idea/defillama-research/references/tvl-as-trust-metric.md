@@ -46,8 +46,8 @@ Track which DeFi categories are growing on Solana:
 - **Lending** — Save (formerly Solend), MarginFi, Kamino
 - **DEXs** — Raydium, Orca, Meteora
 - **Liquid Staking** — Marinade, Jito
-- **Perps** — Drift, Zeta, Jupiter Perps
-- **Yield** — Kamino, Drift
+- **Perps** — Zeta, Jupiter Perps, Flash Trade
+- **Yield** — Kamino
 
 A category with growing aggregate TVL = growing demand = opportunity to build tools, aggregators, or new entrants.
 

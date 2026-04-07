@@ -93,31 +93,6 @@ Raydium combines AMM liquidity with OpenBook's central limit order book (CLOB) f
 
 ---
 
-### Drift -- Perpetual Futures & Spot Margin
-
-Drift is Solana's leading derivatives protocol, offering perps, spot margin trading, and prediction markets.
-
-| Feature | Description |
-|---------|-------------|
-| Perpetual Futures | Up to 20x leverage, 30+ markets |
-| Spot Margin | Cross-margin spot trading |
-| Prediction Markets | Binary outcome markets |
-| Borrow/Lend | Integrated money markets |
-| DLP (Drift Liquidity Provider) | Backstop AMM liquidity |
-
-**When to use:** When building trading bots, portfolio dashboards that include derivatives, or any perps integration. Drift's SDK is well-documented for programmatic trading.
-
-**Key URLs:**
-- App: https://app.drift.trade
-- Docs: https://docs.drift.trade
-- GitHub: https://github.com/drift-labs
-
-**npm packages:**
-- `@drift-labs/sdk` -- TypeScript SDK for all Drift features
-- `@drift-labs/vaults-sdk` -- vault management
-
----
-
 ### Kamino -- Automated Liquidity & Lending
 
 Kamino automates concentrated liquidity management and provides lending/borrowing with leverage strategies.
@@ -703,7 +678,7 @@ const ix = createInitializeTransferFeeConfigInstruction(
 |------|-----|
 | Swap tokens | Jupiter |
 | Create liquidity pool | Orca Whirlpools or Raydium |
-| Perps / derivatives | Drift |
+| Perps / derivatives | Flash Trade, Jupiter Perps |
 | Lending / borrowing | Kamino or Marginfi |
 | Liquid staking | Marinade (mSOL) or Jito (jitoSOL) |
 | NFT minting | Metaplex (Bubblegum for scale, Core for new projects) |

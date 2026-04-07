@@ -38,7 +38,7 @@
       "category": "tooling",
       "setup_command": "npm install @solana-agent-kit/adapter-mcp",
       "url": "https://github.com/sendaifun/solana-agent-kit/tree/v2/packages/adapter-mcp",
-      "keywords": ["sendai", "agent-kit", "adapter", "framework", "defi", "lending", "staking", "nft", "drift", "perps"]
+      "keywords": ["sendai", "agent-kit", "adapter", "framework", "defi", "lending", "staking", "nft", "perps"]
     },
     {
       "id": "helius-mcp",

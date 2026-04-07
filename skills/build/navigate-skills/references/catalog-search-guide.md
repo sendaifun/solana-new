@@ -21,7 +21,7 @@ After setup, catalog data is at:
 
 ## Skill Categories
 - **Official** (Solana Foundation): Core development patterns
-- **Community**: Protocol-specific (Jupiter, Drift, Orca, Helius, etc.)
+- **Community**: Protocol-specific (Jupiter, Orca, Helius, etc.)
 
 ## MCP Categories
 - **RPC & Data**: Helius, Triton, QuickNode

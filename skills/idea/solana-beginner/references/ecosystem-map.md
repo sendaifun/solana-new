@@ -9,7 +9,6 @@ A categorized guide to the major projects, protocols, and tools in the Solana ec
 | **Jupiter** | Leading DEX aggregator — routes trades across all Solana DEXs for best price. Also offers limit orders, DCA, and perps. | https://jup.ag |
 | **Orca** | Concentrated liquidity AMM (like Uniswap v3). Clean UX, developer-friendly SDK. | https://orca.so |
 | **Raydium** | AMM and liquidity provider. Concentrated liquidity (CLMM) + constant product pools. Integrated with OpenBook orderbook. | https://raydium.io |
-| **Drift** | Decentralized perpetual futures exchange. Up to 20x leverage, orderbook + AMM hybrid. | https://drift.trade |
 | **Kamino** | Automated liquidity management and lending. Vaults that auto-rebalance concentrated liquidity positions. | https://kamino.finance |
 | **Marinade** | Liquid staking protocol. Stake SOL, receive mSOL (liquid staking token). | https://marinade.finance |
 | **Jito** | MEV-aware liquid staking. JitoSOL staking token + MEV rewards. Also runs the Jito block engine. | https://jito.network |

@@ -166,13 +166,6 @@
       "category": null
     },
     {
-      "slug": "drift-skill",
-      "title": "Drift Skill",
-      "description": "AI coding skill for Drift Protocol SDK covering perpetual futures and spot trading on Solana.",
-      "url": "https://github.com/sendaifun/skills/tree/main/skills/drift",
-      "category": null
-    },
-    {
       "slug": "jupiter-skill",
       "title": "Jupiter Skill",
       "description": "AI coding skill for Jupiter covering Ultra swaps, limit orders, DCA, perpetuals, and lending.",
@@ -391,7 +384,7 @@
     {
       "slug": "glam",
       "title": "GLAM Protocol",
-      "description": "Solana vault management via GLAM Protocol with DeFi integrations across Jupiter, Drift, Kamino, staking, and cross-chain USDC.",
+      "description": "Solana vault management via GLAM Protocol with DeFi integrations across Jupiter, Kamino, staking, and cross-chain USDC.",
       "url": "https://github.com/sendaifun/skills/tree/main/skills/glam",
       "category": {
         "labelKey": "defi"

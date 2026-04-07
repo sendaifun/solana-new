@@ -215,7 +215,6 @@ Regional Solana communities across 15+ countries with bounties, grants, and tale
 |------------|-------------|-----|
 | `jup-ag/jupiter-quote-api-node` | Jupiter API TypeScript client | https://github.com/jup-ag/jupiter-quote-api-node |
 | `orca-so/whirlpools` | Orca Whirlpools SDK | https://github.com/orca-so/whirlpools |
-| `drift-labs/protocol-v2` | Drift Protocol contracts | https://github.com/drift-labs/protocol-v2 |
 | `jito-foundation/jito-solana` | Jito's MEV-enabled validator | https://github.com/jito-foundation/jito-solana |
 
 ### Infrastructure

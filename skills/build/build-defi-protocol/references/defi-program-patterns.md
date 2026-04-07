@@ -160,8 +160,7 @@ pub struct Vault {
 // Withdraw: underlying_to_return = shares_to_burn * total_underlying / total_shares
 ```
 
-**Skills:** `glam` (vault management via GLAM Protocol — DeFi integrations across Jupiter, Drift, Kamino)
-**Skills:** `drift-skill` (perpetual futures and spot trading)
+**Skills:** `glam` (vault management via GLAM Protocol — DeFi integrations across Jupiter, Kamino)
 
 ## Perpetuals / Derivatives Pattern
 
@@ -212,7 +211,6 @@ pub struct Position {
 - **Position limits**: Cap maximum open interest per market to manage risk.
 - **Price impact**: Large orders should move the mark price (virtual AMM or orderbook).
 
-**Skills:** `drift-skill` (perpetual futures, spot trading, cross-margin, insurance)
 **MCPs:** `flash-trade-mcp` (leveraged perps with Pyth Lazer prices)
 **MCPs:** `perp-cli-mcp` (Pacifica + Hyperliquid perps CLI)
 
@@ -220,20 +218,7 @@ pub struct Position {
 
 If the user wants to BUILD ON TOP of existing perps (not build a new protocol):
 
-```typescript
-// Drift Protocol — open a perp position
-import { DriftClient, PositionDirection } from "@drift-labs/sdk";
-
-const driftClient = new DriftClient({ connection, wallet, programID });
-await driftClient.openPosition({
-  marketIndex: 0,       // SOL-PERP
-  direction: PositionDirection.LONG,
-  baseAssetAmount: new BN(1_000_000_000), // 1 SOL
-  price: new BN(0),     // market order
-});
-```
-
-**Recommendation:** Building a perp protocol from scratch is extremely complex (oracle integration, liquidation, funding, risk management). Consider integrating with Drift or Flash Trade first, then building custom features on top.
+**Recommendation:** Building a perp protocol from scratch is extremely complex (oracle integration, liquidation, funding, risk management). Consider integrating with Flash Trade first, then building custom features on top.
 
 ## Oracle Integration
 

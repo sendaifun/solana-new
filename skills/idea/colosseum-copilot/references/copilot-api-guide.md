@@ -196,7 +196,7 @@ Available dimensions for `/analyze` and `/compare`:
 | Foundational | Cryptography mailing lists, Satoshi's posts/emails, Nick Szabo essays, prediction market theory |
 | Solana Core | Protocol docs (SIMD), validator docs, developer forums, community calls, SPL references |
 | Conference | Breakpoint 2022-2025 transcripts |
-| Protocols | Jupiter, Orca, Raydium, Drift, Marinade, Tensor, Jito docs |
+| Protocols | Jupiter, Orca, Raydium, Marinade, Tensor, Jito docs |
 | Infrastructure | Helius RPC/DAS, Jito MEV research, Firedancer, Triton, gaming/DAO tooling |
 | Security | Sec3, OtterSec, Neodyme audit and vulnerability research |
 | Investment | Paradigm, a16z crypto, Multicoin, Pantera, Electric Capital, Galaxy Research, Coin Metrics |
