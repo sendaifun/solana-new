@@ -2,7 +2,9 @@
 
 Advanced techniques from the [official Remotion skills repo](https://github.com/remotion-dev/skills) (remotion-dev/skills). These patterns go beyond basic Sequences and interpolation.
 
-**Source:** [github.com/remotion-dev/skills](https://github.com/remotion-dev/skills) — 30 rule modules covering every aspect of Remotion video creation.
+**Source:** [github.com/remotion-dev/skills](https://github.com/remotion-dev/skills) — 38 rule modules covering every aspect of Remotion video creation.
+**Quality:** Read [professional-quality-guide.md](professional-quality-guide.md) for anti-AI patterns and Disney principles.
+**Cinematic:** Read [cinematic-techniques.md](cinematic-techniques.md) for light leaks, noise, audio-reactive visuals, and 4K rendering.
 
 ---
 
@@ -404,21 +406,268 @@ const { fontFamily: monoFamily } = loadMono();
 
 ---
 
+## Easing Functions (When Springs Don't Fit)
+
+For properties like color and opacity where spring physics don't apply:
+
+```tsx
+import { Easing } from "remotion";
+
+// Natural motion curves
+const opacity = interpolate(frame, [0, 30], [0, 1], {
+  easing: Easing.inOut(Easing.cubic),  // Smooth acceleration/deceleration
+  extrapolateRight: "clamp",
+});
+
+// Precise control with bezier
+const scale = interpolate(frame, [0, 20], [0.8, 1], {
+  easing: Easing.bezier(0.25, 0.1, 0.25, 1),  // Matches CSS ease
+  extrapolateRight: "clamp",
+});
+```
+
+**Available curves:** `ease`, `quad`, `cubic`, `sin`, `exp`, `circle`, `back`, `elastic`, `bounce`
+**Modifiers:** `Easing.in()`, `Easing.out()`, `Easing.inOut()` — wrap any curve
+
+**Rule:** Never use bare `interpolate()` without easing or spring. Linear motion = robotic.
+
+---
+
+## Dynamic Colors with interpolateColors
+
+```tsx
+import { interpolateColors } from "remotion";
+
+// Background mood shift across scenes
+const bg = interpolateColors(
+  frame,
+  [0, 90, 180, durationInFrames],
+  ["#0a0a0f", "#1a0533", "#0a1628", "#0a0a0f"]
+);
+
+// Supports: CSS named colors, hex, RGB/RGBA, HSL/HSLA, oklch, oklab
+```
+
+---
+
+## Noise-Driven Organic Motion
+
+For subtle, non-repetitive motion that makes elements feel alive:
+
+```tsx
+import { noise3D } from "@remotion/noise";
+
+// Gentle floating — barely perceptible, prevents "dead" resting state
+const driftX = noise3D("x", 0, 0, frame * 0.005) * 3;  // +-3px
+const driftY = noise3D("y", 0, 0, frame * 0.005) * 3;
+
+// Breathing background glow
+const breathe = Math.sin(frame * 0.02) * 0.5 + 0.5;
+const glowOpacity = interpolate(breathe, [0, 1], [0.05, 0.12]);
+```
+
+Install: `npx remotion add @remotion/noise`
+
+---
+
+## Mobile Safe Zones (Vertical Video)
+
+For 9:16 formats (TikTok, Reels, Shorts), keep all text and key content within:
+- **Top:** At least 150px from top edge (platform search bars, status bar)
+- **Bottom:** At least 170px from bottom edge (navigation, swipe-up UI)
+- **Sides:** At least 40px padding
+
+```tsx
+const SafeZone: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <AbsoluteFill style={{
+    paddingTop: 150,
+    paddingBottom: 170,
+    paddingLeft: 40,
+    paddingRight: 40,
+  }}>
+    {children}
+  </AbsoluteFill>
+);
+```
+
+---
+
 ## Rendering Best Practices
 
 ```bash
-# Standard render
-npx remotion render ProductDemo out/product-demo.mp4
+# Draft (fast iteration)
+npx remotion render ProductDemo out/draft.mp4 --codec h264 --crf 23
 
-# High quality
-npx remotion render ProductDemo out/hq.mp4 --codec h264 --crf 18
+# Production quality
+npx remotion render ProductDemo out/final.mp4 --codec h264 --crf 18 --color-space bt709
 
-# Transparent background (for overlays)
+# 4K render (maximum text sharpness)
+npx remotion render ProductDemo out/4k.mp4 --width 3840 --height 2160 --crf 18
+
+# Multi-core (faster render)
+npx remotion render ProductDemo out/fast.mp4 --concurrency 8
+
+# Transparent background (for compositing)
 npx remotion render ProductDemo out/transparent.webm --codec vp8
-
-# With concurrency (faster on multi-core)
-npx remotion render ProductDemo out/fast.mp4 --concurrency 4
 
 # Specific props via CLI
 npx remotion render ProductDemo out/custom.mp4 --props '{"projectName":"MyDApp"}'
+
+# GIF preview (for README, embeds)
+npx remotion render ProductDemo out/preview.gif --every-nth-frame 2
+```
+
+### CRF Guide
+- **18** — Visually lossless, large file (final delivery)
+- **23** — Default, good balance (drafts, iteration)
+- **28** — Smaller file, some quality loss (social media)
+
+### Always use `--color-space bt709` for final renders — ensures accurate colors across devices.
+
+---
+
+## Thumbnail Generation with Still
+
+Register a `Still` (single-frame composition) to auto-generate thumbnails:
+
+```tsx
+import { Still } from "remotion";
+
+// In Root.tsx:
+<Still
+  id="Thumbnail"
+  component={Thumbnail}
+  width={1280}
+  height={720}   // YouTube standard
+  defaultProps={{ metric: "$2.1M", subtitle: "settled in 30 days" }}
+/>
+
+<Still
+  id="ThumbnailSquare"
+  component={Thumbnail}
+  width={1080}
+  height={1080}  // Instagram
+  defaultProps={{ metric: "$2.1M", subtitle: "settled in 30 days" }}
+/>
+```
+
+```tsx
+// Thumbnail.tsx — use the strongest frame from your video
+const Thumbnail: React.FC<{ metric: string; subtitle: string }> = ({ metric, subtitle }) => (
+  <AbsoluteFill style={{
+    backgroundColor: "#0a0a0f",
+    justifyContent: "center",
+    alignItems: "center",
+  }}>
+    {/* High-contrast, 3-4 words max */}
+    <div style={{
+      fontSize: 120, fontWeight: 900, color: "#14F195",
+      fontFamily: "Inter, sans-serif",
+    }}>
+      {metric}
+    </div>
+    <div style={{
+      fontSize: 36, color: "white", marginTop: 16,
+      fontFamily: "Inter, sans-serif",
+    }}>
+      {subtitle}
+    </div>
+  </AbsoluteFill>
+);
+```
+
+Render thumbnails:
+```bash
+npx remotion still Thumbnail out/thumbnail-yt.png
+npx remotion still ThumbnailSquare out/thumbnail-ig.png
+```
+
+**Thumbnail rules:**
+- High contrast (bright text on dark, or dark text on light)
+- 3-4 words maximum
+- No small text — it's displayed at 160x90px in YouTube search
+- The metric/number should be the dominant visual
+- Face + emotion performs best (if applicable)
+
+---
+
+## Multi-Format Auto-Export
+
+Use Remotion's parametrization to render one composition in all platform formats:
+
+### Step 1: Parametrize the composition
+
+```tsx
+import { z } from "zod";
+
+const formatSchema = z.object({
+  format: z.enum(["landscape", "portrait", "square"]),
+  // ... your other props
+});
+
+const FORMAT_CONFIG = {
+  landscape: { width: 1920, height: 1080 },
+  portrait:  { width: 1080, height: 1920 },
+  square:    { width: 1080, height: 1080 },
+};
+```
+
+### Step 2: Use calculateMetadata for dynamic dimensions
+
+```tsx
+export const calculateMetadata: CalculateMetadataFunction<z.infer<typeof formatSchema>> = ({ props }) => {
+  const config = FORMAT_CONFIG[props.format];
+  return {
+    width: config.width,
+    height: config.height,
+  };
+};
+```
+
+### Step 3: Batch render script
+
+```bash
+#!/bin/bash
+# render-all.sh — Render all platform formats
+
+COMP="ProductDemo"
+CRF=18
+COLOR="bt709"
+
+echo "Rendering landscape (16:9)..."
+npx remotion render "$COMP" "out/${COMP}-landscape.mp4" \
+  --props '{"format":"landscape"}' --crf $CRF --color-space $COLOR
+
+echo "Rendering portrait (9:16)..."
+npx remotion render "$COMP" "out/${COMP}-portrait.mp4" \
+  --props '{"format":"portrait"}' --crf $CRF --color-space $COLOR
+
+echo "Rendering square (1:1)..."
+npx remotion render "$COMP" "out/${COMP}-square.mp4" \
+  --props '{"format":"square"}' --crf $CRF --color-space $COLOR
+
+echo "Rendering thumbnails..."
+npx remotion still Thumbnail "out/thumb-youtube.png"
+npx remotion still ThumbnailSquare "out/thumb-instagram.png"
+
+echo "Done! All formats in out/"
+ls -la out/
+```
+
+### Alternative: Separate compositions (simpler)
+
+If your layout changes significantly per format, just register separate compositions:
+
+```tsx
+// Root.tsx
+<Composition id="Demo-Landscape" component={Demo} width={1920} height={1080} ... />
+<Composition id="Demo-Portrait"  component={Demo} width={1080} height={1920} ... />
+<Composition id="Demo-Square"    component={Demo} width={1080} height={1080} ... />
+```
+
+Then render all:
+```bash
+npx remotion render Demo-Landscape out/demo-16x9.mp4 --crf 18 --color-space bt709
+npx remotion render Demo-Portrait  out/demo-9x16.mp4 --crf 18 --color-space bt709
+npx remotion render Demo-Square    out/demo-1x1.mp4  --crf 18 --color-space bt709
 ```

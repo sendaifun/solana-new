@@ -1,12 +1,61 @@
 # Remotion Quickstart Reference
 
-Based on the [official Remotion skills repo](https://github.com/remotion-dev/skills) — 30 rule modules covering every aspect of programmatic video creation.
+Based on the [official Remotion skills repo](https://github.com/remotion-dev/skills) — 38 rule modules covering every aspect of programmatic video creation.
 
-## Installation
+## Installation & Setup
+
+### Step 1: Create Project
 ```bash
 npx create-video@latest my-video
+# Select: Blank template
+# TailwindCSS: Yes (optional but recommended)
+# Install Skills: Yes
 cd my-video && npm install
 ```
+
+### Step 2: Install Official Remotion Skills (REQUIRED)
+The official skills give Claude the full Remotion knowledge base — 38 rule modules covering animations, transitions, captions, audio, 3D, charts, and more:
+
+```bash
+npx skills add remotion-dev/skills
+```
+
+This installs to `~/.claude/skills/` and is automatically available in all future Claude Code sessions.
+
+### Step 3: Install Key Packages
+```bash
+npx remotion add @remotion/transitions     # Scene transitions (fade, slide, wipe)
+npx remotion add @remotion/light-leaks     # Cinematic light leak overlays
+npx remotion add @remotion/google-fonts    # Type-safe font loading
+npx remotion add @remotion/noise           # Perlin noise for organic motion
+npx remotion add @remotion/captions        # TikTok-style captions
+npx remotion add @remotion/media-utils     # Audio visualization, duration detection
+```
+
+### Step 4: Start Development
+```bash
+npx remotion studio          # Preview in browser (hot reload)
+```
+
+## Official Remotion Skills — 38 Rule Modules
+
+The installed skills cover these topics (each is a separate rule file):
+
+| Category | Rules | What They Cover |
+|----------|-------|-----------------|
+| **Animation** | `animations.md`, `timing.md` | useCurrentFrame, interpolate, spring, Easing |
+| **Text** | `text-animations.md`, `fonts.md` | Typewriter, word highlight, Google Fonts, local fonts |
+| **Transitions** | `transitions.md`, `light-leaks.md` | TransitionSeries, fade/slide/wipe/flip, light leaks |
+| **Audio** | `audio.md`, `sfx.md`, `audio-visualization.md` | Import, trim, volume, SFX, spectrum bars, waveforms |
+| **Captions** | `display-captions.md`, `transcribe-captions.md`, `import-srt-captions.md`, `subtitles.md` | Whisper.cpp, TikTok-style, SRT import |
+| **Media** | `assets.md`, `images.md`, `videos.md`, `gifs.md` | staticFile(), Img, Video, trimming, GIFs |
+| **Data Viz** | `charts.md` | Bar, pie, line, stock charts |
+| **Layout** | `compositions.md`, `sequencing.md`, `measuring-dom-nodes.md`, `measuring-text.md` | Compositions, Sequence, text measuring |
+| **Voiceover** | `voiceover.md` | ElevenLabs TTS, dynamic duration |
+| **3D** | `3d.md` | Three.js, ThreeCanvas, useCurrentFrame (NOT useFrame) |
+| **Advanced** | `parameters.md`, `calculate-metadata.md`, `tailwind.md`, `transparent-videos.md`, `trimming.md` | Zod schemas, dynamic props, Tailwind, transparency |
+| **Tools** | `ffmpeg.md`, `extract-frames.md`, `get-audio-duration.md`, `get-video-dimensions.md`, `get-video-duration.md`, `can-decode.md` | FFmpeg, media inspection |
+| **Other** | `lottie.md`, `maps.md` | Lottie animations, Mapbox maps |
 
 ## Project Structure
 ```
@@ -16,7 +65,8 @@ my-video/
     ProductDemo.tsx   # Main product demo composition
     SocialClip.tsx    # Vertical social media clip
     TwitterClip.tsx   # Twitter/X optimized clip
-  public/             # Static assets (screenshots, logos)
+    components/       # Reusable animation components
+  public/             # Static assets (screenshots, logos — use staticFile())
   remotion.config.ts  # Remotion config
   package.json
 ```
@@ -387,6 +437,19 @@ const AnimatedText: React.FC<{
 };
 ```
 
+## Critical Rules (From Official Skills)
+
+These are the non-negotiable rules from the official Remotion skills:
+
+1. **Frame-driven animation ONLY** — All animation via `useCurrentFrame()` + `interpolate()` or `spring()`. CSS transitions, CSS animations, Tailwind `animate-*` classes are ALL FORBIDDEN.
+2. **Always use `staticFile()`** — Never use raw paths for public/ folder assets.
+3. **Always premount Sequences** — `<Sequence premountFor={1 * fps}>` on heavy content.
+4. **Always clamp interpolation** — `extrapolateRight: "clamp"` on every `interpolate()` call.
+5. **Use `type` not `interface`** — For component props, ensures `defaultProps` type safety.
+6. **String slicing for typewriter** — Never use per-character opacity.
+7. **Captions in JSON** — Use `Caption` type from `@remotion/captions`, not raw SRT strings.
+8. **useCurrentFrame in 3D** — Never use `useFrame()` from React Three Fiber.
+
 ## Tips for Solana Videos
 
 1. **Show real data** — Fetch live TVL, transaction counts, or token prices using `@solana/web3.js` in your compositions
@@ -399,3 +462,10 @@ const AnimatedText: React.FC<{
 8. **Sound effects** — Use `@remotion/sfx` for whoosh on transitions, ding on metric reveals
 9. **Premount** — Always premount heavy sequences to avoid blank frames during rendering
 10. **Parametrize** — Use Zod schemas so the same template works for different projects
+
+## Quality References
+
+For professional-grade output, also read:
+- [professional-quality-guide.md](professional-quality-guide.md) — Anti-AI patterns, Disney principles, consistent animation vocabulary, typography rules, organic motion
+- [cinematic-techniques.md](cinematic-techniques.md) — Light leaks, noise visualization, audio-reactive visuals, color grading, Whisper captions, 4K rendering
+- [video-storytelling.md](video-storytelling.md) — 6 narrative frameworks with script templates
