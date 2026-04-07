@@ -17,6 +17,14 @@ Use the local datasets as pattern libraries, not as proof that a market still ma
   - Superteam-style approved ideas
   - Best for Solana-native patterns, problem framing, and example idea structure
 
+## Blog Ideas
+
+- `../../../data/ideas/superteam-blog-ideas.json`
+  - 43 concrete buildable ideas extracted from Superteam blog posts
+  - Sources: "What to Build for Solana DeFi", "State of Solana DePIN 2024", "Layer 1 Wars: It's About AI Agents", "Top 7 Cross-Chain Themes", "Stop Building for Crypto Twitter", "Global DeFi Capital: India's Opportunity"
+  - Strongest for DeFi primitives (perps, LSTs, lending), AI agent payments, cross-chain, DePIN, and India-specific RWA opportunities
+  - Each idea has a `source` field linking back to the original blog post
+
 ## Secondary Files
 
 - `../../../data/ideas/alliance-ideas.json`
