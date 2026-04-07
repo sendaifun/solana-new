@@ -36,13 +36,59 @@ ls -la target/deploy/my_program.so | awk '{print $5/1024/1024 " MB"}'
 ```bash
 solana config set --url https://api.devnet.solana.com
 solana config set --keypair ~/.config/solana/devnet.json
-
-# Fund deploy wallet
-solana airdrop 5
 solana balance  # Need ~3-5 SOL for most programs
 ```
 
-### 1.4 Deploy
+### 1.4 Fund your wallet
+
+The devnet faucet is heavily rate-limited. Use these methods in order of reliability:
+
+#### Option A: Surfpool (recommended for development)
+
+Surfpool gives you a local Solana environment with unlimited SOL, mainnet state cloning, and zero faucet friction. Best for iterating before you deploy to devnet.
+
+```bash
+# Install
+curl -sL https://run.surfpool.run/ | bash
+
+# Start with auto-funded wallet (10,000 SOL default)
+surfpool start
+
+# Or airdrop to specific addresses
+surfpool start --airdrop <WALLET_ADDRESS>
+
+# Deploy to surfpool instead of devnet
+anchor deploy --provider.cluster http://localhost:8899
+
+# Standard airdrop also works (no rate limits)
+solana airdrop 100 --url http://localhost:8899
+```
+
+#### Option B: Web faucet with GitHub auth (for actual devnet)
+
+The most reliable way to get devnet SOL. Allows up to 5 SOL per request, 2 requests per 8 hours.
+
+```bash
+# 1. Go to https://faucet.solana.com
+# 2. Connect your GitHub account (required)
+# 3. Paste your wallet address, select amount, confirm
+```
+
+#### Option C: CLI airdrop (often rate-limited)
+
+```bash
+solana airdrop 2
+# If this fails with "rate limit reached", use Option A or B above
+```
+
+#### Option D: PoW faucet (fallback)
+
+```bash
+cargo install devnet-pow
+devnet-pow mine -d 3 --reward 0.05 --no-infer -t 5000000000
+```
+
+### 1.5 Deploy
 ```bash
 anchor deploy --provider.cluster devnet
 # Or for native programs:
@@ -52,7 +98,7 @@ solana program deploy target/deploy/my_program.so
 echo "Program ID: $(solana address -k target/deploy/my_program-keypair.json)"
 ```
 
-### 1.5 Verify deployment
+### 1.6 Verify deployment
 ```bash
 # Check program exists and is executable
 solana program show <PROGRAM_ID>
