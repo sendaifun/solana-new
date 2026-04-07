@@ -17,6 +17,20 @@ Use the local datasets as pattern libraries, not as proof that a market still ma
   - Superteam-style approved ideas
   - Best for Solana-native patterns, problem framing, and example idea structure
 
+## DeFi & RWA Ideas (2024-2026)
+
+- `../../../data/ideas/yash-defi-2024-ideas.json`
+  - 31 concrete buildable ideas extracted from Superteam blog posts (2024)
+  - Sources: "What to Build for Solana DeFi", "State of Solana DePIN 2024", "Layer 1 Wars: AI Agents", "Stop Building for Crypto Twitter", "India's DeFi Opportunity"
+  - Strongest for DeFi primitives (perps, lending, derivatives), AI agent payments, DePIN, and regional RWA opportunities
+  - Each idea has a `source` field linking back to the original blog post
+
+- `../../../data/ideas/rwa-defi-2026-ideas.json`
+  - 15 VC-raiseable ideas extracted from DAS NYC 2026 conference (April 2026, 99 sessions)
+  - Sources: Multicoin Mega Thesis 2.0, Hyperliquid sessions, market structure panels, stablecoin panels, agentic commerce
+  - Each idea has a `das_signal` field with specific speaker quotes or data points validating the opportunity
+  - Strongest for: equity/commodity/FX perps, branded stablecoins, DeFi middleware, post-Oct-10 products, institutional infra
+
 ## Secondary Files
 
 - `../../../data/ideas/alliance-ideas.json`

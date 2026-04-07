@@ -1,0 +1,122 @@
+[
+  {
+    "name": "DeFi Prime Brokerage",
+    "description": "Smart-contract enforced lending with per-venue, per-asset constraints. Solves the Archegos problem — borrowers can't move capital outside defined parameters. Risk controls in code, not compliance teams finding out after the fact.",
+    "category": "DeFi",
+    "source": "DAS NYC 2026 — Multicoin Mega Thesis 2.0",
+    "difficulty": "Advanced",
+    "das_signal": "Multicoin thesis: 'A DeFi prime brokerage can lend against a user's position and enforce through smart contracts exactly which venues the funds can be used on.'"
+  },
+  {
+    "name": "Branded Stablecoin Platform",
+    "description": "Issuance + compliance + yield management platform for fintechs launching their own branded stablecoins. Every fintech wants the float economics that Western Union gets from USDPT — build the Stripe for branded stablecoins.",
+    "category": "Payments",
+    "source": "DAS NYC 2026 — Inside Western Union's Stablecoin-Fueled Future",
+    "difficulty": "Advanced",
+    "das_signal": "WU CEO: 'If I can free up a couple billion dollars of capital, I can buy back half the company.' Citi forecasts $4T stablecoin market."
+  },
+  {
+    "name": "Emerging Market Currency Stablecoins",
+    "description": "Liquid onchain versions of longtail EM currencies — BRL, MXN, INR, NGN. No liquid onchain versions exist today despite massive demand. $7T/day FX market, EM corridors are the highest-margin segments.",
+    "category": "Payments",
+    "source": "DAS NYC 2026 — On the Design Space for Equity, Commodity, and FX Perps",
+    "difficulty": "Advanced",
+    "das_signal": "Multicoin: 'The real opportunity is longtail emerging market currencies. There aren't really liquid onchain versions of these currencies yet, but there is clearly demand.'"
+  },
+  {
+    "name": "Equity Perps on Solana",
+    "description": "Perpetual futures on public equities (AAPL, TSLA, SPY) settled in stablecoins on Solana. Hyperliquid does $5B/day in equity perps — Solana has zero. 24/7 access, no brokerage required.",
+    "category": "DeFi",
+    "source": "DAS NYC 2026 — On the Design Space for Equity, Commodity, and FX Perps",
+    "difficulty": "Advanced",
+    "das_signal": "HL equity perps $5B/day. Traders worldwide traded oil exposure on HL over a weekend during Iran conflict — no other venue offers this."
+  },
+  {
+    "name": "Commodity Perps on Solana",
+    "description": "Perpetual futures on gold, silver, oil, and other commodities on Solana. Hyperliquid's HIP-3 silver spreads are already tighter than CME (2.4bps vs 3bps). 24/7 settlement in stablecoins.",
+    "category": "DeFi",
+    "source": "DAS NYC 2026 — Hyperliquid: The Architecture of Onchain Markets",
+    "difficulty": "Advanced",
+    "das_signal": "Blockworks Research: HL silver median spread 2.4bps (tighter than CME micro silver at 3bps). HIP-3 RWA OI >$1.5B."
+  },
+  {
+    "name": "FX Perps DEX",
+    "description": "Synthetic FX perpetuals combined with non-USD stablecoin swaps. Trade currency risk 24/7 without bank accounts. Combine with EM stablecoin issuance for full-stack FX on-chain.",
+    "category": "DeFi",
+    "source": "DAS NYC 2026 — On the Design Space for Equity, Commodity, and FX Perps",
+    "difficulty": "Advanced",
+    "das_signal": "$7T/day traditional FX market. Most onchain FX today is synthetic. Teams like Hibachi and Open FX working on early versions."
+  },
+  {
+    "name": "Direct Indexing Platform",
+    "description": "Tokenized index funds (S&P 500, sector indices) with direct indexing — users own the underlying tokenized equities, not a fund wrapper. The Wealthfront for tokenized equities.",
+    "category": "DeFi",
+    "source": "DAS NYC 2026 — Tokenization's Next Unlock: Direct Indexing for All",
+    "difficulty": "Advanced",
+    "das_signal": "Dedicated DAS session. S&P Digital Markets 50 index token launched via Dinari. VanEk product team building tokenized index offerings."
+  },
+  {
+    "name": "Tokenized Private Credit Marketplace",
+    "description": "Onchain marketplace for private credit — the 2nd fastest growing RWA category after treasuries. Bilateral debt markets are fragmented with no centralized infra to fight, making them ideal for blockchain leapfrogging.",
+    "category": "DeFi",
+    "source": "DAS NYC 2026 — Multicoin Mega Thesis 2.0",
+    "difficulty": "Advanced",
+    "das_signal": "Multicoin: 'Private credit maps well to onchain because debt markets are fragmented and relationship-driven. No centralized infrastructure to fight against.'"
+  },
+  {
+    "name": "Defined-Loss Structured Products",
+    "description": "On-chain call spreads, put spreads, and defined-risk option structures. Post Oct-10 2025 cascade ($19B wiped, 1.6M liquidated), institutions are structurally shifting from linear perps to defined-loss instruments.",
+    "category": "DeFi",
+    "source": "DAS NYC 2026 — Avoiding Another 10/10: The Market Structure We Need",
+    "difficulty": "Advanced",
+    "das_signal": "FalconX and STS Digital both confirmed institutional shift to defined-loss structures. No onchain venue offers this natively on Solana."
+  },
+  {
+    "name": "ADL Replacement Protocol",
+    "description": "Replace auto-deleveraging (ADL) with an institutional-grade mechanism. ADL is a BitMEX-era artifact that forcibly closes profitable positions during liquidation cascades. No venue has proposed a replacement.",
+    "category": "Infrastructure",
+    "source": "DAS NYC 2026 — Avoiding Another 10/10: The Market Structure We Need",
+    "difficulty": "Advanced",
+    "das_signal": "Chris Long (DRW): 'ADL is just not institutional.' CME uses T+1 margin calls — crypto hasn't decided between 24/7 ADL or institutional T+1."
+  },
+  {
+    "name": "Cross-Margined Prediction Markets",
+    "description": "Prediction markets cross-margined with perps on a single venue. Bet on events while maintaining perp positions with shared collateral. HIP-4 is bringing this to Hyperliquid — build it on Solana first.",
+    "category": "DeFi",
+    "source": "DAS NYC 2026 — Hyperliquid's Institutional Opportunity",
+    "difficulty": "Advanced",
+    "das_signal": "HIP-4 coming to HL in 2026. No other venue globally offers cross-margined prediction markets + perps."
+  },
+  {
+    "name": "DeFi Middleware API Layer",
+    "description": "APIs connecting fintech frontends (Phantom, Kraken, Robinhood) to backend DeFi protocols (Kamino, Drift, Aave). The plumbing layer of the DeFi Mullet — where fintechs plug into crypto without touching complexity.",
+    "category": "Infrastructure",
+    "source": "DAS NYC 2026 — Multicoin Mega Thesis 2.0",
+    "difficulty": "Advanced",
+    "das_signal": "Multicoin DeFi Mullet thesis: frontends → protocols → middleware. yield.xyz, Lei, fun.xyz cited as early examples. Kraken DeFi Earn $150M in 2 months via this model."
+  },
+  {
+    "name": "Agent Policy Engine",
+    "description": "Operational controls for autonomous agent wallets — spending limits, per-vendor rules, human-in-the-loop approvals, fraud detection. Different from compliance (KYC/AML) — this is runtime governance for agents that hold money.",
+    "category": "AI",
+    "source": "DAS NYC 2026 — Agentic Commerce: What's Real & What's Sci-Fi",
+    "difficulty": "Advanced",
+    "das_signal": "Privy/Stripe: 120M deployed wallets, 35% of incoming devs building agentic products. 'You don't want to give a credit card to an agent without a lot of control.'"
+  },
+  {
+    "name": "Physical Collectibles Marketplace",
+    "description": "On-chain marketplace for physical collectibles — fine wine, watches, trading cards, art. Fix custody, ownership records, and settlement. Enable collateral use. $300B industry fragmented across eBay, dealers, auction houses.",
+    "category": "Consumer dApps",
+    "source": "DAS NYC 2026 — Multicoin Mega Thesis 2.0",
+    "difficulty": "Advanced",
+    "das_signal": "Multicoin BECKOM thesis: 'Collectibles industry is over $300B. Blockchain-enabled marketplaces fix custody, ownership, and settlement.' Portfolio company Baxis already lending against collectibles."
+  },
+  {
+    "name": "Collateral Haircut Engine",
+    "description": "Real-time collateral valuation engine that haircuts LSTs and stablecoins based on actual liquidity depth, not thin orderbook marks. Post Oct-10 cascade, LSTs valued at orderbook prices amplified liquidations reflexively.",
+    "category": "Infrastructure",
+    "source": "DAS NYC 2026 — Avoiding Another 10/10: The Market Structure We Need",
+    "difficulty": "Advanced",
+    "das_signal": "Referenced in nearly every market-structure panel. Fix: haircut + underlying-asset price feeds instead of orderbook marks for collateral valuation."
+  }
+]
