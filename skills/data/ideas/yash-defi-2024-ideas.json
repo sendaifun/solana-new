@@ -1,0 +1,226 @@
+[
+  {
+    "name": "Solana FX Market",
+    "description": "On-chain spot foreign exchange platform enabling merchants to accept payments in one stablecoin and convert to another via order books or AMMs.",
+    "category": "DeFi",
+    "source": "blog.superteam.fun/p/what-to-build-for-solana-defi",
+    "difficulty": "Advanced"
+  },
+  {
+    "name": "Morpho Optimizer for Solana",
+    "description": "Peer-to-peer matching on top of existing money markets to match lenders and borrowers at 100% utilization rates. Matched lenders receive full borrower rate; unmatched tap underlying pools.",
+    "category": "DeFi",
+    "source": "blog.superteam.fun/p/what-to-build-for-solana-defi",
+    "difficulty": "Advanced"
+  },
+  {
+    "name": "Fixed-Rate Lending Protocol",
+    "description": "DeFi fixed-rate lending platform. TradFi is 98% fixed rate, DeFi is almost 0%. Clear gap for protocols like Term Finance or Exactly Finance on Solana.",
+    "category": "DeFi",
+    "source": "blog.superteam.fun/p/what-to-build-for-solana-defi",
+    "difficulty": "Advanced"
+  },
+  {
+    "name": "Composable Leverage Protocol",
+    "description": "Gearbox-style composable leverage for Solana — leveraged yield farming across AMMs, LSTs, and incentive programs. Integrates with Kamino, Drift, Jupiter.",
+    "category": "DeFi",
+    "source": "blog.superteam.fun/p/what-to-build-for-solana-defi",
+    "difficulty": "Advanced"
+  },
+  {
+    "name": "Corporate On-chain Bonds",
+    "description": "Enable revenue-generating on-chain companies to issue transparent blockchain-based bonds without token dilution. On-chain revenue structures as collateral.",
+    "category": "DeFi",
+    "source": "blog.superteam.fun/p/what-to-build-for-solana-defi",
+    "difficulty": "Advanced"
+  },
+  {
+    "name": "Interest Rate Swaps for LSTs",
+    "description": "Forward contracts allowing parties to exchange fixed staking rates for floating rates on LSTs like JitoSOL. LST staking rate as the Solana risk-free rate.",
+    "category": "DeFi",
+    "source": "blog.superteam.fun/p/what-to-build-for-solana-defi",
+    "difficulty": "Advanced"
+  },
+  {
+    "name": "Tokenized Vault Standard for Solana",
+    "description": "ERC-4626 equivalent for Solana — composable yield-bearing tokenized vault standard ensuring interoperability across all yield protocols. $10B+ TVL on Ethereum.",
+    "category": "Infrastructure",
+    "source": "blog.superteam.fun/p/what-to-build-for-solana-defi",
+    "difficulty": "Advanced"
+  },
+  {
+    "name": "Vertical Perps for Niche Markets",
+    "description": "Perpetual futures for specific verticals — commodities, real estate sectors, or event-based markets. Parcl ($5M TVL) proved the model for real estate; space is wide open.",
+    "category": "DeFi",
+    "source": "blog.superteam.fun/p/what-to-build-for-solana-defi",
+    "difficulty": "Advanced"
+  },
+  {
+    "name": "Power Perps",
+    "description": "Quadratic leverage perpetual contracts enabling non-linear payoff structures. Originally proposed by Paradigm research. Underdeveloped in previous cycles.",
+    "category": "DeFi",
+    "source": "blog.superteam.fun/p/what-to-build-for-solana-defi",
+    "difficulty": "Advanced"
+  },
+  {
+    "name": "Everlasting Options",
+    "description": "Perpetual options contracts without expiry dates. Combines perpetual mechanics with options payoff structures for continuous optionality.",
+    "category": "DeFi",
+    "source": "blog.superteam.fun/p/what-to-build-for-solana-defi",
+    "difficulty": "Advanced"
+  },
+  {
+    "name": "Perp Aggregator",
+    "description": "Aggregator routing perp trades across multiple Solana perp DEXs (Drift, Jupiter Perps, Flash) to optimize execution and pricing.",
+    "category": "DeFi",
+    "source": "blog.superteam.fun/p/what-to-build-for-solana-defi",
+    "difficulty": "Intermediate"
+  },
+  {
+    "name": "Market-Making Vaults for Order Books",
+    "description": "Decentralized market-making vaults providing passive liquidity to order book DEXs like Phoenix. Ensures depth isn't dependent on single market makers.",
+    "category": "DeFi",
+    "source": "blog.superteam.fun/p/what-to-build-for-solana-defi",
+    "difficulty": "Advanced"
+  },
+  {
+    "name": "Oracle Extractable Value Protocol",
+    "description": "Mechanisms for applications to capture MEV generated from oracle price updates before arbitrageurs. Application-owned orderflow auctions.",
+    "category": "Infrastructure",
+    "source": "blog.superteam.fun/p/what-to-build-for-solana-defi",
+    "difficulty": "Advanced"
+  },
+  {
+    "name": "Risk Management DAO",
+    "description": "Risk research org publishing dashboards, frameworks, and risk ratings for Solana DeFi protocols. Paid risk assessments and ratings for institutional allocators.",
+    "category": "DeFi",
+    "source": "blog.superteam.fun/p/what-to-build-for-solana-defi",
+    "difficulty": "Intermediate"
+  },
+  {
+    "name": "Continuous Prediction Markets via Memecoins",
+    "description": "Niche trading platforms where memecoins serve as continuous prediction markets with unlimited upside. Unlike binary prediction markets, no cap on returns.",
+    "category": "DeFi",
+    "source": "blog.superteam.fun/p/what-to-build-for-solana-defi",
+    "difficulty": "Intermediate"
+  },
+  {
+    "name": "Yield Aggregator for Solana",
+    "description": "Aggregator routing users to optimal yield sources across Solana lending, staking, and farming protocols. Single interface for yield discovery and optimization.",
+    "category": "DeFi",
+    "source": "blog.superteam.fun/p/what-to-build-for-solana-defi",
+    "difficulty": "Intermediate"
+  },
+  {
+    "name": "Bribe Aggregator / Marketplace",
+    "description": "Platform aggregating incentive bribes for LST staking governance, Jupiter LFG voting, and other protocol participation. Votium model for Solana.",
+    "category": "DeFi",
+    "source": "blog.superteam.fun/p/what-to-build-for-solana-defi",
+    "difficulty": "Intermediate"
+  },
+  {
+    "name": "Instadapp for Solana",
+    "description": "All-in-one DeFi management interface for leveraging, refinancing, and migrating positions across protocols. One-click position management.",
+    "category": "DeFi",
+    "source": "blog.superteam.fun/p/what-to-build-for-solana-defi",
+    "difficulty": "Intermediate"
+  },
+  {
+    "name": "Solana Perp DEX Appchain",
+    "description": "Dedicated appchain for perp trading, eliminating mainnet congestion and enabling gas-free trading. Precedent: Zeta/Bullet, dYdX, Hyperliquid all went appchain.",
+    "category": "DeFi",
+    "source": "blog.superteam.fun/p/what-to-build-for-solana-defi",
+    "difficulty": "Advanced"
+  },
+  {
+    "name": "DeFi Structured Products Vaults",
+    "description": "Automated asset management vaults combining leverage, liquidity provision, and hedging strategies. Friktion reached $500M+ TVL before shutting down — space is open.",
+    "category": "DeFi",
+    "source": "blog.superteam.fun/p/what-to-build-for-solana-defi",
+    "difficulty": "Advanced"
+  },
+  {
+    "name": "Agent-Native Payment Middleware",
+    "description": "Three-module orchestration layer: Stripe-like blockchain interface, policy engine for spending rules, and fraud detection. Sits between AI labs and public blockchains.",
+    "category": "AI",
+    "source": "blog.superteam.fun/p/layer-1-wars-its-about-ai-agents",
+    "difficulty": "Advanced"
+  },
+  {
+    "name": "Agentic Payment Protocol",
+    "description": "Settlement protocol for autonomous software handling high-volume micropayments with deterministic finality and automated dispute resolution between machines.",
+    "category": "AI",
+    "source": "blog.superteam.fun/p/layer-1-wars-its-about-ai-agents",
+    "difficulty": "Advanced"
+  },
+  {
+    "name": "Agent-Aware Compliance Layer",
+    "description": "Token-level transfer hooks and account state config enforcing KYC/AML rules at the protocol level for AI agents. Prevents rogue agents from violating compliance.",
+    "category": "AI",
+    "source": "blog.superteam.fun/p/layer-1-wars-its-about-ai-agents",
+    "difficulty": "Advanced"
+  },
+  {
+    "name": "Machine-to-Machine Dispute Resolution",
+    "description": "Automated dispute resolution for agentic payments using smart contracts and LLM-to-LLM communication. Eliminates human intervention for sub-dollar disputes.",
+    "category": "AI",
+    "source": "blog.superteam.fun/p/layer-1-wars-its-about-ai-agents",
+    "difficulty": "Advanced"
+  },
+  {
+    "name": "Open Ride-Sharing Network",
+    "description": "Decentralized ride-sharing with composable profiles, public ratings, and cross-interface payments. No single-entity dependency. Teleport model on Solana.",
+    "category": "Consumer dApps",
+    "source": "blog.superteam.fun/p/stop-building-for-crypto-twitter",
+    "difficulty": "Advanced"
+  },
+  {
+    "name": "Open Accommodations Marketplace",
+    "description": "Airbnb/Booking.com competitor with real-time inventory, open pricing data, and permissionless APIs for any app builder to create a frontend.",
+    "category": "Consumer dApps",
+    "source": "blog.superteam.fun/p/stop-building-for-crypto-twitter",
+    "difficulty": "Advanced"
+  },
+  {
+    "name": "DePIN-specific SVM Rollup",
+    "description": "Solana VM-based rollup or L1 optimized specifically for DePIN projects, offering greater control while leveraging existing SVM tooling and ecosystem.",
+    "category": "Infrastructure",
+    "source": "blog.superteam.fun/p/state-of-solana-depin-2024",
+    "difficulty": "Advanced"
+  },
+  {
+    "name": "ZK-verifiable GPU Cloud",
+    "description": "On-chain GPU computing using zero-knowledge proofs to verify computations. Enables decentralized AI inferencing at scale with cryptographic proof of work completion.",
+    "category": "DePIN",
+    "source": "blog.superteam.fun/p/state-of-solana-depin-2024",
+    "difficulty": "Advanced"
+  },
+  {
+    "name": "Hardware Financing via RWA",
+    "description": "Real-world asset tokenization enabling investors to fund physical DePIN infrastructure hardware through blockchain-based financing and fractional ownership.",
+    "category": "DePIN",
+    "source": "blog.superteam.fun/p/state-of-solana-depin-2024",
+    "difficulty": "Advanced"
+  },
+  {
+    "name": "Tokenized Regional Government Securities",
+    "description": "Blockchain-based government securities trading on DeFi markets with 24/7 access and T+0 settlement, offering global investors exposure to higher-yield regional bonds.",
+    "category": "DeFi",
+    "source": "blog.superteam.fun/p/global-defi-capital-indias-opportunity",
+    "difficulty": "Advanced"
+  },
+  {
+    "name": "Tokenized Regional Green Bonds",
+    "description": "Tokenize sovereign green bonds on public blockchains for global DeFi participation in emerging market climate commitments. Solves liquidity and transparency issues.",
+    "category": "DeFi",
+    "source": "blog.superteam.fun/p/global-defi-capital-indias-opportunity",
+    "difficulty": "Advanced"
+  },
+  {
+    "name": "Cross-Chain DeFi Capital Connector",
+    "description": "Neutral protocol standardizing regulatory rules across blockchains, enabling seamless regional securities issuance and trading on global DeFi venues.",
+    "category": "Infrastructure",
+    "source": "blog.superteam.fun/p/global-defi-capital-indias-opportunity",
+    "difficulty": "Advanced"
+  }
+]

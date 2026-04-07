@@ -291,7 +291,7 @@
   {
     "name": "ZK-KYC Gateway for Cross-Chain Compliance",
     "description": "Financial institutions and DeFi protocols struggle with **repetitive KYC/AML checks** when users interact across multiple blockchains. Each chain requires redundant verification, exposing sensitive data and increasing compliance costs. Meanwhile, users face privacy risks, and projects lack a standardized, trustless way to share compliance status without compromising user anonymity or fragmenting liquidity.\n",
-    "possible_solution": "A **zero-knowledge proof (ZKP)-based KYC gateway** on Solana that:\n1. **Issues reusable ZK-KYC certificates** after initial verification (e.g., proof of residency, accredited investor status).\n2. **Allows cross-chain dApps** (e.g., DeFi, NFT platforms) to _cryptographically verify compliance_ without accessing raw user data.\n3. **Leverages Solana’s low fees/high speed** for real-time proof generation/validation, with on-chain registries for revoked certificates.\n4. **Integrates with major compliance oracles** (e.g., Chainalysis) to auto-flag high-risk addresses while preserving privacy.\n**Why Solana?**\n- **Throughput**: 65K TPS for instant proof verification.\n- **Cost**: <$0.002 per transaction enables micro-verifications.\n- **Ecosystem**: Native integrations with Serum, Phantom, and Firedancer for scalability.\n",
+    "possible_solution": "A **zero-knowledge proof (ZKP)-based KYC gateway** on Solana that:\n1. **Issues reusable ZK-KYC certificates** after initial verification (e.g., proof of residency, accredited investor status).\n2. **Allows cross-chain dApps** (e.g., DeFi, NFT platforms) to _cryptographically verify compliance_ without accessing raw user data.\n3. **Leverages Solana’s low fees/high speed** for real-time proof generation/validation, with on-chain registries for revoked certificates.\n4. **Integrates with major compliance oracles** (e.g., Chainalysis) to auto-flag high-risk addresses while preserving privacy.\n**Why Solana?**\n- **Throughput**: 65K TPS for instant proof verification.\n- **Cost**: <$0.002 per transaction enables micro-verifications.\n- **Ecosystem**: Native integrations with OpenBook, Phantom, and Firedancer for scalability.\n",
     "resources": "- **Docs**: [Solana ZK Toolkit](https://github.com/solana-labs/solana-zksnarks), [Light Protocol](https://lightprotocol.com/) (ZK on Solana).\n- **Dev Tools**: Anchor framework, Commerce Kit for fiat onboarding (Solana Pay is discontinued).\n- **Standards**: Study [Circle’s Verite](https://verite.org/) (private KYC) and [Ondo’s KYC solution](https://ondo.foundation/).\n- **Tutorial**: [Building ZK Circuits with Solana](https://soldev.app/course/zero-knowledge-proofs).\n",
     "published": "2025-10-14",
     "article_content": "<h2 id='test'><strong id='test2'>Problem to Solve:</strong></h2><p id='test3'>Financial institutions and DeFi protocols struggle with repetitive KYC/AML checks when users interact across multiple blockchains. Each chain requires redundant verification, exposing sensitive data and increasing compliance costs. Meanwhile, users face privacy risks, and projects lack a standardized, trustless way to share compliance status without compromising user anonymity or fragmenting liquidity.</p><h2 id='test'><strong id='test2'>Possible Solution:</strong></h2><p id='test3'>A zero-knowledge proof (ZKP)-based KYC gateway on Solana that:\n1. Issues reusable ZK-KYC certificates after initial verification (e.g., proof of residency, accredited investor status).\n2. Allows cross-chain dApps (e.g., DeFi, NFT platforms) to cryptographically verify compliance without accessing raw user data.\n3. Leverages Solana’s low fees/high speed for real-time proof generation/validation, with on-chain registries for revoked certificates.\n4. Integrates with major compliance oracles (e.g., Chainalysis) to auto-flag high-risk addresses while preserving privacy.\nWhy Solana?\n- Throughput: 65K TPS for instant proof verification.\n- Cost: <$0.002 per transaction enables micro-verifications.\n- Ecosystem: Native integrations with Serum, Phantom, and Firedancer for scalability.</p>- Docs: Solana ZK Toolkit, Light Protocol (ZK on Solana).\n- Dev Tools: Anchor framework, Solana Pay for fiat onboarding.\n- Standards: Study Circle’s Verite (private KYC) and Ondo’s KYC solution.\n- Tutorial: Building ZK Circuits with Solana.",
@@ -561,23 +561,6 @@
     "slug": "autorebalancer-for-lp-pools-that-helps-route-capital-autonomously-from-crowded-lp-pools-to-uncrowded-lp-pools"
   },
   {
-    "name": "NFT Standard using Token Extensions",
-    "description": "The current NFT standard implementations are controlled by Metaplex, which was highly debated last year as they are a monopoly in this case. Token Extensions enable anyone to spin off their own NFT standard, while still retaining composability across wallets and exchanges.\n",
-    "possible_solution": "The NFT standard can have features like:\n1\\. NFT Royalty — Transfer fees enable NFT creators to embed royalties directly into the tokens, making royalty enforcement feasible.\n2\\. Native Modular Token Metadata –– Developers can now add, update, and remove custom fields as necessary, customizing the metadata to meet the unique needs of their projects. With token extensions, this metadata is carried with the token, ensuring portability across all applications for seamless interoperability. For standard token mints—name, symbol, and URL can be easily added directly to the mint account, greatly simplifying the process for indexers and protocols to interact with your token.\n\nWEN — a cat-themed memecoin that emerged during Jupiter's LFG launchpad testing — has developed an entirely new NFT standard leveraging TEs, known as WNS. This NFT standard employs the metadata pointer, group, and member pointers, along with mint closure extensions, with transfer hooks expected to be added soon to enforce on-chain royalties. It is already gaining significant traction with Asset Dash, one of the largest portfolio trackers, launching its 10k collection!\n\nMore token extensions can be mixed and matched to allow a higher feature set of tokens.\n",
-    "resources": "1\\. A Primer on Solana's Token Extensions: The Superteam Blog\n2\\. Token Extensions Docs\n3\\. Wen New Standard by Wen\n",
-    "published": "2025-10-14",
-    "article_content": "<h2 id='test'><strong id='test2'>Problem to Solve:</strong></h2><p id='test3'>The current NFT standard implementations are controlled by Metaplex, which was highly debated last year as they are a monopoly in this case. Token Extensions enable anyone to spin off their own NFT standard, while still retaining composability across wallets and exchanges.</p><h2 id='test'><strong id='test2'>Possible Solution:</strong></h2><p id='test3'>The NFT standard can have features like:\n1. NFT Royalty — Transfer fees enable NFT creators to embed royalties directly into the tokens, making royalty enforcement feasible.\n2. Native Modular Token Metadata –– Developers can now add, update, and remove custom fields as necessary, customizing the metadata to meet the unique needs of their projects. With token extensions, this metadata is carried with the token, ensuring portability across all applications for seamless interoperability. For standard token mints—name, symbol, and URL can be easily added directly to the mint account, greatly simplifying the process for indexers and protocols to interact with your token.\n\nWEN — a cat-themed memecoin that emerged during Jupiter's LFG launchpad testing — has developed an entirely new NFT standard leveraging TEs, known as WNS. This NFT standard employs the metadata pointer, group, and member pointers, along with mint closure extensions, with transfer hooks expected to be added soon to enforce on-chain royalties. It is already gaining significant traction with Asset Dash, one of the largest portfolio trackers, launching its 10k collection!\n\nMore token extensions can be mixed and matched to allow a higher feature set of tokens.</p>1. A Primer on Solana's Token Extensions: The Superteam Blog\n2. Token Extensions Docs\n3. Wen New Standard by Wen",
-    "image": null,
-    "approved": "Approved",
-    "author_pfp": [
-      "http://res.cloudinary.com/dgvnuwspr/image/upload/v1692874261/Grants%20Dashboard/recjtMJjM6wKgAbn2-2023-08-24T10:49:45.000Z.png"
-    ],
-    "categories": "NFTs",
-    "author": "Yash Agarwal",
-    "difficulty": "Intermediate",
-    "slug": "nft-standard-using-token-extensions"
-  },
-  {
     "name": "Decentralized Marketplaces for Collectibles",
     "description": "Collecting is big business. Today, over one-third of Americans self-identify as collectors, and, as of 2024, the market size for collectibles is now nearly [$500 billion dollars](https://finance.yahoo.com/news/collectibles-market-2024-estimated-492-103200953.html). Collectibles are a booming industry—and blockchains are coming for them.\n\nFor flip-trading to be maximally efficient, collectibles marketplaces need to have:\n1. instant settlement, \n2. physical custody, and\n3. authentication\n\nNone of the leading collectibles marketplaces today, such as [Bring a Trailer](https://bringatrailer.com/), [StockX](https://stockx.com/), and [Chrono24](https://www.chrono24.com/), offer all three. Cash settlement is not an option; instead, physical settlement is the default—with settlement times usually measured in days or weeks. For bigger collectibles, such as cars, physical storage also quickly becomes an issue (where do you put 20 cars while you flip them?). For smaller collectibles, often traded via vertical marketplaces like Facebook Groups, fraud is a persistent challenge. \n\nAll of these factors make trading collectibles on today’s marketplaces highly inefficient.\n",
     "possible_solution": "We see a massive opportunity to create a new marketplace design, purpose-built for collectibles traders, called “Blockchain-Enabled Collectibles Marketplaces” (BECMs). These marketplaces offer instant trading via cash settlement, reduce settlement time from weeks to seconds using stablecoins, and use NFTs as digital representations of physical assets held by a trusted custodian or authenticator.\n\nBECMs have the potential to reshape the billion-dollar collectibles market because they make it possible to: 1) unify markets and increase liquidity (vs. current fragmented, dark markets), 2) eliminate the need for personal physical storage, which encourages more trading, 3) increase trust by providing authentication, and 4) financialize collecting behavior by facilitating borrowing where borrowing wasn’t possible before. We believe the result of these efficiencies will be materially TAM expansionary for collectibles markets as a whole as more traders, liquidity, inventory, and marketplaces come online.\n",
@@ -677,7 +660,8 @@
     "categories": "DeFi",
     "author": "Yash Agarwal",
     "difficulty": "Intermediate",
-    "slug": "fixed-income-products"
+    "slug": "fixed-income-products",
+    "das_nyc_2026_signal": "DAS NYC 2026: Onchain fixed income is real. BlackRock BUIDL $2.9B. Franklin Templeton Benji pays intraday yield. Dedicated Day 1 Main Stage session. DTCC onchain for fixed income H2 2026."
   },
   {
     "name": "Solana Loot Protocol: Open & Composable In-Game Asset Economy",
@@ -819,7 +803,7 @@
     "name": "Improving Data Querying for Solana",
     "description": "Improving access and querying capabilities for data on Solana is necessary. Incorrect data has caused unwarranted FUD in the past and there's a need for a tool to ensure access to accurate information.\n",
     "possible_solution": "\\- A web-based tool through which any user can query all data on the Solana blockchain by using SQL queries. Pre-populated databases with parsed data from Solana blocks. This can all be built on Redash just like Dune.\n\\- Any user would be able to write a query: free users would have to open source their queries so others could work and paid users would have the ability to write queries privately\n\\- Automatic hourly updates on the most viewed queries and charts: Paid users could hook an API to any publicly available query and get results\n\\- Dashboarding functionality: Curated queries shared in a visualized form. The team would write several popularly requested queries to launch this product to expedite the kick-off\n",
-    "resources": "\\- Redash Docs - <https://redash.io/help/open-source/setup>\n\\- Step Finance Docs - <https://docs.step.finance/>\n",
+    "resources": "\\- Redash Docs - <https://redash.io/help/open-source/setup>\n\\- Helius Docs - <https://docs.helius.dev/>\n",
     "published": "2025-10-14",
     "article_content": "<h2 id='test'><strong id='test2'>Problem to Solve:</strong></h2><p id='test3'>Improving access and querying capabilities for data on Solana is necessary. Incorrect data has caused unwarranted FUD in the past and there's a need for a tool to ensure access to accurate information.</p><h2 id='test'><strong id='test2'>Possible Solution:</strong></h2><p id='test3'>- A web-based tool through which any user can query all data on the Solana blockchain by using SQL queries. Pre-populated databases with parsed data from Solana blocks. This can all be built on Redash just like Dune.\n- Any user would be able to write a query: free users would have to open source their queries so others could work and paid users would have the ability to write queries privately\n- Automatic hourly updates on the most viewed queries and charts: Paid users could hook an API to any publicly available query and get results\n- Dashboarding functionality: Curated queries shared in a visualized form. The team would write several popularly requested queries to launch this product to expedite the kick-off</p>- Redash Docs - https://redash.io/help/open-source/setup\n- Step Finance Docs - https://docs.step.finance/",
     "image": null,
@@ -847,7 +831,8 @@
     "categories": "DeFi",
     "author": "Yash Agarwal",
     "difficulty": "Advanced",
-    "slug": "defi-powered-consumer-loans"
+    "slug": "defi-powered-consumer-loans",
+    "das_nyc_2026_signal": "DAS NYC 2026: Morpho powers BTC-backed loans on Coinbase/Kraken/Gemini — $12B AUM. DeFi is becoming B2B backend for fintechs. Kraken DeFi Earn hit $150M in 2 months with zero incentives."
   },
   {
     "name": "Privacy-Powered Tokenized Opinion Discovery",
@@ -865,23 +850,6 @@
     "author": "Rishabh Gupta",
     "difficulty": null,
     "slug": "privacy-powered-tokenized-opinion-discovery"
-  },
-  {
-    "name": "Payments and NFT mints in $bSOL",
-    "description": "bSOL functions as a liquid staking token. When staking with Solblaze, participants receive a representative token (e.g., $bSOL), which can be utilized, traded, or invested without requiring unstaking. The objective is to enhance the utility of bSOL.\n",
-    "possible_solution": "\\- Integration and Listing: Facilitate the integration and listing of bSOL within established payment gateways and NFT minting platforms.\n\\- dApps Development: Develop dApps that exclusively accept bSOL for transactions or offer additional incentives, such as BLAZE tokens, when utilizing bSOL for transfers.\n\\- Enhanced Liquidity: Replace SOL denomination with the liquid staking token, bSOL, on platforms like NFT marketplaces. This transition can augment liquidity and utility for bSOL.\n",
-    "resources": "\\- Solblaze Documentation - <https://stake-docs.solblaze.org/>\n\\- Payment Platforms - <https://solanapayments.fun/>\n",
-    "published": "2025-10-14",
-    "article_content": "<h2 id='test'><strong id='test2'>Problem to Solve:</strong></h2><p id='test3'>bSOL functions as a liquid staking token. When staking with Solblaze, participants receive a representative token (e.g., $bSOL), which can be utilized, traded, or invested without requiring unstaking. The objective is to enhance the utility of bSOL.</p><h2 id='test'><strong id='test2'>Possible Solution:</strong></h2><p id='test3'>- Integration and Listing: Facilitate the integration and listing of bSOL within established payment gateways and NFT minting platforms.\n- dApps Development: Develop dApps that exclusively accept bSOL for transactions or offer additional incentives, such as BLAZE tokens, when utilizing bSOL for transfers.\n- Enhanced Liquidity: Replace SOL denomination with the liquid staking token, bSOL, on platforms like NFT marketplaces. This transition can augment liquidity and utility for bSOL.</p>- Solblaze Documentation - https://stake-docs.solblaze.org/\n- Payment Platforms - https://solanapayments.fun/",
-    "image": null,
-    "approved": "Approved",
-    "author_pfp": [
-      "http://res.cloudinary.com/dgvnuwspr/image/upload/v1693499423/Grants%20Dashboard/recnZtqkXQOLJcXDU-2023-08-31T16:28:36.000Z.jpg"
-    ],
-    "categories": "Payments, NFTs, DeFi",
-    "author": "SolBlaze",
-    "difficulty": "Intermediate",
-    "slug": "payments-and-nft-mints-in-$bsol"
   },
   {
     "name": "P2P Payments for Bordering Countries",
@@ -904,7 +872,7 @@
     "name": "Whales DeFi Analytics",
     "description": "A website/dashboard that tracks all biggest whales of each protocol and their holdings across DeFi.\nAdvance analytics of those whales holdings and sentiment base on those analytics.\n",
     "possible_solution": "By using SonarWatch API and on-chain analysis of most active users/holders from various Programs across DeFi protocols, someone could easily build such solution.\n",
-    "resources": "\\- DeFi API : <https://portfolio-api.sonar.watch/api>\n\\- An attempt for Raydium whales: <https://github.com/UbermenschSYM/uber-watch>\n",
+    "resources": "\\- DeFi API : <https://api.sonar.watch/api (verify current URL)>\n\\- An attempt for Raydium whales: <https://github.com/UbermenschSYM/uber-watch>\n",
     "published": "2025-10-14",
     "article_content": "<h2 id='test'><strong id='test2'>Problem to Solve:</strong></h2><p id='test3'>A website/dashboard that tracks all biggest whales of each protocol and their holdings across DeFi.\nAdvance analytics of those whales holdings and sentiment base on those analytics.</p><h2 id='test'><strong id='test2'>Possible Solution:</strong></h2><p id='test3'>By using SonarWatch API and on-chain analysis of most active users/holders from various Programs across DeFi protocols, someone could easily build such solution.</p>- DeFi API : https://portfolio-api.sonar.watch/api\n- An attempt for Raydium whales: https://github.com/UbermenschSYM/uber-watch",
     "image": null,
@@ -1003,23 +971,6 @@
     "slug": "skilling-ecosystem"
   },
   {
-    "name": "Subscriptions built on Streamflow",
-    "description": "Currently, it is difficult to set up a pay-per-second subscription on Solana. With Social and Game apps starting to pick up pace, there is a clear opportunity for subscription style progressive release services. \n",
-    "possible_solution": "Pay-per-second subscription style payments built on the flexible and powerful Streamflow SDK\n",
-    "resources": "\\- Streamflow JS SDK - <https://github.com/streamflow-finance/js-sdk>\n\\- Streamflow Docs - <https://docs.streamflow.finance/integration/sdk>\n",
-    "published": "2025-10-14",
-    "article_content": "<h2 id='test'><strong id='test2'>Problem to Solve:</strong></h2><p id='test3'>Currently, it is difficult to set up a pay-per-second subscription on Solana. With Social and Game apps starting to pick up pace, there is a clear opportunity for subscription style progressive release services. </p><h2 id='test'><strong id='test2'>Possible Solution:</strong></h2><p id='test3'>Pay-per-second subscription style payments built on the flexible and powerful Streamflow SDK</p>- Streamflow JS SDK - https://github.com/streamflow-finance/js-sdk\n- Streamflow Docs - https://docs.streamflow.finance/integration/sdk",
-    "image": null,
-    "approved": "Approved",
-    "author_pfp": [
-      "http://res.cloudinary.com/dgvnuwspr/image/upload/v1692874252/Grants%20Dashboard/rec8JP0tKSBQ3q7z6-2023-08-24T10:50:22.000Z.jpg"
-    ],
-    "categories": "Payments, Consumer dApps",
-    "author": "Streamflow",
-    "difficulty": "Intermediate",
-    "slug": "subscriptions-built-on-streamflow"
-  },
-  {
     "name": "Habit Tracker",
     "description": "People want to get better (exercise more, drink less, save more, eat better, etc)  but need help staying on-track\n",
     "possible_solution": "1\\. An app that lets you start an accountability pool with friends (e.g. invite by wallets address or email id to a pool you created)\n2\\. The creator sets a task and deadline (e.g. I will walk an avg of 5k steps/day for 7 days)\n3\\. At the end of the deadline, 3 outcomes are possible\n    a. All participants confirm that the task was completed, and the creator of the pool gets their money back\n    b. All participants confirm that the task was not completed and the creator loses their stake to others in the pool \n    c. Consensus is not reached and the tokens remain locked for 90 days after which they are burned or donated\n",
@@ -1052,23 +1003,6 @@
     "author": "Parth Chaturvedi",
     "difficulty": null,
     "slug": "psu-asset-tokenization-platform"
-  },
-  {
-    "name": "Twitch Donation Chrome Extension",
-    "description": "A browser extension facilitating easy crypto donations to content creators, making it simple for fans to support their favorite streamers.\n\n**Key Features:**\n- One-click donations in various cryptocurrencies\n- On-ramp integration for fiat-to-crypto conversions\n- Automatic detection of donation addresses\n- Donation history dashboard\n\n",
-    "possible_solution": "This extension could streamline the donation process, potentially increasing support for content creators while promoting crypto adoption. Monetization could include a small fee on each transaction or premium features for enhanced analytics.\n",
-    "resources": "1. Mercuryo Developer Docs - <https://oor-redirect.redoc.ly/>\n2. Jupiter APIs - <https://station.jup.ag/docs/apis>\n\n",
-    "published": "2025-10-14",
-    "article_content": "<h2 id='test'><strong id='test2'>Problem to Solve:</strong></h2><p id='test3'>A browser extension facilitating easy crypto donations to content creators, making it simple for fans to support their favorite streamers.\n\nKey Features:\n- One-click donations in various cryptocurrencies\n- On-ramp integration for fiat-to-crypto conversions\n- Automatic detection of donation addresses\n- Donation history dashboard\n</p><h2 id='test'><strong id='test2'>Possible Solution:</strong></h2><p id='test3'>This extension could streamline the donation process, potentially increasing support for content creators while promoting crypto adoption. Monetization could include a small fee on each transaction or premium features for enhanced analytics.</p>1. Mercuryo Developer Docs - https://oor-redirect.redoc.ly/\n2. Jupiter APIs - https://station.jup.ag/docs/apis\n",
-    "image": null,
-    "approved": "Approved",
-    "author_pfp": [
-      "http://res.cloudinary.com/dgvnuwspr/image/upload/v1725870137/Grants%20Dashboard/recE28KgvxaCDjJcu-2024-09-09T08:20:18.000Z.jpg"
-    ],
-    "categories": "Gaming, Payments",
-    "author": "Mercuryo",
-    "difficulty": "Intermediate",
-    "slug": "twitch-donation-chrome-extension"
   },
   {
     "name": "One-Click DePIN Onboarding Kit",
@@ -1154,23 +1088,6 @@
     "author": "Max Monciardini",
     "difficulty": null,
     "slug": "regional-neobanks"
-  },
-  {
-    "name": "DeFi integrations that maximize $bSOL utility",
-    "description": "bSOL serves as a liquid staking token. When participants stake with Solblaze, they receive a representative token (e.g. $bSOL) that can be used, traded, or invested without the need for unstaking. The goal is to maximize the utility of bSOL.\n",
-    "possible_solution": "\\- Integration and Listing: Facilitate the integration and listing of bSOL on established DEXs, lending and borrowing platforms, vaults, and similar platforms.\n\\- dApps Development: Create dApps that exclusively utilize bSOL for transactions or provide extra incentives, such as BLAZE tokens, for engaging in DeFi activities using bSOL.\n\\- Enhanced Liquidity: Enhance the utility of bSOL within the DeFi ecosystem to boost its liquidity.\n",
-    "resources": "\\- Solblaze Documentation - <https://stake-docs.solblaze.org/>\n",
-    "published": "2025-10-14",
-    "article_content": "<h2 id='test'><strong id='test2'>Problem to Solve:</strong></h2><p id='test3'>bSOL serves as a liquid staking token. When participants stake with Solblaze, they receive a representative token (e.g. $bSOL) that can be used, traded, or invested without the need for unstaking. The goal is to maximize the utility of bSOL.</p><h2 id='test'><strong id='test2'>Possible Solution:</strong></h2><p id='test3'>- Integration and Listing: Facilitate the integration and listing of bSOL on established DEXs, lending and borrowing platforms, vaults, and similar platforms.\n- dApps Development: Create dApps that exclusively utilize bSOL for transactions or provide extra incentives, such as BLAZE tokens, for engaging in DeFi activities using bSOL.\n- Enhanced Liquidity: Enhance the utility of bSOL within the DeFi ecosystem to boost its liquidity.</p>- Solblaze Documentation - https://stake-docs.solblaze.org/",
-    "image": null,
-    "approved": "Approved",
-    "author_pfp": [
-      "http://res.cloudinary.com/dgvnuwspr/image/upload/v1693499423/Grants%20Dashboard/recnZtqkXQOLJcXDU-2023-08-31T16:28:36.000Z.jpg"
-    ],
-    "categories": "DeFi",
-    "author": "SolBlaze",
-    "difficulty": "Intermediate",
-    "slug": "defi-integrations-that-maximize-$bsol-utility"
   },
   {
     "name": "MaybePay",
@@ -1391,7 +1308,8 @@
     "categories": "Payments, DeFi, Consumer dApps",
     "author": "AllianceDAO",
     "difficulty": "Intermediate",
-    "slug": "neobanks-for-developing-nations"
+    "slug": "neobanks-for-developing-nations",
+    "das_nyc_2026_signal": "DAS NYC 2026: WU USDPT on Solana creates de facto offshore US dollar accounts — 100M new users with no US bank. MoneyGram targets >50% stablecoin flows in 5yr. Rain claims 80% reduction in working capital."
   },
   {
     "name": "Unruggable Celebcoins",
@@ -1426,23 +1344,6 @@
     "author": "AllianceDAO",
     "difficulty": "Intermediate",
     "slug": "stablecoins-for-real-world-payments"
-  },
-  {
-    "name": "Structured Products using Token Extensions",
-    "description": "Structured Products are big in TradFI as they enable specific investor needs with a customized product mix. Replicating that on-chain, particularly with Real World Assets is a big opportunity.\n",
-    "possible_solution": "Obligate, an RWA debt player has built a cool prototype for structured product issuances on Solana. They use transfer hooks to do compliance checks, but most importantly keep track of coupon payments using our custom snapshot-transfer-hook. The prototype shows the ability to reduce issuance and price fixing time frames from days to milliseconds and to handle the entire life cycle in a fully automated and transparent fashion.\n",
-    "resources": "1\\. A Primer on Solana's Token Extensions: The Superteam Blog\n2\\. Token Extensions Docs\n",
-    "published": "2025-10-14",
-    "article_content": "<h2 id='test'><strong id='test2'>Problem to Solve:</strong></h2><p id='test3'>Structured Products are big in TradFI as they enable specific investor needs with a customized product mix. Replicating that on-chain, particularly with Real World Assets is a big opportunity.</p><h2 id='test'><strong id='test2'>Possible Solution:</strong></h2><p id='test3'>Obligate, an RWA debt player has built a cool prototype for structured product issuances on Solana. They use transfer hooks to do compliance checks, but most importantly keep track of coupon payments using our custom snapshot-transfer-hook. The prototype shows the ability to reduce issuance and price fixing time frames from days to milliseconds and to handle the entire life cycle in a fully automated and transparent fashion.</p>1. A Primer on Solana's Token Extensions: The Superteam Blog\n2. Token Extensions Docs",
-    "image": null,
-    "approved": "Approved",
-    "author_pfp": [
-      "http://res.cloudinary.com/dgvnuwspr/image/upload/v1692874261/Grants%20Dashboard/recjtMJjM6wKgAbn2-2023-08-24T10:49:45.000Z.png"
-    ],
-    "categories": "DeFi",
-    "author": "Yash Agarwal",
-    "difficulty": "Intermediate",
-    "slug": "structured-products-using-token-extensions"
   },
   {
     "name": "New order types like Stop Loss for Phoenix",
@@ -1510,12 +1411,13 @@
     "categories": "AI",
     "author": "Yash Agarwal",
     "difficulty": null,
-    "slug": "-llm-x-prediction-markets"
+    "slug": "-llm-x-prediction-markets",
+    "das_nyc_2026_signal": "DAS NYC 2026: HIP-4 prediction markets + binary options coming to Hyperliquid, cross-margined with perps. CFTC filed brief defending prediction markets in court."
   },
   {
     "name": "US Tokenised Stocks on Solana",
-    "description": "Retail Investors around the globe want to invest in US stocks or other capital markets but are constrained by low access and high forex costs of ~3-4%, which eat away a significant portion of their returns.\n\nTokenized Stocks on Blockchain are a great alternative. However, they are right now:\n1) Only focussed on Ethereum-ecosystems, no robust protocols on Solana\n2) Synthetic stock was a great feature in FTX, but with its crash, there's a huge void in the market\n\nSynthetify is an existing protocol on Solana but has failed to gain significant traction and is now almost dead with daily volume < $1000 post FTX crash.\n",
-    "possible_solution": "A Synthetic protocol on Solana, where it tracks the price of US Stocks via Pyth/Switchboard oracle. A synthetic AMM pool can be created, or orderbooks like OpenBook (Serum) can be used.\n\nHow will it work:\n1) User buys the tokenized stock, let's say AAPL, as per the real-world price tracked by Pyth Oracle. This will be transferred from an existing user.\n2) User can also mint a tokenized stock by simply depositing the equivalent amount of USDC and redeeming likewise.\n3) The stocks can either be fully backed by equivalent stocks, partnering with a US-based custodian, or hedged via equivalent futures to avoid any risk.\n\nThe key benefit of bringing it on-chain would be: increased accessibility, as anyone worldwide can trade these assets without relying on clunky international payments and long onboarding processes. Other synthetic assets like Bonds, Currencies, and commodities can also be bought later. There's a significant demand for this product from a FinTech BD perspective.\n\nDM me at @yashhsm on Twitter/Telegram - I would be happy to guide you throughout and make connections if anyone is interested in building.\n",
+    "description": "Retail Investors around the globe want to invest in US stocks or other capital markets but are constrained by low access and high forex costs of ~3-4%, which eat away a significant portion of their returns.\n\nTokenized Stocks on Blockchain are a great alternative. However, they are right now:\n1) Only focussed on Ethereum-ecosystems, no robust protocols on Solana\n2) Synthetic stock has been validated by Hyperliquid equity perps doing $5B/day. There's a huge opportunity in the market\n\nSynthetify is an existing protocol on Solana but has failed to gain significant traction and is now almost dead with daily volume < $1000 post FTX crash.\n",
+    "possible_solution": "A Synthetic protocol on Solana, where it tracks the price of US Stocks via Pyth/Switchboard oracle. A synthetic AMM pool can be created, or orderbooks like OpenBook (OpenBook) can be used.\n\nHow will it work:\n1) User buys the tokenized stock, let's say AAPL, as per the real-world price tracked by Pyth Oracle. This will be transferred from an existing user.\n2) User can also mint a tokenized stock by simply depositing the equivalent amount of USDC and redeeming likewise.\n3) The stocks can either be fully backed by equivalent stocks, partnering with a US-based custodian, or hedged via equivalent futures to avoid any risk.\n\nThe key benefit of bringing it on-chain would be: increased accessibility, as anyone worldwide can trade these assets without relying on clunky international payments and long onboarding processes. Other synthetic assets like Bonds, Currencies, and commodities can also be bought later. There's a significant demand for this product from a FinTech BD perspective.\n\nDM me at @yashhsm on Twitter/Telegram - I would be happy to guide you throughout and make connections if anyone is interested in building.\n",
     "resources": "\\- Synthetix - <https://synthetix.io/>\n\\- Tokenized Stocks - <https://www.sofi.com/learn/content/tokenized-stocks/>\n",
     "published": "2025-10-14",
     "article_content": "<h2 id='test'><strong id='test2'>Problem to Solve:</strong></h2><p id='test3'>Retail Investors around the globe want to invest in US stocks or other capital markets but are constrained by low access and high forex costs of ~3-4%, which eat away a significant portion of their returns.\n\nTokenized Stocks on Blockchain are a great alternative. However, they are right now:\n1) Only focussed on Ethereum-ecosystems, no robust protocols on Solana\n2) Synthetic stock was a great feature in FTX, but with its crash, there's a huge void in the market\n\nSynthetify is an existing protocol on Solana but has failed to gain significant traction and is now almost dead with daily volume < $1000 post FTX crash.</p><h2 id='test'><strong id='test2'>Possible Solution:</strong></h2><p id='test3'>A Synthetic protocol on Solana, where it tracks the price of US Stocks via Pyth/Switchboard oracle. A synthetic AMM pool can be created, or orderbooks like OpenBook (Serum) can be used.\n\nHow will it work:\n1) User buys the tokenized stock, let's say AAPL, as per the real-world price tracked by Pyth Oracle. This will be transferred from an existing user.\n2) User can also mint a tokenized stock by simply depositing the equivalent amount of USDC and redeeming likewise.\n3) The stocks can either be fully backed by equivalent stocks, partnering with a US-based custodian, or hedged via equivalent futures to avoid any risk.\n\nThe key benefit of bringing it on-chain would be: increased accessibility, as anyone worldwide can trade these assets without relying on clunky international payments and long onboarding processes. Other synthetic assets like Bonds, Currencies, and commodities can also be bought later. There's a significant demand for this product from a FinTech BD perspective.\n\nDM me at @yashhsm on Twitter/Telegram - I would be happy to guide you throughout and make connections if anyone is interested in building.</p>- Synthetix - https://synthetix.io/\n- Tokenized Stocks - https://www.sofi.com/learn/content/tokenized-stocks/",
@@ -1527,7 +1429,8 @@
     "categories": "DeFi",
     "author": "Yash Agarwal",
     "difficulty": "Advanced",
-    "slug": "us-tokenised-stocks-on-solana"
+    "slug": "us-tokenised-stocks-on-solana",
+    "das_nyc_2026_signal": "DAS NYC 2026: Equity perps doing $5B/day on Hyperliquid. NYSE x Securitize pilot Q3 2026. DTCC onchain for Russell 1000 H2 2026. Ondo $700M tokenized stocks TVL."
   },
   {
     "name": "Solana Build",
@@ -1578,7 +1481,8 @@
     "categories": "Infrastructure",
     "author": "Yash Agarwal",
     "difficulty": "Intermediate",
-    "slug": "stablecoin-launchpad"
+    "slug": "stablecoin-launchpad",
+    "das_nyc_2026_signal": "DAS NYC 2026: Every fintech wants branded stablecoins (WU USDPT model). Citi forecasts $4T stablecoin market. Bridge/Stripe: yield-sharing will be table stakes. OCC designing GENIUS for non-bank issuance."
   },
   {
     "name": "Archive",
@@ -1887,23 +1791,6 @@
     "slug": "fully-onchain-gig-economy"
   },
   {
-    "name": "Open source DEX aggregator",
-    "description": "There are currently no DEX swap aggregators that are completely open source.\n",
-    "possible_solution": "Use the Orca smart router implementation as a basis to build a more generalized router that supports multiple other DEX protocols.\n",
-    "resources": "\\- Orca Whirlpools Router - <https://github.com/orca-so/whirlpools/tree/main/sdk/src/router>\n\\- Uniswap Universal Router - <https://github.com/Uniswap/universal-router>\n\\- Jupiter Router - <https://station.jup.ag/blog/jup-v3-metis-routing-algo>\n",
-    "published": "2025-10-14",
-    "article_content": "<h2 id='test'><strong id='test2'>Problem to Solve:</strong></h2><p id='test3'>There are currently no DEX swap aggregators that are completely open source.</p><h2 id='test'><strong id='test2'>Possible Solution:</strong></h2><p id='test3'>Use the Orca smart router implementation as a basis to build a more generalized router that supports multiple other DEX protocols.</p>- Orca Whirlpools Router - https://github.com/orca-so/whirlpools/tree/main/sdk/src/router\n- Uniswap Universal Router - https://github.com/Uniswap/universal-router\n- Jupiter Router - https://station.jup.ag/blog/jup-v3-metis-routing-algo",
-    "image": null,
-    "approved": "Approved",
-    "author_pfp": [
-      "http://res.cloudinary.com/dgvnuwspr/image/upload/v1692874880/Grants%20Dashboard/rec6UaLebnMnS35Yu-2023-08-24T10:59:56.000Z.jpg"
-    ],
-    "categories": "DeFi",
-    "author": "Orca",
-    "difficulty": "Easy",
-    "slug": "open-source-dex-aggregator"
-  },
-  {
     "name": "Finance superapp for RWAs only",
     "description": "Today's wallets are optimized for trading & degeneracy.\n\nWho is building a finance superapp built on Solana that focuses on yield, stocks & equities, and less volatile tokens?\n",
     "possible_solution": "Personal finance mobile app with stablecoin rails and living onchain\n",
@@ -1918,7 +1805,8 @@
     "categories": "Mobile, DeFi, Payments, Consumer dApps",
     "author": "Vibhu",
     "difficulty": null,
-    "slug": "finance-superapp-for-rwas-only"
+    "slug": "finance-superapp-for-rwas-only",
+    "das_nyc_2026_signal": "DAS NYC 2026: Only money market fund RWAs have true PMF (BlackRock). Collateral use case > trading for tokenized assets. RWA lending deposits $0 to $1B+ in past year."
   },
   {
     "name": "revshare protocols on solana",
@@ -1986,13 +1874,14 @@
     "categories": "DeFi",
     "author": "Monaco Protocol",
     "difficulty": "Advanced",
-    "slug": "sports-betting-exchange-"
+    "slug": "sports-betting-exchange-",
+    "das_nyc_2026_signal": "DAS NYC 2026: CFTC defending prediction market operators against state gaming lawsuits. Sportsbook vigs are large and increasing. Multicoin investing in P2P betting exchanges (Novig, Triumph)."
   },
   {
     "name": "Lending Orderbook",
     "description": "In DeFi lending markets, we use a pool system where there is 1 borrow APY and the supply APY is a function of the borrow APY. \n\nThis creates issues where future borrowers after you spike the borrow APY and increase the cost of borrowing for ALL users, or leads to capital being under utilized as users arent willing to borrow, leading to very low capital efficiency in lending markets.\n",
     "possible_solution": "Ideally, we have an orderbook or a system where lenders and borrowers can specify the interest rate they want to borrow and supply at, and an orderbook handles the matching between users.\n\nAlternatively, lenders can use a pool and borrowers can specify the rates they will borrow at on an orderbook, and borrows are executed overtime at different rates. For example, 100 USDC in the pool, 80 USDC can be borrowed at 4%, and 10 USDC borrowed at 3.8%, leading to higher yields for all lenders and optimized borrow costs for borrowers. \n",
-    "resources": "\\- First look into Solend and traditional lending markets - <https://save.finance>\n\\- Look into Serum V4 (AOB) as a starting point - <https://github.com/openbook-dex/program>\n",
+    "resources": "\\- First look into Solend and traditional lending markets - <https://save.finance>\n\\- Look into OpenBook V2 as a starting point - <https://github.com/openbook-dex/openbook-v2>\n",
     "published": "2025-10-14",
     "article_content": "<h2 id='test'><strong id='test2'>Problem to Solve:</strong></h2><p id='test3'>In DeFi lending markets, we use a pool system where there is 1 borrow APY and the supply APY is a function of the borrow APY. \n\nThis creates issues where future borrowers after you spike the borrow APY and increase the cost of borrowing for ALL users, or leads to capital being under utilized as users arent willing to borrow, leading to very low capital efficiency in lending markets.</p><h2 id='test'><strong id='test2'>Possible Solution:</strong></h2><p id='test3'>Ideally, we have an orderbook or a system where lenders and borrowers can specify the interest rate they want to borrow and supply at, and an orderbook handles the matching between users.\n\nAlternatively, lenders can use a pool and borrowers can specify the rates they will borrow at on an orderbook, and borrows are executed overtime at different rates. For example, 100 USDC in the pool, 80 USDC can be borrowed at 4%, and 10 USDC borrowed at 3.8%, leading to higher yields for all lenders and optimized borrow costs for borrowers. </p>- First look into Solend and traditional lending markets - https://save.finance\n- Look into Serum V4 (AOB) as a starting point - https://github.com/openbook-dex/program",
     "image": null,
@@ -2142,23 +2031,6 @@
     "slug": "anonymous-social-networks"
   },
   {
-    "name": "Tutorial on Getting Token Metadata",
-    "description": "Associated Metadata for each token is needed in a DeFi app aggregating several tokens on a platform such as Raydium, or for an analytics app like CoinGecko which displays data about thousands of tokens.\nThe metadata includes:\n\\- Token's name\n\\- Symbol\n\\- Logo\n\\- Other important details\n‍\nExisting resources are scarce and are not a great developer experience.\n",
-    "possible_solution": "Create tutorials on how to fetch a token and its metadata. Can have code snippets as well.\nChoose any of the below formats:\n\\- Written documentation\n\\- Video format\nHelp to understand how to fetch a token and its metadata In a developer-friendly way.\nGitHub Issue: <https://github.com/solana-developers/developer-experience/issues/33>\n",
-    "resources": "\\- Displaying Tokens (Best Practices) - <https://docs.phantom.app/best-practices/tokens>\n\\- Token Metadata (Overview by Metaplex) - <https://docs.metaplex.com/programs/token-metadata/overview>\n\\- SPL Token Metadata - <https://docs.rs/crate/spl-token-metadata/latest>\n",
-    "published": "2025-10-14",
-    "article_content": "<h2 id='test'><strong id='test2'>Problem to Solve:</strong></h2><p id='test3'>Associated Metadata for each token is needed in a DeFi app aggregating several tokens on a platform such as Raydium, or for an analytics app like CoinGecko which displays data about thousands of tokens.\nThe metadata includes:\n- Token's name\n- Symbol\n- Logo\n- Other important details\n‍\nExisting resources are scarce and are not a great developer experience.</p><h2 id='test'><strong id='test2'>Possible Solution:</strong></h2><p id='test3'>Create tutorials on how to fetch a token and its metadata. Can have code snippets as well.\nChoose any of the below formats:\n- Written documentation\n- Video format\nHelp to understand how to fetch a token and its metadata In a developer-friendly way.\nGitHub Issue: https://github.com/solana-developers/developer-experience/issues/33</p>- Displaying Tokens (Best Practices) - https://docs.phantom.app/best-practices/tokens\n- Token Metadata (Overview by Metaplex) - https://docs.metaplex.com/programs/token-metadata/overview\n- SPL Token Metadata - https://docs.rs/crate/spl-token-metadata/latest",
-    "image": null,
-    "approved": "Approved",
-    "author_pfp": [
-      "http://res.cloudinary.com/dgvnuwspr/image/upload/v1692876767/Grants%20Dashboard/recpFy8980s3VRpUD-2023-08-24T11:31:56.000Z.jpg"
-    ],
-    "categories": "Content",
-    "author": "Nemanja Boskovic",
-    "difficulty": "Easy",
-    "slug": "tutorial-on-getting-token-metadata"
-  },
-  {
     "name": "Stablecoins Transfer App on Solana",
     "description": "An application aggregating various methods to send money to friends, focusing on crypto transfers and fiat off-ramping, making peer-to-peer transactions seamless.\n\n**Key Features:**\n- Multiple transfer options including crypto, fiat, and an option to buy crypto first with fiat\n- On-ramp integration for instant crypto-to-fiat conversions\n- QR code and link-based transfers for non-users\n- Split bill functionality with crypto settlement options\n\n",
     "possible_solution": "This app could simplify crypto transfers, accelerating mainstream adoption of cryptocurrencies for peer-to-peer transactions. Monetization could come from transaction fees and premium features for advanced transfer options.\n",
@@ -2190,7 +2062,8 @@
     "categories": "Payments",
     "author": "Harj Taggar & Jesse Pollak ",
     "difficulty": null,
-    "slug": "stablecoins"
+    "slug": "stablecoins",
+    "das_nyc_2026_signal": "DAS NYC 2026: WU CEO on main stage. Citi $4T forecast. Stablecoin share of lending deposits 20%→40%. SEC taxonomy: payment stablecoins are NOT securities. GENIUS Act signed July 2025."
   },
   {
     "name": "Crypto-Powered Virtual Powered Plant",
@@ -2280,7 +2153,7 @@
   {
     "name": "LST Options Vaults on Solana",
     "description": "LSTs like JitoSOL and mSOL are underutilized in Solana DeFi. Users earn passive yield, but there’s no way to amplify returns or hedge risk without unstaking or complex strategies. Meanwhile, options markets on Solana are still shallow and lack real utility-driven demand.\n",
-    "possible_solution": "**LST Options Vaults** let users deposit LSTs into automated covered call or put-selling strategies.\n- Earn **extra yield** from options premiums on top of staking rewards\n- Choose risk levels (strike %, expiry, etc.) via a simple UI\n- LPs get vault shares, and protocols like PsyOptions or Zeta can plug in for execution\n- Helps bootstrap **real demand** for Solana-native options markets\n",
+    "possible_solution": "**LST Options Vaults** let users deposit LSTs into automated covered call or put-selling strategies.\n- Earn **extra yield** from options premiums on top of staking rewards\n- Choose risk levels (strike %, expiry, etc.) via a simple UI\n- LPs get vault shares, and protocols like existing options protocols on Solana can plug in for execution\n- Helps bootstrap **real demand** for Solana-native options markets\n",
     "resources": "### Liquid Staking Protocols\n- **Jito**: <https://www.jito.network/>\n- **Marinade**: <https://www.marinade.finance/>\n### Options Protocols\n- **Zeta Markets**: <https://www.zeta.markets/>\n### Yield & Vault Strategies\n- **Kamino Finance**: <https://kamino.finance/>\n- **Super Stake SOL**: <https://www.superstakesol.com/>\n### Educational Resources\n- **Phantom's Guide to Liquid Staking**: <https://phantom.com/learn/crypto-101/solana-liquid-staking>\n- **Solana Compass**: <https://solanacompass.com/>\n\n",
     "published": "2025-10-14",
     "article_content": "<h2 id='test'><strong id='test2'>Problem to Solve:</strong></h2><p id='test3'>LSTs like JitoSOL and mSOL are underutilized in Solana DeFi. Users earn passive yield, but there’s no way to amplify returns or hedge risk without unstaking or complex strategies. Meanwhile, options markets on Solana are still shallow and lack real utility-driven demand.</p><h2 id='test'><strong id='test2'>Possible Solution:</strong></h2><p id='test3'>LST Options Vaults let users deposit LSTs into automated covered call or put-selling strategies.\n- Earn extra yield from options premiums on top of staking rewards\n- Choose risk levels (strike %, expiry, etc.) via a simple UI\n- LPs get vault shares, and protocols like PsyOptions or Zeta can plug in for execution\n- Helps bootstrap real demand for Solana-native options markets</p>Liquid Staking Protocols\n- Jito: https://www.jito.network/\n- Marinade: https://www.marinade.finance/\nOptions Protocols\n- Zeta Markets: https://www.zeta.markets/\nYield & Vault Strategies\n- Kamino Finance: https://kamino.finance/\n- Super Stake SOL: https://www.superstakesol.com/\nEducational Resources\n- Phantom's Guide to Liquid Staking: https://phantom.com/learn/crypto-101/solana-liquid-staking\n- Solana Compass: https://solanacompass.com/\n",
@@ -2292,7 +2165,8 @@
     "categories": "DeFi, Developer Tooling",
     "author": "Abhirup Banerjee",
     "difficulty": null,
-    "slug": "lst-options-vaults-on-solana"
+    "slug": "lst-options-vaults-on-solana",
+    "das_nyc_2026_signal": "DAS NYC 2026: Post Oct-10 2025 cascade, institutions shifting from linear perps to defined-loss structures (call/put spreads). FalconX and STS Digital both confirmed structural shift. Vaults category grew $0→$20B."
   },
   {
     "name": "Crypto Credit Card",
@@ -2343,41 +2217,8 @@
     "categories": "AI",
     "author": "Yash Agarwal",
     "difficulty": null,
-    "slug": "crypto-powered-economic-co-ordination-networks-for-ai-agents:"
-  },
-  {
-    "name": "RWA Standard using Token Extensions",
-    "description": "The Solana Ecosystem lacks a unified, widely accepted standard for tokenizing RWAs. Just as standards like JPEG and PDF formats standardized files across different devices and facilitated the sharing of content on the internet, a standardized RWA standard can help boost RWAs for Solana. Think of it this way: Just as Metaplex made it easy to create NFTs, a standardized RWA token can simplify the process of creating tokenized RWAs.\n",
-    "possible_solution": "Create a RWA standard leveraging token extensions like:\n1\\. Transfer hooks for checking whether an address is whitelisted or not.\n2\\. Interest-bearing tokens\n3\\. Transfer fees\nAnd more. The token extensions are created with RWAs in mind.\n\nA SaaS tool can be created which enables institutions to deploy RWAs.\n\nMore token extensions can be mixed and matched to allow a higher feature set of tokens.\n",
-    "resources": "1\\. The State of Solana RWAs by Yash Agarwal (2023)\n2\\. A Primer on Solana's Token Extensions: The Superteam Blog\n3\\. Token Extensions Docs\n",
-    "published": "2025-10-14",
-    "article_content": "<h2 id='test'><strong id='test2'>Problem to Solve:</strong></h2><p id='test3'>The Solana Ecosystem lacks a unified, widely accepted standard for tokenizing RWAs. Just as standards like JPEG and PDF formats standardized files across different devices and facilitated the sharing of content on the internet, a standardized RWA standard can help boost RWAs for Solana. Think of it this way: Just as Metaplex made it easy to create NFTs, a standardized RWA token can simplify the process of creating tokenized RWAs.</p><h2 id='test'><strong id='test2'>Possible Solution:</strong></h2><p id='test3'>Create a RWA standard leveraging token extensions like:\n1. Transfer hooks for checking whether an address is whitelisted or not.\n2. Interest-bearing tokens\n3. Transfer fees\nAnd more. The token extensions are created with RWAs in mind.\n\nA SaaS tool can be created which enables institutions to deploy RWAs.\n\nMore token extensions can be mixed and matched to allow a higher feature set of tokens.</p>1. The State of Solana RWAs by Yash Agarwal (2023)\n2. A Primer on Solana's Token Extensions: The Superteam Blog\n3. Token Extensions Docs",
-    "image": null,
-    "approved": "Approved",
-    "author_pfp": [
-      "http://res.cloudinary.com/dgvnuwspr/image/upload/v1692874261/Grants%20Dashboard/recjtMJjM6wKgAbn2-2023-08-24T10:49:45.000Z.png"
-    ],
-    "categories": "DeFi",
-    "author": "Yash Agarwal",
-    "difficulty": "Advanced",
-    "slug": "rwa-standard-using-token-extensions"
-  },
-  {
-    "name": "Payment Widget for all Tokens",
-    "description": "When making payments to a merchant, users may possess USDC, while the merchant exclusively accepts USDT. This discrepancy creates the inconvenience of having to convert these tokens on a swapping platform before ultimately completing the payment for the purchase.\n",
-    "possible_solution": "To address this issue, the Jupiter widget can be seamlessly integrated into the merchant's checkout process. This integration would enable users to directly swap their USDC for the desired USDT or any other preferred token. Consequently, this approach streamlines the payment process, eliminating the need to navigate away from the merchant's page and ensuring smooth token swapping, all powered by Jupiter's technology.\n",
-    "resources": "\\- Jupiter APIs - <https://station.jup.ag/docs/apis>\n\\- TipLink - <https://tiplink.io/products/tiplink-wallet> (project has pivoted)\n",
-    "published": "2025-10-14",
-    "article_content": "<h2 id='test'><strong id='test2'>Problem to Solve:</strong></h2><p id='test3'>When making payments to a merchant, users may possess USDC, while the merchant exclusively accepts USDT. This discrepancy creates the inconvenience of having to convert these tokens on a swapping platform before ultimately completing the payment for the purchase.</p><h2 id='test'><strong id='test2'>Possible Solution:</strong></h2><p id='test3'>To address this issue, the Jupiter widget can be seamlessly integrated into the merchant's checkout process. This integration would enable users to directly swap their USDC for the desired USDT or any other preferred token. Consequently, this approach streamlines the payment process, eliminating the need to navigate away from the merchant's page and ensuring smooth token swapping, all powered by Jupiter's technology.</p>- Jupiter APIs - https://station.jup.ag/docs/apis\n- Tiplink - https://tiplink.io/products/tiplink-wallet",
-    "image": null,
-    "approved": "Approved",
-    "author_pfp": [
-      "http://res.cloudinary.com/dgvnuwspr/image/upload/v1692875852/Grants%20Dashboard/rec1InF65m2NMJn8Y-2023-08-24T11:16:30.000Z.jpg"
-    ],
-    "categories": "Payments",
-    "author": "Jupiter",
-    "difficulty": "Intermediate",
-    "slug": "payment-widget-for-all-tokens"
+    "slug": "crypto-powered-economic-co-ordination-networks-for-ai-agents:",
+    "das_nyc_2026_signal": "DAS NYC 2026: Solana processed 15M agent payments YTD, 65% of x402 volume. Privy/Stripe: 120M wallets, 35% of devs building agentic. Solana Foundation launching own x402 gateway."
   },
   {
     "name": "NFT-Based Digital Art Galleries",
@@ -2411,12 +2252,13 @@
     "categories": "Payments",
     "author": "Yash Agarwal",
     "difficulty": "Advanced",
-    "slug": "flatcoins"
+    "slug": "flatcoins",
+    "das_nyc_2026_signal": "DAS NYC 2026: Non-USD stablecoin infra is a massive gap. Longtail EM currencies (BRL, MXN, INR, NGN) have no liquid onchain versions. $7T/day FX market. WU/MoneyGram building on stablecoin rails."
   },
   {
     "name": "Open-Grants Protocol for Solana",
     "description": "The biggest challenge in the current process of grants and hackathons is, it’s way too CENTRALISED! There are pros and cons to it. The biggest pro is, faster turnaround time and hence, faster decision-making. For instance, Superteam Instagrants are disbursed within just ~48 hours, if approved. Implying, the Solana foundation or any central organization responsible for grants is better suited for shortlisting and judging deserving projects.\n\nHowever, the lack of a decentralized grants program also leads to more closed-source programs, as the projects are not incentivized enough to open-source their programs with very low community participation in them. \n",
-    "possible_solution": "The Open Grants protocol will be similar to Openbook [fork of Project Serum], but for matching grants instead of matching trades. This can be entirely on-chain i.e Solana and will be accompanied by an SDK and a reference open-source frontend implementation for easy integrations.\n\nA few components of the Open Grants architecture:\n\n\\- Frontends/UIs:\n    \\- There can be as many as Frontends possible and they can compete against each other to attract more sponsors, funders, project creators, and so on. \n    \\- They will be independent to decide their own fees, filtering mechanisms, and so on. \n    \\- However, since all of the funds and data are aggregated into a single protocol, the liquidity will be concentrated and will avoid any fragmentation of grants - making it truly composable as well.\n\\- Protocol:\n    \\- Once collected by the frontends, all the metadata and funds of the various stakeholders like Projects, communities, and Sponsors finally get aggregated into the protocol. \n    \\- All the logic and calculations of Quadratic Funding, Funds disbursal, and Milestones can be embedded in the protocol itself. \n    \\- The changes can be governed by the community, which can even be a DAO and for an obvious reason, all this will be open-source.\n\\- Governance:\n    \\- Similar to Gitcoin, a governance token would make sense to decentralize the community into a DAO. \n    \\- However, a token isn’t necessary and it can be very well governed by a set of trusted multi-sigs, who can make decisions and signs on behalf of the community. \n    \\- For instance, few members can be appointed from Solana Foundation or any major community voices can be elected to be part of the multi-sig group.\n\nMore details here: <https://litmosis.substack.com/p/understanding-gitcoin-and-envisioning-for-solana>\n",
+    "possible_solution": "The Open Grants protocol will be similar to OpenBook V2, but for matching grants instead of matching trades. This can be entirely on-chain i.e Solana and will be accompanied by an SDK and a reference open-source frontend implementation for easy integrations.\n\nA few components of the Open Grants architecture:\n\n\\- Frontends/UIs:\n    \\- There can be as many as Frontends possible and they can compete against each other to attract more sponsors, funders, project creators, and so on. \n    \\- They will be independent to decide their own fees, filtering mechanisms, and so on. \n    \\- However, since all of the funds and data are aggregated into a single protocol, the liquidity will be concentrated and will avoid any fragmentation of grants - making it truly composable as well.\n\\- Protocol:\n    \\- Once collected by the frontends, all the metadata and funds of the various stakeholders like Projects, communities, and Sponsors finally get aggregated into the protocol. \n    \\- All the logic and calculations of Quadratic Funding, Funds disbursal, and Milestones can be embedded in the protocol itself. \n    \\- The changes can be governed by the community, which can even be a DAO and for an obvious reason, all this will be open-source.\n\\- Governance:\n    \\- Similar to Gitcoin, a governance token would make sense to decentralize the community into a DAO. \n    \\- However, a token isn’t necessary and it can be very well governed by a set of trusted multi-sigs, who can make decisions and signs on behalf of the community. \n    \\- For instance, few members can be appointed from Solana Foundation or any major community voices can be elected to be part of the multi-sig group.\n\nMore details here: <https://litmosis.substack.com/p/understanding-gitcoin-and-envisioning-for-solana>\n",
     "resources": "\\- Cubik (Quadratic Funding Platform on Solana) by Irffan and Dhruvraj: <https://www.cubik.so/>\n\\- Stockpile (crowdfunding platform on Solana) by 0xSavant - <https://www.stockpile.pro/>\n\\- Read the entire idea in this essay, written by us to get few concrete models around it - <https://open.substack.com/pub/litmosis/p/understanding-gitcoin-and-envisioning-for-solana>\n",
     "published": "2025-10-14",
     "article_content": "<h2 id='test'><strong id='test2'>Problem to Solve:</strong></h2><p id='test3'>The biggest challenge in the current process of grants and hackathons is, it’s way too CENTRALISED! There are pros and cons to it. The biggest pro is, faster turnaround time and hence, faster decision-making. For instance, Superteam Instagrants are disbursed within just ~48 hours, if approved. Implying, the Solana foundation or any central organization responsible for grants is better suited for shortlisting and judging deserving projects.\n\nHowever, the lack of a decentralized grants program also leads to more closed-source programs, as the projects are not incentivized enough to open-source their programs with very low community participation in them. </p><h2 id='test'><strong id='test2'>Possible Solution:</strong></h2><p id='test3'>The Open Grants protocol will be similar to Openbook [fork of Project Serum], but for matching grants instead of matching trades. This can be entirely on-chain i.e Solana and will be accompanied by an SDK and a reference open-source frontend implementation for easy integrations.\n\nA few components of the Open Grants architecture:\n\n- Frontends/UIs:\n    - There can be as many as Frontends possible and they can compete against each other to attract more sponsors, funders, project creators, and so on. \n    - They will be independent to decide their own fees, filtering mechanisms, and so on. \n    - However, since all of the funds and data are aggregated into a single protocol, the liquidity will be concentrated and will avoid any fragmentation of grants - making it truly composable as well.\n- Protocol:\n    - Once collected by the frontends, all the metadata and funds of the various stakeholders like Projects, communities, and Sponsors finally get aggregated into the protocol. \n    - All the logic and calculations of Quadratic Funding, Funds disbursal, and Milestones can be embedded in the protocol itself. \n    - The changes can be governed by the community, which can even be a DAO and for an obvious reason, all this will be open-source.\n- Governance:\n    - Similar to Gitcoin, a governance token would make sense to decentralize the community into a DAO. \n    - However, a token isn’t necessary and it can be very well governed by a set of trusted multi-sigs, who can make decisions and signs on behalf of the community. \n    - For instance, few members can be appointed from Solana Foundation or any major community voices can be elected to be part of the multi-sig group.\n\nMore details here: https://litmosis.substack.com/p/understanding-gitcoin-and-envisioning-for-solana</p>- Cubik (Quadratic Funding Platform on Solana) by Irffan and Dhruvraj: https://www.cubik.so/\n- Stockpile (crowdfunding platform on Solana) by 0xSavant - https://www.stockpile.pro/\n- Read the entire idea in this essay, written by us to get few concrete models around it - https://open.substack.com/pub/litmosis/p/understanding-gitcoin-and-envisioning-for-solana",
@@ -2774,7 +2616,7 @@
     "name": "Single token strategy vaults",
     "description": "DeFi Vault is an asset management service that automatically optimizes returns on your contributed funds. Vaults aggregate user funds into pools, thereby reducing overall transaction costs and optimizing returns for each pool participant. However, Solana currently lacks active single-token strategy vaults.\n",
     "possible_solution": "Introduce a Single Token Strategy Vault, built on top of Raydium liquidity pools. This structured vault is capable of hosting multiple yield strategies under the hood. Users can deposit a single token asset and gain exposure to all the strategies within.\n",
-    "resources": "\\- Raydium Docs - <https://docs.raydium.io/raydium/>\n\\- Take inspiration from Kamino Finance - <https://kamino.finance/> or Tulip - <https://tulip.garden/>\n",
+    "resources": "\\- Raydium Docs - <https://docs.raydium.io/raydium/>\n\\- Take inspiration from Kamino Finance - <https://kamino.finance/> \n",
     "published": "2025-10-14",
     "article_content": "<h2 id='test'><strong id='test2'>Problem to Solve:</strong></h2><p id='test3'>DeFi Vault is an asset management service that automatically optimizes returns on your contributed funds. Vaults aggregate user funds into pools, thereby reducing overall transaction costs and optimizing returns for each pool participant. However, Solana currently lacks active single-token strategy vaults.</p><h2 id='test'><strong id='test2'>Possible Solution:</strong></h2><p id='test3'>Introduce a Single Token Strategy Vault, built on top of Raydium liquidity pools. This structured vault is capable of hosting multiple yield strategies under the hood. Users can deposit a single token asset and gain exposure to all the strategies within.</p>- Raydium Docs - https://docs.raydium.io/raydium/\n- Take inspiration from Kamino Finance - https://kamino.finance/ or Tulip - https://tulip.garden/",
     "image": null,
@@ -2786,23 +2628,6 @@
     "author": "Raydium",
     "difficulty": "Advanced",
     "slug": "single-token-strategy-vaults"
-  },
-  {
-    "name": "Market-Making Scripts for OpenBook",
-    "description": "Market Making is critical for infusing liquidity in orderbooks, increasing efficiency for any exchange. After the demise of FTX, OpenBook (Fork of Project Serum) has been facing a liquidity crunch due to a lack of market makers. Alameda was one of the most active market makers.\nWithout active market making, spreads won’t be tight, leading to inefficient prices for all market participants.\n",
-    "possible_solution": "Provide liquidity on OpenBook by placing bids/asks on opposite sides of the book and earning a spread.\nThe SDKs can be utilized to pay a 2 bps fee for taker orders and pay 0 bps to make, i.e., market-making executions will be cost-free.\nA few features of the bot can be:\n1\\. It should be easily configurable by anyone, plug and play.\n2\\. It should place both ask and bid orders around some mid-price.\n3\\. The spread should be configurable.\n4\\. It should automatically rebalance and be able to maintain 24/7 liquidity\n",
-    "resources": "\\- OpenBook Docs - <https://github.com/openbook-dex/openbook-ts>\n\\- Market Making Bot by Mango Markets - <https://docs.mango.markets/archived-v3/market-making-bot-python> (archived)\n",
-    "published": "2025-10-14",
-    "article_content": "<h2 id='test'><strong id='test2'>Problem to Solve:</strong></h2><p id='test3'>Market Making is critical for infusing liquidity in orderbooks, increasing efficiency for any exchange. After the demise of FTX, OpenBook (Fork of Project Serum) has been facing a liquidity crunch due to a lack of market makers. Alameda was one of the most active market makers.\nWithout active market making, spreads won’t be tight, leading to inefficient prices for all market participants.</p><h2 id='test'><strong id='test2'>Possible Solution:</strong></h2><p id='test3'>Provide liquidity on OpenBook by placing bids/asks on opposite sides of the book and earning a spread.\nThe SDKs can be utilized to pay a 2 bps fee for taker orders and pay 0 bps to make, i.e., market-making executions will be cost-free.\nA few features of the bot can be:\n1. It should be easily configurable by anyone, plug and play.\n2. It should place both ask and bid orders around some mid-price.\n3. The spread should be configurable.\n4. It should automatically rebalance and be able to maintain 24/7 liquidity</p>- OpenBook Docs - https://github.com/openbook-dex/openbook-ts\n- Market Making Bot by Mango Markets - https://docs.mango.markets/archived-v3/market-making-bot-python (archived)",
-    "image": null,
-    "approved": "Approved",
-    "author_pfp": [
-      "http://res.cloudinary.com/dgvnuwspr/image/upload/v1692875140/Grants%20Dashboard/rec7zT8a5I7oAnXs2-2023-08-24T11:04:00.000Z.png"
-    ],
-    "categories": "DeFi",
-    "author": "Openbook",
-    "difficulty": "Advanced",
-    "slug": "market-making-scripts-for-openbook"
   },
   {
     "name": "Automatically Offset Transactions",
@@ -3114,7 +2939,7 @@
     "name": "AMMs for Sports Betting Platforms",
     "description": "Central limit order books are a great platform for high liquidity binary outcome wagers, yet they are limited in their ability to provide accumulator or parlay bets - an integral part of any sports betting platform. \n",
     "possible_solution": "An automated market maker protocol which allows for long-tail markets and parlays, all while maintaining high liquidity to ensure users can get their bet matched timely, and the pricing reflects the true odds of the outcome. This could be used in a variety of manners including: \n\nBringing accumulators/parlays to on-chain betting exchanges has long been considered the holy grail of web3 betting platforms. The margin on a parlay/accumulator can get up to 40%, the protocol which solves this problem could take in significant revenue.  (Note - exposure could be hedged by individual underlying markets on Monaco)\n\nAMM’s could also be used to augment liquidity on regular markets. For example, if an AMM was built on top of a Monaco match winner CLOB market for Liverpool vs Real Madrid, users could theoretically have a much deeper and more efficient market to trade on. \n\nWhat does the smart contract and economic incentive design look like for these type of solutions? \n",
-    "resources": "\\- Raydium has built an AMM on top of Serum/Openbook for crypto token markets, something similar could potentially be built for sports betting - <https://docs.raydium.io>\n",
+    "resources": "\\- Raydium has built an AMM on top of OpenBook for crypto token markets, something similar could potentially be built for sports betting - <https://docs.raydium.io>\n",
     "published": "2025-10-14",
     "article_content": "<h2 id='test'><strong id='test2'>Problem to Solve:</strong></h2><p id='test3'>Central limit order books are a great platform for high liquidity binary outcome wagers, yet they are limited in their ability to provide accumulator or parlay bets - an integral part of any sports betting platform. </p><h2 id='test'><strong id='test2'>Possible Solution:</strong></h2><p id='test3'>An automated market maker protocol which allows for long-tail markets and parlays, all while maintaining high liquidity to ensure users can get their bet matched timely, and the pricing reflects the true odds of the outcome. This could be used in a variety of manners including: \n\nBringing accumulators/parlays to on-chain betting exchanges has long been considered the holy grail of web3 betting platforms. The margin on a parlay/accumulator can get up to 40%, the protocol which solves this problem could take in significant revenue.  (Note - exposure could be hedged by individual underlying markets on Monaco)\n\nAMM’s could also be used to augment liquidity on regular markets. For example, if an AMM was built on top of a Monaco match winner CLOB market for Liverpool vs Real Madrid, users could theoretically have a much deeper and more efficient market to trade on. \n\nWhat does the smart contract and economic incentive design look like for these type of solutions? </p>- Raydium has built an AMM on top of Serum/Openbook for crypto token markets, something similar could potentially be built for sports betting - https://docs.raydium.io",
     "image": null,
@@ -3193,7 +3018,8 @@
     "categories": "DeFi",
     "author": "Max Monciardini",
     "difficulty": null,
-    "slug": "undercollateralized-lending"
+    "slug": "undercollateralized-lending",
+    "das_nyc_2026_signal": "DAS NYC 2026: Morpho powering institutional lending via Coinbase/Kraken. DeFi Prime Brokerage concept validated — smart-contract enforced constraints solve Archegos problem. Private credit is 2nd fastest RWA."
   },
   {
     "name": "Ideas to Build on Jito StakeNet",
@@ -3346,7 +3172,8 @@
     "categories": "Infrastructure, Payments",
     "author": "Vibhu",
     "difficulty": null,
-    "slug": "offchain-underwriting,-onchain-markets"
+    "slug": "offchain-underwriting,-onchain-markets",
+    "das_nyc_2026_signal": "DAS NYC 2026: Multicoin thesis — private credit maps well to onchain because debt markets are fragmented and bilateral (no centralized infra to fight). Sky Spark Vaults and Plural Energy cited."
   },
   {
     "name": "Recruitment with Skin in the Game",
@@ -3553,25 +3380,8 @@
     "slug": "decentralized-identity-(dids)-on-solana"
   },
   {
-    "name": "Community-based Learning Apps",
-    "description": "Duo Lingo was able to blitz scale as a free learning app because thousands of volunteers contributed to creating its coursework. \n\nAnd while there is a thriving Duo Lingo community on Reddit, Discord, Twitch, etc multiple past attempts at incorporating community into the product have failed. \n",
-    "possible_solution": "This is a problem because language is inherently social. If there’s one thing you want to learn from another human - it’s how to speak with them. \n\nA crypto-powered learning app would include: \n\\- an in-app wallet\n\\- micropayments via a native token / USDC\n\\- an incentives mechanism: bounties, quests, rewards for helping other users, etc.\n\\- simple on and off-ramps\n",
-    "resources": "\\- Full PRD with Product Mockups - <https://blog.superteam.fun/p/duo-lingo-internal-economy>\n\\- Solana Mobile Stack - <https://solanamobile.com/developers> \n\\- Compression Docs - <https://docs.metaplex.com/programs/compression/> \n",
-    "published": "2025-10-14",
-    "article_content": "<h2 id='test'><strong id='test2'>Problem to Solve:</strong></h2><p id='test3'>Duo Lingo was able to blitz scale as a free learning app because thousands of volunteers contributed to creating its coursework. \n\nAnd while there is a thriving Duo Lingo community on Reddit, Discord, Twitch, etc multiple past attempts at incorporating community into the product have failed. </p><h2 id='test'><strong id='test2'>Possible Solution:</strong></h2><p id='test3'>This is a problem because language is inherently social. If there’s one thing you want to learn from another human - it’s how to speak with them. \n\nA crypto-powered learning app would include: \n- an in-app wallet\n- micropayments via a native token / USDC\n- an incentives mechanism: bounties, quests, rewards for helping other users, etc.\n- simple on and off-ramps</p>- Full PRD with Product Mockups - https://blog.superteam.fun/p/duo-lingo-internal-economy\n- Solana Mobile Stack - https://solanamobile.com/developers \n- Compression Docs - https://docs.metaplex.com/programs/compression/ ",
-    "image": null,
-    "approved": "Approved",
-    "author_pfp": [
-      "http://res.cloudinary.com/dgvnuwspr/image/upload/v1692874264/Grants%20Dashboard/recwcTzBMt38TwQHP-2023-08-24T10:49:43.000Z.jpg"
-    ],
-    "categories": "Mobile, Consumer dApps",
-    "author": "Aditya Shetty",
-    "difficulty": "Intermediate",
-    "slug": "community-based-learning-apps"
-  },
-  {
     "name": "Streamflow PDF Generator",
-    "description": "Streamflow supports these wallets - Phantom, Sollet, Solflare and Slope. If a recipient is using a different non-custodial wallet or using a centralized exchange wallet address to receive the payments, they can’t see the stream details on request. They can only get the streaming details if the sender has added their email address while setting up the stream. The recipient gets notified when the stream is set-up or the funds are auto-withdrawn to their SPL wallet.\n\nin case the sender forgets to add email, the employee would not receive any notification(s).\n",
+    "description": "Streamflow supports these wallets - Phantom, Solflare, and Backpack. If a recipient is using a different non-custodial wallet or using a centralized exchange wallet address to receive the payments, they can’t see the stream details on request. They can only get the streaming details if the sender has added their email address while setting up the stream. The recipient gets notified when the stream is set-up or the funds are auto-withdrawn to their SPL wallet.\n\nin case the sender forgets to add email, the employee would not receive any notification(s).\n",
     "possible_solution": "An on-request tool that generates a PDF document with all the details about the stream created with Streamflow for both senders & receivers. Senders can create a PDF with stream details to be shared with the recipients as soon as the stream is created. Recipients can also check the stream details as soon as it is created.\n",
     "resources": "\\- Streamflow JS SDK - <https://github.com/streamflow-finance/js-sdk>\n\\- Streamflow Docs - <https://docs.streamflow.finance/integration/sdk>\n",
     "published": "2025-10-14",
@@ -3585,23 +3395,6 @@
     "author": "Streamflow",
     "difficulty": "Easy",
     "slug": "streamflow-pdf-generator"
-  },
-  {
-    "name": "One-Click Telegram Bot for Solana Token Purchases",
-    "description": "This bot streamlines the process of buying any Solana token through Telegram, integrating on-ramp solution and a DEX aggregator, making crypto investments accessible and convenient.\nKey Features:\n\\- Seamless fiat-to-SOL on-ramping \n\\- Integration with major Solana DEX aggregators for token swaps\n\\- DCA (Dollar-Cost Averaging) functionality\n\\- Price movement alerts with buy/sell confirmations\n\\- User-friendly Telegram interface for all operations\n",
-    "possible_solution": "Potential Impact and Monetization:\nThis bot could lower the barrier to entry for new crypto users, facilitating easier investments in Solana tokens. Monetization could come from transaction fees on swaps or premium features for advanced trading options.\n",
-    "resources": "1\\. Mercuryo Developer Docs - <https://oor-redirect.redoc.ly/>\n2\\. Jupiter APIs - <https://station.jup.ag/docs/apis>\n",
-    "published": "2025-10-14",
-    "article_content": "<h2 id='test'><strong id='test2'>Problem to Solve:</strong></h2><p id='test3'>This bot streamlines the process of buying any Solana token through Telegram, integrating on-ramp solution and a DEX aggregator, making crypto investments accessible and convenient.\nKey Features:\n- Seamless fiat-to-SOL on-ramping \n- Integration with major Solana DEX aggregators for token swaps\n- DCA (Dollar-Cost Averaging) functionality\n- Price movement alerts with buy/sell confirmations\n- User-friendly Telegram interface for all operations</p><h2 id='test'><strong id='test2'>Possible Solution:</strong></h2><p id='test3'>Potential Impact and Monetization:\nThis bot could lower the barrier to entry for new crypto users, facilitating easier investments in Solana tokens. Monetization could come from transaction fees on swaps or premium features for advanced trading options.</p>1. Mercuryo Developer Docs - https://oor-redirect.redoc.ly/\n2. Jupiter APIs - https://station.jup.ag/docs/apis",
-    "image": null,
-    "approved": "Approved",
-    "author_pfp": [
-      "http://res.cloudinary.com/dgvnuwspr/image/upload/v1725870137/Grants%20Dashboard/recE28KgvxaCDjJcu-2024-09-09T08:20:18.000Z.jpg"
-    ],
-    "categories": "Payments, Consumer dApps",
-    "author": "Mercuryo",
-    "difficulty": "Easy",
-    "slug": "one-click-telegram-bot-for-solana-token-purchases"
   },
   {
     "name": "Accept any SPL token using Jupiter",
@@ -3771,7 +3564,8 @@
     "categories": "DeFi",
     "author": "Yash Agarwal",
     "difficulty": "Advanced",
-    "slug": "corporate-bond-market-on-solana"
+    "slug": "corporate-bond-market-on-solana",
+    "das_nyc_2026_signal": "DAS NYC 2026: Building the Onchain Fixed Income Ecosystem was a dedicated session. Tokenized private credit is 2nd fastest RWA category. Model: offchain collateral, onchain stablecoin loans."
   },
   {
     "name": "Contract Method Name Registry",
@@ -3927,23 +3721,6 @@
     "slug": "wallet-integration-to-meteora-dynamic-vaults"
   },
   {
-    "name": "Fiat to any SPL token Widget",
-    "description": "Most of the on-ramp/off-ramp (fiat <> crypto) players have only three major SPL tokens listed: USDC, USDT, and SOL, as these are the most traded and liquid assets on Solana. However, this prevents the exposure of other Solana tokens to first-time users that are not listed on these on/off-ramps.\n",
-    "possible_solution": "\\- Develop a widget similar to the Jup.ag widget.\n\\- Users should have the option to select an on/off-ramp provider, such as Moonpay or Ramp, along with any token listed by Jupiter.\n\\- Upon clicking the \"swap\" button, the selected token should be received in the user's wallet.\n\\- In the backend, fiat should be converted to the most liquid asset, such as USDC, which can then be automatically converted to the chosen token using Jupiter APIs.\n\\- To achieve comprehensive on/off-ramp coverage, it's advisable to utilize an on/off-ramp aggregator like Worldline or Onramper.\n",
-    "resources": "\\- Jupiter APIs - <https://station.jup.ag/docs/apis>\n",
-    "published": "2025-10-14",
-    "article_content": "<h2 id='test'><strong id='test2'>Problem to Solve:</strong></h2><p id='test3'>Most of the on-ramp/off-ramp (fiat <> crypto) players have only three major SPL tokens listed: USDC, USDT, and SOL, as these are the most traded and liquid assets on Solana. However, this prevents the exposure of other Solana tokens to first-time users that are not listed on these on/off-ramps.</p><h2 id='test'><strong id='test2'>Possible Solution:</strong></h2><p id='test3'>- Develop a widget similar to the Jup.ag widget.\n- Users should have the option to select an on/off-ramp provider, such as Moonpay or Ramp, along with any token listed by Jupiter.\n- Upon clicking the \"swap\" button, the selected token should be received in the user's wallet.\n- In the backend, fiat should be converted to the most liquid asset, such as USDC, which can then be automatically converted to the chosen token using Jupiter APIs.\n- To achieve comprehensive on/off-ramp coverage, it's advisable to utilize an on/off-ramp aggregator like Worldline or Onramper.</p>- Jupiter APIs - https://station.jup.ag/docs/apis",
-    "image": null,
-    "approved": "Approved",
-    "author_pfp": [
-      "http://res.cloudinary.com/dgvnuwspr/image/upload/v1692875852/Grants%20Dashboard/rec1InF65m2NMJn8Y-2023-08-24T11:16:30.000Z.jpg"
-    ],
-    "categories": "Payments",
-    "author": "Jupiter",
-    "difficulty": "Advanced",
-    "slug": "fiat-to-any-spl-token-widget"
-  },
-  {
     "name": "Universal Caller ID",
     "description": "We need a better system to manage unwanted and spam calls.\n\nTruecaller is a widely used app that provides call identification, spam call blocking and an organized inbox.\n",
     "possible_solution": "A universal caller ID that rewards contributors using DePIN concepts:\n1\\. Contributors earn tokens for providing access to their contacts, labelling spam, verifying IDs, etc.\n2\\. Users and businesses pay in tokens for caller ID, verification, login and other services.\n3\\. Developers can build apps & tooling on the contact network.\n",
@@ -3976,23 +3753,6 @@
     "author": "Solana Foundation",
     "difficulty": "Advanced",
     "slug": "private-onchain-identity"
-  },
-  {
-    "name": "Games using Token Extensions",
-    "description": "Games have incredible use cases for Token Extensions as all games want flexibility in representing different gaming assets while having composability with DEXs for higher liquidity.\n",
-    "possible_solution": "For instance, Blessed Burgers — A Solana-based Squid Game, powered by Token Extensions-based protocol called epPlex, which are ephemeral NFTs, programmed to self-destruct. It makes use of TokenMetadata Extension (On-chain voting), TransferHook Extension, Permanent Delegate Extension: Purge & burn NFT, and CloseAuthority (Closing Mint accounts).\n\nFluxbeam is developing another funny on-chain strategy game, called Chronokingdoms using Token Extensions.\n\nMore token extensions can be mixed and matched to allow a higher feature set to tokens.\n",
-    "resources": "1\\. A Primer on Solana's Token Extensions: The Superteam Blog\n2\\. Token Extensions Docs\n",
-    "published": "2025-10-14",
-    "article_content": "<h2 id='test'><strong id='test2'>Problem to Solve:</strong></h2><p id='test3'>Games have incredible use cases for Token Extensions as all games want flexibility in representing different gaming assets while having composability with DEXs for higher liquidity.</p><h2 id='test'><strong id='test2'>Possible Solution:</strong></h2><p id='test3'>For instance, Blessed Burgers — A Solana-based Squid Game, powered by Token Extensions-based protocol called epPlex, which are ephemeral NFTs, programmed to self-destruct. It makes use of TokenMetadata Extension (On-chain voting), TransferHook Extension, Permanent Delegate Extension: Purge & burn NFT, and CloseAuthority (Closing Mint accounts).\n\nFluxbeam is developing another funny on-chain strategy game, called Chronokingdoms using Token Extensions.\n\nMore token extensions can be mixed and matched to allow a higher feature set to tokens.</p>1. A Primer on Solana's Token Extensions: The Superteam Blog\n2. Token Extensions Docs",
-    "image": null,
-    "approved": "Approved",
-    "author_pfp": [
-      "http://res.cloudinary.com/dgvnuwspr/image/upload/v1692874261/Grants%20Dashboard/recjtMJjM6wKgAbn2-2023-08-24T10:49:45.000Z.png"
-    ],
-    "categories": "Gaming",
-    "author": "Yash Agarwal",
-    "difficulty": "Easy",
-    "slug": "games-using-token-extensions"
   },
   {
     "name": "MEV-protected Swap Aggregator",
@@ -4111,7 +3871,8 @@
     "categories": "DeFi",
     "author": "AllianceDAO",
     "difficulty": "Advanced",
-    "slug": "rwa-collateral-lending"
+    "slug": "rwa-collateral-lending",
+    "das_nyc_2026_signal": "DAS NYC 2026: Collateral use case > trading for RWAs (Robert Leshner, Superstate). USB and USCC used as collateral on Aave Horizon. Real institutional demand confirmed."
   },
   {
     "name": "Composable NFT Loyalty",
@@ -4162,7 +3923,8 @@
     "categories": "DeFi",
     "author": "ONDC India",
     "difficulty": "Easy",
-    "slug": "tokenizing-precious-metals"
+    "slug": "tokenizing-precious-metals",
+    "das_nyc_2026_signal": "DAS NYC 2026: Commodity perps finding PMF — HL silver spreads tighter than CME (2.4bps vs 3bps). Pax Gold and XAUt growing. Precious metals suit wrapped model; consumable commodities skew synthetic."
   },
   {
     "name": "Apps & Agents",
