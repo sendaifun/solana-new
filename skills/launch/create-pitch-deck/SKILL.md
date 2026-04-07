@@ -59,34 +59,100 @@ Generate a compelling, investor-ready pitch deck using proven frameworks from Se
 
 This skill doesn't just generate slides — it coaches you through building a narrative that lands.
 
+## Non-Negotiables (Read First)
+
+- **Never skip the interview.** Don't auto-generate from context files alone. Every pitch needs a human conversation to find the real story.
+- **Stay blunt.** If their "problem" is vague, push back. If their "why now" is weak, say so. If they have no traction, don't hide it — help them frame what they DO have.
+- **Problem first, always.** No one cares about Solana until they care about the problem. (Sequoia rule #1)
+- **One idea per slide.** If you need two slides, use two slides. (YC rule)
+- **Real numbers only.** "Growing fast" is not a metric. Mark unknowns as "TBD".
+- **Crypto necessity must be proven.** "Why blockchain?" must have a concrete answer. If removing the blockchain doesn't break the product, the pitch has a fatal flaw — say so.
+- **The ask must be specific.** Amount + instrument + use + timeline + milestone. "We're raising" is not an ask.
+- **Always generate the HTML artifact.** Using the design system from [references/deck-design-system.md](references/deck-design-system.md) and slide templates from [references/slide-templates.md](references/slide-templates.md).
+- **3 questions max per message.** Conversational rounds, not a questionnaire dump.
+
 ## Workflow
 
-### Phase 1: Context Gathering
+### Phase 1: Context Gathering (Silent)
 
-1. Check for `.superstack/idea-context.md` and `.superstack/build-context.md`. Use available context to pre-populate.
-2. If no context, run the **Deep Interview** (see below).
-3. Check for output from `competitive-landscape` skill (competition data) and `defillama-research` skill (market data). Use if available.
+Before asking anything, read what exists:
+- `.superstack/idea-context.md` — Product concept, audience, value prop
+- `.superstack/build-context.md` — Tech stack, features, deployment status
+- Output from `competitive-landscape` skill, `defillama-research` skill if available
+
+Also auto-detect project assets:
+```bash
+# Screenshots, logos, product images
+find . -maxdepth 3 -type f \( -name "*.png" -o -name "*.jpg" -o -name "*.svg" \) ! -path "*/node_modules/*" ! -path "*/.git/*" 2>/dev/null | head -15
+# Project name/description
+cat package.json 2>/dev/null | grep -E '"name"|"description"' | head -5
+```
+
+If you find useful context, mention it during the interview: "I see from your idea-context that you're building X for Y — let's start from there."
 
 ### Phase 2: Deep Interview
 
-Don't just ask "what did you build?" — extract the narrative. Ask these in sequence, adapting based on answers:
+This is a conversation, not a form. Start with anchor questions, pull deeper based on answers. Do NOT move to deck generation until you can clearly articulate: the problem, the solution, the proof, the audience, and the ask.
 
-**Round 1 — The Story** (ask all at once):
-1. What's the one sentence that explains what you do to a stranger at a bar?
-2. What personal experience led you to this problem? (Founder-problem fit story)
-3. What's the most surprising thing you've learned from users so far?
+**Round 1 — The Story (ask all three together):**
 
-**Round 2 — The Evidence** (ask based on Round 1):
-4. What's your single strongest traction metric? (Users, TVL, transactions, revenue, waitlist)
-5. What changed in the last 12 months that makes this possible NOW? (The "Why Now" catalyst)
-6. If you removed the blockchain, would the product still work? Why or why not?
+1. **"Explain what you do to me like I'm someone you met at a bar — no jargon."**
+   *Why:* Forces plain language. If they can't say it simply, they don't understand it yet (YC principle). The bar test is the first line of the title slide.
 
-**Round 3 — The Ask** (ask based on Round 2):
-7. Who is your audience? (Hackathon judges / VCs / Grant committee / Accelerator / Partners)
-8. What specific outcome do you want from this pitch? (Funding amount, partnership, acceptance, prize)
-9. What's the hardest question you're afraid someone will ask?
+2. **"What personal experience made you angry enough to build this?"**
+   *Why:* Founder-problem fit is the #1 signal VCs look for at pre-seed. (a16z: "We back founders who have lived the problem.") If they didn't live it, ask "then who told you about this problem, and why did you listen?"
 
-Use their answers to select the right narrative framework and audience template.
+3. **"What's the most surprising thing a user has told you?"**
+   *Why:* Reveals customer discovery depth. If they haven't talked to users, that's a red flag — but a fixable one. Push: "Have you talked to potential users? What did they say?"
+
+**Round 2 — The Evidence (adapt based on Round 1):**
+
+4. **"What's your single strongest proof that this works?"**
+   *Why:* Forces prioritization. Could be: users (DAU), money (revenue/TVL), speed (testnet metrics), demand (waitlist), or conviction (LOIs/pilots).
+   *Follow-up if weak:* "If you have nothing yet, what's the cheapest experiment that would prove demand in 2 weeks?"
+
+5. **"What changed in the last 12 months that makes this possible NOW?"**
+   *Why:* Sequoia's most overlooked slide. "Why Now" separates ideas from opportunities. Common catalysts: new regulation (MiCA), tech breakthrough (state compression), market shift (institutional on-ramps), behavior change (mobile-first wallets).
+   *Push back if generic:* "'Crypto is growing' is not a why-now. What specific event or change created this window?"
+
+6. **"If I ripped out the blockchain from your product, what breaks?"**
+   *Why:* The blockchain necessity test. If the answer is "nothing" — the pitch has a fatal flaw. Help them find the real crypto angle or be honest that it's weak.
+   *Good answers:* "Composability breaks — other protocols can't build on us." / "Permissionless access breaks — no bank account needed." / "Trustless settlement breaks — agents can pay each other without intermediaries."
+
+**Round 3 — The Audience & Ask (ask based on Round 2):**
+
+7. **"Who exactly will you be presenting this to?"**
+   *Why:* Everything changes based on audience. Push for specificity:
+   - Hackathon judges → Show working demo, innovation, completeness
+   - VCs → TAM/SAM, revenue model, team, defensibility
+   - Grant committees → Ecosystem impact, open-source, Solana-specific value
+   - Accelerators → Execution speed, coachability, early signals
+   - Strategic partners → Integration value, mutual benefit, user overlap
+
+8. **"What's the specific outcome you want? Be precise."**
+   *Why:* "Raise money" is not specific. Push for: "$500K SAFE at $5M cap to hire 2 engineers and reach 1K DAU in 6 months." OR: "Win the DeFi track at Colosseum Radar."
+
+9. **"What's the question you're most afraid someone will ask?"**
+   *Why:* This reveals the biggest weakness. If they say "I don't know" — probe: "Is it about traction? Team size? Why crypto? Competition?" The answer shapes the objection prep.
+
+**Round 4 — Taste & Positioning (ask if needed):**
+
+10. **"Have you seen a pitch or deck you loved? Any industry."**
+    *Why:* Reveals their quality bar and communication style. If they name something, use it as a reference. If not, offer: "Clean and minimal like Airbnb's 10-slider? Data-heavy like Coinbase's seed deck? Story-driven like Buffer?"
+
+11. **"Do you have brand colors? If not, what's the vibe — corporate and trustworthy, or bold and consumer?"**
+    *Why:* NEVER default to purple or AI-ish gradients. The palette must come from the user's brand or be intentionally chosen. See [references/deck-design-system.md](references/deck-design-system.md) for recommended palettes (Navy+White for DeFi, Teal+Ivory for consumer, Black+White for premium). Ask, don't guess.
+
+12. **"Who are the 2-3 competitors someone will mention? What's your honest take on them?"**
+    *Why:* Saying "no competition" kills credibility. Competitors include: direct rivals, indirect alternatives, and "doing nothing." (Peter Thiel: the biggest competitor is always the status quo.)
+
+### Interview Rules
+
+- **Adapt, don't script.** If context files answer a question, skip it. If an answer is rich, dig deeper instead of moving on.
+- **Challenge weak answers.** "We're building a DEX" → "Why would anyone use YOUR DEX instead of Jupiter?" Be direct.
+- **No false praise.** If their traction is weak, help them frame what they have honestly. Don't invent momentum.
+- **Pull for specifics.** "Users like it" → "How many users? What's retention? What do they actually say?"
+- **The interview succeeds when you can fill every slide with conviction.** If you can't articulate their "why now" or their "ask" — keep asking until you can.
 
 ### Phase 3: Select Narrative Framework
 
@@ -128,23 +194,33 @@ Show the scorecard to the user with actionable suggestions for any 🟡 or 🔴 
 
 ### Phase 6: Generate HTML Artifact
 
-Write a polished HTML pitch deck to `pitch-deck.html` in the project root. The HTML must:
+Write a polished HTML pitch deck to `pitch-deck-YYYYMMDD-HHMMSS.html` in the project root.
 
-- Use a dark theme with Solana brand colors (#9945FF purple, #14F195 green, #000000 black)
-- Include slide navigation (arrow keys + click)
-- Have a presenter notes view (press 'N' to toggle)
-- Use clean typography (Inter or system fonts)
-- Include subtle animations (fade-in on slide transition)
-- Be self-contained (no external dependencies)
-- Include a print-friendly mode for PDF export
-- Each slide should have: title, content, and hidden speaker notes
+**How to build the HTML:**
 
-**Design principles:**
+1. **Start with the shell** from [references/deck-design-system.md](references/deck-design-system.md) — this gives you the complete CSS design system (colors, typography, layout, navigation, animations, print support) and the JavaScript for slide navigation + presenter notes.
+
+2. **Pick slides** from [references/slide-templates.md](references/slide-templates.md) based on audience:
+   - Hackathon: Title → Problem → Solution → Demo → Why Crypto → Traction → Ask → Contact (8 slides)
+   - VC: All 13 slides + optional Tokenomics/Roadmap
+   - Grant: Title → Problem → Solution → Why Solana → Demo → Traction → Ecosystem Impact → Ask → Contact
+   - Accelerator: Title → Problem → Solution → Demo → Traction → Team → Ask → Contact
+
+3. **Fill every `{{PLACEHOLDER}}`** with content from the interview. Every piece of text comes from what the user told you — never generate generic filler.
+
+4. **Customize the brand palette** — if the user has brand colors, update the CSS variables in `:root`. Otherwise use the Solana defaults.
+
+5. **Add presenter notes** to every slide (hidden by default, press N to show).
+
+**The templates are a design system, not a fixed layout.** Each user gets a unique deck — different slides, different content, different narrative — but all built on the same professional visual foundation. Think of it like a brand kit: consistent quality, infinite variation.
+
+**Design rules (enforced):**
 - One idea per slide (YC rule)
 - 30pt minimum font equivalent (Kawasaki rule)
 - Max 6 words per bullet, max 6 bullets per slide
-- Visuals > text. Use comparison tables, before/after, metric callouts
+- Visuals > text. Use metric cards, comparison tables, progress bars, timelines — not paragraphs
 - First slide must hook in under 5 seconds
+- Whitespace is confidence — don't fill every pixel
 
 ### Phase 7: Objection Prep
 
@@ -159,28 +235,22 @@ For each objection, provide a 2-sentence response framework.
 
 If `.superstack/idea-context.md` or `.superstack/build-context.md` exist, use them to enrich the deck. If they don't exist, **proceed immediately** — interview the user about their project. Do NOT redirect to other commands.
 
-## Non-Negotiables
-
-- **Problem first, always.** No one cares about Solana until they care about the problem. (Sequoia rule #1)
-- **One idea per slide.** If you need two slides, use two slides. (YC design rule)
-- **Real numbers only.** "Growing fast" is not a metric. Mark unknowns as "TBD".
-- **Crypto necessity must be proven.** "Why blockchain?" must have a concrete answer on a dedicated slide.
-- **The ask must be specific.** Amount + use + timeline. "We're raising" is not an ask. (Kawasaki rule)
-- **Always generate the HTML artifact.** The deck must be viewable, navigable, and presentable.
-- **Never fabricate metrics.** If missing, mark clearly and suggest how to get them.
-- **Tailor to audience.** VCs ≠ hackathon judges ≠ grant committees.
-- **Include objection prep.** A deck without Q&A prep is half a pitch.
-
 ## Resources
 
-### references/
+### references/ — Content & Strategy
 - [references/pitch-structure.md](references/pitch-structure.md) — Sequoia/YC/Kawasaki hybrid slide framework
+- [references/pitch-reference-sources.md](references/pitch-reference-sources.md) — **Deep pitch wisdom** from Sequoia, YC, a16z, Multicoin, real deck teardowns (Phantom, Uniswap, Jupiter), traction benchmarks by stage, 10-slide litmus test
+- [references/storytelling-frameworks.md](references/storytelling-frameworks.md) — 6 narrative frameworks (PAS, AIDA, Hero's Journey, Pixar, 6-Part Arc, BAB)
 - [references/crypto-pitch-mistakes.md](references/crypto-pitch-mistakes.md) — 12 antipatterns with examples
 - [references/investor-audience-guide.md](references/investor-audience-guide.md) — 5 audience types with scoring rubrics
-- [references/storytelling-frameworks.md](references/storytelling-frameworks.md) — 6 narrative frameworks (PAS, AIDA, Hero's Journey, Pixar, 6-Part Arc, BAB)
 - [references/crypto-pitch-examples.md](references/crypto-pitch-examples.md) — Real case studies (Phantom $1.2B, Uniswap $11M, Filecoin $257M)
 
+### references/ — Design & Templates
+- [references/deck-design-system.md](references/deck-design-system.md) — **Complete HTML/CSS design system**: brand palette, typography scale, layout grid, components (cards, badges, progress bars, comparison tables, timelines, quote blocks), slide navigation, presenter notes, print support, animations
+- [references/slide-templates.md](references/slide-templates.md) — **15 production-ready slide templates**: Title, Problem (2 variants), Why Now, Solution, Demo/Product, Why Crypto, Traction, Market (TAM/SAM/SOM), Competition, Business Model, Team, Ask, Contact, Tokenomics, Roadmap — all with `{{PLACEHOLDERS}}`
+
 ### Cross-skill data (use if available)
+- [skills/data/colosseum/hackathon-winners.md](../../data/colosseum/hackathon-winners.md) — **Complete Colosseum hackathon winner dataset** — 6 grand champions, 40+ track winners, winning patterns by track, track distribution analysis. Use to reference similar winners and position your pitch.
 - `skills/data/ideas/` — 228+ curated ideas from YC, a16z, Alliance, Superteam for market positioning
 - `skills/data/solana-knowledge/` — "Why Solana" talking points
 

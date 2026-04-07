@@ -90,6 +90,9 @@ If `.superstack/idea-context.md` or `.superstack/build-context.md` exist, use th
 - [references/demo-video-script.md](references/demo-video-script.md)
 - [references/judging-criteria.md](references/judging-criteria.md)
 
+### Cross-skill data
+- [skills/data/colosseum/hackathon-winners.md](../../data/colosseum/hackathon-winners.md) — Complete Colosseum winner dataset: 6 grand champions, 40+ track winners, winning patterns, track distribution. Study winners in your track to position your submission.
+
 ## Quick Start
 
 ```bash
