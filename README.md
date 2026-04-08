@@ -76,7 +76,7 @@ Ships with a curated catalog of Solana ecosystem resources and a comprehensive k
 | **MCPs** | 49 | Helius, Jupiter, Phantom, Orca, Chainstack, openSVM, security, DAO |
 | **Knowledge Docs** | 7 | Covers everything on solana.com — architecture, programs, SDKs, DeFi protocols, app layer, open-source research, plus the full Cookbook index |
 | **Guides** | 3+ | RPC + wallet setup, deploy devnet to mainnet, security audit checklist, curated ideas |
-| **Curated Ideas** | 114+ | From YC, a16z, Alliance, and Superteam |
+| **Curated Ideas** | 515+ | From YC, a16z, Alliance, Superteam, DAS NYC 2026 |
 
 Knowledge docs and guides are in `skills/data/` — skills reference them automatically so you don't need to look them up manually.
 
@@ -166,7 +166,7 @@ skills/
     solana-knowledge/       6 knowledge area docs + cookbook index
     guides/                 Shared guides (RPC+wallet, deploy, security, curated ideas)
     specs/                  Phase handoff contracts
-    ideas/                  114+ curated ideas from YC, a16z, Alliance, Superteam
+    ideas/                  515+ curated ideas from YC, a16z, Alliance, Superteam, DAS NYC 2026
 convex/
   schema.ts                 Feedback + telemetry tables
   feedback.ts               Submit mutation
