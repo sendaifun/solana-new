@@ -161,21 +161,28 @@
     {
       "slug": "dflow-skill",
       "title": "DFlow Skill",
-      "description": "AI coding skill for DFlow trading protocol covering spot trading, prediction markets, and WebSocket streaming.",
+      "description": "AI coding skill for DFlow trading protocol covering spot trading, prediction markets, WebSocket streaming, Phantom Connect, and Proof KYC.",
       "url": "https://github.com/sendaifun/skills/tree/main/skills/dflow",
       "category": null
     },
     {
       "slug": "jupiter-skill",
       "title": "Jupiter Skill",
-      "description": "AI coding skill for Jupiter covering Ultra swaps, limit orders, DCA, perpetuals, and lending.",
+      "description": "AI coding skill for Jupiter covering Ultra swaps, limit orders, DCA, perpetuals, lending (Earn/Borrow), prediction markets, and CLI integration.",
       "url": "https://github.com/jup-ag/agent-skills/tree/main/skills/integrating-jupiter",
+      "category": null
+    },
+    {
+      "slug": "jupiter-lend-skill",
+      "title": "Jupiter Lend Skill",
+      "description": "Deep-dive AI coding skill for Jupiter Lend protocol covering Earn vaults, Borrow markets, read/write SDKs, and yield strategies.",
+      "url": "https://github.com/jup-ag/agent-skills/tree/main/skills/jupiter-lend",
       "category": null
     },
     {
       "slug": "kamino-skill",
       "title": "Kamino Skill",
-      "description": "AI coding skill for Kamino Finance covering lending, borrowing, liquidity management, and leverage trading.",
+      "description": "AI coding skill for Kamino Finance covering Earn vaults, Borrow markets, klend-sdk integration, yield strategies, and leverage trading on Solana.",
       "url": "https://github.com/sendaifun/skills/tree/main/skills/kamino",
       "category": null
     },
@@ -238,7 +245,7 @@
     {
       "slug": "magicblock-dev-skill",
       "title": "MagicBlock Dev Skill",
-      "description": "End-to-end MagicBlock development skill for Claude Code covering latency/privacy solutions and VRFs on Solana.",
+      "description": "End-to-end MagicBlock development skill for Claude Code covering Ephemeral Rollups, Private Ephemeral Rollups (PERs), BOLT ECS, VRFs, session keys, and real-time on-chain gaming on Solana.",
       "url": "https://github.com/magicblock-labs/magicblock-dev-skill",
       "category": {
         "labelKey": "infrastructure"
@@ -254,7 +261,7 @@
     {
       "slug": "solana-game-skill",
       "title": "Solana Game Skill",
-      "description": "Claude Code skills for developing games on Solana using C#, React Native, and Magicblock's Unity SDK.",
+      "description": "Claude Code skills for developing games on Solana using C#, React Native, MagicBlock's Unity SDK, BOLT ECS, and Ephemeral Rollups.",
       "url": "https://github.com/solanabr/solana-game-skill",
       "category": null
     },
@@ -501,7 +508,7 @@
     {
       "slug": "magicblock-skill",
       "title": "MagicBlock Skill",
-      "description": "Gaming and ephemeral rollups on Solana using MagicBlock for sub-10ms latency, gasless transactions, and Solana Plugins.",
+      "description": "Gaming and Ephemeral Rollups on Solana using MagicBlock — BOLT ECS, Private Ephemeral Rollups (PERs), sub-10ms latency, gasless transactions, VRFs, SOAR achievements, and session keys.",
       "url": "https://github.com/sendaifun/skills/tree/main/skills/magicblock",
       "category": {
         "labelKey": "gaming"
