@@ -1,6 +1,6 @@
 # DeFi & Crypto Ideas from Superteam Blog (2024)
 
-Extracted from 5 key blog.superteam.fun posts. Use as deeper context when the normalized JSON (`ideas/yash-defi-2024-ideas.json`) flags a relevant idea.
+Extracted from 5 key blog.superteam.fun posts. Use as deeper context when the normalized JSON (`../ideas/yash-defi-2024-ideas.json`) flags a relevant idea.
 
 ---
 

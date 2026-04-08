@@ -1,6 +1,6 @@
 # RWA & DeFi Ideas from DAS NYC 2026
 
-Extracted from 99 sessions at Digital Asset Summit NYC (March 24-26, 2026). Use as deeper context when the normalized JSON (`ideas/rwa-defi-2026-ideas.json`) flags a relevant idea.
+Extracted from 99 sessions at Digital Asset Summit NYC (March 24-26, 2026). Use as deeper context when the normalized JSON (`../ideas/rwa-defi-2026-ideas.json`) flags a relevant idea.
 
 Full conference memo: compiled from Blockworks YouTube transcripts.
 
