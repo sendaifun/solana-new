@@ -1,6 +1,6 @@
 # superstack
 
-Everything a Solana developer needs — 24 journey skills, 59 repos, 71 ecosystem skills, 49 MCP servers.
+Everything you need to build a crypto app with 5-6 prompts — 515+ curated ideas, 24 journey skills, 59 repos, 71 ecosystem skills, 49 MCP servers.
 
 ## Install
 
@@ -76,7 +76,7 @@ Ships with a curated catalog of Solana ecosystem resources and a comprehensive k
 | **MCPs** | 49 | Helius, Jupiter, Phantom, Orca, Chainstack, openSVM, security, DAO |
 | **Knowledge Docs** | 7 | Covers everything on solana.com — architecture, programs, SDKs, DeFi protocols, app layer, open-source research, plus the full Cookbook index |
 | **Guides** | 3+ | RPC + wallet setup, deploy devnet to mainnet, security audit checklist, curated ideas |
-| **Curated Ideas** | 114+ | From YC, a16z, Alliance, and Superteam |
+| **Curated Ideas** | 515+ | From YC, a16z, Alliance, SendAI, and Superteam |
 
 Knowledge docs and guides are in `skills/data/` — skills reference them automatically so you don't need to look them up manually.
 
