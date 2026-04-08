@@ -509,6 +509,26 @@
       "setup_command": "npx -y @unclaimed-sol/mcp",
       "url": "https://github.com/unclaimed-sol/unclaimed-sol-mcp",
       "keywords": ["unclaimed", "sol", "rent", "reclaim", "token", "accounts", "cleanup", "dust"]
+    },
+    {
+      "id": "jupiter-docs-mcp",
+      "name": "Jupiter Docs MCP (Official)",
+      "repo": "jup-ag/docs",
+      "description": "Official Jupiter documentation MCP — search and query Jupiter docs and OpenAPI specs for swaps, perps, lending, prediction markets, and CLI integration",
+      "category": "defi",
+      "setup_command": "codex mcp add --transport http jupiter-docs https://dev.jup.ag/mcp",
+      "url": "https://dev.jup.ag/mcp",
+      "keywords": ["jupiter", "docs", "official", "swap", "perps", "lend", "prediction-markets", "cli", "ultra"]
+    },
+    {
+      "id": "dflow-docs-mcp",
+      "name": "DFlow Docs MCP (Official)",
+      "repo": "DFlowProtocol/docs",
+      "description": "Official DFlow documentation MCP — search and query DFlow docs and API specs for spot trading, prediction markets, and Phantom Connect integration",
+      "category": "defi",
+      "setup_command": "codex mcp add --transport http dflow-docs https://pond.dflow.net/mcp",
+      "url": "https://pond.dflow.net/mcp",
+      "keywords": ["dflow", "docs", "official", "trading", "prediction-markets", "phantom", "kalshi"]
     }
   ]
 }
