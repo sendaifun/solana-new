@@ -63,9 +63,9 @@ Skills live in `skills/<phase>/<skill-name>/`. To add a new skill, create a fold
 
 | Catalog | Count | File |
 |---------|-------|------|
-| Repos | 59 | `cli/data/clonable-repos.json` |
+| Repos | 80 | `cli/data/clonable-repos.json` |
 | Skills | 71 | `cli/data/solana-skills.json` |
-| MCPs | 49 | `cli/data/solana-mcps.json` |
+| MCPs | 53 | `cli/data/solana-mcps.json` |
 
 ## File Map
 
