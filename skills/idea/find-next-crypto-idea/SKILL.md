@@ -60,12 +60,13 @@ Interview the user until there is real clarity, not just enthusiasm. Generate th
 ## Workflow
 
 1. Infer whether the user needs fresh ideas, a narrowed idea search in a known domain, or validation of an existing thesis.
-2. Read [references/source-map.md](references/source-map.md) first to understand the local datasets available to this skill.
-3. Read [references/interview-framework.md](references/interview-framework.md) before asking substantive questions.
-4. Gate every candidate through [references/crypto-necessity-test.md](references/crypto-necessity-test.md) before scoring it.
-5. Score surviving candidates with [references/scoring-rubric.md](references/scoring-rubric.md).
-6. Run fresh research with [references/research-playbook.md](references/research-playbook.md). When you already have candidate ideas, use `scripts/live_research.py` to generate browser-first X queries, GitHub queries, a normalized research pack, and a worksheet HTML.
-7. Produce the shortlist artifact first. Let the user pick one. Then deepen the chosen idea and write a second artifact.
+2. **Ask the user to pick a report theme.** Read [references/report-themes.md](references/report-themes.md) and present the 12-theme table. Store their choice as the `theme` field in the JSON payload. If they say "surprise me", pick one that matches their vibe.
+3. Read [references/source-map.md](references/source-map.md) first to understand the local datasets available to this skill.
+4. Read [references/interview-framework.md](references/interview-framework.md) before asking substantive questions.
+5. Gate every candidate through [references/crypto-necessity-test.md](references/crypto-necessity-test.md) before scoring it.
+6. Score surviving candidates with [references/scoring-rubric.md](references/scoring-rubric.md).
+7. Run fresh research with [references/research-playbook.md](references/research-playbook.md). When you already have candidate ideas, use `scripts/live_research.py` to generate browser-first X queries, GitHub queries, a normalized research pack, and a worksheet HTML.
+8. Produce the shortlist artifact first. Let the user pick one. Then deepen the chosen idea and write a second artifact.
 
 ## Non-Negotiables
 
@@ -156,6 +157,7 @@ This skill is **Phase 1 (Idea)** in the Idea → Build → Launch journey. After
 - [references/research-playbook.md](references/research-playbook.md)
 - [references/research-output-schema.md](references/research-output-schema.md)
 - [references/output-spec.md](references/output-spec.md)
+- [references/report-themes.md](references/report-themes.md)
 
 ### scripts/
 
