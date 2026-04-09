@@ -120,6 +120,8 @@ Every deck needs real, current numbers. Never use stale data from context files 
 
 **Every number in the deck must come from this research pass, not from the interview or context files alone.** If a stat is outdated or unverifiable, either update it or mark it clearly.
 
+**Check for recent hacks/exploits.** Before citing any protocol as a competitor, integration, or reference point, verify it hasn't been recently compromised. Don't reference hacked protocols positively in the deck.
+
 ### Phase 2: Deep Interview
 
 This is a conversation, not a form. Start with anchor questions, pull deeper based on answers. Do NOT move to deck generation until you can clearly articulate: the problem, the solution, the proof, the audience, and the ask.

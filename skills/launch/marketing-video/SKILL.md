@@ -198,6 +198,8 @@ Every metric shown in a video must be current. Before producing the creative bri
 
 **Every number that appears as text in the video must come from this research pass.** Outdated metrics in a video are worse than no metrics.
 
+**Check for recent hacks/exploits.** Don't reference hacked protocols positively. Verify before citing any protocol as a competitor or comparison.
+
 ### Step 3: Creative Direction (You Decide, User Approves)
 
 After the interview, YOU produce the creative direction. Don't ask the user to pick from a menu — present a single confident recommendation they can approve or push back on.
