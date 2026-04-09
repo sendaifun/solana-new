@@ -1,12 +1,10 @@
 {
   "buildCommand": "bash scripts/package-skills.sh",
   "outputDirectory": "public",
-  "redirects": [
-    {
-      "source": "/",
-      "destination": "https://github.com/sendaifun/solana-new",
-      "permanent": false
-    }
+  "rewrites": [
+    { "source": "/setup.sh", "destination": "/setup.sh" },
+    { "source": "/skills.tar.gz", "destination": "/skills.tar.gz" },
+    { "source": "/(.*)", "destination": "https://solana-new-landing.vercel.app/$1" }
   ],
   "headers": [
     {
