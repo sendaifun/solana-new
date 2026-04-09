@@ -61,21 +61,18 @@ This skill doesn't just generate slides — it coaches you through building a na
 
 ## Core Principles
 
-Judges and investors review hundreds of decks. They skim. Every slide must earn its spot.
+Hackathon judges review hundreds of submissions quickly and often skim for the essentials. Capture attention in the first 30 seconds with a punchy one-liner using a sharp, relatable analogy that instantly clarifies the idea — "HIP-3 for Solana", "Jupiter for lending", "Uber for compute". Follow immediately with a crisp, high-quality demo that shows the working product in action. Structure the deck as a simple narrative: clearly explain the problem, the innovative solution, and the business model or path to users. Skip stiff slide templates — focus on storytelling. Keep everything short, visually polished, aesthetic, and easy to scan. Draw inspiration from top competitors on design and flow. Clarity and impact win every time.
 
-- **Hook in the first 30 seconds.** Open with a punchy one-liner using a sharp, relatable analogy that instantly clarifies the idea — "HIP-3 for Solana", "Jupiter for lending", "Uber for compute". One analogy saves 3 slides of explanation.
-- **Demo immediately after the hook.** A crisp, high-quality demo of the working product in action is worth more than 10 slides of explanation. Show, don't tell.
-- **Storytelling over templates.** Structure the deck as a simple narrative: problem → solution → business model / path to users. Skip stiff slide templates — focus on the story arc. Slides are a vehicle for the narrative, not the other way around.
-- **Short, visual, scannable.** Keep everything visually polished and easy to scan. Draw inspiration from top competitors on design and flow. Clarity and impact win every time.
-- **Real numbers only.** "Growing fast" is not a metric. Mark unknowns as "TBD".
-- **Crypto necessity must be proven.** "Why blockchain?" must have a concrete answer. If removing the blockchain doesn't break the product, the pitch has a fatal flaw — say so.
-- **The ask must be specific.** Amount + instrument + use + timeline + milestone. "We're raising" is not an ask.
-
-## Non-Negotiables
+## Non-Negotiables (Read First)
 
 - **Never skip the interview.** Don't auto-generate from context files alone. Every pitch needs a human conversation to find the real story.
 - **Stay blunt.** If their "problem" is vague, push back. If their "why now" is weak, say so. If they have no traction, don't hide it — help them frame what they DO have.
-- **Always generate the HTML artifact.** Using the design system from [references/deck-design-system.md](references/deck-design-system.md) and slide templates from [references/slide-templates.md](references/slide-templates.md). Templates are a starting point — adapt them to the narrative, don't force the narrative into templates.
+- **Problem first, always.** No one cares about Solana until they care about the problem. (Sequoia rule #1)
+- **One idea per slide.** If you need two slides, use two slides. (YC rule)
+- **Real numbers only.** "Growing fast" is not a metric. Mark unknowns as "TBD".
+- **Crypto necessity must be proven.** "Why blockchain?" must have a concrete answer. If removing the blockchain doesn't break the product, the pitch has a fatal flaw — say so.
+- **The ask must be specific.** Amount + instrument + use + timeline + milestone. "We're raising" is not an ask.
+- **Always generate the HTML artifact.** Using the design system from [references/deck-design-system.md](references/deck-design-system.md) and slide templates from [references/slide-templates.md](references/slide-templates.md).
 - **3 questions max per message.** Conversational rounds, not a questionnaire dump.
 
 ## Workflow
