@@ -60,11 +60,13 @@ Take a validated idea and turn it into a ready-to-code workspace with the right 
 ## Workflow
 
 1. Check for `.superstack/idea-context.md`. If found, extract the chosen idea's requirements. If not, interview the user briefly: what are you building, for whom, and what Solana primitives do you need?
-2. Read [references/stack-decision-tree.md](references/stack-decision-tree.md) to match the idea to a technology stack.
-3. Read [references/catalog-recommendations.md](references/catalog-recommendations.md) to pick specific repos, skills, and MCPs from the solana-new catalogs.
-4. Read [references/architecture-patterns.md](references/architecture-patterns.md) for the recommended project structure.
-5. Present the scaffold plan to the user for confirmation.
-6. Execute the setup:
+2. **Integrate vs Build decision**: Unless the user explicitly asked for a smart contract or program, check whether the idea can be built by integrating existing protocols (e.g., Jupiter for swaps, Kamino for lending, Orca for liquidity). If so, scaffold a frontend-only project (Next.js + Protocol SDKs, no Anchor). See `data/solana-knowledge/04-protocols-and-sdks.md` → "Integrate First, Build Second" and the Decision Quick Reference.
+3. **Protocol selection**: If integrating, identify which protocols to use. Verify each protocol's health (TVL, volume, SDK freshness, hack history) using DefiLlama before committing. See `04-protocols-and-sdks.md` → "Protocol Health Verification".
+4. Read [references/stack-decision-tree.md](references/stack-decision-tree.md) to match the idea to a technology stack.
+5. Read [references/catalog-recommendations.md](references/catalog-recommendations.md) to pick specific repos, skills, and MCPs from the solana-new catalogs.
+6. Read [references/architecture-patterns.md](references/architecture-patterns.md) for the recommended project structure.
+7. Present the scaffold plan to the user for confirmation.
+8. Execute the setup:
    - Clone the recommended starter repo(s)
    - Install skills via `npx skills add <url>`
    - Configure MCPs in `.claude/settings.json`

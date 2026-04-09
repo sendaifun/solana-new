@@ -212,3 +212,4 @@ Solana's runtime prevents direct re-entrancy (a program cannot CPI back into its
 
 - **Jupiter**: Uses PDAs for route caching, user-specific limit orders, and DCA positions. Seeds include user key + position index for multiple positions per user.
 - **Orca Whirlpool**: Pool PDAs derived from token pair mints. Tick array PDAs derived from pool + tick index. Position PDAs from pool + lower/upper tick.
+- **Drift** (defunct — exploited April 2026): User account PDAs were derived from authority + sub-account index, supporting multiple sub-accounts per wallet for isolated margin. Listed as an architectural example only — do not integrate.

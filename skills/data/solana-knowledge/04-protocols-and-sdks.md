@@ -4,6 +4,81 @@
 
 ---
 
+## Integrate First, Build Second
+
+**Default recommendation: integrate an existing protocol before building a custom smart contract.** Default to custom development when the user is clearly building the protocol layer itself or needs novel on-chain logic.
+
+Most apps don't need a new on-chain program. Existing protocols have battle-tested contracts handling billions in TVL, TypeScript SDKs for direct frontend integration, established liquidity, and ongoing security maintenance.
+
+**When to integrate (most cases):**
+- Trading UIs, portfolio dashboards, DeFi aggregators
+- Adding swap, lending, or perps functionality to an app
+- Bots, agents, or automation on top of DeFi
+- Stablecoin payments, fintech apps, or payment rails (integrate existing stablecoin infra + Jupiter for conversions)
+- Any frontend-only or API-only project
+
+**When to build custom:**
+- User wants to own the protocol layer or build novel on-chain logic/state
+- Novel mechanism design that doesn't exist yet (new AMM curve, new collateral model)
+- Need on-chain composability that existing protocols don't expose
+- User explicitly says "build a program", "smart contract", or "on-chain protocol"
+
+When in doubt, integrate. You ship faster, inherit security and liquidity, and can always build custom later if the integrated approach hits a wall.
+
+---
+
+## Protocol Health Verification
+
+**Before recommending any protocol, verify it is alive, liquid, and safe.** Never rely solely on the static recommendations in this document — protocols can decline, get exploited, or shut down.
+
+### How to Check Protocol Health
+
+Use whatever data source is available — DefiLlama MCP tools if installed, DefiLlama API directly, or web search. The key data points to gather:
+
+1. **TVL and trend** — Is the protocol still holding meaningful TVL? Is it growing or declining?
+   - DefiLlama API: `GET https://api.llama.fi/protocol/{protocol-slug}`
+   - DefiLlama API: `GET https://api.llama.fi/protocols` (list all, filter by chain/category)
+   - Or use `mcp__defillama__get_protocol` / `mcp__defillama__search_protocols` if available
+
+2. **Volume** — Is there active trading? Dead volume = dead protocol.
+   - DefiLlama API: `GET https://api.llama.fi/overview/dexs/solana` (DEX volumes)
+   - Or use `mcp__defillama__get_dex_overview` / `mcp__defillama__get_fees_overview` if available
+
+3. **Hack history** — Has it been exploited? Did it recover?
+   - DefiLlama API: `GET https://api.llama.fi/hacks`
+   - Or use `mcp__defillama__get_hacks` if available
+
+4. **SDK freshness** — Is the TypeScript SDK still maintained?
+   ```bash
+   npm view <package-name> time --json | jq 'to_entries | last'
+   gh repo view <org>/<repo> --json updatedAt,stargazerCount
+   ```
+
+### Health Criteria
+
+| Signal | Healthy | Warning | Avoid |
+|--------|---------|---------|-------|
+| TVL | >$50M | $5M–$50M | <$5M or declining >50% in 30d |
+| 24h Volume | >$10M | $1M–$10M | <$1M |
+| SDK last publish | <3 months | 3–6 months | >6 months |
+| GitHub activity | Weekly commits | Monthly | No commits in 6+ months |
+| Security | Audited, no major exploits | Audited, recovered from incident | Unaudited or unrecovered exploit |
+| Documentation | Complete with examples | Exists but sparse | Missing or outdated |
+
+### Defunct or Risky Protocol Signals
+
+Do not auto-recommend any protocol that shows these patterns:
+- **TVL near zero or crashed >90%** from peak without recovery
+- **SDK abandoned** — no npm publish or GitHub commit in 6+ months, team unresponsive
+- **Major unrecovered exploit** — funds lost, users not made whole
+- **Officially sunset** — team announced shutdown or migration
+
+If a protocol was exploited but recovered (repaid users, patched, resumed operations), note the history but don't auto-exclude — use judgment based on current health signals.
+
+**Always verify current state before recommending.** This document is a starting point, not the final answer.
+
+---
+
 ## DeFi Protocols
 
 ### Jupiter -- Aggregator & Trading Infrastructure
@@ -90,6 +165,35 @@ Raydium combines AMM liquidity with OpenBook's central limit order book (CLOB) f
 
 **npm packages:**
 - `@raydium-io/raydium-sdk-v2` -- TypeScript SDK
+
+---
+
+### Drift -- DEFUNCT (Exploited April 2026)
+
+> **DO NOT INTEGRATE.** Drift was exploited for $285M on April 1, 2026 via compromised admin keys (DPRK-linked). The protocol is permanently frozen. TVL collapsed from $550M to <$10M. Use Jupiter Perpetual Exchange instead.
+
+---
+
+### Jupiter Perpetual Exchange -- Perps & Derivatives
+
+Jupiter Perps is now Solana's leading derivatives platform, offering oracle-based perpetual futures with deep liquidity backed by the JLP pool.
+
+| Feature | Description |
+|---------|-------------|
+| Perpetual Futures | Up to 100x leverage on SOL, ETH, BTC and more |
+| JLP Pool | Liquidity provider pool earning trading fees |
+| Oracle-based | Chaos primary oracle, Pyth + Chainlink fallback |
+| Part of Jupiter | Integrated with Jupiter's swap, DCA, limit orders |
+
+**When to use:** When building perps trading frontends, trading bots, or any derivatives integration on Solana. Jupiter Perps is the default choice after the Drift shutdown.
+
+**Key URLs:**
+- App: https://jup.ag/perps
+- Docs: https://station.jup.ag/docs
+- GitHub: https://github.com/jup-ag
+
+**npm packages:**
+- `@jup-ag/api` -- TypeScript client for Jupiter APIs (swaps, perps, DCA)
 
 ---
 
@@ -678,7 +782,7 @@ const ix = createInitializeTransferFeeConfigInstruction(
 |------|-----|
 | Swap tokens | Jupiter |
 | Create liquidity pool | Orca Whirlpools or Raydium |
-| Perps / derivatives | Flash Trade, Jupiter Perps |
+| Perps / derivatives | Jupiter Perpetual Exchange (Drift is defunct — exploited April 2026) |
 | Lending / borrowing | Kamino or Marginfi |
 | Liquid staking | Marinade (mSOL) or Jito (jitoSOL) |
 | NFT minting | Metaplex (Bubblegum for scale, Core for new projects) |

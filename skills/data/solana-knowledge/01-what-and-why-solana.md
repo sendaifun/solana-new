@@ -103,10 +103,13 @@ Source: [DeFiLlama](https://defillama.com/chain/Solana), [Solana Explorer](https
 Solana has the broadest application ecosystem of any non-EVM chain:
 
 ### DeFi
+
+> **Note:** Protocol names below are examples at the time of writing. Always verify current health (TVL, volume, hack history) before recommending. See `04-protocols-and-sdks.md` → "Protocol Health Verification".
+
 - **DEX aggregation**: Jupiter (dominant aggregator)
 - **AMMs**: Orca, Raydium, Meteora
 - **Lending**: Kamino, MarginFi, Save
-- **Derivatives**: Zeta Markets, Phoenix, Flash Trade
+- **Derivatives**: Jupiter Perpetual Exchange, Zeta Markets, Phoenix
 - **Liquid staking**: Marinade, Jito, BlazeStake
 
 ### Consumer

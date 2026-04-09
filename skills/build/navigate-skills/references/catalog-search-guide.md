@@ -30,9 +30,14 @@ After setup, catalog data is at:
 - **NFT**: Metaplex, collection management
 - **Wallet**: Wallet adapters, transaction building
 
+## Protocol Health
+
+Catalog entries can go stale — a listed skill or MCP may reference a defunct protocol. Before recommending any protocol-specific tool, verify the protocol is still healthy. See `data/solana-knowledge/04-protocols-and-sdks.md` → "Protocol Health Verification" for criteria and how to check using DefiLlama.
+
 ## Matching Strategy
 
 1. Extract keywords from user's question
 2. Search across all three catalogs
 3. Prioritize: exact keyword match > category match > description match
 4. Return top 3-5 results with actionable next steps
+5. For protocol-specific results, cross-check protocol health before recommending

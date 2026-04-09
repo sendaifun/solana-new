@@ -2,12 +2,14 @@
 
 Map the user's idea to specific repos, skills, and MCPs from the solana-new catalogs. Every entry below is verified against the actual catalog JSONs.
 
+> **Protocol selection**: Before picking repos and skills, identify which protocol(s) to integrate with using `data/solana-knowledge/04-protocols-and-sdks.md` → Decision Quick Reference. Verify each protocol's health before committing — see "Protocol Health Verification" in the same file.
+
 ## DeFi & Trading
 
 **Repos:** `anchor-by-example`, `jupiter-nextjs-example`, `whirlpools`, `raydium-cp-swap`, `marinade-liquid-staking`
 **Skills:** `programs-anchor` (official), `security` (official), `testing` (official), `meteora-skill`, `solana-kit-skill`
 **MCPs:** `helius-mcp`, `dcspark-jupiter`, `demcp-orca-mcp`, `opensvm-dexscreener-mcp`
-**Tip:** Jupiter for swaps. Orca/Raydium for AMM. Always add Helius MCP for wallet data.
+**Tip:** Jupiter for swaps. Orca/Raydium for AMM. Always add Helius MCP for wallet data. For protocol-specific skills, verify the protocol is still active before installing.
 
 ## AI Agents
 

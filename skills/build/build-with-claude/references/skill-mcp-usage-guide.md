@@ -68,6 +68,12 @@ Use installed skills and MCPs during development — they accelerate every step.
 |-----|-------|
 | `phantom-mcp-server` | Wallet operations (Solana + EVM) |
 
+## Protocol Research — Verify Before Recommending
+
+Before recommending a protocol integration, verify its health using live data. See `data/solana-knowledge/04-protocols-and-sdks.md` → "Protocol Health Verification" for full criteria, thresholds, and methods (DefiLlama MCP, REST API, or web search).
+
+Run this check when recommending integrations, when a user asks "which protocol should I use for X?", or before adding a protocol dependency to any project.
+
 ## Tips
 
 - Read each skill's SKILL.md before using — it explains triggers and capabilities

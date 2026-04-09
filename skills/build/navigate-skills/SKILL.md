@@ -149,6 +149,22 @@ When recommending a community skill from the catalog, always suggest the `npx sk
 3. **User is stuck** → Suggest the next logical skill in the Idea → Build → Launch journey
 4. **User wants ecosystem tools** → Search catalogs by keyword and recommend repos + MCPs
 5. **User wants to install a skill** → Provide the `npx skills add <url>` command
+6. **User wants to build an app/frontend** → Default to recommending existing protocol integration. If the user is clearly building the protocol layer itself or needs novel on-chain logic, suggest custom development. When in doubt, ask.
+7. **Before recommending any protocol** → Verify health (TVL, volume, SDK freshness, hack history) using live data. See `data/solana-knowledge/04-protocols-and-sdks.md` → "Protocol Health Verification" for criteria and methods.
+
+## Protocol Health Check
+
+When recommending a protocol integration, verify it is healthy before suggesting it. Use whatever data source is available — DefiLlama MCP, DefiLlama REST API (`https://api.llama.fi/`), or web search.
+
+**Check before recommending:**
+- TVL is meaningful (>$5M) and not in steep decline
+- There is active volume (not a ghost protocol)
+- SDK was published in the last 6 months
+- No major unrecovered exploits
+
+**Avoid recommending** protocols with near-zero TVL, abandoned SDKs, or major unrecovered hacks. See `data/solana-knowledge/04-protocols-and-sdks.md` → "Protocol Health Verification" for full criteria and thresholds.
+
+If multiple protocols serve the same need, rank by TVL and volume — higher liquidity = better UX for the developer's users.
 
 ## Search Strategy
 
@@ -157,6 +173,7 @@ When searching catalogs:
 2. Match on `keywords`, `description`, `category` fields
 3. Return specific entries with their install/clone commands
 4. If multiple matches, rank by relevance and explain why each fits
+5. For protocol recommendations, cross-check health using DefiLlama data before finalizing
 
 ## Response Format
 
