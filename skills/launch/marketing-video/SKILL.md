@@ -188,6 +188,16 @@ This is a conversation, not a questionnaire. Start with the anchor questions. Pu
 - **Never ask about animation preferences.** Users don't know what `spring damping` means and shouldn't need to. Ask about FEEL, not technique. You translate taste → technique.
 - **3 questions max per message.** Don't dump all 13 questions at once. Conversational rounds.
 
+### Step 2.5: Live Research (mandatory before creative direction)
+
+Every metric shown in a video must be current. Before producing the creative brief, research:
+
+- Pull current TVL, volume, user counts for the product and its competitors using web search or MCP tools (DefiLlama, CoinGecko)
+- Get the latest ecosystem stats relevant to the hook (eg. total Solana perps volume, number of tokens launched on pump.fun, etc.)
+- Verify any numbers the user mentioned in the interview
+
+**Every number that appears as text in the video must come from this research pass.** Outdated metrics in a video are worse than no metrics.
+
 ### Step 3: Creative Direction (You Decide, User Approves)
 
 After the interview, YOU produce the creative direction. Don't ask the user to pick from a menu — present a single confident recommendation they can approve or push back on.

@@ -94,6 +94,32 @@ cat package.json 2>/dev/null | grep -E '"name"|"description"' | head -5
 
 If you find useful context, mention it during the interview: "I see from your idea-context that you're building X for Y — let's start from there."
 
+### Phase 1.5: Live Research (mandatory before deck generation)
+
+Every deck needs real, current numbers. Never use stale data from context files or training data alone. Before generating any slides, run a research pass for the specific idea:
+
+**Market data:**
+- Use DefiLlama MCP or web search to pull current TVL, volume, and protocol stats for the relevant category
+- Get competitor TVL/volume/user numbers as of today, not from memory
+- Pull total market size data (perps volume, lending TVL, stablecoin market cap, etc.)
+
+**Competitor landscape:**
+- Identify the 3-5 closest competitors and get their current metrics
+- Check what's launched in the last 3 months in this space
+- Note any recent funding rounds, partnerships, or shutdowns
+
+**Ecosystem data:**
+- Solana-specific stats: total TVL, DEX volume, number of active programs, relevant Pyth feeds
+- Any recent ecosystem announcements or regulatory changes that affect the idea
+
+**How to research:**
+- Use web search, DefiLlama MCP, CoinGecko MCP, or any available data tools
+- If MCP tools are unavailable, use web search as fallback
+- Cross-reference at least 2 sources for key numbers
+- Mark any numbers you couldn't verify as "~estimate" in the deck
+
+**Every number in the deck must come from this research pass, not from the interview or context files alone.** If a stat is outdated or unverifiable, either update it or mark it clearly.
+
 ### Phase 2: Deep Interview
 
 This is a conversation, not a form. Start with anchor questions, pull deeper based on answers. Do NOT move to deck generation until you can clearly articulate: the problem, the solution, the proof, the audience, and the ask.

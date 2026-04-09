@@ -23,7 +23,7 @@ if the user has no preference → use these defaults as a starting point, show t
 
 ### sentence style
 - short sentences. don't chain with "and" or "but" when you can start a new one.
-- dashes (—) and semicolons over nested commas
+- **avoid em dashes (—) in decks and marketing copy** — they're a telltale sign of AI-generated text. use periods, semicolons, or colons instead. em dashes are fine in long-form writing but not in slides or social copy.
 - arrows (→) for progression or causality
 - colons to set up a key point: "the core insight: markets need liquidity from block 1"
 - contractions always — "it's", "don't", "won't"
