@@ -84,6 +84,9 @@ If `.superstack/idea-context.md` or `.superstack/build-context.md` exist, use th
 
 ## Resources
 
+### Writing Tone
+- [../tone-guide.md](../tone-guide.md) — Default writing tone for project descriptions, demo scripts, and submission copy. **Ask the user's tone preference** before writing. Hackathon submissions that sound human > AI-generated.
+
 ### references/
 
 - [references/hackathon-submission-guide.md](references/hackathon-submission-guide.md)

@@ -166,7 +166,10 @@ This is a conversation, not a questionnaire. Start with the anchor questions. Pu
     - If they have screenshots: Get them in the highest resolution possible
     - If they have NOTHING: "No worries. I'll set up a visual system — we'll use SVG icons, a generated color palette, and animated text to build the video."
 
-11. **"Any specific text that MUST appear? Tagline, URL, metric, hackathon name?"**
+11. **"Do you have a preferred writing tone for text overlays and captions? Lowercase and casual, or polished and proper?"**
+    Why: Text overlays and post copy should match the founder's voice. Read [../tone-guide.md](../tone-guide.md) for defaults.
+
+12. **"Any specific text that MUST appear? Tagline, URL, metric, hackathon name?"**
     Why: Some text is non-negotiable (sponsor logos, hackathon branding, product URL).
 
 **Round 5 — The Constraint (ask if needed):**
@@ -463,6 +466,9 @@ For every video project, deliver:
 6. **Post copy** — suggested tweet/caption text for each platform
 
 ## Resources
+
+### Writing Tone
+- [../tone-guide.md](../tone-guide.md) — Default writing tone for text overlays, captions, and post copy. **Ask the user's tone preference** during the interview. Covers casing, sentence style, and format-specific notes for video text and social copy.
 
 ### references/
 - [references/scene-templates.md](references/scene-templates.md) — **16 pre-built LEGO-block scenes** + 3 full composition recipes. Mix and match: hooks, problems, demos, metrics, CTAs, testimonials, terminals, logo reveals

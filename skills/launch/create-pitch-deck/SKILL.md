@@ -137,7 +137,10 @@ This is a conversation, not a form. Start with anchor questions, pull deeper bas
 
 **Round 4 — Taste & Positioning (ask if needed):**
 
-10. **"Have you seen a pitch or deck you loved? Any industry."**
+10. **"Do you have a preferred writing tone? Some folks want lowercase and casual, others want polished and corporate."**
+    *Why:* The tone of slide text, speaking notes, and social copy should match the founder's voice — not sound AI-generated. Read [../tone-guide.md](../tone-guide.md) for defaults if they have no preference.
+
+11. **"Have you seen a pitch or deck you loved? Any industry."**
     *Why:* Reveals their quality bar and communication style. If they name something, use it as a reference. If not, offer: "Clean and minimal like Airbnb's 10-slider? Data-heavy like Coinbase's seed deck? Story-driven like Buffer?"
 
 11. **"Do you have brand colors? If not, what's the vibe — corporate and trustworthy, or bold and consumer?"**
@@ -236,6 +239,9 @@ For each objection, provide a 2-sentence response framework.
 If `.superstack/idea-context.md` or `.superstack/build-context.md` exist, use them to enrich the deck. If they don't exist, **proceed immediately** — interview the user about their project. Do NOT redirect to other commands.
 
 ## Resources
+
+### Writing Tone
+- [../tone-guide.md](../tone-guide.md) — Default writing tone for generated content. **Ask the user's tone preference** during the interview before generating final output. Covers casing, sentence style, what to avoid, and format-specific notes for slides, speaking notes, and social copy.
 
 ### references/ — Content & Strategy
 - [references/pitch-structure.md](references/pitch-structure.md) — Sequoia/YC/Kawasaki hybrid slide framework

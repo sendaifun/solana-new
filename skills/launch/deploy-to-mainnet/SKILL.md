@@ -94,6 +94,9 @@ See `../../../data/specs/phase-handoff.md` for the full JSON contract.
 
 ## Resources
 
+### Writing Tone
+- [../tone-guide.md](../tone-guide.md) — Default tone for deployment reports and status updates.
+
 ### references/
 
 - [references/deployment-checklist.md](references/deployment-checklist.md)
