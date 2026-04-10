@@ -183,4 +183,4 @@ Built by [SendAI](https://sendai.fun) and [Superteam](https://superteam.fun). Po
 
 ## License
 
-MIT
+[MIT](LICENSE)
