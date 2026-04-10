@@ -7,7 +7,7 @@
   "install_all_command": "npx skills add https://github.com/solana-foundation/solana-dev-skill",
   "counts": {
     "official": 15,
-    "community": 57
+    "community": 58
   },
   "official_skills": [
     {
@@ -566,6 +566,15 @@
       "url": "https://github.com/blueshift-gg/quasar",
       "category": {
         "labelKey": "programs"
+      }
+    },
+    {
+      "slug": "privy-agent-wallets",
+      "title": "Privy Agent Wallets",
+      "description": "Give AI agents their own Ethereum and Solana wallets via the Privy Agent CLI — login, fund, sign messages, send transactions, and make x402/MPP paid API calls.",
+      "url": "https://agents.privy.io/skill.md",
+      "category": {
+        "labelKey": "infrastructure"
       }
     }
   ],

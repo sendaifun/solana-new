@@ -155,7 +155,7 @@ cli/
   init.ts                   Auto-install skills to ~/.claude/skills/ and ~/.codex/skills/
   data/
     clonable-repos.json     59 repos catalog
-    solana-skills.json      72 skills catalog
+    solana-skills.json      73 skills catalog
     solana-mcps.json        49 MCP servers catalog
 skills/
   SKILL_ROUTER.md           Shared routing table — AI auto-corrects wrong skill
