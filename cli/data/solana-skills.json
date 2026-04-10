@@ -7,7 +7,7 @@
   "install_all_command": "npx skills add https://github.com/solana-foundation/solana-dev-skill",
   "counts": {
     "official": 15,
-    "community": 56
+    "community": 57
   },
   "official_skills": [
     {
@@ -557,6 +557,15 @@
       "url": "https://github.com/qedgen/solana-skills/blob/main/SKILL.md",
       "category": {
         "labelKey": "security"
+      }
+    },
+    {
+      "slug": "quasar-skill",
+      "title": "Quasar Skill",
+      "description": "AI coding skill for Quasar, a zero-copy Solana program framework with blazing fast SVM programs, auto-generated clients, CU profiler, and QuasarSVM test harness.",
+      "url": "https://github.com/blueshift-gg/quasar",
+      "category": {
+        "labelKey": "programs"
       }
     }
   ],

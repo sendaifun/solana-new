@@ -1265,6 +1265,24 @@
       ],
       "clone_command": "git clone https://github.com/palindrome-eng/loopscale-client.git",
       "is_template": false
+    },
+    {
+      "id": "quasar",
+      "repo": "blueshift-gg/quasar",
+      "description": "Quasar — zero-copy Solana program framework for blazing fast SVM programs with auto-generated TS/Rust clients, CU profiler, and QuasarSVM test harness",
+      "category": "framework",
+      "keywords": [
+        "program",
+        "framework",
+        "zero-copy",
+        "quasar",
+        "svm",
+        "performance",
+        "on-chain",
+        "blueshift"
+      ],
+      "clone_command": "git clone https://github.com/blueshift-gg/quasar.git",
+      "is_template": false
     }
   ]
 }

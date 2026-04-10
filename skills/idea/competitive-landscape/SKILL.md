@@ -99,7 +99,7 @@ This skill is **Phase 1 (Idea)** in the Idea → Build → Launch journey. After
 
 # The skill will search:
 # - 59 repos in cli/data/clonable-repos.json
-# - 71 skills in cli/data/solana-skills.json
+# - 72 skills in cli/data/solana-skills.json
 # - 49 MCPs in cli/data/solana-mcps.json
 # - DefiLlama, GitHub, and crypto Twitter
 ```
