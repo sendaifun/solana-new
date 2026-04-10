@@ -1,148 +1,137 @@
 # superstack
 
-Everything you need to build a crypto app with 5-6 prompts — 515+ curated ideas, 24 journey skills, 59 repos, 71 ecosystem skills, 49 MCP servers.
+[![solana.new](https://img.shields.io/badge/solana.new-Install-black?logo=solana&logoColor=white)](https://solana.new)
+[![Skills](https://img.shields.io/badge/skills-73-blueviolet)](#ecosystem-catalog)
+[![Repos](https://img.shields.io/badge/repos-81-blue)](#ecosystem-catalog)
+[![MCPs](https://img.shields.io/badge/MCPs-53-green)](#ecosystem-catalog)
+[![License](https://img.shields.io/github/license/sendaifun/solana-new)](LICENSE)
+
+The open-source platform behind [solana.new](https://solana.new) — 25 journey skills that take you from "what should I build?" to a shipped, funded product on Solana. Backed by 81 repos, 73 ecosystem skills, 53 MCP servers, 515+ curated ideas, and a comprehensive Solana knowledge base.
+
+Works with [Claude Code](https://claude.ai/code) and [Codex](https://openai.com/index/codex/).
 
 ## Install
-
-Requirements: [Claude Code](https://claude.ai/code) or [Codex](https://openai.com/codex), Git, and Node.js 20+.
 
 ```bash
 curl -fsSL https://www.solana.new/setup.sh | bash
 ```
 
-**What gets installed:** Skills (Markdown prompts) in `~/.claude/skills/` and `~/.codex/skills/`, Solana knowledge base, guides, and catalog data. Nothing touches your PATH or runs in the background.
+Installs skills (Markdown prompts) to `~/.claude/skills/` and `~/.codex/skills/`, plus the Solana knowledge base, guides, and catalog data. Nothing touches your PATH or runs in the background.
+
+**Requirements:** Git and Node.js 20+.
 
 ## Quick Start
 
 ```bash
 claude "/find-next-crypto-idea What should I build on Solana?"
 claude "/scaffold-project Set up my workspace"
+claude "/build-with-claude Help me build the MVP"
 claude "/deploy-to-mainnet Ship it"
 ```
 
+Every skill interviews you first — never assumes.
+
 ## Journey Skills
 
-23 skills across 4 phases — user just asks naturally, right skill activates. Every skill interviews you first (via AskUserQuestion) and never assumes.
-
-### Phase 0: Learn — Solana Fundamentals
-| Skill | Trigger |
-|-------|---------|
-| `solana-beginner` | "I'm new to Solana — teach me the fundamentals" |
-| `learn` | "What have we learned across sessions?" |
-
-### Phase 1: Idea — Discovery & Planning
-| Skill | Trigger |
-|-------|---------|
-| `find-next-crypto-idea` | "What should I build on Solana?" |
-| `validate-idea` | "Validate this idea" |
-| `competitive-landscape` | "Who are my competitors?" |
-| `defillama-research` | "Show me DeFi opportunities on Solana" |
-
-### Phase 2: Build — Solana Implementation
-| Skill | Trigger |
-|-------|---------|
-| `scaffold-project` | "Scaffold my Solana project with Anchor" |
-| `build-with-claude` | "Help me build the Solana MVP step by step" |
-| `virtual-solana-incubator` | "Deep dive into Solana architecture and Rust" |
-| `build-defi-protocol` | "Build a DeFi protocol on Solana" |
-| `build-data-pipeline` | "Build a Solana data pipeline" |
-| `build-mobile` | "Build a Solana mobile app" |
-| `launch-token` | "Launch an SPL token on Solana" |
-| `roast-my-product` | "Roast my product — be brutal" |
-| `product-review` | "Review my product's UX and quality" |
-| `review-and-iterate` | "Review my Solana program for security" |
-| `cso` | "Run a security audit on my project" |
-| `debug-program` | "Debug my failing Solana program" |
-| `navigate-skills` | "What skills do I have?" |
-
-### Phase 3: Launch — Go to Market
-| Skill | Trigger |
-|-------|---------|
-| `deploy-to-mainnet` | "Deploy to mainnet" |
-| `create-pitch-deck` | "Create a pitch deck" |
-| `submit-to-hackathon` | "Prepare my hackathon submission" |
-| `marketing-video` | "Create a marketing video" |
-
-Skills live in `skills/<phase>/<skill-name>/`.
-
-## What's Indexed
-
-Ships with a curated catalog of Solana ecosystem resources and a comprehensive knowledge base.
-
-| Catalog | Count | Description |
-|---------|-------|-------------|
-| **Repos** | 59 | Solana official, Metaplex, Orca, Raydium, Jupiter, SendAI, community |
-| **Skills** | 71 | 15 official from solana.com + 56 community (Jupiter, Helius, etc.) |
-| **MCPs** | 49 | Helius, Jupiter, Phantom, Orca, Chainstack, openSVM, security, DAO |
-| **Knowledge Docs** | 7 | Covers everything on solana.com — architecture, programs, SDKs, DeFi protocols, app layer, open-source research, plus the full Cookbook index |
-| **Guides** | 3+ | RPC + wallet setup, deploy devnet to mainnet, security audit checklist, curated ideas |
-| **Curated Ideas** | 515+ | From YC, a16z, Alliance, SendAI, and Superteam |
-
-Knowledge docs and guides are in `skills/data/` — skills reference them automatically so you don't need to look them up manually.
-
-## Context & Learnings
-
-Each phase writes context to `.superstack/` as markdown so the next phase picks up automatically:
+25 skills across 4 phases. You ask naturally, the right skill activates.
 
 ```
-.superstack/
-  idea-context.md       # Chosen idea, scores, validation, competitors
-  build-context.md      # Stack, milestones, review findings
-  learnings.md          # Patterns, pitfalls, preferences (managed by /learn)
+  LEARN                  IDEA                     BUILD                         LAUNCH
+  ──────────────────     ──────────────────────   ───────────────────────────   ──────────────────────
+  solana-beginner        find-next-crypto-idea    scaffold-project              deploy-to-mainnet
+  learn                  validate-idea            build-with-claude             create-pitch-deck
+                         competitive-landscape    virtual-solana-incubator      submit-to-hackathon
+                         defillama-research       build-defi-protocol           marketing-video
+                         colosseum-copilot        build-data-pipeline
+                                                  build-mobile
+                                                  launch-token
+                                                  roast-my-product
+                                                  product-review
+                                                  review-and-iterate
+                                                  cso
+                                                  debug-program
+                                                  navigate-skills
 ```
 
-Use `/learn` to view, search, prune, or export project learnings across sessions.
+### Learn
+
+| Skill | What it does |
+|-------|-------------|
+| `solana-beginner` | Teaches Solana fundamentals adapted to your background (EVM dev, beginner, backend) |
+| `learn` | Reviews, searches, prunes, and exports project learnings across sessions |
+
+### Idea
+
+| Skill | What it does |
+|-------|-------------|
+| `find-next-crypto-idea` | Interviews you to discover and rank crypto startup ideas from 515+ curated sources |
+| `validate-idea` | Stress-tests an idea with a structured validation sprint |
+| `competitive-landscape` | Maps competitors, substitutes, and whitespace across the ecosystem catalog |
+| `defillama-research` | Researches DeFi protocols and market opportunities using real-time TVL data |
+| `colosseum-copilot` | Searches Colosseum hackathon projects for winner patterns and gaps |
+
+### Build
+
+| Skill | What it does |
+|-------|-------------|
+| `scaffold-project` | Sets up workspace with the right repo, skills, MCPs, and architecture |
+| `build-with-claude` | Guides you through MVP implementation step by step |
+| `virtual-solana-incubator` | Deep technical bootcamp — SVM, Rust, PDAs, CPIs, programs |
+| `build-defi-protocol` | Guided DeFi build with security-first patterns, CPIs, and token math |
+| `build-data-pipeline` | Indexes accounts, tracks transactions, builds real-time data infrastructure |
+| `build-mobile` | React Native + Expo + Mobile Wallet Adapter |
+| `launch-token` | Token mint, metadata, distribution, and launch strategy |
+| `roast-my-product` | Harsh, honest product critique — finds every weakness before users do |
+| `product-review` | Balanced UX/quality evaluation with improvement roadmap |
+| `review-and-iterate` | Code review for quality, security, and production readiness |
+| `cso` | Infrastructure-first security audit: secrets, deps, CI/CD, OWASP |
+| `debug-program` | Diagnoses program errors and failed transactions |
+| `navigate-skills` | Browses all installed skills, repos, and MCPs |
+
+### Launch
+
+| Skill | What it does |
+|-------|-------------|
+| `deploy-to-mainnet` | Pre-flight checklist and guided mainnet deployment |
+| `create-pitch-deck` | Structured pitch deck for VCs, hackathons, or grants |
+| `submit-to-hackathon` | Optimized hackathon submission with demo script |
+| `marketing-video` | Code-driven (Remotion) + AI-generated video production |
+
+## How Phases Connect
+
+Each phase writes context to `.superstack/` in your project. The next phase reads it automatically.
+
+```
+find-next-crypto-idea  ──writes──>  .superstack/idea-context.md
+scaffold-project       ──reads───>  .superstack/idea-context.md
+build-with-claude      ──writes──>  .superstack/build-context.md
+deploy-to-mainnet      ──reads───>  .superstack/build-context.md
+```
+
+Context files are optional, not gates. Skip to any phase — the skill asks you directly if context is missing.
+
+## Ecosystem Catalog
+
+Ships with a curated catalog of the Solana ecosystem that skills search and recommend from.
+
+| Catalog | Count | Examples |
+|---------|-------|---------|
+| **Repos** | 81 | Anchor, Pinocchio, Quasar, Metaplex, Orca, Raydium, Jupiter, Solana Agent Kit, MagicBlock |
+| **Skills** | 73 | 15 official (Solana Foundation) + 58 community (Jupiter, Helius, Kamino, Privy, DFlow, Meteora, Sanctum, QEDGen) |
+| **MCPs** | 53 | Helius, Jupiter, Phantom, Orca, Flash Trade, Solscan, DexScreener, Solana Foundation |
+| **Knowledge** | 7 docs | Architecture, programs, protocols, SDKs, app layer, open-source research, Cookbook index |
+| **Guides** | 3 | RPC + wallet setup, deploy runbook, security checklist |
+| **Ideas** | 515+ | Curated from YC, a16z, Alliance, SendAI, and Superteam |
+
+Catalog data lives in `cli/data/`. Skills reference it automatically — you don't need to look anything up.
 
 ## Telemetry
 
-superstack collects **anonymous, privacy-first** usage telemetry to understand which skills are popular and where things break. No code, no file paths, no PII — ever.
-
-### Three tiers
-
-| Tier | What's collected | Default? |
-|------|-----------------|----------|
-| `off` | Nothing at all | **Yes** |
-| `anonymous` | Skill name, phase, command, success/failure, duration, platform, CLI version | No |
-| `community` | Same as anonymous + a random installation UUID (to count unique installs) | No |
-
-### How to change your tier
+Anonymous, opt-in, privacy-first. Tracks which skills get used and how long they take — no code, no file paths, no PII. Default is **off**.
 
 ```bash
-# Check current setting
-cat ~/.superstack/config.json
-
-# Or set it programmatically in config.json:
-# { "telemetryTier": "anonymous" }
-```
-
-### How it works
-
-- Events are buffered locally in `~/.superstack/telemetry.jsonl`
-- Background sync to Convex (fire-and-forget, 3s timeout)
-- All collection fails silently — telemetry never crashes the CLI
-- No tracking cookies, no browser fingerprinting, no IP logging
-
-### What an event looks like
-
-```json
-{
-  "skill": "scaffold-project",
-  "phase": "build",
-  "command": "ship",
-  "status": "success",
-  "durationMs": 4200,
-  "version": "0.4.0",
-  "platform": "darwin-arm64",
-  "timestamp": 1712150400000
-}
-```
-
-## Development
-
-```bash
-pnpm install          # install deps
-pnpm build            # compile TypeScript → dist/
-pnpm dev              # run CLI via tsx (no build needed)
+# Check or change in ~/.superstack/config.json
+# Options: "off" (default) | "anonymous" | "community"
 ```
 
 ## Project Structure
@@ -150,29 +139,48 @@ pnpm dev              # run CLI via tsx (no build needed)
 ```
 cli/
   branding.ts               Single source of truth for all brand strings
-  index.ts                  Command dispatcher, agent output, help
+  index.ts                  Command dispatcher and main entry
   telemetry.ts              Skill usage tracking (Convex + local JSONL)
-  init.ts                   Auto-install skills to ~/.claude/skills/ and ~/.codex/skills/
+  init.ts                   Auto-install skills to ~/.claude/ and ~/.codex/
   data/
-    clonable-repos.json     59 repos catalog
-    solana-skills.json      73 skills catalog
-    solana-mcps.json        49 MCP servers catalog
+    clonable-repos.json     81 repos
+    solana-skills.json      73 skills (15 official + 58 community)
+    solana-mcps.json        53 MCP servers
 skills/
-  SKILL_ROUTER.md           Shared routing table — AI auto-corrects wrong skill
-  idea/                     Discovery & planning skills (6 skills)
-  build/                    Implementation skills (14 skills)
-  launch/                   Go-to-market skills (4 skills)
+  SKILL_ROUTER.md           Routing table — AI auto-corrects wrong skill
+  idea/                     Discovery & planning (6 skills)
+  build/                    Implementation & review (14 skills)
+  launch/                   Go-to-market (4 skills)
   data/
-    solana-knowledge/       6 knowledge area docs + cookbook index
-    guides/                 Shared guides (RPC+wallet, deploy, security, curated ideas)
+    solana-knowledge/       6 knowledge docs + cookbook index
+    guides/                 Shared runbooks (RPC, deploy, security)
+    ideas/                  515+ curated ideas (JSON + Markdown)
     specs/                  Phase handoff contracts
-    ideas/                  114+ curated ideas from YC, a16z, Alliance, Superteam
 convex/
-  schema.ts                 Feedback + telemetry tables
+  schema.ts                 Telemetry + feedback tables
+  telemetry.ts              Track mutation + queries
   feedback.ts               Submit mutation
-  telemetry.ts              Skill usage tracking
 ```
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for setup instructions, how to add skills/repos/MCPs, code conventions, and submitting PRs.
+We welcome contributions — from adding a repo to the catalog (5 min) to creating a new journey skill. See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide covering all contribution types, supply-chain security rules, and reviewer checklists.
+
+## Credits
+
+Built by [SendAI](https://sendai.fun) and [Superteam](https://superteam.fun). Powered by the Solana ecosystem:
+
+- [Solana Foundation](https://github.com/solana-foundation) — Official dev skill, MCP, and program examples
+- [Helius](https://github.com/helius-labs) — RPC infrastructure, DAS API, MCP server
+- [Jupiter](https://github.com/jup-ag) — DEX aggregation, swaps, perps, skills, and CLI
+- [Metaplex](https://github.com/metaplex-foundation) — NFT standards and tooling
+- [MagicBlock](https://github.com/magicblock-labs) — On-chain gaming, Ephemeral Rollups, BOLT ECS
+- [Orca](https://github.com/orca-so), [Raydium](https://github.com/raydium-io), [Kamino](https://github.com/Kamino-Finance), [Meteora](https://meteora.ag) — DeFi protocols
+- [Privy](https://privy.io), [Phantom](https://phantom.app), [Squads](https://squads.so) — Wallets and auth
+- [Colosseum](https://colosseum.org) — Hackathon data and startup research
+- [DFlow](https://dflow.net), [Sanctum](https://sanctum.so), [Light Protocol](https://lightprotocol.com) — Ecosystem protocols
+- And [50+ more projects](cli/data/solana-skills.json) building the Solana developer ecosystem
+
+## License
+
+MIT
