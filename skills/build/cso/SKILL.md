@@ -79,11 +79,11 @@ You are a Chief Security Officer conducting a security audit. You are methodical
 | `/cso` | Full audit (all phases) |
 | `/cso --comprehensive` | Monthly deep scan, 2/10 confidence bar |
 | `/cso --infra` | Phases 0-6 only (infrastructure) |
-| `/cso --code` | Phases 8-9 only (OWASP + code) |
+| `/cso --code` | Phases 8-9 only (OWASP Top 10:2025 + code) |
 | `/cso --skills` | Phase 8 only (skill supply chain) |
 | `/cso --diff` | Audit only changed files (git diff against main) |
 | `/cso --supply-chain` | Phases 3, 8 only (dependency + skill supply chain) |
-| `/cso --owasp` | Phase 9 only (OWASP Top 10) |
+| `/cso --owasp` | Phase 9 only (OWASP Top 10:2025) |
 | `/cso --scope <path>` | Limit audit to specific directory or file |
 
 ## Mode Resolution
@@ -100,7 +100,7 @@ Always start by asking the user which scope they want using AskUserQuestion, unl
 
 - **Full audit** — all 15 phases, recommended for first run
 - **Infrastructure only** — network, secrets, CI/CD, webhooks
-- **Code only** — OWASP Top 10, code-level vulnerabilities
+- **Code only** — OWASP Top 10:2025, code-level vulnerabilities
 - **Supply chain** — dependencies and skill packages
 - **Diff only** — just the changed files since main
 - **Custom scope** — specific directory or file path
@@ -208,7 +208,8 @@ Use Bash only for: git commands, running test suites, checking file permissions,
 **Goal:** Ensure the build and deploy pipeline cannot be compromised.
 
 1. **GitHub Actions:**
-   - Search for `uses:` with unpinned actions (no `@sha256:` or `@v` tag)
+   - Search for `uses:` entries not pinned to a full immutable commit SHA (for example, `@<full commit SHA>`, including 40- or 64-character SHAs)
+   - Treat `@v*` tags, branches, and other mutable refs as weaker references, not immutable pinning
    - Check for `pull_request_target` trigger (code injection risk)
    - Check for `${{ github.event.*.body }}` or similar injection points
    - Verify secrets are not logged (`echo ${{ secrets.* }}`)
@@ -319,9 +320,9 @@ Use Bash only for: git commands, running test suites, checking file permissions,
 
 ---
 
-## Phase 9: OWASP Top 10 Assessment
+## Phase 9: OWASP Top 10:2025 Assessment
 
-**Goal:** Systematic check against OWASP Top 10 (2021) with active verification.
+**Goal:** Systematic check against OWASP Top 10:2025 with active verification.
 
 ### A01: Broken Access Control
 - Check for missing authorization on API routes
@@ -329,60 +330,66 @@ Use Bash only for: git commands, running test suites, checking file permissions,
 - Verify role-based access control implementation
 - Solana: check for missing signer constraints, unchecked account ownership
 
-### A02: Cryptographic Failures
-- Search for weak algorithms: `MD5`, `SHA1` (for security purposes), `DES`, `RC4`
-- Check for hardcoded encryption keys
-- Verify TLS configuration (minimum version, cipher suites)
-- Solana: verify proper use of `ed25519`, check for weak randomness in key generation
-
-### A03: Injection
-- **SQL:** Search for string concatenation in queries (`"SELECT.*" + `, `` `SELECT ${` ``)
-- **Command:** Search for `exec(`, `spawn(`, `system(` with user input
-- **XSS:** Search for `dangerouslySetInnerHTML`, `innerHTML`, unescaped output in templates
-- **LDAP/XPath:** If applicable, check injection points
-- **Solana:** Check for unchecked instruction data deserialization
-
-### A04: Insecure Design
-- Check for rate limiting on auth endpoints
-- Verify account lockout mechanisms
-- Check for security-relevant business logic flaws
-- Review error messages for information leakage
-
-### A05: Security Misconfiguration
+### A02: Security Misconfiguration
 - Check for debug mode in production configs
 - Search for default credentials
 - Verify security headers (CSP, HSTS, X-Frame-Options, X-Content-Type-Options)
 - Check CORS configuration (`Access-Control-Allow-Origin: *`)
 - Verify directory listing is disabled
 
-### A06: Vulnerable and Outdated Components
-- Cross-reference with Phase 3 dependency audit
-- Check for components with known CVEs
-- Verify update policy exists
+### A03: Software Supply Chain Failures
+- Cross-reference with Phase 3 dependency audit and Phase 4 CI/CD integrity audit
+- Check for vulnerable, unsupported, or unmaintained third-party components
+- Verify version tracking, vulnerability scanning, and change-management processes exist
+- Check CI/CD dependencies such as GitHub Actions, container base images, and build tooling for mutable or untrusted sources
 
-### A07: Identification and Authentication Failures
+### A04: Cryptographic Failures
+- Search for weak algorithms: `MD5`, `SHA1` (for security purposes), `DES`, `RC4`
+- Check for hardcoded encryption keys
+- Verify TLS configuration (minimum version, cipher suites)
+- Solana: verify proper use of `ed25519`, check for weak randomness in key generation
+
+### A05: Injection
+- **SQL:** Search for string concatenation in queries (`"SELECT.*" + `, `` `SELECT ${` ``)
+- **Command:** Search for `exec(`, `spawn(`, `system(` with user input
+- **XSS:** Search for `dangerouslySetInnerHTML`, `innerHTML`, unescaped output in templates
+- **LDAP/XPath:** If applicable, check injection points
+- **Solana:** Check for unchecked instruction data deserialization
+
+### A06: Insecure Design
+- Check for rate limiting on auth endpoints
+- Verify account lockout mechanisms
+- Check for security-relevant business logic flaws
+- Review error messages for information leakage
+
+### A07: Authentication Failures
 - Check password policies (if applicable)
 - Verify session management (expiry, rotation, secure flags)
 - Check for credential stuffing protections
 - Solana: verify wallet signature validation, check for replay attacks
 
-### A08: Software and Data Integrity Failures
+### A08: Software or Data Integrity Failures
 - Check for unsigned updates or deployments
 - Verify CI/CD pipeline integrity (cross-ref Phase 4)
 - Check for deserialization of untrusted data
 - Solana: verify program upgrade authority, check IDL integrity
 
-### A09: Security Logging and Monitoring Failures
+### A09: Security Logging and Alerting Failures
 - Check for security event logging (failed logins, privilege changes)
 - Verify log injection protections
 - Check for sensitive data in logs (passwords, tokens, keys)
 - Verify alerting exists for security events
 
-### A10: Server-Side Request Forgery (SSRF)
-- Search for user-controlled URLs in server-side requests
-- Check for URL validation and allowlisting
-- Verify internal network access restrictions
-- Check for DNS rebinding protections
+### A10: Mishandling of Exceptional Conditions
+- Check for fail-open behavior on errors or missing inputs
+- Verify exceptions and abnormal states are handled securely and consistently
+- Review error paths for sensitive-data leakage
+- Check timeout, retry, fallback, and privilege-failure handling
+
+## Sources for Phase 4 and Phase 9
+- GitHub secure use reference: https://docs.github.com/en/actions/reference/security/secure-use
+- OWASP Top Ten project: https://owasp.org/www-project-top-ten/
+- OWASP Top 10:2025 reference: https://owasp.org/www-project-top-ten/
 
 ---
 
