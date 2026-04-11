@@ -117,7 +117,7 @@ Ships with a curated catalog of the Solana ecosystem that skills search and reco
 
 | Catalog | Count | Examples |
 |---------|-------|---------|
-| **Repos** | 106 | Anchor, Pinocchio, Quasar, Doppler, Metaplex, Orca, Raydium, Jupiter, Jito, LiteSVM, Mollusk, Codama, Blueshift, Solana Foundation, Solana Agent Kit, MagicBlock |
+| **Repos** | 106 | Anchor, Pinocchio, Quasar, Doppler, Metaplex, Orca, Raydium, Jupiter, Jito, LiteSVM, Mollusk, Codama, Blueshift, ConnectorKit, Solana Agent Kit, MagicBlock |
 | **Skills** | 77 | 15 official (Solana Foundation) + 62 community (Jupiter, Helius, Kamino, Privy, DFlow, Meteora, Sanctum, QEDGen, Carbium) |
 | **MCPs** | 53 | Helius, Jupiter, Phantom, Orca, Alchemy, Flash Trade, Solscan, DexScreener, Solana Foundation |
 | **Knowledge** | 7 docs | Architecture, programs, protocols, SDKs, app layer, open-source research, Cookbook index |
