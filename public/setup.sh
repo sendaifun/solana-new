@@ -326,8 +326,8 @@ EOF
   _fc() { local t="$1" w="$2" l=${#1}; if ((l>=w)); then printf "%.${w}s" "$t"; else local lp=$(((w-l)/2)); printf "%*s%s%*s" "$lp" "" "$t" $((w-l-lp)) ""; fi; }
   _rep() { printf "%0.s$1" $(seq 1 "$2"); }
   _vlen() { local s; s=$(printf '%s' "$1" | perl -pe 's/\e\[\d+(;\d+)*m//g'); echo ${#s}; }
-  _row() { local c="$1" p=$((MW-$(_vlen "$1"))); printf '%s' "$c"; ((p>0)) && printf "${BG}%${p}s" ""; }
-  _rowlr() { local l="$1" r="$2" g=$((MW-$(_vlen "$1")-$(_vlen "$2"))); printf '%s' "$l"; ((g>0)) && printf "${BG}%${g}s" ""; printf '%s' "$r"; }
+  _row() { local c="$1" p=$((MW-$(_vlen "$1"))); printf '%s' "$c"; ((p>0)) && printf "${BG}%${p}s" "" || true; }
+  _rowlr() { local l="$1" r="$2" g=$((MW-$(_vlen "$1")-$(_vlen "$2"))); printf '%s' "$l"; ((g>0)) && printf "${BG}%${g}s" "" || true; printf '%s' "$r"; }
   _L() { local ltr="$1" sep="$2"; if [[ -n "$ltr" ]]; then printf "  ${GD}║${BG}  ${D}${ltr}${R}${BG}  ${GD}${sep} ║${BG}"; else printf "  ${GD}║${BG}$(_f '' $SW)${GD}${sep} ║${BG}"; fi; }
   _R() { local ltr="$1" sep="$2"; if [[ -n "$ltr" ]]; then printf "${R}${GD}║ ${sep}${BG}  ${D}${ltr}${R}${BG}  ${GD}║${R}\n"; else printf "${R}${GD}║ ${sep}${BG}$(_f '' $SW)${GD}║${R}\n"; fi; }
 
