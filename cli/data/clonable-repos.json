@@ -19,21 +19,6 @@
       "is_template": true
     },
     {
-      "id": "dapp-scaffold",
-      "repo": "solana-labs/dapp-scaffold",
-      "description": "Original Next.js dApp scaffold with wallet adapter",
-      "category": "scaffold",
-      "keywords": [
-        "next",
-        "web",
-        "wallet",
-        "dapp",
-        "frontend"
-      ],
-      "clone_command": "git clone https://github.com/solana-labs/dapp-scaffold.git",
-      "is_template": true
-    },
-    {
       "id": "anchor-by-example",
       "repo": "coral-xyz/anchor-by-example",
       "description": "Curated Anchor program examples (escrow, auction, counter, etc.)",
@@ -181,22 +166,6 @@
       ],
       "clone_command": "git clone https://github.com/marinade-finance/liquid-staking-program.git",
       "is_template": false
-    },
-    {
-      "id": "jupiter-nextjs-example",
-      "repo": "jup-ag/jupiter-nextjs-example",
-      "description": "Jupiter swap aggregator integration in Next.js",
-      "category": "defi",
-      "keywords": [
-        "swap",
-        "jupiter",
-        "aggregator",
-        "dex",
-        "next",
-        "frontend"
-      ],
-      "clone_command": "git clone https://github.com/jup-ag/jupiter-nextjs-example.git",
-      "is_template": true
     },
     {
       "id": "squads-v4",
@@ -1136,22 +1105,6 @@
         "typescript"
       ],
       "clone_command": "git clone https://github.com/jup-ag/jupiter-swap-api-client.git",
-      "is_template": false
-    },
-    {
-      "id": "jupiter-cpi",
-      "repo": "jup-ag/jupiter-cpi",
-      "description": "Anchor CPI client for the Jupiter program — integrate Jupiter swaps directly into Solana programs",
-      "category": "defi",
-      "keywords": [
-        "jupiter",
-        "cpi",
-        "anchor",
-        "swap",
-        "program",
-        "on-chain"
-      ],
-      "clone_command": "git clone https://github.com/jup-ag/jupiter-cpi.git",
       "is_template": false
     },
     {

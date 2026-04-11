@@ -7,7 +7,7 @@ A structured sprint to test whether an idea deserves engineering time.
 ### Day 1-2: Signal Collection
 
 1. **Competitor Scan** — Find every live product, dead project, and active fork in the space
-   - Search Solana ecosystem (use solana-new catalogs: 80 repos, 73 skills, 53 MCPs)
+   - Search Solana ecosystem (use solana-new catalogs: 77 repos, 73 skills, 52 MCPs)
    - Search broader crypto (Ethereum, Base, Arbitrum equivalents)
    - Check Colosseum hackathon submissions for similar projects
 2. **Demand Signals** — Look for evidence that people want this

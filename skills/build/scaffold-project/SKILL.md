@@ -1,6 +1,6 @@
 ---
 name: scaffold-project
-description: Set up a complete Solana project workspace from a validated idea. Use when a user says "scaffold my project", "set up my workspace", "what stack should I use", "create the project structure", or "initialize my project". Reads idea-context.md from a prior idea phase if available. Leverages solana-new's catalogs of 80 repos, 73 skills, and 53 MCPs.
+description: Set up a complete Solana project workspace from a validated idea. Use when a user says "scaffold my project", "set up my workspace", "what stack should I use", "create the project structure", or "initialize my project". Reads idea-context.md from a prior idea phase if available. Leverages solana-new's catalogs of 77 repos, 73 skills, and 52 MCPs.
 ---
 
 ## Preamble (run first)
