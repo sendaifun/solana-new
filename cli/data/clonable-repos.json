@@ -1399,6 +1399,23 @@
       ],
       "clone_command": "git clone https://github.com/Shyft-to/solana-defi.git",
       "is_template": true
+    },
+    {
+      "id": "meteora-dlmm-sdk",
+      "repo": "MeteoraAg/dlmm-sdk",
+      "description": "Meteora DLMM SDK — concentrated liquidity with dynamic fees, TypeScript and Rust clients for building on Meteora's liquidity infrastructure",
+      "category": "defi",
+      "keywords": [
+        "meteora",
+        "dlmm",
+        "amm",
+        "liquidity",
+        "concentrated",
+        "defi",
+        "sdk"
+      ],
+      "clone_command": "git clone https://github.com/MeteoraAg/dlmm-sdk.git",
+      "is_template": false
     }
   ]
 }

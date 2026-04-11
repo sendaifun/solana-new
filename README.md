@@ -1,11 +1,11 @@
 # superstack
 [![solana.new](https://img.shields.io/badge/solana.new-Install-black?logo=solana&logoColor=white)](https://solana.new)
 [![Skills](https://img.shields.io/badge/skills-77-blueviolet)](#ecosystem-catalog)
-[![Repos](https://img.shields.io/badge/repos-88-blue)](#ecosystem-catalog)
+[![Repos](https://img.shields.io/badge/repos-89-blue)](#ecosystem-catalog)
 [![MCPs](https://img.shields.io/badge/MCPs-53-green)](#ecosystem-catalog)
 [![License](https://img.shields.io/github/license/sendaifun/solana-new)](LICENSE)
 
-The open-source platform behind [solana.new](https://solana.new) — 25 journey skills that take you from "what should I build?" to a shipped, funded product on Solana. Backed by 88 repos, 77 ecosystem skills, 53 MCP servers, 515+ curated ideas, and a comprehensive Solana knowledge base.
+The open-source platform behind [solana.new](https://solana.new) — 25 journey skills that take you from "what should I build?" to a shipped, funded product on Solana. Backed by 89 repos, 77 ecosystem skills, 53 MCP servers, 515+ curated ideas, and a comprehensive Solana knowledge base.
 
 Works with [Claude Code](https://claude.ai/code) and [Codex](https://openai.com/index/codex/).
 
@@ -144,7 +144,7 @@ cli/
   telemetry.ts              Skill usage tracking (Convex + local JSONL)
   init.ts                   Auto-install skills to ~/.claude/ and ~/.codex/
   data/
-    clonable-repos.json     88 repos
+    clonable-repos.json     89 repos
     solana-skills.json      77 skills (15 official + 62 community)
     solana-mcps.json        53 MCP servers
 skills/
