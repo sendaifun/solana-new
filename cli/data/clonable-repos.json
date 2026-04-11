@@ -1670,6 +1670,22 @@
       ],
       "clone_command": "git clone https://github.com/solana-foundation/solana-bootcamp-2026.git",
       "is_template": true
+    },
+    {
+      "id": "noir-examples",
+      "repo": "solana-foundation/noir-examples",
+      "description": "ZK proofs on Solana using Noir and Sunspot — examples for zero-knowledge program development",
+      "category": "example",
+      "keywords": [
+        "zk",
+        "noir",
+        "sunspot",
+        "zero-knowledge",
+        "proof",
+        "foundation"
+      ],
+      "clone_command": "git clone https://github.com/solana-foundation/noir-examples.git",
+      "is_template": true
     }
   ]
 }
