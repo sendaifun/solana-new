@@ -1,6 +1,6 @@
 ---
 name: competitive-landscape
-description: Map the competitive landscape for a crypto product idea. Use when a user says "who are my competitors", "map the competitive landscape", "what exists in this space", "show me similar projects", or "competitive analysis". Leverages solana-new's catalogs of 106 repos, 77 skills, and 53 MCPs.
+description: Map the competitive landscape for a crypto product idea. Use when a user says "who are my competitors", "map the competitive landscape", "what exists in this space", "show me similar projects", or "competitive analysis". Leverages solana-new's catalogs of 106 repos, 77 skills, and 36 MCPs.
 ---
 
 ## Preamble (run first)
@@ -100,7 +100,7 @@ This skill is **Phase 1 (Idea)** in the Idea → Build → Launch journey. After
 # The skill will search:
 # - 106 repos in cli/data/clonable-repos.json
 # - 77 skills in cli/data/solana-skills.json
-# - 53 MCPs in cli/data/solana-mcps.json
+# - 36 MCPs in cli/data/solana-mcps.json
 # - DefiLlama, GitHub, and crypto Twitter
 ```
 
