@@ -7,7 +7,7 @@
   "install_all_command": "npx skills add https://github.com/solana-foundation/solana-dev-skill",
   "counts": {
     "official": 15,
-    "community": 58
+    "community": 62
   },
   "official_skills": [
     {
@@ -575,6 +575,42 @@
       "url": "https://agents.privy.io/skill.md",
       "category": {
         "labelKey": "infrastructure"
+      }
+    },
+    {
+      "slug": "carbium-skill",
+      "title": "Carbium Skill",
+      "description": "AI coding skill for Carbium bare-metal Solana infrastructure — RPC, gRPC full-block streaming, DEX aggregation via CQ1, gasless swaps, MEV-protected execution.",
+      "url": "https://github.com/sendaifun/skills/tree/main/skills/carbium",
+      "category": {
+        "labelKey": "infrastructure"
+      }
+    },
+    {
+      "slug": "jupiter-swap-migration-skill",
+      "title": "Jupiter Swap Migration Skill",
+      "description": "AI coding skill for migrating from Jupiter Metis (v1) or Ultra to Swap API v2 with the unified build endpoint.",
+      "url": "https://github.com/jup-ag/agent-skills/tree/main/skills/jupiter-swap-migration",
+      "category": {
+        "labelKey": "defi"
+      }
+    },
+    {
+      "slug": "jupiter-vrfd-skill",
+      "title": "Jupiter VRFD Skill",
+      "description": "AI coding skill for Jupiter token verification — submit verification requests, update metadata via Jupiter express verification.",
+      "url": "https://github.com/jup-ag/agent-skills/tree/main/skills/jupiter-vrfd",
+      "category": {
+        "labelKey": "defi"
+      }
+    },
+    {
+      "slug": "helius-okx-skill",
+      "title": "Helius x OKX Skill (Official)",
+      "description": "Official Helius skill for trading apps with OKX DEX aggregation — swaps, token discovery, smart money signals, and meme token analysis.",
+      "url": "https://github.com/helius-labs/core-ai/tree/main/helius-skills/helius-okx",
+      "category": {
+        "labelKey": "defi"
       }
     }
   ],

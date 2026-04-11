@@ -1220,6 +1220,185 @@
       ],
       "clone_command": "git clone https://github.com/blueshift-gg/quasar.git",
       "is_template": false
+    },
+    {
+      "id": "litesvm",
+      "repo": "LiteSVM/litesvm",
+      "description": "Fast SVM program test harness — the recommended unit testing tool for Solana programs with Rust and TypeScript bindings",
+      "category": "tooling",
+      "keywords": [
+        "test",
+        "svm",
+        "unit-test",
+        "litesvm",
+        "fast",
+        "harness"
+      ],
+      "clone_command": "git clone https://github.com/LiteSVM/litesvm.git",
+      "is_template": false
+    },
+    {
+      "id": "mollusk",
+      "repo": "anza-xyz/mollusk",
+      "description": "SVM program test harness for isolated instruction-level testing — part of the official Solana testing pyramid",
+      "category": "tooling",
+      "keywords": [
+        "test",
+        "svm",
+        "instruction",
+        "mollusk",
+        "anza",
+        "isolated"
+      ],
+      "clone_command": "git clone https://github.com/anza-xyz/mollusk.git",
+      "is_template": false
+    },
+    {
+      "id": "codama",
+      "repo": "codama-idl/codama",
+      "description": "Generate type-safe clients, CLIs, and documentation from Solana program IDLs — multi-language code generation",
+      "category": "tooling",
+      "keywords": [
+        "idl",
+        "codegen",
+        "client",
+        "codama",
+        "typescript",
+        "rust",
+        "cli"
+      ],
+      "clone_command": "git clone https://github.com/codama-idl/codama.git",
+      "is_template": false
+    },
+    {
+      "id": "yellowstone-grpc",
+      "repo": "rpcpool/yellowstone-grpc",
+      "description": "Triton's Dragon's Mouth gRPC service — high-performance real-time Solana data streaming for indexers and trading bots",
+      "category": "infrastructure",
+      "keywords": [
+        "grpc",
+        "streaming",
+        "yellowstone",
+        "triton",
+        "real-time",
+        "indexer",
+        "data"
+      ],
+      "clone_command": "git clone https://github.com/rpcpool/yellowstone-grpc.git",
+      "is_template": false
+    },
+    {
+      "id": "carbon",
+      "repo": "sevenlabs-hq/carbon",
+      "description": "Rust indexing framework for Solana — simplifies building custom on-chain data indexers",
+      "category": "infrastructure",
+      "keywords": [
+        "indexer",
+        "rust",
+        "carbon",
+        "data",
+        "on-chain",
+        "framework"
+      ],
+      "clone_command": "git clone https://github.com/sevenlabs-hq/carbon.git",
+      "is_template": false
+    },
+    {
+      "id": "solana-verifiable-build",
+      "repo": "solana-foundation/solana-verifiable-build",
+      "description": "CLI tool for deterministic builds and on-chain verification of deployed Solana programs",
+      "category": "tooling",
+      "keywords": [
+        "verifiable",
+        "build",
+        "deploy",
+        "security",
+        "verification",
+        "deterministic"
+      ],
+      "clone_command": "git clone https://github.com/solana-foundation/solana-verifiable-build.git",
+      "is_template": false
+    },
+    {
+      "id": "kora",
+      "repo": "solana-foundation/kora",
+      "description": "Official Solana relayer for gasless and sponsored transactions — fee abstraction for end users",
+      "category": "infrastructure",
+      "keywords": [
+        "relayer",
+        "gasless",
+        "sponsor",
+        "fee",
+        "abstraction",
+        "onboarding"
+      ],
+      "clone_command": "git clone https://github.com/solana-foundation/kora.git",
+      "is_template": false
+    },
+    {
+      "id": "jito-searcher-examples",
+      "repo": "jito-labs/searcher-examples",
+      "description": "Reference examples for Jito bundle searchers — MEV extraction, bundle submission, and tip management on Solana",
+      "category": "defi",
+      "keywords": [
+        "jito",
+        "mev",
+        "bundle",
+        "searcher",
+        "tips",
+        "trading"
+      ],
+      "clone_command": "git clone https://github.com/jito-labs/searcher-examples.git",
+      "is_template": true
+    },
+    {
+      "id": "jito-ts",
+      "repo": "jito-labs/jito-ts",
+      "description": "Jito TypeScript SDK for bundle submission and tip management on Solana",
+      "category": "defi",
+      "keywords": [
+        "jito",
+        "mev",
+        "bundle",
+        "typescript",
+        "sdk",
+        "tips"
+      ],
+      "clone_command": "git clone https://github.com/jito-labs/jito-ts.git",
+      "is_template": false
+    },
+    {
+      "id": "jito-restaking",
+      "repo": "jito-foundation/restaking",
+      "description": "Jito restaking protocol — stake SOL to secure additional services and earn extra yield",
+      "category": "defi",
+      "keywords": [
+        "jito",
+        "restaking",
+        "staking",
+        "yield",
+        "defi",
+        "security"
+      ],
+      "clone_command": "git clone https://github.com/jito-foundation/restaking.git",
+      "is_template": false
+    },
+    {
+      "id": "solana-defi-grpc-examples",
+      "repo": "Shyft-to/solana-defi",
+      "description": "Yellowstone gRPC parsing examples for Pump, Meteora, Raydium, and more — account and transaction parsing for DeFi indexers",
+      "category": "example",
+      "keywords": [
+        "grpc",
+        "yellowstone",
+        "parser",
+        "pump",
+        "meteora",
+        "raydium",
+        "indexer"
+      ],
+      "clone_command": "git clone https://github.com/Shyft-to/solana-defi.git",
+      "is_template": true
     }
   ]
 }
