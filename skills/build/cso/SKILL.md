@@ -389,7 +389,7 @@ Use Bash only for: git commands, running test suites, checking file permissions,
 ## Sources for Phase 4 and Phase 9
 - GitHub secure use reference: https://docs.github.com/en/actions/reference/security/secure-use
 - OWASP Top Ten project: https://owasp.org/www-project-top-ten/
-- OWASP Top 10:2025 upstream navigation: https://raw.githubusercontent.com/OWASP/Top10/master/2025/mkdocs.yml
+- OWASP Top 10:2025 reference: https://owasp.org/www-project-top-ten/
 
 ---
 
