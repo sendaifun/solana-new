@@ -42,8 +42,10 @@ pub struct Vault {
 | Token account | `[b"token", mint.key(), user.key()]` | Associated token storage owned by program |
 | Order/position | `[b"order", user.key(), &order_id.to_le_bytes()]` | Indexed records per user |
 | Pool | `[b"pool", token_a.key(), token_b.key()]` | Deterministic pair addressing |
-| Metadata | `[b"metadata", nft_mint.key()]` | Metadata attached to a mint |
+| Metaplex metadata | `[b"metadata", mpl_token_metadata::ID.as_ref(), mint.key().as_ref()]` | Metadata PDA for a mint under the Metaplex Token Metadata program |
 | Authority | `[b"authority"]` | Program-owned signer for CPIs |
+
+Note: This PDA is derived by the Metaplex Token Metadata program, not by your program. In Umi/JS, prefer `findMetadataPda(context, { mint })`. A master edition PDA adds a trailing `b"edition"` seed.
 
 ## PDA as Signer
 
@@ -114,19 +116,25 @@ pub struct InitConfig<'info> {
 ### Token Account Owned by PDA
 
 ```rust
+use anchor_spl::token_interface::{Mint, TokenAccount, TokenInterface};
+
 #[account(
     init,
     payer = user,
     token::mint = mint,
     token::authority = vault_authority,
+    token::token_program = token_program,
     seeds = [b"token", mint.key().as_ref(), user.key().as_ref()],
     bump
 )]
-pub token_account: Account<'info, TokenAccount>,
+pub token_account: InterfaceAccount<'info, TokenAccount>;
 
 #[account(seeds = [b"authority"], bump)]
-/// CHECK: PDA used as token authority
-pub vault_authority: UncheckedAccount<'info>,
+/// CHECK: PDA used only as the token authority signer
+pub vault_authority: UncheckedAccount<'info>;
+
+pub mint: InterfaceAccount<'info, Mint>;
+pub token_program: Interface<'info, TokenInterface>;
 ```
 
 ## CPI Patterns
@@ -147,15 +155,21 @@ anchor_lang::system_program::transfer(cpi_ctx, lamports)?;
 ### Transfer Tokens via Token Program
 
 ```rust
+let decimals = ctx.accounts.mint.decimals;
+
+let cpi_accounts = token_interface::TransferChecked {
+    mint: ctx.accounts.mint.to_account_info(),
+    from: ctx.accounts.source.to_account_info(),
+    to: ctx.accounts.destination.to_account_info(),
+    authority: ctx.accounts.owner.to_account_info(),
+};
+
 let cpi_ctx = CpiContext::new(
     ctx.accounts.token_program.to_account_info(),
-    token::Transfer {
-        from: ctx.accounts.source.to_account_info(),
-        to: ctx.accounts.destination.to_account_info(),
-        authority: ctx.accounts.owner.to_account_info(),
-    },
+    cpi_accounts,
 );
-token::transfer(cpi_ctx, amount)?;
+
+token_interface::transfer_checked(cpi_ctx, amount, decimals)?;
 ```
 
 ### Mint Tokens with PDA Authority
@@ -163,16 +177,20 @@ token::transfer(cpi_ctx, amount)?;
 ```rust
 let seeds = &[b"mint_authority", &[bump]];
 let signer_seeds = &[&seeds[..]];
+
+let cpi_accounts = token_interface::MintTo {
+    mint: ctx.accounts.mint.to_account_info(),
+    to: ctx.accounts.destination.to_account_info(),
+    authority: ctx.accounts.mint_authority.to_account_info(),
+};
+
 let cpi_ctx = CpiContext::new_with_signer(
     ctx.accounts.token_program.to_account_info(),
-    token::MintTo {
-        mint: ctx.accounts.mint.to_account_info(),
-        to: ctx.accounts.destination.to_account_info(),
-        authority: ctx.accounts.mint_authority.to_account_info(),
-    },
+    cpi_accounts,
     signer_seeds,
 );
-token::mint_to(cpi_ctx, amount)?;
+
+token_interface::mint_to(cpi_ctx, amount)?;
 ```
 
 ### Close Account and Reclaim Rent
@@ -212,4 +230,4 @@ Solana's runtime prevents direct re-entrancy (a program cannot CPI back into its
 
 - **Jupiter**: Uses PDAs for route caching, user-specific limit orders, and DCA positions. Seeds include user key + position index for multiple positions per user.
 - **Orca Whirlpool**: Pool PDAs derived from token pair mints. Tick array PDAs derived from pool + tick index. Position PDAs from pool + lower/upper tick.
-- **Drift** (defunct — exploited April 2026): User account PDAs were derived from authority + sub-account index, supporting multiple sub-accounts per wallet for isolated margin. Listed as an architectural example only — do not integrate.
+- **Drift**: Uses PDAs for user accounts and sub-accounts; for example, user account addresses are derived from seeds including `"user"`, the authority pubkey, and a sub-account index. Useful as an architectural example of multi-account-per-user design. Drift was exploited in April 2026 via a social-engineering incident and is currently paused; that status note is operational, not a comment on the PDA design pattern itself. Treat it as a design reference only and revalidate current protocol status before any integration work.

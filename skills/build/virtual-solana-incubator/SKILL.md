@@ -182,7 +182,7 @@ See `references/incubator-curriculum.md` for the full breakdown of each track wi
 | Reference | Purpose |
 |-----------|---------|
 | `references/incubator-curriculum.md` | Full curriculum with tracks, exercises, solutions |
-| `references/svm-architecture.md` | SVM internals, Sealevel, compute units, BPF |
+| `references/svm-architecture.md` | SVM internals, Sealevel, compute units, sBPF / Solana Bytecode Format |
 | `references/rust-for-solana.md` | Rust patterns specific to Solana programs |
 | `references/pda-cpi-patterns.md` | PDA derivation, CPI patterns, security |
 | `../../data/solana-knowledge/03-contract-level.md` | Contract-level knowledge base |
