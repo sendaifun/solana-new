@@ -175,29 +175,36 @@ await transfer(connection, payer, sourceATA, destATA, owner, amount);
 
 ## Jupiter Swap Integration
 
-> **Note:** The v6 API (`quote-api.jup.ag/v6`) is being sunset. The replacement is the **Ultra API** at `api.jup.ag`. New projects should use the Ultra API. See [Jupiter docs](https://station.jup.ag/docs) for migration guidance.
+> **Note:** `quote-api.jup.ag/v6` is legacy. Current Jupiter docs center on the Swap API at `api.jup.ag/swap/v2`. New integrations should use `GET /swap/v2/order` and `POST /swap/v2/execute`, and include an `x-api-key` header. `swap/v1` may still respond, but it is no longer the primary docs path.
 
 ```typescript
-// ⚠️ Legacy v6 API — being sunset. Migrate to Ultra API (api.jup.ag) for new projects.
-const quoteUrl = `https://quote-api.jup.ag/v6/quote?inputMint=${inputMint}&outputMint=${outputMint}&amount=${amount}&slippageBps=50`;
-const quote = await fetch(quoteUrl).then(r => r.json());
+const params = new URLSearchParams({
+  inputMint,
+  outputMint,
+  amount: amount.toString(),
+  taker: wallet.publicKey.toString(),
+  slippageBps: "50",
+});
 
-const swapUrl = "https://quote-api.jup.ag/v6/swap";
-const swap = await fetch(swapUrl, {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ quoteResponse: quote, userPublicKey: wallet.publicKey.toString() }),
-}).then(r => r.json());
+const order = await fetch(`https://api.jup.ag/swap/v2/order?${params}`, {
+  headers: {
+    "x-api-key": process.env.JUP_API_KEY!,
+  },
+}).then((r) => r.json());
 
-// Deserialize and send the transaction
-const tx = VersionedTransaction.deserialize(Buffer.from(swap.swapTransaction, "base64"));
-tx.sign([wallet]);
-const sig = await connection.sendRawTransaction(tx.serialize());
+// Sign the returned base64 transaction, then POST the signed transaction
+// plus `requestId` from /order to `https://api.jup.ag/swap/v2/execute`.
 ```
 
 **Skills:** `jupiter-skill` (community)
 **MCPs:** `dcspark-jupiter` (swap quotes + execution)
 **Repos:** `jupiter-nextjs-example`
+
+## Sources
+
+- Jupiter developer docs: https://dev.jup.ag/docs/swap
+- Jupiter API reference: https://dev.jup.ag/docs/api-reference/swap/order
+- Jupiter API reference: https://dev.jup.ag/docs/api-reference/swap/execute
 
 ## Wallet Connection (Frontend)
 
