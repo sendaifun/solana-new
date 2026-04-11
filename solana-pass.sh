@@ -38,11 +38,43 @@ _seal_parts() {
   SEAL_BOT="'$(date +%y)"
 }
 
+# ── Auto-detect GitHub stats ─────────────────────────────
+GH_CONTRIBS=""
+GH_REPOS_NUM=""
+GH_FOLLOWERS_NUM=""
+
+_fetch_gh() {
+  local candidate="$1" json type
+  [ -z "$candidate" ] && return 1
+  json=$(curl -sf --max-time 3 "https://api.github.com/users/$candidate" 2>/dev/null) || return 1
+  type=$(echo "$json" | grep '"type":' | head -1 | sed 's/.*"type":[[:space:]]*"\([^"]*\)".*/\1/')
+  [ "$type" = "User" ] || return 1
+  GH_REPOS_NUM=$(echo "$json" | grep '"public_repos":' | head -1 | tr -dc '0-9')
+  GH_FOLLOWERS_NUM=$(echo "$json" | grep '"followers":' | head -1 | tr -dc '0-9')
+  # Fetch contributions (last year) from contributions calendar
+  local contribs_page
+  contribs_page=$(curl -sf --max-time 3 "https://github.com/users/$candidate/contributions" 2>/dev/null) || true
+  GH_CONTRIBS=$(echo "$contribs_page" | tr -s '[:space:]' ' ' | grep -o '[0-9,]* contributions' | head -1 | tr -dc '0-9')
+  [ -z "$GH_CONTRIBS" ] && GH_CONTRIBS="0"
+  return 0
+}
+_fetch_gh "$(git config --global github.user 2>/dev/null)" ||
+  _fetch_gh "$(git config --global user.name 2>/dev/null | tr -d ' ')" ||
+  _fetch_gh "$(git remote get-url origin 2>/dev/null | sed -n 's|.*github\.com[:/]\([^/]*\)/.*|\1|p')" ||
+  true
+
+# Right stub: repo count as vertical digits
+_rpad=$(printf "%-4s" "${GH_REPOS_NUM:-0}")
+STUB_R1="${_rpad:0:1}"; [ "$STUB_R1" = " " ] && STUB_R1=""
+STUB_R2="${_rpad:1:1}"; [ "$STUB_R2" = " " ] && STUB_R2=""
+STUB_R3="${_rpad:2:1}"; [ "$STUB_R3" = " " ] && STUB_R3=""
+STUB_R4="${_rpad:3:1}"; [ "$STUB_R4" = " " ] && STUB_R4=""
+
 # ── Configurable Fields ──────────────────────────────────
 PASS_NAME="$(_format_name)"
 PASS_ISSUED="$(_today_issued)"
 PASS_CLASS="FOUNDING  BUILDER"
-PASS_LEVEL="LVL  1"
+PASS_GITHUB="${GH_CONTRIBS:-0}  CONTRIBUTIONS"
 PASS_NO="0142"
 STAMP_1="○ IDEA"      # ● IDEA when earned
 STAMP_2="○ BUILD"
@@ -180,7 +212,7 @@ VAL_W=$((MW - 1 - 13 - 1 - SEAL_BOX - 2))
 NAME_DISP=$(fixl "$PASS_NAME" $VAL_W)
 ISS_DISP=$(fixl "$PASS_ISSUED" $VAL_W)
 CLS_DISP=$(fixl "$PASS_CLASS" $VAL_W)
-LVL_DISP=$(fixl "◆  $PASS_LEVEL" $VAL_W)
+LVL_DISP=$(fixl "◆  $PASS_GITHUB" $VAL_W)
 
 S1=$(fixl "$STAMP_1" 10)
 S2=$(fixl "$STAMP_2" 10)
@@ -252,28 +284,28 @@ ROWS+=("$(_L '' '│'; rowlr " ${GB}◆ SOLANA·NEW  |  FOUNDER PASS${R}${BG}" "
 ROWS+=("$(_L '' '│'; row " ${GK}$(rep '┄' $((MW-2)))${R}${BG} "; _bR '' '│')")
 
 # Row 2: C-notch top
-ROWS+=("$(_L 'A' '╯'; row "$(fixl '' $MW)"; _bR '' '╰')")
+ROWS+=("$(_L '' '╯'; row "$(fixl '' $MW)"; _bR '' '╰')")
 
 # Row 3: NAME
-ROWS+=("$(_L 'D' ' '; row " ${GK}NAME  ${GK}····· ${GB}${NAME_DISP}${R}${BG}"; _bR '' ' ')")
+ROWS+=("$(_L 'S' ' '; row " ${GK}NAME  ${GK}····· ${GB}${NAME_DISP}${R}${BG}"; _bR '' ' ')")
 
 # Row 4: ISSUED
-ROWS+=("$(_L 'M' ' '; rowlr " ${GK}ISSUED ${GK}···  ${G}${ISS_DISP}${R}${BG}" " ${D}${SEAL_TOP_L}${R}${BG} "; _bR 'L' ' ')")
+ROWS+=("$(_L 'O' ' '; rowlr " ${GK}ISSUED ${GK}···  ${G}${ISS_DISP}${R}${BG}" " ${D}${SEAL_TOP_L}${R}${BG} "; _bR "$STUB_R1" ' ')")
 
 # Row 5: CLASS
-ROWS+=("$(_L 'I' ' '; rowlr " ${GK}CLASS  ${GK}···· ${G}${CLS_DISP}${R}${BG}" " ${D}${SEAL_APR_L}${R}${BG} "; _bR 'V' ' ')")
+ROWS+=("$(_L 'L' ' '; rowlr " ${GK}CLASS  ${GK}···· ${G}${CLS_DISP}${R}${BG}" " ${D}${SEAL_APR_L}${R}${BG} "; _bR "$STUB_R2" ' ')")
 
-# Row 6: LEVEL
-ROWS+=("$(_L 'T' ' '; rowlr " ${GK}LEVEL  ${GK}···· ${G}${LVL_DISP}${R}${BG}" " ${GB}${SEAL_DAY_L}${R}${BG} "; _bR 'L' ' ')")
+# Row 6: GITHUB
+ROWS+=("$(_L 'A' ' '; rowlr " ${GK}GITHUB ${GK}···· ${G}${LVL_DISP}${R}${BG}" " ${GB}${SEAL_DAY_L}${R}${BG} "; _bR "$STUB_R3" ' ')")
 
 # Row 7: seal '26
-ROWS+=("$(_L 'O' ' '; rowlr "" " ${D}${SEAL_YR_L}${R}${BG} "; _bR '1' ' ')")
+ROWS+=("$(_L 'N' ' '; rowlr "" " ${D}${SEAL_YR_L}${R}${BG} "; _bR "$STUB_R4" ' ')")
 
 # Row 8: seal bottom
-ROWS+=("$(_L 'N' ' '; rowlr "" " ${D}${SEAL_BOT_L}${R}${BG} "; _bR '' ' ')")
+ROWS+=("$(_L 'A' ' '; rowlr "" " ${D}${SEAL_BOT_L}${R}${BG} "; _bR '' ' ')")
 
 # Row 9: C-notch bottom
-ROWS+=("$(_L 'E' '╮'; row "$(fixl '' $MW)"; _bR '' '╭')")
+ROWS+=("$(_L '' '╮'; row "$(fixl '' $MW)"; _bR '' '╭')")
 
 # Row 10: STAMPS
 ROWS+=("$(_L '' '│'; row " ${GK}STAMPS ${GK}···  ${G}${S1}${R}${BG}  ${G}${S2}${R}${BG}  ${G}${S3}${R}${BG}"; _bR '' '│')")

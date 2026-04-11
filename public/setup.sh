@@ -244,6 +244,38 @@ _render_pass() {
   local raw_name
   raw_name=$(git config --global user.name 2>/dev/null) || raw_name=$(id -F 2>/dev/null) || raw_name="${USER:-Builder}"
   local PASS_NAME=$(echo "$raw_name" | tr '[:lower:]' '[:upper:]' | sed 's/ /  /g')
+
+  # Auto-detect GitHub stats
+  local GH_USER="" GH_DISPLAY="BUILDER" GH_REPOS_NUM="0"
+  _try_gh_user() {
+    local candidate="$1" json type
+    [ -z "$candidate" ] && return 1
+    json=$(curl -sf --max-time 3 "https://api.github.com/users/$candidate" 2>/dev/null) || return 1
+    type=$(echo "$json" | grep '"type":' | head -1 | sed 's/.*"type":[[:space:]]*"\([^"]*\)".*/\1/')
+    [ "$type" = "User" ] || return 1
+    local repos followers contribs_page contribs
+    repos=$(echo "$json" | grep '"public_repos":' | head -1 | tr -dc '0-9')
+    followers=$(echo "$json" | grep '"followers":' | head -1 | tr -dc '0-9')
+    # Fetch contributions (last year) from contributions calendar
+    contribs_page=$(curl -sf --max-time 3 "https://github.com/users/$candidate/contributions" 2>/dev/null) || true
+    contribs=$(echo "$contribs_page" | tr -s '[:space:]' ' ' | grep -o '[0-9,]* contributions' | head -1 | tr -dc '0-9')
+    [ -z "$contribs" ] && contribs="0"
+    GH_USER="$candidate"
+    GH_REPOS_NUM="${repos:-0}"
+    GH_DISPLAY="${contribs}  CONTRIBUTIONS"
+    return 0
+  }
+  _try_gh_user "$(git config --global github.user 2>/dev/null)" ||
+    _try_gh_user "$(git config --global user.name 2>/dev/null | tr -d ' ')" ||
+    _try_gh_user "$(git remote get-url origin 2>/dev/null | sed -n 's|.*github\.com[:/]\([^/]*\)/.*|\1|p')" ||
+    true
+  # Right stub: repo count as vertical digits
+  local _rpad STUB_R1="" STUB_R2="" STUB_R3="" STUB_R4=""
+  _rpad=$(printf "%-4s" "$GH_REPOS_NUM")
+  STUB_R1="${_rpad:0:1}"; [ "$STUB_R1" = " " ] && STUB_R1=""
+  STUB_R2="${_rpad:1:1}"; [ "$STUB_R2" = " " ] && STUB_R2=""
+  STUB_R3="${_rpad:2:1}"; [ "$STUB_R3" = " " ] && STUB_R3=""
+  STUB_R4="${_rpad:3:1}"; [ "$STUB_R4" = " " ] && STUB_R4=""
   local months=("JAN" "FEB" "MAR" "APR" "MAY" "JUN" "JUL" "AUG" "SEP" "OCT" "NOV" "DEC")
   local dd=$(date +%d) mm=${months[$(($(date +%-m) - 1))]} yy=$(date +%Y)
   local PASS_ISSUED="${dd}  ${mm}  ${yy}"
@@ -264,7 +296,7 @@ _render_pass() {
   # Precompute
   local SEAL_BOX=9 VAL_W=$((MW-1-13-1-9-2))
   local NAME_D=$(_f "$PASS_NAME" $VAL_W) ISS_D=$(_f "$PASS_ISSUED" $VAL_W)
-  local CLS_D=$(_f "FOUNDING  BUILDER" $VAL_W) LVL_D=$(_f "◆  LVL  1" $VAL_W)
+  local CLS_D=$(_f "FOUNDING  BUILDER" $VAL_W) LVL_D=$(_f "◆  ${GH_DISPLAY}" $VAL_W)
   local S1=$(_f "○ IDEA" 10) S2=$(_f "○ BUILD" 10) S3=$(_f "○ SHIP" 10)
   local OL=$(_f "SUPERTEAM" 18) OM=$(_fc "solana.new" 16)
   local ST="╭───────╮" SA="│ $(_fc "$SEAL_T" 5) │" SD="│ $(_fc "$SEAL_M" 5) │"
@@ -275,14 +307,14 @@ _render_pass() {
   printf "  ${GD}╔"; _rep "═" $SW; printf "╕ ╔"; _rep "═" $MW; printf "╗ ╕"; _rep "═" $SW; printf "╗${R}\n"
   _L '' '│'; _rowlr " ${GB}◆ SOLANA·NEW  |  FOUNDER PASS${R}${BG}" "${GD}N° ${PASS_NO_FMT}${R}${BG} "; _R '' '│'
   _L '' '│'; _row " ${GK}$(_rep '┄' $((MW-2)))${R}${BG} "; _R '' '│'
-  _L 'A' '╯'; _row "$(_f '' $MW)"; _R '' '╰'
-  _L 'D' ' '; _row " ${GK}NAME  ${GK}····· ${GB}${NAME_D}${R}${BG}"; _R '' ' '
-  _L 'M' ' '; _rowlr " ${GK}ISSUED ${GK}···  ${G}${ISS_D}${R}${BG}" " ${D}${ST}${R}${BG} "; _R 'L' ' '
-  _L 'I' ' '; _rowlr " ${GK}CLASS  ${GK}···· ${G}${CLS_D}${R}${BG}" " ${D}${SA}${R}${BG} "; _R 'V' ' '
-  _L 'T' ' '; _rowlr " ${GK}LEVEL  ${GK}···· ${G}${LVL_D}${R}${BG}" " ${GB}${SD}${R}${BG} "; _R 'L' ' '
-  _L 'O' ' '; _rowlr "" " ${D}${SY}${R}${BG} "; _R '1' ' '
-  _L 'N' ' '; _rowlr "" " ${D}${SB}${R}${BG} "; _R '' ' '
-  _L 'E' '╮'; _row "$(_f '' $MW)"; _R '' '╭'
+  _L '' '╯'; _row "$(_f '' $MW)"; _R '' '╰'
+  _L 'S' ' '; _row " ${GK}NAME  ${GK}····· ${GB}${NAME_D}${R}${BG}"; _R '' ' '
+  _L 'O' ' '; _rowlr " ${GK}ISSUED ${GK}···  ${G}${ISS_D}${R}${BG}" " ${D}${ST}${R}${BG} "; _R "$STUB_R1" ' '
+  _L 'L' ' '; _rowlr " ${GK}CLASS  ${GK}···· ${G}${CLS_D}${R}${BG}" " ${D}${SA}${R}${BG} "; _R "$STUB_R2" ' '
+  _L 'A' ' '; _rowlr " ${GK}GITHUB ${GK}···· ${G}${LVL_D}${R}${BG}" " ${GB}${SD}${R}${BG} "; _R "$STUB_R3" ' '
+  _L 'N' ' '; _rowlr "" " ${D}${SY}${R}${BG} "; _R "$STUB_R4" ' '
+  _L 'A' ' '; _rowlr "" " ${D}${SB}${R}${BG} "; _R '' ' '
+  _L '' '╮'; _row "$(_f '' $MW)"; _R '' '╭'
   _L '' '│'; _row " ${GK}STAMPS ${GK}···  ${G}${S1}${R}${BG}  ${G}${S2}${R}${BG}  ${G}${S3}${R}${BG}"; _R '' '│'
   _L '' '│'; _row " ${GK}$(_rep '─' $((MW-10)))${R}${BG}     "; _R '' '│'
   _L '' '│'; _row "$(_fc "you're now a certified agentic engineer on solana" $MW | sed "s/^/${G}/" | sed "s/$/${R}${BG}/")"; _R '' '│'
