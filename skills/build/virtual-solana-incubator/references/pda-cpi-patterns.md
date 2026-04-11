@@ -55,7 +55,7 @@ PDAs can sign CPIs using `invoke_signed`. The program provides the seeds and bum
 pub fn withdraw(ctx: Context<Withdraw>, amount: u64) -> Result<()> {
     let seeds = &[
         b"vault",
-        ctx.accounts.user.key.as_ref(),
+        ctx.accounts.user.key().as_ref(),
         &[ctx.accounts.vault.bump],
     ];
     let signer_seeds = &[&seeds[..]];
@@ -127,14 +127,14 @@ use anchor_spl::token_interface::{Mint, TokenAccount, TokenInterface};
     seeds = [b"token", mint.key().as_ref(), user.key().as_ref()],
     bump
 )]
-pub token_account: InterfaceAccount<'info, TokenAccount>;
+pub token_account: InterfaceAccount<'info, TokenAccount>,
 
 #[account(seeds = [b"authority"], bump)]
 /// CHECK: PDA used only as the token authority signer
-pub vault_authority: UncheckedAccount<'info>;
+pub vault_authority: UncheckedAccount<'info>,
 
-pub mint: InterfaceAccount<'info, Mint>;
-pub token_program: Interface<'info, TokenInterface>;
+pub mint: InterfaceAccount<'info, Mint>,
+pub token_program: Interface<'info, TokenInterface>,
 ```
 
 ## CPI Patterns
@@ -200,12 +200,12 @@ token_interface::mint_to(cpi_ctx, amount)?;
 #[account(mut, close = recipient, has_one = authority)]
 pub account_to_close: Account<'info, MyAccount>,
 
-// Or manually via CPI:
+// Or manually:
 let dest_starting_lamports = recipient.lamports();
-**recipient.lamports.borrow_mut() = dest_starting_lamports
+*recipient.lamports.borrow_mut() = dest_starting_lamports
     .checked_add(account_to_close.to_account_info().lamports())
     .unwrap();
-**account_to_close.to_account_info().lamports.borrow_mut() = 0;
+*account_to_close.to_account_info().lamports.borrow_mut() = 0;
 account_to_close.to_account_info().data.borrow_mut().fill(0);
 ```
 
