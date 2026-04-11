@@ -53,10 +53,10 @@ Common Solana development errors, organized by category. When stuck, use the `co
 
 | Error | Cause | Fix |
 |-------|-------|-----|
-| `anchor build` fails with BPF error | Version mismatch | Check `compatibility-matrix` skill. Usually: `solana-install update` |
-| `pnpm install` hangs | Node version too old | Use Node 18+ (`nvm use 18`) |
+| `anchor build` fails with BPF error | Version mismatch | Check `compatibility-matrix` skill. Usually: `agave-install update` |
+| `pnpm install` hangs | Node version too old | Use Node 20+ (`nvm install 20 && nvm use 20`) |
 | IDL type mismatch | Stale IDL after program change | Rebuild: `anchor build` then copy IDL from `target/idl/` |
-| `cargo build-sbf` fails | Missing Solana SDK | Run `solana-install update` |
+| `cargo build-sbf` fails | Missing Solana SDK | Run `agave-install update` |
 | Rust compiler errors in dependencies | Version conflict | Check `Cargo.lock`, run `cargo update` |
 
 ## Debug Strategy
@@ -70,3 +70,9 @@ Common Solana development errors, organized by category. When stuck, use the `co
 
 **Skills:** `common-errors` (official), `surfpool` (official)
 **MCPs:** `helius-mcp`, `solscan-mcp` (transaction forensics)
+
+## Sources
+
+- Anchor installation docs: https://www.anchor-lang.com/docs/installation
+- Solana installation docs: https://solana.com/docs/intro/installation
+- npm package metadata for current Node requirements (for example `@solana/wallet-adapter-react`, `@solana/kit`)

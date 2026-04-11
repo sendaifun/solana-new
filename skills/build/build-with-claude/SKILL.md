@@ -108,7 +108,7 @@ See `../../data/specs/phase-handoff.md` for the full JSON contract.
 
 ```bash
 # Verify dev environment
-solana --version       # >= 2.0 (Agave)
+solana --version       # 3.x (Agave)
 anchor --version       # >= 1.0.0
 node --version         # >= 20
 

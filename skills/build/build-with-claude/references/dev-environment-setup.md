@@ -6,9 +6,9 @@ Get your local environment ready before writing code.
 
 | Tool | Version | Install |
 |------|---------|---------|
-| Node.js | 18+ | `nvm install 18` |
+| Node.js | 20+ | `nvm install 20 && nvm use 20` |
 | Rust | latest stable | `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \| sh` |
-| Solana CLI | 2.x+ | `sh -c "$(curl -sSfL https://release.anza.xyz/stable/install)"` |
+| Solana CLI | 3.x | `curl --proto '=https' --tlsv1.2 -sSfL https://solana-install.solana.workers.dev | bash` |
 | Anchor | 1.0.0+ | `cargo install avm --git https://github.com/solana-foundation/anchor --locked && avm update` |
 
 **Skill:** `compatibility-matrix` (official) — check exact version requirements for your stack
@@ -63,9 +63,9 @@ SOLANA_RPC_URL=https://api.devnet.solana.com
 ## Verify Setup
 
 ```bash
-solana --version          # Should show 2.x+
+solana --version          # Should show 3.x
 anchor --version          # Should show 1.0.0+
-node --version            # Should show 18+
+node --version            # Should show 20+
 solana config get         # Check RPC URL
 solana balance            # Check devnet balance
 ```
@@ -84,3 +84,9 @@ Configure in `.claude/settings.json`:
 ```
 
 **MCPs:** `helius-mcp` (wallet data, transactions), `solana-fender-mcp` (program analysis)
+
+## Sources
+
+- Solana installation docs: https://solana.com/docs/intro/installation
+- Anchor installation docs: https://www.anchor-lang.com/docs/installation
+- npm package metadata for current Node requirements (for example `@solana/wallet-adapter-react`, `@solana/kit`)
