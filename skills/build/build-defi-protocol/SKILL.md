@@ -86,10 +86,13 @@ See `data/solana-knowledge/04-protocols-and-sdks.md` → "Integrate First, Build
 
 - Never deploy a DeFi program without at least one independent security review pass.
 - All math must use checked arithmetic — no overflows, no precision loss on division.
-- Always validate oracle prices are fresh (staleness check) before using in calculations.
+- Define and document rounding direction for every value-moving path (deposit, withdraw, swap, borrow, repay, liquidate). Round conservatively so users cannot extract value through dust or rounding loops.
+- Always validate oracle publish time/freshness, confidence interval, trading status when available, and decimal/exponent normalization before using a price. Define explicit fallback behavior when the oracle is stale or too wide.
 - Test with realistic liquidity state using Surfpool's mainnet forking, not just unit tests.
 - Include an emergency pause mechanism — you will need it.
 - Validate slippage on every swap or liquidity operation. No unbounded price impact.
+- All custody vaults must be PDA-controlled. Keep vault authority, admin authority, and emergency/pause authority logically separate.
+- Define upgrade authority, pause authority, and authority revocation/transfer plans before mainnet. Prefer multisig control for privileged actions.
 
 ## Phase Handoff
 
@@ -118,8 +121,8 @@ cd my-defi-protocol
 cargo add anchor-spl          # SPL token integration
 cargo add pyth-solana-receiver-sdk  # Oracle price feeds (Pyth pull model)
 
-# Test with mainnet fork (real liquidity data)
-surfpool --fork mainnet-beta
+# Test with mainnet state (real liquidity data)
+surfpool start --network mainnet
 anchor test --skip-local-validator
 ```
 
@@ -127,8 +130,9 @@ anchor test --skip-local-validator
 
 - **Which DeFi category?** AMM, lending, perps, staking, yield.
 - **Which oracle?** Pyth for crypto price feeds (fastest, widest coverage). Switchboard for custom data feeds or non-crypto data.
-- **Which token standard?** SPL Token for simple fungible, Token-2022 for transfer fees.
+- **Which token standard?** SPL Token for simple fungible tokens. Token-2022 when you need extension-enabled mints or accounts — e.g. transfer fees, transfer hooks, metadata/group pointers, confidential transfers, interest-bearing tokens, non-transferable tokens, default account state, memo-required transfers, CPI guard, pausable behavior, or permanent delegates. Verify every downstream CPI and protocol integration supports the exact extensions you enable.
 - **Single deployer vs multisig?** Use Squads multisig for any program handling >$10k TVL.
+- **Who executes maintenance actions?** Decide early whether liquidations, rebalancing, funding updates, interest accrual, or cranks are permissionless, keeper-driven, or admin-triggered.
 - **Security checklist:** See `../../data/guides/security-checklist.md` — mandatory before mainnet.
 
 ## Resources

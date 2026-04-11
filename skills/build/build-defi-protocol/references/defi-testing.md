@@ -106,7 +106,7 @@ impl FuzzInstruction for SwapData {
 
 ```bash
 # Run Trident fuzzer
-trident fuzz run-hfuzz fuzz_0 --timeout 3600
+trident fuzz run fuzz_0
 ```
 
 **Repos:** `trident` (Rust-based fuzzing framework for Solana program security testing)
@@ -115,9 +115,11 @@ trident fuzz run-hfuzz fuzz_0 --timeout 3600
 
 Test against real mainnet state — real token mints, real pool reserves, real oracle prices.
 
+For regression coverage, pin a small set of known pools, feeds, and market accounts so the same high-value scenarios stay reproducible across test runs. Include at least one degraded-liquidity scenario and one stale/wide-oracle scenario in the suite.
+
 ```bash
 # Start Surfpool with mainnet forking
-surfpool start --mainnet-fork
+surfpool start --network mainnet
 
 # Surfpool auto-clones accounts as needed
 # Your tests interact with real Raydium/Orca/Jupiter state
@@ -139,13 +141,13 @@ assert(simResult.value.err === null, `Swap failed: ${JSON.stringify(simResult.va
 
 ```typescript
 // Warp time forward (test interest accrual)
-await rpc.surfnet_warpToSlot(currentSlot + 216_000).send(); // ~1 day forward
+await rpc.surfnet_timeTravel({ absoluteSlot: currentSlot + 216_000 }).send(); // ~1 day forward
 
 // Set account balance (test liquidation scenarios)
 await rpc.surfnet_setAccount(userAccount, { lamports: lowBalance }).send();
 
-// Clone a mainnet account (get real oracle data)
-await rpc.surfnet_cloneAccount(PYTH_SOL_USD_FEED).send();
+// Surfpool clones external mainnet accounts on demand when your test touches them
+const pythFeedAccount = await connection.getAccountInfo(PYTH_SOL_USD_FEED);
 ```
 
 **Skills:** `surfpool` (official — mainnet forking, sub-second startup, transaction profiling)
@@ -186,7 +188,7 @@ const result = await swap(1n); // Should succeed or fail gracefully
 
 ```typescript
 // Test behavior when oracle returns stale price
-await rpc.surfnet_warpToSlot(currentSlot + 1_000_000).send(); // Far future
+await rpc.surfnet_timeTravel({ absoluteSlot: currentSlot + 1_000_000 }).send(); // Far future
 // Now oracle price is stale — does your program reject it?
 ```
 
@@ -203,3 +205,9 @@ await rpc.surfnet_warpToSlot(currentSlot + 1_000_000).send(); // Far future
 - [ ] At least one external security review completed
 
 **MCPs:** `solana-fender-mcp` (static analysis for Anchor programs)
+
+## Sources
+
+- Surfpool README and CLI/RPC source: https://github.com/solana-foundation/surfpool
+- Trident commands docs: https://ackee.xyz/trident/docs/latest/basics/commands/
+- Trident fuzz execution docs: https://ackee.xyz/trident/docs/latest/start-fuzzing/executing-fuzz-test/
