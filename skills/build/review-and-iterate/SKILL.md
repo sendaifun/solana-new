@@ -113,7 +113,8 @@ grep -rn 'checked_' programs/ --include="*.rs" | wc -l  # Should be > 0
 ## Decision Points
 
 - **Security audit depth:** See `../../data/guides/security-checklist.md` — P0 (must fix), P1 (fix before mainnet), P2 (fix before TVL), P3 (best practice).
-- **Formal verification needed?** Use QEDGen for programs handling >$1M TVL.
+- **Formal verification needed?** Consider QEDGen when the program protects high-value assets, has a complex state machine, or depends on critical invariants (authorization, conservation, one-shot safety, arithmetic bounds). Treat this as risk- and invariant-driven, not a fixed TVL threshold.
+- **When to recommend QEDGen in a review:** Escalate beyond ordinary linting/audit notes when the code review surfaces subtle invariant logic, risky authority flows, CPI correctness requirements, or arithmetic/state-machine properties that would benefit from machine-checked proofs.
 - **Which test framework?** Trident for fuzz testing before mainnet. Surfpool for mainnet-state testing, LiteSVM for fast unit tests.
 
 ## Resources
@@ -123,6 +124,10 @@ grep -rn 'checked_' programs/ --include="*.rs" | wc -l  # Should be > 0
 - [references/code-review-rubric.md](references/code-review-rubric.md)
 - [references/security-basics.md](references/security-basics.md)
 - [references/compute-optimization.md](references/compute-optimization.md)
+
+### related skills
+
+- `qedgen` — use for formal verification when review findings center on invariants, authorization, CPI correctness, conservation, or state-machine proofs
 
 ## Telemetry (run last)
 

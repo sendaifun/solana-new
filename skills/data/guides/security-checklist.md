@@ -229,6 +229,15 @@ The skill walks through pattern-based detection.
 ```
 
 ### Using QEDGen for Formal Verification
+Use QEDGen when the review uncovers properties that are hard to gain confidence in with testing alone:
+- critical authorization rules or signer/authority invariants
+- conservation properties (assets, shares, claims, reserves)
+- one-shot / no-replay / lifecycle-state guarantees
+- arithmetic bounds and overflow-sensitive value flows
+- CPI correctness requirements and cross-account relationship invariants
+
+Treat escalation to QEDGen as risk- and invariant-driven, not tied to a fixed TVL threshold.
+
 ```
 npx skills add qedgen/solana-skills
 $QEDGEN spec --idl target/idl/my_program.json
