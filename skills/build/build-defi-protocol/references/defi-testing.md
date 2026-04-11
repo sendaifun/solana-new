@@ -105,7 +105,7 @@ impl FuzzInstruction for SwapData {
 | Staking | Staked amount tracks deposits/withdrawals exactly; rewards proportional |
 
 ```bash
-# Run Trident fuzzer
+# Run Trident fuzzer for at least 1 hour, then stop it manually
 trident fuzz run fuzz_0
 ```
 
