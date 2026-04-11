@@ -32,7 +32,7 @@ Reducing compute units (CU) and transaction costs on Solana.
 - Align fields to avoid padding waste
 
 ### 4. CPI optimization
-- Each CPI has a small fixed invocation charge (currently ~946 CU in Agave), plus account-data transfer cost and the callee program's own execution
+- Each CPI has a small fixed invocation overhead that varies by Solana/Agave runtime version, plus account-data transfer cost and the callee program's own execution
 - Batch operations instead of multiple CPIs where possible
 - Cache PDA bump in account state when a hot path would otherwise call `find_program_address` repeatedly; on-chain bump search has variable compute cost
 
