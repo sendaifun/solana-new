@@ -103,6 +103,7 @@ Interview the user until there is real clarity, not just enthusiasm. Generate th
   - why the other two lost
   - a bear case for each idea
 - Treat the local datasets as archetype libraries. Combine, mutate, or discard them freely if the user's context demands it.
+- **Integration-first framing**: For each idea, note whether it can be built by integrating existing protocols or requires custom on-chain logic. Ideas that can integrate ship faster and inherit audited security — note this as context, but don't bias scoring against ideas that legitimately need a new protocol. See `data/solana-knowledge/04-protocols-and-sdks.md` → "Integrate First, Build Second" and the Decision Quick Reference for current protocol mapping.
 
 ## Artifact Rules
 

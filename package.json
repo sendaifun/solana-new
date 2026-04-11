@@ -2,6 +2,7 @@
   "name": "superstack",
   "version": "0.2.0",
   "private": true,
+  "license": "MIT",
   "description": "Ship on Solana — Idea to Launch. Skills, repos, MCPs.",
   "type": "module",
   "bin": {

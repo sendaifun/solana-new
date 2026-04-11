@@ -42,12 +42,9 @@ TVL = Total Value Locked = real money deposited in smart contracts. It's the clo
 
 ### TVL per Category
 
-Track which DeFi categories are growing on Solana:
-- **Lending** — Save (formerly Solend), MarginFi, Kamino
-- **DEXs** — Raydium, Orca, Meteora
-- **Liquid Staking** — Marinade, Jito
-- **Perps** — Zeta, Jupiter Perps, Flash Trade
-- **Yield** — Kamino
+Track which DeFi categories are growing on Solana. Use DefiLlama to get current leaders per category rather than relying on this list — protocols can decline or shut down between updates.
+
+Common categories: Lending, DEXs, Liquid Staking, Derivatives, Yield. See `data/solana-knowledge/04-protocols-and-sdks.md` → Decision Quick Reference for current protocol recommendations, and "Protocol Health Verification" for how to validate them.
 
 A category with growing aggregate TVL = growing demand = opportunity to build tools, aggregators, or new entrants.
 

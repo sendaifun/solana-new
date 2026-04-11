@@ -57,6 +57,17 @@ This only happens once. If `TEL_PROMPTED` is `yes`, skip this entirely and proce
 
 Guide the user through designing and implementing a DeFi protocol on Solana — AMMs, lending pools, vaults, or yield strategies. Covers program architecture, math primitives, security patterns, and testing against real liquidity state. Emphasizes security-first development since DeFi programs handle real funds.
 
+## Integrate vs Build Decision (Step 0)
+
+Before writing any program code, check whether the user actually needs a custom smart contract:
+
+- **If the user wants to own the protocol layer, build novel on-chain logic, or explicitly asked for a program/smart contract** → proceed to the workflow below.
+- **If the user said "build a DEX/perps/lending app"** and it's unclear whether they mean the protocol or an app on top → ask: "Do you want to build the on-chain program itself, or build a frontend/app on top of an existing protocol? Integrating an existing protocol is faster, inherits audited security and liquidity, and gets you to production sooner."
+
+If they choose integration, route to `build-with-claude` instead — this skill is for custom program development.
+
+See `data/solana-knowledge/04-protocols-and-sdks.md` → "Integrate First, Build Second" for the full decision framework and protocol health verification steps.
+
 ## Workflow
 
 1. Check for `.superstack/build-context.md`. If found, use stack decisions. If not, ask: what type of DeFi (AMM, lending, vault, yield aggregator)? What's the target scale and composability needs? Write `.superstack/build-context.md` with the context gathered so future skills can use it.

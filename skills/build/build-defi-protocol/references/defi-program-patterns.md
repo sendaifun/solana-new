@@ -160,7 +160,9 @@ pub struct Vault {
 // Withdraw: underlying_to_return = shares_to_burn * total_underlying / total_shares
 ```
 
-**Skills:** `glam` (vault management via GLAM Protocol — DeFi integrations across Jupiter, Kamino)
+**Skills:** `glam` (vault management via GLAM Protocol — DeFi integrations across Jupiter, Kamino, etc.)
+
+> **Note:** Protocol-specific skills (e.g., `drift-skill`) may reference defunct protocols. Always verify protocol health before using — see `data/solana-knowledge/04-protocols-and-sdks.md` → "Protocol Health Verification".
 
 ## Perpetuals / Derivatives Pattern
 
@@ -214,11 +216,13 @@ pub struct Position {
 **MCPs:** `flash-trade-mcp` (leveraged perps with Pyth Lazer prices)
 **MCPs:** `perp-cli-mcp` (Pacifica + Hyperliquid perps CLI)
 
-### Integrating with existing perp protocols (instead of building from scratch):
+> **Note:** Protocol-specific skills may reference defunct protocols. Always verify protocol health before using — see `data/solana-knowledge/04-protocols-and-sdks.md` → "Protocol Health Verification".
 
-If the user wants to BUILD ON TOP of existing perps (not build a new protocol):
+### Integrating with existing protocols (instead of building from scratch):
 
-**Recommendation:** Building a perp protocol from scratch is extremely complex (oracle integration, liquidation, funding, risk management). Consider integrating with Flash Trade first, then building custom features on top.
+If the user wants to BUILD ON TOP of existing protocols (not build a new one), route them to `build-with-claude` instead. Building from scratch is extremely complex (oracle integration, liquidation, funding, risk management).
+
+**Recommendation:** Check `data/solana-knowledge/04-protocols-and-sdks.md` → Decision Quick Reference for the current healthy protocol in each category. Verify its health, then use its SDK. This applies to all DeFi categories — swaps, lending, derivatives, yield, etc.
 
 ## Oracle Integration
 

@@ -9,6 +9,7 @@ A categorized guide to the major projects, protocols, and tools in the Solana ec
 | **Jupiter** | Leading DEX aggregator — routes trades across all Solana DEXs for best price. Also offers limit orders, DCA, and perps. | https://jup.ag |
 | **Orca** | Concentrated liquidity AMM (like Uniswap v3). Clean UX, developer-friendly SDK. | https://orca.so |
 | **Raydium** | AMM and liquidity provider. Concentrated liquidity (CLMM) + constant product pools. Integrated with OpenBook orderbook. | https://raydium.io |
+| **Jupiter Perps** | Oracle-based perpetual futures. Up to 100x leverage, backed by JLP pool. Part of the Jupiter ecosystem. | https://jup.ag/perps |
 | **Kamino** | Automated liquidity management and lending. Vaults that auto-rebalance concentrated liquidity positions. | https://kamino.finance |
 | **Marinade** | Liquid staking protocol. Stake SOL, receive mSOL (liquid staking token). | https://marinade.finance |
 | **Jito** | MEV-aware liquid staking. JitoSOL staking token + MEV rewards. Also runs the Jito block engine. | https://jito.network |
@@ -95,3 +96,5 @@ A categorized guide to the major projects, protocols, and tools in the Solana ec
 - **Need an RPC?** Helius for most projects (best DX), QuickNode if you need multi-chain
 - **Need a wallet?** Phantom for users, @solana/wallet-adapter for connecting any wallet
 - **Building mobile?** Check Solana Mobile Stack + Chapter2 phone dApp Store
+
+> **Note:** The protocols listed above are examples at the time of writing — they can decline, get hacked, or shut down. Always verify protocol health (TVL, volume, SDK freshness, hack history) before recommending or integrating. See `data/solana-knowledge/04-protocols-and-sdks.md` → "Protocol Health Verification" for criteria and how to check.

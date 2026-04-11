@@ -19,21 +19,6 @@
       "is_template": true
     },
     {
-      "id": "dapp-scaffold",
-      "repo": "solana-labs/dapp-scaffold",
-      "description": "Original Next.js dApp scaffold with wallet adapter",
-      "category": "scaffold",
-      "keywords": [
-        "next",
-        "web",
-        "wallet",
-        "dapp",
-        "frontend"
-      ],
-      "clone_command": "git clone https://github.com/solana-labs/dapp-scaffold.git",
-      "is_template": true
-    },
-    {
       "id": "anchor-by-example",
       "repo": "coral-xyz/anchor-by-example",
       "description": "Curated Anchor program examples (escrow, auction, counter, etc.)",
@@ -181,22 +166,6 @@
       ],
       "clone_command": "git clone https://github.com/marinade-finance/liquid-staking-program.git",
       "is_template": false
-    },
-    {
-      "id": "jupiter-nextjs-example",
-      "repo": "jup-ag/jupiter-nextjs-example",
-      "description": "Jupiter swap aggregator integration in Next.js",
-      "category": "defi",
-      "keywords": [
-        "swap",
-        "jupiter",
-        "aggregator",
-        "dex",
-        "next",
-        "frontend"
-      ],
-      "clone_command": "git clone https://github.com/jup-ag/jupiter-nextjs-example.git",
-      "is_template": true
     },
     {
       "id": "squads-v4",
@@ -872,22 +841,6 @@
       "is_template": false
     },
     {
-      "id": "polymarket-indexer",
-      "repo": "sendaifun/polymarket-indexer",
-      "description": "Rust indexer and API for Polymarket prediction markets data",
-      "category": "agent",
-      "keywords": [
-        "polymarket",
-        "prediction",
-        "indexer",
-        "rust",
-        "api",
-        "data"
-      ],
-      "clone_command": "git clone https://github.com/sendaifun/polymarket-indexer.git",
-      "is_template": false
-    },
-    {
       "id": "fraction",
       "repo": "sendaifun/fraction",
       "description": "Fraction by SendAI — fractional ownership and token distribution on Solana",
@@ -1155,22 +1108,6 @@
       "is_template": false
     },
     {
-      "id": "jupiter-cpi",
-      "repo": "jup-ag/jupiter-cpi",
-      "description": "Anchor CPI client for the Jupiter program — integrate Jupiter swaps directly into Solana programs",
-      "category": "defi",
-      "keywords": [
-        "jupiter",
-        "cpi",
-        "anchor",
-        "swap",
-        "program",
-        "on-chain"
-      ],
-      "clone_command": "git clone https://github.com/jup-ag/jupiter-cpi.git",
-      "is_template": false
-    },
-    {
       "id": "jupiter-sol-swap-cpi",
       "repo": "jup-ag/sol-swap-cpi",
       "description": "Swap any token to SOL via Jupiter CPI when the user has no SOL — gasless swap pattern",
@@ -1265,6 +1202,490 @@
       ],
       "clone_command": "git clone https://github.com/palindrome-eng/loopscale-client.git",
       "is_template": false
+    },
+    {
+      "id": "quasar",
+      "repo": "blueshift-gg/quasar",
+      "description": "Quasar — zero-copy Solana program framework for blazing fast SVM programs with auto-generated TS/Rust clients, CU profiler, and QuasarSVM test harness",
+      "category": "framework",
+      "keywords": [
+        "program",
+        "framework",
+        "zero-copy",
+        "quasar",
+        "svm",
+        "performance",
+        "on-chain",
+        "blueshift"
+      ],
+      "clone_command": "git clone https://github.com/blueshift-gg/quasar.git",
+      "is_template": false
+    },
+    {
+      "id": "litesvm",
+      "repo": "LiteSVM/litesvm",
+      "description": "Fast SVM program test harness — the recommended unit testing tool for Solana programs with Rust and TypeScript bindings",
+      "category": "tooling",
+      "keywords": [
+        "test",
+        "svm",
+        "unit-test",
+        "litesvm",
+        "fast",
+        "harness"
+      ],
+      "clone_command": "git clone https://github.com/LiteSVM/litesvm.git",
+      "is_template": false
+    },
+    {
+      "id": "mollusk",
+      "repo": "anza-xyz/mollusk",
+      "description": "SVM program test harness for isolated instruction-level testing — part of the official Solana testing pyramid",
+      "category": "tooling",
+      "keywords": [
+        "test",
+        "svm",
+        "instruction",
+        "mollusk",
+        "anza",
+        "isolated"
+      ],
+      "clone_command": "git clone https://github.com/anza-xyz/mollusk.git",
+      "is_template": false
+    },
+    {
+      "id": "codama",
+      "repo": "codama-idl/codama",
+      "description": "Generate type-safe clients, CLIs, and documentation from Solana program IDLs — multi-language code generation",
+      "category": "tooling",
+      "keywords": [
+        "idl",
+        "codegen",
+        "client",
+        "codama",
+        "typescript",
+        "rust",
+        "cli"
+      ],
+      "clone_command": "git clone https://github.com/codama-idl/codama.git",
+      "is_template": false
+    },
+    {
+      "id": "yellowstone-grpc",
+      "repo": "rpcpool/yellowstone-grpc",
+      "description": "Triton's Dragon's Mouth gRPC service — high-performance real-time Solana data streaming for indexers and trading bots",
+      "category": "infrastructure",
+      "keywords": [
+        "grpc",
+        "streaming",
+        "yellowstone",
+        "triton",
+        "real-time",
+        "indexer",
+        "data"
+      ],
+      "clone_command": "git clone https://github.com/rpcpool/yellowstone-grpc.git",
+      "is_template": false
+    },
+    {
+      "id": "carbon",
+      "repo": "sevenlabs-hq/carbon",
+      "description": "Rust indexing framework for Solana — simplifies building custom on-chain data indexers",
+      "category": "infrastructure",
+      "keywords": [
+        "indexer",
+        "rust",
+        "carbon",
+        "data",
+        "on-chain",
+        "framework"
+      ],
+      "clone_command": "git clone https://github.com/sevenlabs-hq/carbon.git",
+      "is_template": false
+    },
+    {
+      "id": "solana-verifiable-build",
+      "repo": "solana-foundation/solana-verifiable-build",
+      "description": "CLI tool for deterministic builds and on-chain verification of deployed Solana programs",
+      "category": "tooling",
+      "keywords": [
+        "verifiable",
+        "build",
+        "deploy",
+        "security",
+        "verification",
+        "deterministic"
+      ],
+      "clone_command": "git clone https://github.com/solana-foundation/solana-verifiable-build.git",
+      "is_template": false
+    },
+    {
+      "id": "kora",
+      "repo": "solana-foundation/kora",
+      "description": "Official Solana relayer for gasless and sponsored transactions — fee abstraction for end users",
+      "category": "infrastructure",
+      "keywords": [
+        "relayer",
+        "gasless",
+        "sponsor",
+        "fee",
+        "abstraction",
+        "onboarding"
+      ],
+      "clone_command": "git clone https://github.com/solana-foundation/kora.git",
+      "is_template": false
+    },
+    {
+      "id": "jito-searcher-examples",
+      "repo": "jito-labs/searcher-examples",
+      "description": "Reference examples for Jito bundle searchers — MEV extraction, bundle submission, and tip management on Solana",
+      "category": "defi",
+      "keywords": [
+        "jito",
+        "mev",
+        "bundle",
+        "searcher",
+        "tips",
+        "trading"
+      ],
+      "clone_command": "git clone https://github.com/jito-labs/searcher-examples.git",
+      "is_template": true
+    },
+    {
+      "id": "jito-ts",
+      "repo": "jito-labs/jito-ts",
+      "description": "Jito TypeScript SDK for bundle submission and tip management on Solana",
+      "category": "defi",
+      "keywords": [
+        "jito",
+        "mev",
+        "bundle",
+        "typescript",
+        "sdk",
+        "tips"
+      ],
+      "clone_command": "git clone https://github.com/jito-labs/jito-ts.git",
+      "is_template": false
+    },
+    {
+      "id": "jito-restaking",
+      "repo": "jito-foundation/restaking",
+      "description": "Jito restaking protocol — stake SOL to secure additional services and earn extra yield",
+      "category": "defi",
+      "keywords": [
+        "jito",
+        "restaking",
+        "staking",
+        "yield",
+        "defi",
+        "security"
+      ],
+      "clone_command": "git clone https://github.com/jito-foundation/restaking.git",
+      "is_template": false
+    },
+    {
+      "id": "solana-defi-grpc-examples",
+      "repo": "Shyft-to/solana-defi",
+      "description": "Yellowstone gRPC parsing examples for Pump, Meteora, Raydium, and more — account and transaction parsing for DeFi indexers",
+      "category": "example",
+      "keywords": [
+        "grpc",
+        "yellowstone",
+        "parser",
+        "pump",
+        "meteora",
+        "raydium",
+        "indexer"
+      ],
+      "clone_command": "git clone https://github.com/Shyft-to/solana-defi.git",
+      "is_template": true
+    },
+    {
+      "id": "meteora-dlmm-sdk",
+      "repo": "MeteoraAg/dlmm-sdk",
+      "description": "Meteora DLMM SDK — concentrated liquidity with dynamic fees, TypeScript and Rust clients for building on Meteora's liquidity infrastructure",
+      "category": "defi",
+      "keywords": [
+        "meteora",
+        "dlmm",
+        "amm",
+        "liquidity",
+        "concentrated",
+        "defi",
+        "sdk"
+      ],
+      "clone_command": "git clone https://github.com/MeteoraAg/dlmm-sdk.git",
+      "is_template": false
+    },
+    {
+      "id": "doppler",
+      "repo": "blueshift-gg/doppler",
+      "description": "Ultra-optimized oracle program for Solana — 21 CU per update, zero dependencies, no_std Rust",
+      "category": "infrastructure",
+      "keywords": [
+        "oracle",
+        "performance",
+        "blueshift",
+        "zero-copy",
+        "price-feed"
+      ],
+      "clone_command": "git clone https://github.com/blueshift-gg/doppler.git",
+      "is_template": false
+    },
+    {
+      "id": "sbpf",
+      "repo": "blueshift-gg/sbpf",
+      "description": "CLI to bootstrap, build, deploy, and debug sBPF assembly programs on Solana — includes disassembler and debugger",
+      "category": "tooling",
+      "keywords": [
+        "sbpf",
+        "assembly",
+        "bytecode",
+        "blueshift",
+        "optimization",
+        "debug"
+      ],
+      "clone_command": "git clone https://github.com/blueshift-gg/sbpf.git",
+      "is_template": false
+    },
+    {
+      "id": "awesome-sbpf",
+      "repo": "deanmlittle/awesome-sbpf",
+      "description": "Curated collection of sBPF assembly resources, tooling, documentation, and example programs for Solana",
+      "category": "example",
+      "keywords": [
+        "sbpf",
+        "assembly",
+        "awesome",
+        "resources",
+        "optimization",
+        "reference"
+      ],
+      "clone_command": "git clone https://github.com/deanmlittle/awesome-sbpf.git",
+      "is_template": false
+    },
+    {
+      "id": "anchor-escrow-2024",
+      "repo": "deanmlittle/anchor-escrow-2024",
+      "description": "Canonical Anchor escrow program example — the most-referenced escrow tutorial in the Solana ecosystem",
+      "category": "example",
+      "keywords": [
+        "anchor",
+        "escrow",
+        "example",
+        "tutorial",
+        "program"
+      ],
+      "clone_command": "git clone https://github.com/deanmlittle/anchor-escrow-2024.git",
+      "is_template": true
+    },
+    {
+      "id": "beethoven",
+      "repo": "blueshift-gg/beethoven",
+      "description": "Protocol-agnostic CPI routing — one deposit/swap/borrow instruction routes to Kamino, Jupiter, Marginfi, and more",
+      "category": "defi",
+      "keywords": [
+        "cpi",
+        "routing",
+        "composability",
+        "blueshift",
+        "defi",
+        "protocol-agnostic"
+      ],
+      "clone_command": "git clone https://github.com/blueshift-gg/beethoven.git",
+      "is_template": false
+    },
+    {
+      "id": "scilla",
+      "repo": "blueshift-gg/Scilla",
+      "description": "Interactive Solana CLI with prompted navigation — account inspection, cluster state, staking, and developer tools",
+      "category": "tooling",
+      "keywords": [
+        "cli",
+        "interactive",
+        "blueshift",
+        "developer",
+        "solana",
+        "tools"
+      ],
+      "clone_command": "git clone https://github.com/blueshift-gg/Scilla.git",
+      "is_template": false
+    },
+    {
+      "id": "svm-merkle-tree",
+      "repo": "deanmlittle/svm-merkle-tree",
+      "description": "SVM-optimized Merkle tree with syscalls, Bitcoin parity, multiple hash functions, truncated hashes, CLI and WASM bindings",
+      "category": "tooling",
+      "keywords": [
+        "merkle",
+        "tree",
+        "proof",
+        "airdrop",
+        "compression",
+        "hash"
+      ],
+      "clone_command": "git clone https://github.com/deanmlittle/svm-merkle-tree.git",
+      "is_template": false
+    },
+    {
+      "id": "chadbuffer",
+      "repo": "deanmlittle/chadbuffer",
+      "description": "Parallel data upload to Solana with self-healing state and priority fees — 2.7kb program size",
+      "category": "tooling",
+      "keywords": [
+        "upload",
+        "data",
+        "parallel",
+        "buffer",
+        "on-chain"
+      ],
+      "clone_command": "git clone https://github.com/deanmlittle/chadbuffer.git",
+      "is_template": false
+    },
+    {
+      "id": "sbpf-asm-abort",
+      "repo": "deanmlittle/sbpf-asm-abort",
+      "description": "352-byte emergency abort program — shuts down any upgradable Solana program in one transaction",
+      "category": "tooling",
+      "keywords": [
+        "abort",
+        "emergency",
+        "shutdown",
+        "security",
+        "sbpf",
+        "safety"
+      ],
+      "clone_command": "git clone https://github.com/deanmlittle/sbpf-asm-abort.git",
+      "is_template": false
+    },
+    {
+      "id": "idlgen",
+      "repo": "deanmlittle/idlgen",
+      "description": "Generate CPI and introspection SDKs from Anchor IDL files — complements Codama for client generation",
+      "category": "tooling",
+      "keywords": [
+        "idl",
+        "codegen",
+        "cpi",
+        "anchor",
+        "sdk",
+        "introspection"
+      ],
+      "clone_command": "git clone https://github.com/deanmlittle/idlgen.git",
+      "is_template": false
+    },
+    {
+      "id": "solana-secp256k1",
+      "repo": "deanmlittle/solana-secp256k1",
+      "description": "200x CU reduction for secp256k1 operations on Solana — enables efficient Bitcoin/Ethereum signature verification on-chain",
+      "category": "infrastructure",
+      "keywords": [
+        "secp256k1",
+        "cryptography",
+        "bitcoin",
+        "ethereum",
+        "cross-chain",
+        "signature"
+      ],
+      "clone_command": "git clone https://github.com/deanmlittle/solana-secp256k1.git",
+      "is_template": false
+    },
+    {
+      "id": "quasar-svm",
+      "repo": "blueshift-gg/quasar-svm",
+      "description": "In-process SVM execution for Rust, Node.js, and Python — test Solana programs locally without RPC or validators",
+      "category": "tooling",
+      "keywords": [
+        "test",
+        "svm",
+        "local",
+        "quasar",
+        "blueshift",
+        "rust",
+        "typescript",
+        "python"
+      ],
+      "clone_command": "git clone https://github.com/blueshift-gg/quasar-svm.git",
+      "is_template": false
+    },
+    {
+      "id": "connectorkit",
+      "repo": "solana-foundation/connectorkit",
+      "description": "Production-ready headless Solana wallet connector — framework-agnostic, built on Wallet Standard",
+      "category": "infrastructure",
+      "keywords": [
+        "wallet",
+        "connector",
+        "headless",
+        "wallet-standard",
+        "foundation"
+      ],
+      "clone_command": "git clone https://github.com/solana-foundation/connectorkit.git",
+      "is_template": false
+    },
+    {
+      "id": "mpp-sdk",
+      "repo": "solana-foundation/mpp-sdk",
+      "description": "Machine Payments Protocol SDK — Solana payment method for autonomous agent-to-agent and machine-to-machine payments",
+      "category": "infrastructure",
+      "keywords": [
+        "payments",
+        "mpp",
+        "machine",
+        "agent",
+        "foundation",
+        "protocol"
+      ],
+      "clone_command": "git clone https://github.com/solana-foundation/mpp-sdk.git",
+      "is_template": false
+    },
+    {
+      "id": "solana-keychain",
+      "repo": "solana-foundation/solana-keychain",
+      "description": "Framework-agnostic Solana transaction signing with multiple backends — unified trait interface, async-first design",
+      "category": "infrastructure",
+      "keywords": [
+        "signing",
+        "keychain",
+        "transaction",
+        "wallet",
+        "async",
+        "foundation"
+      ],
+      "clone_command": "git clone https://github.com/solana-foundation/solana-keychain.git",
+      "is_template": false
+    },
+    {
+      "id": "solana-bootcamp-2026",
+      "repo": "solana-foundation/solana-bootcamp-2026",
+      "description": "Official Solana Bootcamp 2026 curriculum — developer training materials from the Solana Foundation",
+      "category": "example",
+      "keywords": [
+        "bootcamp",
+        "education",
+        "curriculum",
+        "training",
+        "foundation",
+        "2026"
+      ],
+      "clone_command": "git clone https://github.com/solana-foundation/solana-bootcamp-2026.git",
+      "is_template": true
+    },
+    {
+      "id": "noir-examples",
+      "repo": "solana-foundation/noir-examples",
+      "description": "ZK proofs on Solana using Noir and Sunspot — examples for zero-knowledge program development",
+      "category": "example",
+      "keywords": [
+        "zk",
+        "noir",
+        "sunspot",
+        "zero-knowledge",
+        "proof",
+        "foundation"
+      ],
+      "clone_command": "git clone https://github.com/solana-foundation/noir-examples.git",
+      "is_template": true
     }
   ]
 }

@@ -61,16 +61,6 @@
       "keywords": ["opensvm", "rpc", "infrastructure", "73", "methods", "accounts", "blocks", "transactions", "tokens"]
     },
     {
-      "id": "chainstack-rpc-nodes-mcp",
-      "name": "Chainstack RPC Nodes MCP",
-      "repo": "chainstacklabs/rpc-nodes-mcp",
-      "description": "Fast extensible MCP server for JSON-RPC blockchain nodes — supports EVM and Solana for real-time interactions and program calls",
-      "category": "infrastructure",
-      "setup_command": "git clone https://github.com/chainstacklabs/rpc-nodes-mcp && cd rpc-nodes-mcp && npm install",
-      "url": "https://github.com/chainstacklabs/rpc-nodes-mcp",
-      "keywords": ["chainstack", "rpc", "infrastructure", "evm", "solana", "json-rpc", "node"]
-    },
-    {
       "id": "quicknode-mcp",
       "name": "QuickNode MCP",
       "repo": "quiknode-labs/qn-guide-examples",
@@ -529,6 +519,16 @@
       "setup_command": "codex mcp add --transport http dflow-docs https://pond.dflow.net/mcp",
       "url": "https://pond.dflow.net/mcp",
       "keywords": ["dflow", "docs", "official", "trading", "prediction-markets", "phantom", "kalshi"]
+    },
+    {
+      "id": "alchemy-mcp",
+      "name": "Alchemy MCP (Official)",
+      "repo": "alchemyplatform/alchemy-mcp-server",
+      "description": "Official Alchemy MCP — token prices, balances, NFT data, transaction history, swaps, and smart contract interactions across Solana and EVM chains",
+      "category": "infrastructure",
+      "setup_command": "claude mcp add alchemy --transport http https://mcp.alchemy.com/mcp",
+      "url": "https://github.com/alchemyplatform/alchemy-mcp-server",
+      "keywords": ["alchemy", "rpc", "infrastructure", "token", "nft", "balance", "transaction", "swap", "multi-chain"]
     }
   ]
 }

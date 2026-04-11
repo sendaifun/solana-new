@@ -30,16 +30,16 @@ Each account has:
 
 Programs receive accounts as inputs, read/modify them, and return them as outputs. A program can only modify accounts it owns.
 
-## BPF Bytecode
+## Program Bytecode: sBPF
 
-Solana programs compile to Berkeley Packet Filter (BPF) bytecode, specifically the sBPF variant:
+Solana programs are compiled to Solana Bytecode Format (sBPF) and stored onchain as ELF shared objects (`.so`) in executable accounts.
 
-- Rust programs → compiled via `cargo build-sbf` → `.so` shared object files
-- The SVM includes a BPF virtual machine (rbpf) that interprets this bytecode
-- JIT compilation is available for improved performance
-- Programs have a fixed instruction set: arithmetic, memory access, branching, function calls, syscalls
+- Rust programs are typically built with `cargo build-sbf`, which produces a deployable `.so`
+- The runtime executes programs inside an sBPF virtual machine
+- The bytecode is Solana-specific: sBPF is derived from eBPF, but it is not generic Linux eBPF
+- Programs run with a restricted instruction set plus Solana syscalls for logging, CPI, hashing, memory operations, and access to runtime data
 
-The BPF model was chosen because it is simple, sandboxed, and easy to verify for safety.
+Use “sBPF” for the bytecode/runtime model, and reserve “BPF” mainly for legacy loader names such as BPF Loader and BPF Loader Upgradeable.
 
 ## Sealevel: Parallel Execution
 
@@ -137,3 +137,10 @@ execute(program_id, accounts[], instruction_data) → Result<(), ProgramError>
 - It receives `instruction_data` (arbitrary bytes — your function args)
 - It returns success or an error
 - Any modifications to accounts are committed on success, rolled back on failure
+
+## Sources
+
+- [Solana Docs — Programs](https://solana.com/docs/core/programs)
+- [Solana Docs — Program Execution](https://solana.com/docs/core/programs/program-execution)
+- [Solana Docs — Deploying Programs](https://solana.com/docs/programs/deploying)
+- [Agave source — program-runtime](https://github.com/anza-xyz/agave/tree/master/program-runtime)

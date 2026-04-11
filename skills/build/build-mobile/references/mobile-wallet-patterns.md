@@ -47,43 +47,36 @@ const authorizeWallet = async () => {
 
 ### Sign and Send Transaction
 
+For new React Native apps, prefer a Kit-first transaction-building flow when the chosen sample/template supports it.
+
+Practical guidance:
+- if you are following newer samples like `skr-staking`, build transactions using `@solana/kit` and pair them with `@wallet-ui/react-native-kit`
+- if you are following the current official Solana Mobile React Native installation path, you may still be on the web3.js stack (`@wallet-ui/react-native-web3js` + `@solana/web3.js`)
+- do not mix Kit and web3.js transaction-building patterns casually inside the same mobile app
+
+Recommended default for this skill:
+- use the transaction-building and signing pattern from the exact template/sample you scaffolded from
+- for Kit-based apps, follow the current `skr-staking` sample as the reference implementation
+- for web3.js-based apps, follow the official Solana Mobile docs/examples until the chosen template has moved to Kit
+
+Current Kit-based mobile pattern to copy into new apps:
+- wallet access via `useMobileWallet()` from `@wallet-ui/react-native-kit`
+- cluster/provider setup at the layout level via `MobileWalletProvider`
+- RPC reads via `createSolanaRpc(...)` from `@solana/kit`
+- on-chain address/PDA helpers via `address(...)`, `getAddressEncoder(...)`, and `getProgramDerivedAddress(...)`
+- program instruction construction via generated clients or Kit-compatible builders
+- transaction submission through the wallet hook rather than old ad hoc web3.js transaction examples
+
+A minimal mental model for Kit-based apps is:
 ```typescript
-import { Connection, Transaction, SystemProgram, PublicKey } from "@solana/web3.js";
-
-const sendSol = async (recipientAddress: string, amountSol: number) => {
-  const connection = new Connection(RPC_URL);
-
-  await transact(async (wallet: Web3MobileWallet) => {
-    // Reauthorize if needed
-    const auth = await wallet.authorize({
-      cluster: "mainnet-beta",
-      identity: { name: "My App", uri: "https://myapp.com", icon: "favicon.png" },
-    });
-
-    const senderPubkey = new PublicKey(auth.accounts[0].address);
-
-    // Build transaction
-    const tx = new Transaction().add(
-      SystemProgram.transfer({
-        fromPubkey: senderPubkey,
-        toPubkey: new PublicKey(recipientAddress),
-        lamports: amountSol * 1e9,
-      })
-    );
-
-    tx.feePayer = senderPubkey;
-    tx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
-
-    // Sign and send in one step
-    const signatures = await wallet.signAndSendTransactions({
-      transactions: [tx],
-    });
-
-    console.log("Transaction signature:", signatures[0]);
-    return signatures[0];
-  });
-};
+const { connect, disconnect, sendTransaction, account } = useMobileWallet();
+const rpc = createSolanaRpc(process.env.EXPO_PUBLIC_RPC_URL || 'https://api.mainnet-beta.solana.com');
+const connectedWalletAddress = account?.address ?? null;
 ```
+
+This is the pattern used by newer mobile samples and is the preferred direction for new React Native apps.
+
+This skill should treat Kit as the preferred direction for new mobile examples, while keeping web3.js as a compatibility path where the current official docs/sample still require it.
 
 ### Sign Multiple Transactions
 
@@ -105,27 +98,29 @@ await transact(async (wallet: Web3MobileWallet) => {
 });
 ```
 
-## Phantom Connect SDK (Alternative)
+## Phantom Mobile SDK / Alternative Mobile Wallet Flows
 
-Phantom Connect provides a higher-level SDK with additional features like social login and embedded wallets.
+Phantom can be used in mobile apps, but React Native apps should follow Phantom's mobile-specific SDK or supported mobile flow guidance rather than browser SDK examples.
 
-### React Native Setup
+### React Native Guidance
 
-```typescript
-import { createPhantom } from "@phantom/browser-sdk";
+For React Native:
+- do not use `@phantom/browser-sdk` as the default mobile integration example
+- prefer Phantom's React Native/mobile-specific guidance when using Phantom directly
+- if the app only needs wallet handoff and signing, deep-link flows may be simpler than a full SDK
+- if the app needs embedded/social/mobile-specific wallet UX, use the current Phantom mobile SDK path
 
-const phantom = createPhantom({
-  appId: "your-app-id", // Get from Phantom developer portal
-  chainId: "solana:mainnet",
-});
+### Practical Recommendation
 
-// Connect
-const connected = await phantom.solana.connect();
-console.log("Address:", connected.publicKey.toString());
+Choose one of these based on app needs:
+- **MWA / Solana Mobile wallet flow**: best default for Solana-native mobile apps
+- **Phantom mobile SDK flow**: when Phantom-specific UX or embedded/social features are required
+- **Phantom deep links**: for simpler connect-and-sign flows without a full SDK integration
+- **Embedded wallet SDK**: when the product explicitly needs embedded onboarding
 
-// Sign transaction
-const signed = await phantom.solana.signTransaction(transaction);
-```
+### Caution
+
+Do not copy browser-SDK examples into React Native mobile apps. Browser SDK examples are for web/browser contexts and are not the right default reference for React Native mobile implementations.
 
 **Skills:** `phantom-connect-skill` (Phantom Connect SDK — React, React Native, browser, social login, token gating)
 **Skills:** `helius-phantom-skill` (Official Helius skill for frontend dApp development with Phantom Connect)
@@ -255,11 +250,12 @@ const userFriendlyError = (error: any): string => {
 
 ## Testing Wallet Integration
 
-### Emulator Limitations
+### Emulator and Device Testing
 
-- MWA does NOT work in emulators — must test on physical device
-- Deep links partially work in emulators (with Phantom APK sideloaded)
+- Use any Android device or emulator during development
+- Use Mock MWA Wallet when testing MWA flows in development environments
 - Use devnet for all testing — airdrop SOL via `solana airdrop 2`
+- Before release, repeat the critical wallet and signing flow on a physical device with a real wallet installed
 
 ### Physical Device Testing Checklist
 
@@ -274,3 +270,9 @@ const userFriendlyError = (error: any): string => {
 - [ ] Error messages are user-friendly (no raw error codes)
 
 **MCPs:** `phantom-mcp-server` (Official Phantom MCP — wallet access, sign/send, swaps)
+
+## Sources
+
+- [Solana Mobile Docs — Installation](https://docs.solanamobile.com/get-started/react-native/installation)
+- [Solana Mobile Docs — Test with any Android device](https://docs.solanamobile.com/recipes/general/test-with-any-android-device)
+- [solana-mobile/react-native-samples](https://github.com/solana-mobile/react-native-samples)

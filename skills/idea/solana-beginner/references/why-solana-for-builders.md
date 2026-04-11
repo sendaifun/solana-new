@@ -48,7 +48,7 @@ On Ethereum's L2 ecosystem, composing across Arbitrum + Base + Optimism requires
 
 ## Ecosystem Maturity
 
-- **$5B+ DeFi TVL** across Jupiter, Kamino, Marinade, Jito, and dozens of others.
+- **$5B+ DeFi TVL** across Jupiter, Kamino, Marinade, Jito, and dozens of others. (Verify current protocol health before recommending — see `04-protocols-and-sdks.md`.)
 - **Institutional adoption:** Circle (USDC native on Solana), PayPal (PYUSD), Visa, Shopify integrations.
 - **59+ open-source repos** you can fork and build on.
 - **49+ MCP servers** for AI-native development.

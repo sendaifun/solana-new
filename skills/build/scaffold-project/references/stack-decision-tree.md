@@ -6,7 +6,8 @@ Match an idea to the right technology stack.
 
 ### Q1: What type of product?
 
-- **Web dApp (frontend + on-chain)** → Next.js + Anchor
+- **Frontend on existing protocol (no custom program)** → Next.js + Protocol SDK (no Anchor needed). Use when integrating with existing DeFi, payments, or stablecoin infrastructure. See `data/solana-knowledge/04-protocols-and-sdks.md` → Decision Quick Reference for which protocol SDK to use.
+- **Web dApp (frontend + custom on-chain program)** → Next.js + Anchor
 - **AI Agent (autonomous)** → Solana Agent Kit + TypeScript
 - **Bot (Telegram/Discord)** → Bot framework + Solana Agent Kit
 - **On-chain program only** → Anchor or Pinocchio

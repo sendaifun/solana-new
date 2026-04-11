@@ -74,12 +74,14 @@ Anchor errors encode as `6000 + variant_index`. Custom `ProgramError` codes star
 
 ```rust
 use anchor_lang::prelude::*;
-use anchor_spl::token::{self, Token, TokenAccount, Mint};
+use anchor_spl::token_interface::{self, Mint, TokenAccount, TokenInterface};
 
 // Key types
 let key: Pubkey = ctx.accounts.signer.key();
 let system: Pubkey = anchor_lang::system_program::ID;
-let token_program: Pubkey = anchor_spl::token::ID;
+
+// Works with either the classic SPL Token program or Token-2022
+let token_program: Pubkey = ctx.accounts.token_program.key();
 ```
 
 ## Derive Accounts
@@ -149,42 +151,62 @@ pub struct Initialize<'info> {
 ### Direct Invoke
 
 ```rust
-let cpi_accounts = Transfer {
+let decimals = ctx.accounts.mint.decimals;
+
+let cpi_accounts = token_interface::TransferChecked {
+    mint: ctx.accounts.mint.to_account_info(),
     from: ctx.accounts.from.to_account_info(),
     to: ctx.accounts.to.to_account_info(),
     authority: ctx.accounts.signer.to_account_info(),
 };
-let cpi_ctx = CpiContext::new(ctx.accounts.token_program.to_account_info(), cpi_accounts);
-token::transfer(cpi_ctx, amount)?;
+
+let cpi_ctx = CpiContext::new(
+    ctx.accounts.token_program.to_account_info(),
+    cpi_accounts,
+);
+
+token_interface::transfer_checked(cpi_ctx, amount, decimals)?;
 ```
 
 ### Invoke Signed (PDA as signer)
 
 ```rust
+let decimals = ctx.accounts.mint.decimals;
 let seeds = &[b"vault", user.key().as_ref(), &[bump]];
 let signer_seeds = &[&seeds[..]];
+
+let cpi_accounts = token_interface::TransferChecked {
+    mint: ctx.accounts.mint.to_account_info(),
+    from: ctx.accounts.from.to_account_info(),
+    to: ctx.accounts.to.to_account_info(),
+    authority: ctx.accounts.vault_authority.to_account_info(),
+};
+
 let cpi_ctx = CpiContext::new_with_signer(
     ctx.accounts.token_program.to_account_info(),
     cpi_accounts,
     signer_seeds,
 );
-token::transfer(cpi_ctx, amount)?;
+
+token_interface::transfer_checked(cpi_ctx, amount, decimals)?;
 ```
 
 ## SPL Token Operations
 
+Prefer `anchor_spl::token_interface` in new teaching material. It supports both the classic SPL Token program and Token-2022, and `transfer_checked` is the current default teaching pattern for transfers.
+
 ```rust
 // Mint tokens
-token::mint_to(cpi_ctx, amount)?;
+token_interface::mint_to(cpi_ctx, amount)?;
 
-// Transfer tokens
-token::transfer(cpi_ctx, amount)?;
+// Transfer tokens (preferred teaching pattern)
+token_interface::transfer_checked(cpi_ctx, amount, decimals)?;
 
 // Burn tokens
-token::burn(cpi_ctx, amount)?;
+token_interface::burn(cpi_ctx, amount)?;
 
 // Approve delegate
-token::approve(cpi_ctx, amount)?;
+token_interface::approve(cpi_ctx, amount)?;
 ```
 
 ## Testing Patterns
@@ -240,3 +262,12 @@ Rust panics on overflow in debug mode but wraps in release. Use `checked_add`, `
 
 ### String and Vec in Accounts
 Strings and Vecs are dynamically sized. You must pre-allocate space: `4 + (max_length * item_size)`. The 4 bytes store the length prefix.
+
+## Sources
+
+- [Anchor Docs — Transfer Tokens](https://www.anchor-lang.com/docs/tokens/basics/transfer-tokens)
+- [Anchor Docs — Create Token Account](https://www.anchor-lang.com/docs/tokens/basics/create-token-account)
+- [Anchor Docs — Mint Tokens](https://www.anchor-lang.com/docs/tokens/basics/mint-tokens)
+- [Anchor Docs — Account Types](https://www.anchor-lang.com/docs/references/account-types)
+- [Anchor SPL source — token_interface.rs](https://github.com/solana-foundation/anchor/blob/master/spl/src/token_interface.rs)
+- [Anchor source — InterfaceAccount](https://github.com/solana-foundation/anchor/blob/master/lang/src/accounts/interface_account.rs)

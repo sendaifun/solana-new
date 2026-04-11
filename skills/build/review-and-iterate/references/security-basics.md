@@ -38,12 +38,12 @@ PDA seeds must be deterministic and include enough entropy.
 ```rust
 #[account(
     seeds = [b"vault", user.key().as_ref()],
-    bump = vault.bump,  // Always save and reuse the bump
+    bump = vault.bump,  // Optional optimization when you want cheap repeated validation
 )]
 pub vault: Account<'info, Vault>,
 ```
 - Always re-derive the PDA in the instruction — never trust the client
-- Save the canonical bump in account state to avoid re-derivation cost
+- Optionally save the canonical bump in account state if this PDA is validated often or reused for signer seeds on a hot path
 - Include unique identifiers in seeds (user pubkey, mint address) to prevent collisions
 
 ### 4. Arithmetic Safety
@@ -56,7 +56,7 @@ let result = amount_a.checked_add(amount_b).ok_or(ErrorCode::MathOverflow)?;
 // Bad
 let result = amount_a + amount_b; // Can overflow silently
 ```
-Anchor enables overflow checks by default in release builds, but always use `checked_*` explicitly.
+Do not rely on release builds for overflow protection: Rust release profiles disable overflow checks by default unless you explicitly set `overflow-checks = true`. Always use `checked_*` or `try_*` math for value-sensitive logic.
 
 ### 5. Reinitialization Protection
 Accounts that should be initialized once must not be reinitializable.
@@ -82,7 +82,7 @@ if account.discriminator != EXPECTED_DISCRIMINATOR {
 ```
 
 ### 7. Bump Seed Canonicalization
-Always use the canonical bump (from `find_program_address`) and save it.
+Always use the canonical bump. In Anchor, bare `bump` is a valid default that re-derives the canonical bump automatically; storing the bump in account state is an optimization when you want cheaper repeated validation or signer-seed reuse.
 
 ```rust
 // Good: save bump on init, reuse on subsequent calls
@@ -91,7 +91,7 @@ Always use the canonical bump (from `find_program_address`) and save it.
     bump = config.bump, // Saved during initialization
 )]
 
-// Bad: letting Anchor re-derive (costs CU, risk of bump grinding)
+// Valid default: Anchor computes the canonical bump automatically
 #[account(seeds = [b"config"], bump)]
 ```
 

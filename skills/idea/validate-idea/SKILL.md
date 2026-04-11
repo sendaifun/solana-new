@@ -75,6 +75,7 @@ Take an idea (from a prior find-next-crypto-idea session or fresh from the user)
 - If the user has no evidence of demand, the answer is "go validate" with a specific sprint plan, not "go build".
 - Always check if there is already a live product doing the same thing on Solana.
 - Always write a local HTML artifact. Do not leave results only in chat.
+- **Integration-first assessment**: As part of validation, identify whether the idea can be built by integrating existing Solana protocols rather than writing a custom program. If integration is viable, note it as an advantage (faster to ship, lower audit costs). If the idea requires novel on-chain logic or the user is building the protocol layer itself, custom development is the right call — don't penalize it. Include the integration-vs-build assessment in next_steps. See `data/solana-knowledge/04-protocols-and-sdks.md` → "Integrate First, Build Second".
 
 ## Phase Handoff
 
