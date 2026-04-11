@@ -6,9 +6,9 @@ Methods for ingesting Solana on-chain data. Choose based on latency requirements
 
 | Method | Latency | Complexity | Best For | Cost |
 |--------|---------|------------|----------|------|
-| Helius Webhooks | ~1-5s | Low | Event-driven, specific programs | Pay per event |
+| Helius Webhooks | ~200-500ms after confirmation | Low | Event-driven, specific programs | Pay per event |
 | WebSocket (accountSubscribe) | ~400ms | Medium | Real-time account monitoring | RPC subscription |
-| Geyser Plugin (LaserStream) | ~100ms | High | High-throughput, all transactions | Infrastructure |
+| LaserStream (managed Yellowstone-compatible gRPC) | ~100ms | High | High-throughput streaming with replay/failover | Paid managed service |
 | RPC Polling | 1-10s | Low | Simple, low-frequency checks | RPC credits |
 | DAS API | On-demand | Low | NFT/token metadata queries | Per request |
 
@@ -28,7 +28,7 @@ claude mcp add helius npx helius-mcp@latest
 
 ```typescript
 // Create a webhook via Helius API
-const webhook = await fetch("https://api.helius.dev/v0/webhooks?api-key=YOUR_KEY", {
+const webhook = await fetch("https://api-mainnet.helius-rpc.com/v0/webhooks?api-key=YOUR_KEY", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
@@ -88,7 +88,7 @@ async function processTransfer(event: any) {
 | Type | Data Format | Use When |
 |------|-------------|----------|
 | `enhanced` | Parsed (type, source, transfers) | You want structured data without parsing |
-| `raw` | Raw transaction bytes | You need custom parsing or full instruction data |
+| `raw` | Unparsed transaction data | You need custom parsing or raw instruction/account payloads |
 | `discord` | Formatted message to Discord | Simple notifications |
 
 **Skills:** `helius-build-skill` (Official — DAS API, WebSockets, webhooks, wallet API)
@@ -103,7 +103,7 @@ For real-time account monitoring with lower latency than webhooks.
 import { Connection, PublicKey } from "@solana/web3.js";
 
 const connection = new Connection(RPC_URL, {
-  wsEndpoint: WS_URL, // e.g., wss://atlas-mainnet.helius-rpc.com?api-key=KEY
+  wsEndpoint: WS_URL, // e.g., wss://mainnet.helius-rpc.com/?api-key=KEY
 });
 
 // Subscribe to account changes
@@ -147,22 +147,22 @@ const logSubId = connection.onLogs(
 connection.removeAccountChangeListener(subscriptionId);
 ```
 
-## Geyser Plugin / LaserStream
+## LaserStream (Managed Yellowstone-Compatible gRPC)
 
-For high-throughput indexing of all Solana transactions with minimal latency.
+For high-throughput, low-latency Solana streaming when you want a managed service instead of running your own Yellowstone/Geyser infrastructure.
 
 ```typescript
-// LaserStream via Helius — gRPC streaming
+// LaserStream via Helius — managed Yellowstone-compatible gRPC
 // Skills: helius-build-skill (LaserStream gRPC documentation)
 
 // LaserStream provides:
-// - All transactions as they're processed (not just confirmed)
-// - Account updates in real-time
-// - Slot notifications
-// - ~100ms latency
+// - Transactions, accounts, blocks, and slots with low latency
+// - Automatic reconnects and historical replay (up to 24 hours)
+// - A drop-in path for teams already using Yellowstone gRPC clients
 
-// Setup: requires Helius Business plan
-// Use helius-mcp to get LaserStream info and configuration
+// Check current Helius LaserStream docs for network/tier availability
+// instead of hardcoding a plan requirement.
+// If you want to run your own infra, treat self-hosted Yellowstone/Geyser separately.
 ```
 
 **Skills:** `quicknode-blockchain-skills` (Yellowstone gRPC streaming)
@@ -175,7 +175,7 @@ Raw transactions need parsing to extract meaningful data.
 ```typescript
 // Helius enhanced transaction parsing (easiest)
 const parsed = await fetch(
-  `https://api.helius.dev/v0/transactions/?api-key=${API_KEY}`,
+  `https://api-mainnet.helius-rpc.com/v0/transactions?api-key=${API_KEY}`,
   {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -199,7 +199,7 @@ You will miss events. Plan for it.
 // Backfill from Helius transaction history
 async function backfill(address: string, beforeSignature?: string) {
   const history = await fetch(
-    `https://api.helius.dev/v0/addresses/${address}/transactions?api-key=${API_KEY}&before=${beforeSignature || ""}`
+    `https://api-mainnet.helius-rpc.com/v0/addresses/${address}/transactions?api-key=${API_KEY}&before-signature=${beforeSignature || ""}`
   ).then(r => r.json());
 
   for (const tx of history) {
@@ -215,3 +215,13 @@ async function backfill(address: string, beforeSignature?: string) {
 
 **Repos:** `helius-core-ai` (Official Helius AI tooling — CLI, MCP, skills)
 **MCPs:** `solscan-mcp` (transaction forensics and analytics via Solscan Pro API)
+
+## Sources
+
+- Helius Webhooks API: https://www.helius.dev/docs/api-reference/webhooks/llms.txt
+- Helius Enhanced Transactions API: https://www.helius.dev/docs/api-reference/enhanced-transactions/llms.txt
+- Helius DAS API: https://www.helius.dev/docs/api-reference/das/llms.txt
+- Helius LaserStream gRPC API: https://www.helius.dev/docs/api-reference/laserstream/grpc/llms.txt
+- Helius LaserStream overview: https://www.helius.dev/laserstream.md
+- MetaMask DAS reference (`getAssetsByOwner`): https://docs.metamask.io/services/reference/solana/json-rpc-methods/digital-asset-standard/getassetsbyowner/
+- QuickNode DAS reference (`getAsset`): https://www.quicknode.com/docs/solana/getAsset

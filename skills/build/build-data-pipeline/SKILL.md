@@ -55,7 +55,7 @@ This only happens once. If `TEL_PROMPTED` is `yes`, skip this entirely and proce
 
 ## Overview
 
-Guide the user through building a data pipeline that ingests, transforms, and stores Solana on-chain data. Covers real-time event streaming via webhooks and WebSockets, historical backfilling, account state indexing, and building query-friendly storage. Uses Helius infrastructure for production-grade data ingestion.
+Guide the user through building a data pipeline that ingests, transforms, and stores Solana on-chain data. Covers real-time event streaming via webhooks and WebSockets, historical backfilling, account state indexing, and building query-friendly storage. Uses Helius where it is the best fit for production-grade ingestion, while keeping the storage and indexing design provider-agnostic.
 
 ## Workflow
 
@@ -99,9 +99,9 @@ See `../../data/specs/phase-handoff.md` for the full JSON contract.
 
 ```bash
 # Fastest: Helius webhooks (no infrastructure needed)
-# 1. Get Helius API key from helius.dev
+# 1. Get Helius API key from dashboard.helius.dev
 # 2. Create webhook:
-curl -X POST https://api.helius.xyz/v0/webhooks?api-key=YOUR_KEY \
+curl -X POST https://api-mainnet.helius-rpc.com/v0/webhooks?api-key=YOUR_KEY \
   -H 'Content-Type: application/json' \
   -d '{
     "webhookURL": "https://your-app.com/webhook",
@@ -117,7 +117,7 @@ curl -X POST https://api.helius.xyz/v0/webhooks?api-key=YOUR_KEY \
 ## Decision Points
 
 - **Which ingestion method?** Webhooks (simplest, Helius) → WebSocket (real-time) → Geyser (highest throughput) → Polling (last resort).
-- **Which RPC?** Helius required for webhooks and DAS API.
+- **Which RPC?** Helius is required if you want Helius webhooks or Helius-only enhanced APIs. DAS is available from multiple providers (for example Helius, MetaMask/Infura, and QuickNode), so choose based on pricing, limits, and where the rest of your stack already lives.
 - **Database?** PostgreSQL for relational data + transactions. Redis for caching + real-time state. SQLite for small/local indexers.
 - **Hosting?** Railway or Fly.io for webhook receivers. AWS/GCP for Geyser plugins.
 
