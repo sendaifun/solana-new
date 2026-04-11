@@ -8,7 +8,7 @@ Patterns for launching tokens on Solana. Choose the right path based on your tok
 
 Best for: memecoins, community tokens, rapid launches with minimal custom infrastructure.
 
-Pump uses a bonding curve to make newly created SPL coins immediately tradable without pre-seeding external liquidity. When the curve completes and the token reaches Pump’s completion/graduation condition, liquidity can be migrated to PumpSwap. In the current Pump program docs, migration is permissionless via `migrate(user, mint)`.
+Pump uses a bonding curve to make newly created SPL tokens immediately tradable without pre-seeding external liquidity. When the curve completes and the token reaches Pump’s completion/graduation condition, liquidity can be migrated to PumpSwap. In the current Pump program docs, migration is permissionless via `migrate(user, mint)`.
 
 ```typescript
 // Current Pump SDK shape
