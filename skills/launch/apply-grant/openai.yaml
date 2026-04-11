@@ -1,0 +1,4 @@
+interface:
+  display_name: "Apply for Grant"
+  short_description: "Prepare an Agentic Engineering Grant application for Solana Earn"
+  default_prompt: "Use $apply-grant to gather project data and generate a complete Agentic Engineering Grant application ready for form submission."

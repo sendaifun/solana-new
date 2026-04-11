@@ -2,7 +2,7 @@
 
 ## What This Is
 
-Skills and knowledge base to ship on Solana — Idea to Launch. 25 journey skills, 59 repos, 71 ecosystem skills, 49 MCP servers.
+Skills and knowledge base to ship on Solana — Idea to Launch. 26 journey skills, 59 repos, 71 ecosystem skills, 49 MCP servers.
 
 ## Install
 
@@ -49,6 +49,7 @@ claude "/deploy-to-mainnet Ship it"
 | Launch | `create-pitch-deck` | "Create a pitch deck" |
 | Launch | `submit-to-hackathon` | "Prepare my hackathon submission" |
 | Launch | `marketing-video` | "Create a marketing video" |
+| Launch | `apply-grant` | "Apply for Agentic Engineering Grant" |
 
 Skills live in `skills/<phase>/<skill-name>/`. To add a new skill, create a folder with `SKILL.md` + `references/` + `agents/openai.yaml`.
 
@@ -83,7 +84,7 @@ skills/
   SKILL_ROUTER.md           Shared routing table — AI auto-corrects wrong skill
   idea/                     Discovery & planning skills (6 skills, includes solana-beginner, learn)
   build/                    Implementation skills (14 skills, includes virtual-solana-incubator, roast-my-product, product-review, cso)
-  launch/                   Go-to-market skills (4 skills, includes marketing-video)
+  launch/                   Go-to-market skills (5 skills, includes marketing-video, apply-grant)
   data/
     guides/                 Shared guides (RPC+wallet, deploy, security, curated ideas)
     solana-knowledge/       6 knowledge area docs + cookbook index (covers all of solana.com)
