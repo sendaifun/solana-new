@@ -44,7 +44,11 @@ tx.recentBlockhash = blockhash;
 
 **Symptom:** `AccountNotInitialized` (error 3012) or `AccountOwnedByWrongProgram`
 **Cause:** Trying to read/use an account that hasn't been created yet.
-**Fix:** Initialize the account first, or use `init_if_needed` in Anchor:
+**Fix:** Initialize the account first, or use `init_if_needed` in Anchor — but note that `#[account(init_if_needed)]` requires enabling the `init-if-needed` cargo feature for `anchor-lang`:
+```toml
+anchor-lang = { version = "<your-version>", features = ["init-if-needed"] }
+```
+
 ```rust
 #[account(init_if_needed, payer = user, space = 8 + MyAccount::INIT_SPACE)]
 pub my_account: Account<'info, MyAccount>,
@@ -127,7 +131,7 @@ pub struct MyAccount {
 
 **Symptom:** `0x0` error or "already in use" during account creation
 **Cause:** Trying to `init` an account that already exists.
-**Fix:** Use `init_if_needed` or check existence before creating.
+**Fix:** Use `init_if_needed` (with Anchor's `init-if-needed` cargo feature enabled) or check existence before creating.
 
 ## 12. Forgetting to Mark Account Mutable
 
@@ -238,3 +242,8 @@ pub my_account: Account<'info, MyAccount>,
 **Skills:** `compatibility-matrix` (official — version matching to avoid toolchain conflicts)
 **Skills:** `programs-anchor` (official — Anchor framework patterns and best practices)
 **MCPs:** `helius-mcp` (troubleshootError tool — error diagnosis)
+
+## Sources
+
+- Anchor account constraints docs: https://www.anchor-lang.com/docs/references/account-constraints
+- Anchor docs source: https://github.com/solana-foundation/anchor/blob/master/docs/content/docs/references/account-constraints.mdx

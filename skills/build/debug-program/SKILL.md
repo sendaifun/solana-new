@@ -114,7 +114,7 @@ anchor idl fetch <PROGRAM_ID>  # Verify IDL matches
 
 ## Decision Points
 
-- **Which RPC for debugging?** Use Surfpool with `--fork mainnet-beta` to replay mainnet transactions locally.
+- **Which RPC for debugging?** Use Surfpool with `surfpool start --network mainnet` to replay mainnet transactions locally. For a custom upstream RPC, use `surfpool start --rpc-url <RPC_URL>`.
 - **Can't read error code?** Check Anchor error codes: 6000+ are custom program errors. 0x1 = insufficient funds. 0x0 = success.
 - **CPI error from another program?** Check the inner instructions in transaction logs. The error comes from the CPI'd program, not yours.
 
