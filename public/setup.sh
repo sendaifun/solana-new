@@ -233,12 +233,137 @@ if [ -f "$CONFIG_DIR/config.json" ] && ! grep -q "convexUrl" "$CONFIG_DIR/config
   fi
 fi
 
-# --- What gets installed ---
-printf "\n"
-printf "  ${CYAN}┌─────────────────────────────────────────────────────────────────┐${RESET}\n"
-printf "  ${CYAN}│${RESET} ${BOLD}What gets installed:${RESET} Agent Skills in ~/.claude/skills/,              ${CYAN}│${RESET}\n"
-printf "  ${CYAN}│${RESET} ~/.codex/skills/, and ~/.agents/skills/.                       ${CYAN}│${RESET}\n"
-printf "  ${CYAN}└─────────────────────────────────────────────────────────────────┘${RESET}\n"
+# --- Founder Pass ---
+# Inline the pass renderer so it works from curl | bash
+_render_pass() {
+  local R=$'\033[0m' G=$'\033[38;5;178m' GB=$'\033[1;38;5;220m'
+  local GD=$'\033[38;5;136m' GK=$'\033[38;5;94m' D=$'\033[38;5;240m' BG=$'\033[48;5;233m'
+  local MW=60 SW=5
+
+  # Auto-detect user data
+  local raw_name
+  raw_name=$(git config --global user.name 2>/dev/null) || raw_name=$(id -F 2>/dev/null) || raw_name="${USER:-Builder}"
+  local PASS_NAME=$(echo "$raw_name" | tr '[:lower:]' '[:upper:]' | sed 's/ /  /g')
+
+  # GitHub identity + stats
+  local GH_USER="" GH_DISPLAY="CONNECT  GITHUB" GH_REPOS_NUM="" GH_CONTRIBS=""
+  _gh_can_auth() {
+    command -v gh >/dev/null 2>&1 && gh auth status >/dev/null 2>&1
+  }
+  _resolve_gh_user() {
+    if [ -n "${GITHUB_USER:-}" ]; then
+      printf '%s\n' "$GITHUB_USER"
+      return 0
+    fi
+    local configured
+    configured=$(git config --global github.user 2>/dev/null)
+    if [ -n "$configured" ]; then
+      printf '%s\n' "$configured"
+      return 0
+    fi
+    if _gh_can_auth; then
+      gh api user --jq '.login' 2>/dev/null
+      return $?
+    fi
+    return 1
+  }
+  _fetch_gh_rest() {
+    local login="$1" json type
+    [ -z "$login" ] && return 1
+    json=$(curl -sf --max-time 3 "https://api.github.com/users/$login" 2>/dev/null) || return 1
+    type=$(echo "$json" | grep '"type":' | head -1 | sed 's/.*"type":[[:space:]]*"\([^"]*\)".*/\1/')
+    [ "$type" = "User" ] || return 1
+    GH_USER="$login"
+    GH_REPOS_NUM=$(echo "$json" | grep '"public_repos":' | head -1 | tr -dc '0-9')
+    return 0
+  }
+  _fetch_gh_graphql() {
+    local login="$1" row
+    [ -z "$login" ] && return 1
+    _gh_can_auth || return 1
+    row=$(gh api graphql \
+      -f query='query($login: String!) { user(login: $login) { login contributionsCollection { contributionCalendar { totalContributions } } repositories(privacy: PUBLIC) { totalCount } } }' \
+      -F login="$login" \
+      --jq '.data.user | [.login, (.contributionsCollection.contributionCalendar.totalContributions|tostring), (.repositories.totalCount|tostring)] | @tsv' 2>/dev/null) || return 1
+    IFS=$'\t' read -r GH_USER GH_CONTRIBS GH_REPOS_NUM <<EOF
+$row
+EOF
+    [ -n "$GH_USER" ]
+  }
+  local gh_login
+  gh_login=$(_resolve_gh_user 2>/dev/null) || true
+  if [ -n "$gh_login" ]; then
+    _fetch_gh_graphql "$gh_login" || _fetch_gh_rest "$gh_login" || true
+  fi
+  if [ -n "$GH_CONTRIBS" ]; then
+    GH_DISPLAY="${GH_CONTRIBS}  CONTRIBUTIONS"
+  elif [ -n "$GH_USER" ]; then
+    GH_DISPLAY="@${GH_USER}"
+  fi
+  if [ -n "$GH_USER" ]; then
+    PASS_NAME="${PASS_NAME} (@${GH_USER})"
+  fi
+  # Right stub: repo count as vertical digits
+  local _rpad STUB_R1="" STUB_R2="" STUB_R3="" STUB_R4=""
+  if [ -n "$GH_REPOS_NUM" ]; then
+    _rpad=$(printf "%-4s" "$GH_REPOS_NUM")
+  else
+    _rpad="    "
+  fi
+  STUB_R1="${_rpad:0:1}"; [ "$STUB_R1" = " " ] && STUB_R1=""
+  STUB_R2="${_rpad:1:1}"; [ "$STUB_R2" = " " ] && STUB_R2=""
+  STUB_R3="${_rpad:2:1}"; [ "$STUB_R3" = " " ] && STUB_R3=""
+  STUB_R4="${_rpad:3:1}"; [ "$STUB_R4" = " " ] && STUB_R4=""
+  local months=("JAN" "FEB" "MAR" "APR" "MAY" "JUN" "JUL" "AUG" "SEP" "OCT" "NOV" "DEC")
+  local dd=$(date +%d) mm=${months[$(($(date +%-m) - 1))]} yy=$(date +%Y)
+  local PASS_ISSUED="${dd}  ${mm}  ${yy}"
+  local SEAL_T="$mm" SEAL_M="$dd" SEAL_B="'$(date +%y)"
+  local PASS_NO_FMT=$(echo "0142" | sed 's/./& /g' | sed 's/ $//')
+
+  # Helpers
+  local fixl_='printf "%-${2}.${2}s" "$1"'
+  _f() { printf "%-${2}.${2}s" "$1"; }
+  _fc() { local t="$1" w="$2" l=${#1}; if ((l>=w)); then printf "%.${w}s" "$t"; else local lp=$(((w-l)/2)); printf "%*s%s%*s" "$lp" "" "$t" $((w-l-lp)) ""; fi; }
+  _rep() { printf "%0.s$1" $(seq 1 "$2"); }
+  _vlen() { local s; s=$(printf '%s' "$1" | perl -pe 's/\e\[\d+(;\d+)*m//g'); echo ${#s}; }
+  _row() { local c="$1" p=$((MW-$(_vlen "$1"))); printf '%s' "$c"; ((p>0)) && printf "${BG}%${p}s" "" || true; }
+  _rowlr() { local l="$1" r="$2" g=$((MW-$(_vlen "$1")-$(_vlen "$2"))); printf '%s' "$l"; ((g>0)) && printf "${BG}%${g}s" "" || true; printf '%s' "$r"; }
+  _L() { local ltr="$1" sep="$2"; if [[ -n "$ltr" ]]; then printf "  ${GD}║${BG}  ${D}${ltr}${R}${BG}  ${GD}${sep} ║${BG}"; else printf "  ${GD}║${BG}$(_f '' $SW)${GD}${sep} ║${BG}"; fi; }
+  _R() { local ltr="$1" sep="$2"; if [[ -n "$ltr" ]]; then printf "${R}${GD}║ ${sep}${BG}  ${D}${ltr}${R}${BG}  ${GD}║${R}\n"; else printf "${R}${GD}║ ${sep}${BG}$(_f '' $SW)${GD}║${R}\n"; fi; }
+
+  # Precompute
+  local SEAL_BOX=9 VAL_W=$((MW-1-13-1-9-2))
+  local NAME_D=$(_f "$PASS_NAME" $VAL_W) ISS_D=$(_f "$PASS_ISSUED" $VAL_W)
+  local CLS_D=$(_f "FOUNDING  BUILDER" $VAL_W) LVL_D=$(_f "◆  ${GH_DISPLAY}" $VAL_W)
+  local S1=$(_f "○ IDEA" 10) S2=$(_f "○ BUILD" 10) S3=$(_f "○ SHIP" 10)
+  local OL=$(_f "SUPERTEAM" 18) OM=$(_fc "solana.new" 16)
+  local ST="╭───────╮" SA="│ $(_fc "$SEAL_T" 5) │" SD="│ $(_fc "$SEAL_M" 5) │"
+  local SY="│ $(_fc "$SEAL_B" 5) │" SB="╰───────╯"
+
+  echo ""
+  printf "  ${D}      "; _rep "╌ " 34; printf "${R}\n"
+  printf "  ${GD}╔"; _rep "═" $SW; printf "╕ ╔"; _rep "═" $MW; printf "╗ ╕"; _rep "═" $SW; printf "╗${R}\n"
+  _L '' '│'; _rowlr " ${GB}◆ SOLANA·NEW  |  FOUNDER PASS${R}${BG}" "${GD}N° ${PASS_NO_FMT}${R}${BG} "; _R '' '│'
+  _L '' '│'; _row " ${GK}$(_rep '┄' $((MW-2)))${R}${BG} "; _R '' '│'
+  _L '' '╯'; _row "$(_f '' $MW)"; _R '' '╰'
+  _L 'S' ' '; _row " ${GK}NAME  ${GK}····· ${GB}${NAME_D}${R}${BG}"; _R '' ' '
+  _L 'O' ' '; _rowlr " ${GK}ISSUED ${GK}···  ${G}${ISS_D}${R}${BG}" " ${D}${ST}${R}${BG} "; _R "$STUB_R1" ' '
+  _L 'L' ' '; _rowlr " ${GK}CLASS  ${GK}···· ${G}${CLS_D}${R}${BG}" " ${D}${SA}${R}${BG} "; _R "$STUB_R2" ' '
+  _L 'A' ' '; _rowlr " ${GK}GITHUB ${GK}···· ${G}${LVL_D}${R}${BG}" " ${GB}${SD}${R}${BG} "; _R "$STUB_R3" ' '
+  _L 'N' ' '; _rowlr "" " ${D}${SY}${R}${BG} "; _R "$STUB_R4" ' '
+  _L 'A' ' '; _rowlr "" " ${D}${SB}${R}${BG} "; _R '' ' '
+  _L '' '╮'; _row "$(_f '' $MW)"; _R '' '╭'
+  _L '' '│'; _row " ${GK}STAMPS ${GK}···  ${G}${S1}${R}${BG}  ${G}${S2}${R}${BG}  ${G}${S3}${R}${BG}"; _R '' '│'
+  _L '' '│'; _row " ${GK}$(_rep '─' $((MW-10)))${R}${BG}     "; _R '' '│'
+  _L '' '│'; _row "$(_fc "you're now a certified agentic engineer on solana" $MW | sed "s/^/${G}/" | sed "s/$/${R}${BG}/")"; _R '' '│'
+  _L '' '│'; _row "     ${GK}$(_rep '─' $((MW-10)))${R}${BG}     "; _R '' '│'
+  printf "  ${GD}║${BG}$(_f '' $SW)${GD}│ ╠"; _rep "═" $MW; printf "╣ │${BG}$(_f '' $SW)${GD}║${R}\n"
+  _L '' '│'; _rowlr " ${D}${OL}${R}${BG}  ${GK}${OM}${R}${BG}" "${D}SendAI${R}${BG} "; _R '' '│'
+  printf "  ${GD}╚"; _rep "═" $SW; printf "╛ ╚"; _rep "═" $MW; printf "╝ ╛"; _rep "═" $SW; printf "╝${R}\n"
+  printf "  ${D}      "; _rep "╌ " 34; printf "${R}\n"
+  echo ""
+}
+_render_pass
 
 # --- Done ---
 printf "\n"
