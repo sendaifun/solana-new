@@ -245,33 +245,71 @@ _render_pass() {
   raw_name=$(git config --global user.name 2>/dev/null) || raw_name=$(id -F 2>/dev/null) || raw_name="${USER:-Builder}"
   local PASS_NAME=$(echo "$raw_name" | tr '[:lower:]' '[:upper:]' | sed 's/ /  /g')
 
-  # Auto-detect GitHub stats
-  local GH_USER="" GH_DISPLAY="BUILDER" GH_REPOS_NUM="0"
-  _try_gh_user() {
-    local candidate="$1" json type
-    [ -z "$candidate" ] && return 1
-    json=$(curl -sf --max-time 3 "https://api.github.com/users/$candidate" 2>/dev/null) || return 1
+  # GitHub identity + stats
+  local GH_USER="" GH_DISPLAY="CONNECT  GITHUB" GH_REPOS_NUM="" GH_CONTRIBS=""
+  _gh_can_auth() {
+    command -v gh >/dev/null 2>&1 && gh auth status >/dev/null 2>&1
+  }
+  _resolve_gh_user() {
+    if [ -n "${GITHUB_USER:-}" ]; then
+      printf '%s\n' "$GITHUB_USER"
+      return 0
+    fi
+    local configured
+    configured=$(git config --global github.user 2>/dev/null)
+    if [ -n "$configured" ]; then
+      printf '%s\n' "$configured"
+      return 0
+    fi
+    if _gh_can_auth; then
+      gh api user --jq '.login' 2>/dev/null
+      return $?
+    fi
+    return 1
+  }
+  _fetch_gh_rest() {
+    local login="$1" json type
+    [ -z "$login" ] && return 1
+    json=$(curl -sf --max-time 3 "https://api.github.com/users/$login" 2>/dev/null) || return 1
     type=$(echo "$json" | grep '"type":' | head -1 | sed 's/.*"type":[[:space:]]*"\([^"]*\)".*/\1/')
     [ "$type" = "User" ] || return 1
-    local repos followers contribs_page contribs
-    repos=$(echo "$json" | grep '"public_repos":' | head -1 | tr -dc '0-9')
-    followers=$(echo "$json" | grep '"followers":' | head -1 | tr -dc '0-9')
-    # Fetch contributions (last year) from contributions calendar
-    contribs_page=$(curl -sf --max-time 3 "https://github.com/users/$candidate/contributions" 2>/dev/null) || true
-    contribs=$(echo "$contribs_page" | tr -s '[:space:]' ' ' | grep -o '[0-9,]* contributions' | head -1 | tr -dc '0-9')
-    [ -z "$contribs" ] && contribs="0"
-    GH_USER="$candidate"
-    GH_REPOS_NUM="${repos:-0}"
-    GH_DISPLAY="${contribs}  CONTRIBUTIONS"
+    GH_USER="$login"
+    GH_REPOS_NUM=$(echo "$json" | grep '"public_repos":' | head -1 | tr -dc '0-9')
     return 0
   }
-  _try_gh_user "$(git config --global github.user 2>/dev/null)" ||
-    _try_gh_user "$(git config --global user.name 2>/dev/null | tr -d ' ')" ||
-    _try_gh_user "$(git remote get-url origin 2>/dev/null | sed -n 's|.*github\.com[:/]\([^/]*\)/.*|\1|p')" ||
-    true
+  _fetch_gh_graphql() {
+    local login="$1" row
+    [ -z "$login" ] && return 1
+    _gh_can_auth || return 1
+    row=$(gh api graphql \
+      -f query='query($login: String!) { user(login: $login) { login contributionsCollection { contributionCalendar { totalContributions } } repositories(privacy: PUBLIC) { totalCount } } }' \
+      -F login="$login" \
+      --jq '.data.user | [.login, (.contributionsCollection.contributionCalendar.totalContributions|tostring), (.repositories.totalCount|tostring)] | @tsv' 2>/dev/null) || return 1
+    IFS=$'\t' read -r GH_USER GH_CONTRIBS GH_REPOS_NUM <<EOF
+$row
+EOF
+    [ -n "$GH_USER" ]
+  }
+  local gh_login
+  gh_login=$(_resolve_gh_user 2>/dev/null) || true
+  if [ -n "$gh_login" ]; then
+    _fetch_gh_graphql "$gh_login" || _fetch_gh_rest "$gh_login" || true
+  fi
+  if [ -n "$GH_CONTRIBS" ]; then
+    GH_DISPLAY="${GH_CONTRIBS}  CONTRIBUTIONS"
+  elif [ -n "$GH_USER" ]; then
+    GH_DISPLAY="@${GH_USER}"
+  fi
+  if [ -n "$GH_USER" ]; then
+    PASS_NAME="${PASS_NAME} (@${GH_USER})"
+  fi
   # Right stub: repo count as vertical digits
   local _rpad STUB_R1="" STUB_R2="" STUB_R3="" STUB_R4=""
-  _rpad=$(printf "%-4s" "$GH_REPOS_NUM")
+  if [ -n "$GH_REPOS_NUM" ]; then
+    _rpad=$(printf "%-4s" "$GH_REPOS_NUM")
+  else
+    _rpad="    "
+  fi
   STUB_R1="${_rpad:0:1}"; [ "$STUB_R1" = " " ] && STUB_R1=""
   STUB_R2="${_rpad:1:1}"; [ "$STUB_R2" = " " ] && STUB_R2=""
   STUB_R3="${_rpad:2:1}"; [ "$STUB_R3" = " " ] && STUB_R3=""

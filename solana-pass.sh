@@ -6,8 +6,31 @@
 #  Themes: gold (default), blue, cyber, royal, obsidian, platinum
 # ─────────────────────────────────────────────────────────
 
-# ── Theme selection ──────────────────────────────────────
-THEME="${1:-gold}"
+# ── Argument parsing ─────────────────────────────────────
+THEME="gold"
+GITHUB_USER_ARG=""
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --github-user)
+      GITHUB_USER_ARG="$2"
+      shift 2
+      ;;
+    --github-user=*)
+      GITHUB_USER_ARG="${1#*=}"
+      shift
+      ;;
+    -h|--help)
+      printf 'Usage: %s [theme] [--github-user USERNAME]\n' "$0"
+      printf 'Themes: gold (default), blue, cyber, royal, obsidian, platinum\n'
+      exit 0
+      ;;
+    *)
+      THEME="$1"
+      shift
+      ;;
+  esac
+done
 
 # ── Auto-detect user data ────────────────────────────────
 _get_name() {
@@ -38,33 +61,88 @@ _seal_parts() {
   SEAL_BOT="'$(date +%y)"
 }
 
-# ── Auto-detect GitHub stats ─────────────────────────────
+# ── GitHub identity + stats ──────────────────────────────
+GH_LOGIN=""
 GH_CONTRIBS=""
 GH_REPOS_NUM=""
 GH_FOLLOWERS_NUM=""
 
-_fetch_gh() {
-  local candidate="$1" json type
-  [ -z "$candidate" ] && return 1
-  json=$(curl -sf --max-time 3 "https://api.github.com/users/$candidate" 2>/dev/null) || return 1
+_gh_can_auth() {
+  command -v gh >/dev/null 2>&1 && gh auth status >/dev/null 2>&1
+}
+
+_resolve_github_login() {
+  if [ -n "$GITHUB_USER_ARG" ]; then
+    printf '%s\n' "$GITHUB_USER_ARG"
+    return 0
+  fi
+  if [ -n "${GITHUB_USER:-}" ]; then
+    printf '%s\n' "$GITHUB_USER"
+    return 0
+  fi
+  local configured
+  configured=$(git config --global github.user 2>/dev/null)
+  if [ -n "$configured" ]; then
+    printf '%s\n' "$configured"
+    return 0
+  fi
+  if _gh_can_auth; then
+    gh api user --jq '.login' 2>/dev/null
+    return $?
+  fi
+  return 1
+}
+
+_fetch_gh_rest() {
+  local login="$1" json type
+  [ -z "$login" ] && return 1
+  json=$(curl -sf --max-time 3 "https://api.github.com/users/$login" 2>/dev/null) || return 1
   type=$(echo "$json" | grep '"type":' | head -1 | sed 's/.*"type":[[:space:]]*"\([^"]*\)".*/\1/')
   [ "$type" = "User" ] || return 1
+  GH_LOGIN="$login"
   GH_REPOS_NUM=$(echo "$json" | grep '"public_repos":' | head -1 | tr -dc '0-9')
   GH_FOLLOWERS_NUM=$(echo "$json" | grep '"followers":' | head -1 | tr -dc '0-9')
-  # Fetch contributions (last year) from contributions calendar
-  local contribs_page
-  contribs_page=$(curl -sf --max-time 3 "https://github.com/users/$candidate/contributions" 2>/dev/null) || true
-  GH_CONTRIBS=$(echo "$contribs_page" | tr -s '[:space:]' ' ' | grep -o '[0-9,]* contributions' | head -1 | tr -dc '0-9')
-  [ -z "$GH_CONTRIBS" ] && GH_CONTRIBS="0"
   return 0
 }
-_fetch_gh "$(git config --global github.user 2>/dev/null)" ||
-  _fetch_gh "$(git config --global user.name 2>/dev/null | tr -d ' ')" ||
-  _fetch_gh "$(git remote get-url origin 2>/dev/null | sed -n 's|.*github\.com[:/]\([^/]*\)/.*|\1|p')" ||
-  true
+
+_fetch_gh_graphql() {
+  local login="$1" row
+  [ -z "$login" ] && return 1
+  _gh_can_auth || return 1
+  row=$(gh api graphql \
+    -f query='query($login: String!) { user(login: $login) { login contributionsCollection { contributionCalendar { totalContributions } } repositories(privacy: PUBLIC) { totalCount } followers { totalCount } } }' \
+    -F login="$login" \
+    --jq '.data.user | [.login, (.contributionsCollection.contributionCalendar.totalContributions|tostring), (.repositories.totalCount|tostring), (.followers.totalCount|tostring)] | @tsv' 2>/dev/null) || return 1
+  IFS=$'\t' read -r GH_LOGIN GH_CONTRIBS GH_REPOS_NUM GH_FOLLOWERS_NUM <<EOF
+$row
+EOF
+  [ -n "$GH_LOGIN" ]
+}
+
+_load_github_stats() {
+  local login
+  login=$(_resolve_github_login) || return 1
+  [ -n "$login" ] || return 1
+  _fetch_gh_graphql "$login" || _fetch_gh_rest "$login" || return 1
+  return 0
+}
+
+_load_github_stats || true
+
+if [ -n "$GH_CONTRIBS" ]; then
+  PASS_GITHUB="${GH_CONTRIBS}  CONTRIBUTIONS"
+elif [ -n "$GH_LOGIN" ]; then
+  PASS_GITHUB="@${GH_LOGIN}"
+else
+  PASS_GITHUB="NOT  CONNECTED"
+fi
 
 # Right stub: repo count as vertical digits
-_rpad=$(printf "%-4s" "${GH_REPOS_NUM:-0}")
+if [ -n "$GH_REPOS_NUM" ]; then
+  _rpad=$(printf "%-4s" "$GH_REPOS_NUM")
+else
+  _rpad="    "
+fi
 STUB_R1="${_rpad:0:1}"; [ "$STUB_R1" = " " ] && STUB_R1=""
 STUB_R2="${_rpad:1:1}"; [ "$STUB_R2" = " " ] && STUB_R2=""
 STUB_R3="${_rpad:2:1}"; [ "$STUB_R3" = " " ] && STUB_R3=""
@@ -72,9 +150,11 @@ STUB_R4="${_rpad:3:1}"; [ "$STUB_R4" = " " ] && STUB_R4=""
 
 # ── Configurable Fields ──────────────────────────────────
 PASS_NAME="$(_format_name)"
+if [ -n "$GH_LOGIN" ]; then
+  PASS_NAME="${PASS_NAME} (@${GH_LOGIN})"
+fi
 PASS_ISSUED="$(_today_issued)"
 PASS_CLASS="FOUNDING  BUILDER"
-PASS_GITHUB="${GH_CONTRIBS:-0}  CONTRIBUTIONS"
 PASS_NO="0142"
 STAMP_1="○ IDEA"      # ● IDEA when earned
 STAMP_2="○ BUILD"
