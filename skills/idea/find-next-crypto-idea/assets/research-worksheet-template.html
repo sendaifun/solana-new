@@ -5,166 +5,418 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>__TITLE__</title>
     <style>
-      :root {
-        --bg: #181c22;
-        --surface: #222831;
-        --surface-2: #2a3040;
-        --border: rgba(221, 221, 221, 0.08);
-        --text: #DDDDDD;
-        --text-muted: #7a8494;
-        --accent: #30475E;
-        --accent-soft: rgba(48, 71, 94, 0.2);
-        --radius: 12px;
-        --radius-lg: 16px;
-      }
-
       * { box-sizing: border-box; margin: 0; padding: 0; }
 
+      /* ===================== THEMES ===================== */
+
+      :root, body.manuscript {
+        --font-body: Georgia, 'Times New Roman', serif;
+        --font-heading: Georgia, 'Times New Roman', serif;
+        --font-mono: 'IBM Plex Mono', 'SF Mono', Menlo, monospace;
+        --font-label: Georgia, 'Times New Roman', serif;
+        --font-size: 17px; --line-height: 1.7; --max-width: 780px;
+        --bg: #FAF8F5; --surface: #FFFFFF; --surface-2: #F5F2ED;
+        --text: #2C2C2C; --text-muted: #6B6B6B;
+        --accent: #1A5276; --accent-soft: rgba(26, 82, 118, 0.07);
+        --border: #E8E4DF; --border-strong: #C8C2B8;
+        --radius: 0; --radius-lg: 0; --shadow: none;
+        --heading-weight: 700; --heading-transform: none;
+        --label-transform: normal; --label-tracking: 0;
+        --label-size: 0.82rem; --label-weight: 600;
+        --rule-weight: 1px; --spacing: 2.5rem;
+        --link-color: #1A5276;
+      }
+
+      body.linear {
+        --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+        --font-heading: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+        --font-mono: 'SF Mono', 'Fira Code', Consolas, monospace;
+        --font-label: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+        --font-size: 15px; --line-height: 1.55; --max-width: 1000px;
+        --bg: #131316; --surface: #1C1C21; --surface-2: #25252B;
+        --text: #EDEDEF; --text-muted: #8B8B93;
+        --accent: #7C6AEF; --accent-soft: rgba(124, 106, 239, 0.1);
+        --border: rgba(255,255,255,0.08); --border-strong: rgba(255,255,255,0.14);
+        --radius: 10px; --radius-lg: 14px; --shadow: none;
+        --heading-weight: 600; --heading-transform: none;
+        --label-transform: uppercase; --label-tracking: 0.06em;
+        --label-size: 0.7rem; --label-weight: 600;
+        --rule-weight: 1px; --spacing: 1.75rem;
+        --link-color: #7C6AEF;
+      }
+
+      body.swiss {
+        --font-body: Helvetica Neue, Helvetica, Arial, sans-serif;
+        --font-heading: Helvetica Neue, Helvetica, Arial, sans-serif;
+        --font-mono: 'Courier New', Courier, monospace;
+        --font-label: Helvetica Neue, Helvetica, Arial, sans-serif;
+        --font-size: 16px; --line-height: 1.5; --max-width: 1080px;
+        --bg: #FFFFFF; --surface: #F5F5F5; --surface-2: #EEEEEE;
+        --text: #0A0A0A; --text-muted: #555555;
+        --accent: #E63B2E; --accent-soft: rgba(230, 59, 46, 0.06);
+        --border: #DDDDDD; --border-strong: #0A0A0A;
+        --radius: 0; --radius-lg: 0; --shadow: none;
+        --heading-weight: 700; --heading-transform: none;
+        --label-transform: uppercase; --label-tracking: 0.12em;
+        --label-size: 0.68rem; --label-weight: 600;
+        --rule-weight: 2px; --spacing: 2rem;
+        --link-color: #E63B2E;
+      }
+
+      body.academic {
+        --font-body: 'Times New Roman', Times, Georgia, serif;
+        --font-heading: 'Times New Roman', Times, Georgia, serif;
+        --font-mono: 'Courier New', Courier, monospace;
+        --font-label: 'Times New Roman', Times, Georgia, serif;
+        --font-size: 16px; --line-height: 1.55; --max-width: 860px;
+        --bg: #FFFFFF; --surface: #F8F8F8; --surface-2: #F0F0F0;
+        --text: #1A1A1A; --text-muted: #4A4A4A;
+        --accent: #1A3C6E; --accent-soft: rgba(26, 60, 110, 0.06);
+        --border: #D0D0D0; --border-strong: #999999;
+        --radius: 0; --radius-lg: 0; --shadow: none;
+        --heading-weight: 700; --heading-transform: none;
+        --label-transform: normal; --label-tracking: 0;
+        --label-size: 0.82rem; --label-weight: 700;
+        --rule-weight: 1px; --spacing: 1.75rem;
+        --link-color: #1A3C6E;
+      }
+
+      body.stripe {
+        --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+        --font-heading: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+        --font-mono: 'SF Mono', 'Fira Code', Consolas, monospace;
+        --font-label: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+        --font-size: 15px; --line-height: 1.6; --max-width: 1020px;
+        --bg: #F6F8FA; --surface: #FFFFFF; --surface-2: #F0F2F5;
+        --text: #1A1F36; --text-muted: #697386;
+        --accent: #635BFF; --accent-soft: rgba(99, 91, 255, 0.06);
+        --border: #E3E8EE; --border-strong: #C1C9D2;
+        --radius: 10px; --radius-lg: 14px;
+        --shadow: 0 1px 2px rgba(0,0,0,0.04), 0 3px 10px rgba(0,0,0,0.03);
+        --heading-weight: 600; --heading-transform: none;
+        --label-transform: uppercase; --label-tracking: 0.04em;
+        --label-size: 0.72rem; --label-weight: 600;
+        --rule-weight: 1px; --spacing: 1.75rem;
+        --link-color: #635BFF;
+      }
+
+      body.brutalist {
+        --font-body: Georgia, 'Times New Roman', serif;
+        --font-heading: 'Arial Black', Impact, 'Helvetica Neue', Arial, sans-serif;
+        --font-mono: 'Courier New', Courier, monospace;
+        --font-label: 'Courier New', Courier, monospace;
+        --font-size: 17px; --line-height: 1.55; --max-width: 1000px;
+        --bg: #FFFFFF; --surface: #F0F0F0; --surface-2: #E4E4E4;
+        --text: #000000; --text-muted: #333333;
+        --accent: #000000; --accent-soft: rgba(0,0,0,0.05);
+        --border: #000000; --border-strong: #000000;
+        --radius: 0; --radius-lg: 0; --shadow: none;
+        --heading-weight: 900; --heading-transform: uppercase;
+        --label-transform: uppercase; --label-tracking: 0.1em;
+        --label-size: 0.68rem; --label-weight: 400;
+        --rule-weight: 3px; --spacing: 2rem;
+        --link-color: #000000;
+      }
+
+      body.muji {
+        --font-body: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+        --font-heading: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+        --font-mono: Menlo, Monaco, monospace;
+        --font-label: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+        --font-size: 14px; --line-height: 1.9; --max-width: 720px;
+        --bg: #F9F7F4; --surface: #F2EFE9; --surface-2: #ECE9E2;
+        --text: #3D3D3D; --text-muted: #8A8A8A;
+        --accent: #C4593C; --accent-soft: rgba(196, 89, 60, 0.05);
+        --border: #DDD8D0; --border-strong: #C8C2B8;
+        --radius: 2px; --radius-lg: 3px; --shadow: none;
+        --heading-weight: 400; --heading-transform: none;
+        --label-transform: normal; --label-tracking: 0.04em;
+        --label-size: 0.72rem; --label-weight: 400;
+        --rule-weight: 0.5px; --spacing: 3rem;
+        --link-color: #C4593C;
+      }
+
+      body.notion {
+        --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        --font-heading: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        --font-mono: 'SFMono-Regular', Menlo, Consolas, monospace;
+        --font-label: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        --font-size: 16px; --line-height: 1.6; --max-width: 920px;
+        --bg: #FFFFFF; --surface: #F7F6F3; --surface-2: #EFEEEA;
+        --text: #37352F; --text-muted: #787774;
+        --accent: #2EAADC; --accent-soft: rgba(46, 170, 220, 0.07);
+        --border: #E9E9E7; --border-strong: #DDDDD5;
+        --radius: 5px; --radius-lg: 8px; --shadow: none;
+        --heading-weight: 600; --heading-transform: none;
+        --label-transform: normal; --label-tracking: 0;
+        --label-size: 0.78rem; --label-weight: 600;
+        --rule-weight: 1px; --spacing: 1.5rem;
+        --link-color: #2EAADC;
+      }
+
+      body.grayscale {
+        --font-body: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+        --font-heading: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+        --font-mono: 'SF Mono', Menlo, monospace;
+        --font-label: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+        --font-size: 15px; --line-height: 1.55; --max-width: 960px;
+        --bg: #FFFFFF; --surface: #F5F5F5; --surface-2: #EBEBEB;
+        --text: #1A1A1A; --text-muted: #666666;
+        --accent: #1A3C6E; --accent-soft: rgba(26, 60, 110, 0.05);
+        --border: #E0E0E0; --border-strong: #333333;
+        --radius: 2px; --radius-lg: 4px; --shadow: none;
+        --heading-weight: 600; --heading-transform: none;
+        --label-transform: uppercase; --label-tracking: 0.06em;
+        --label-size: 0.7rem; --label-weight: 600;
+        --rule-weight: 1px; --spacing: 1.5rem;
+        --link-color: #1A3C6E;
+      }
+
+      body.glass {
+        --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+        --font-heading: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+        --font-mono: 'SF Mono', 'Fira Code', Consolas, monospace;
+        --font-label: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+        --font-size: 15px; --line-height: 1.6; --max-width: 1020px;
+        --bg: #08080a;
+        --surface: rgba(255,255,255,0.04);
+        --surface-2: rgba(255,255,255,0.025);
+        --text: #E8E8ED; --text-muted: #707080;
+        --accent: #a0a0b8; --accent-soft: rgba(160, 160, 184, 0.06);
+        --border: rgba(255,255,255,0.07); --border-strong: rgba(255,255,255,0.14);
+        --radius: 14px; --radius-lg: 18px;
+        --shadow: 0 4px 24px rgba(0,0,0,0.3);
+        --heading-weight: 600; --heading-transform: none;
+        --label-transform: uppercase; --label-tracking: 0.04em;
+        --label-size: 0.7rem; --label-weight: 500;
+        --rule-weight: 1px; --spacing: 1.75rem;
+        --link-color: #a0a0b8;
+      }
+
+      /* ===================== BASE ===================== */
+
       body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif;
+        font-family: var(--font-body);
+        font-size: var(--font-size);
         color: var(--text);
         background: var(--bg);
-        line-height: 1.6;
+        line-height: var(--line-height);
         -webkit-font-smoothing: antialiased;
+      }
+      body.glass {
+        background: linear-gradient(160deg, #0a0a0e 0%, #0e0e14 40%, #0a0c10 70%, #080808 100%);
+        background-attachment: fixed;
+        min-height: 100vh;
       }
 
       .shell {
-        width: min(1100px, calc(100vw - 48px));
+        width: min(var(--max-width), calc(100vw - 48px));
         margin: 0 auto;
-        padding: 40px 0 64px;
+        padding: 56px 0 80px;
       }
+
+      /* ===================== HERO ===================== */
 
       .hero {
-        padding: 32px;
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-lg);
-        margin-bottom: 24px;
+        margin-bottom: var(--spacing);
       }
-
       .hero h1 {
-        font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-        font-weight: 700;
-        letter-spacing: -0.02em;
-        line-height: 1.1;
-        margin-bottom: 8px;
+        font-family: var(--font-heading);
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: var(--heading-weight);
+        text-transform: var(--heading-transform);
+        letter-spacing: -0.025em;
+        line-height: 1.08;
+        margin-bottom: 10px;
       }
+      body.swiss .hero h1 { font-size: clamp(2.5rem, 5.5vw, 4.5rem); letter-spacing: -0.035em; }
+      body.brutalist .hero h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); }
+      body.muji .hero h1 { font-size: clamp(1.3rem, 2.5vw, 1.8rem); letter-spacing: 0.01em; }
 
       .hero p {
         color: var(--text-muted);
-        font-size: 0.95rem;
-        max-width: 60ch;
+        font-size: 1rem;
+        max-width: 55ch;
+        margin-bottom: 20px;
       }
-
-      .meta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-top: 16px;
+      .hero-meta {
+        display: flex; flex-wrap: wrap; gap: 8px;
       }
-
       .chip {
-        display: inline-flex;
-        align-items: center;
-        padding: 6px 12px;
-        border-radius: 999px;
-        background: rgba(48, 71, 94, 0.25);
-        color: #DDDDDD;
-        font-size: 0.8rem;
-        font-weight: 500;
-        border: 1px solid rgba(48, 71, 94, 0.4);
+        display: inline-flex; align-items: center;
+        padding: 5px 14px; border-radius: 999px;
+        background: var(--accent-soft); color: var(--text-muted);
+        font-family: var(--font-label); font-size: 0.76rem;
+        font-weight: 500; border: 1px solid var(--border);
       }
+      body.brutalist .chip { border-radius: 0; border-width: 2px; font-family: var(--font-mono); text-transform: uppercase; }
+
+      /* ===================== IDEA CARDS ===================== */
 
       .idea {
+        margin-bottom: var(--spacing);
+        padding: 28px 32px;
         background: var(--surface);
         border: 1px solid var(--border);
         border-radius: var(--radius-lg);
-        padding: 24px;
-        margin-bottom: 16px;
+        box-shadow: var(--shadow);
       }
+      body.glass .idea {
+        backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      }
+      body.manuscript .idea,
+      body.muji .idea {
+        background: transparent; border: none; box-shadow: none;
+        border-top: var(--rule-weight) solid var(--border);
+        border-radius: 0; padding: var(--spacing) 0;
+      }
+      body.swiss .idea {
+        background: transparent; border: none; box-shadow: none;
+        border-top: var(--rule-weight) solid var(--border-strong);
+        border-radius: 0; padding: var(--spacing) 0;
+      }
+      body.brutalist .idea { border-width: 3px; }
 
       .idea h2 {
-        font-size: 1.15rem;
-        font-weight: 600;
-        letter-spacing: -0.01em;
-        margin-bottom: 4px;
+        font-family: var(--font-heading);
+        font-size: 1.35rem;
+        font-weight: var(--heading-weight);
+        text-transform: var(--heading-transform);
+        letter-spacing: -0.015em;
+        margin-bottom: 6px;
       }
+      body.swiss .idea h2 { font-size: 1.8rem; }
+      body.muji .idea h2 { font-size: 1.1rem; }
 
       .idea > p {
         color: var(--text-muted);
-        font-size: 0.9rem;
-        margin-bottom: 16px;
+        font-size: 0.92rem;
+        margin-bottom: 20px;
       }
+
+      /* ===================== QUERY COLUMNS ===================== */
 
       .columns {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 12px;
+        gap: 16px;
+      }
+      body.manuscript .columns,
+      body.muji .columns {
+        grid-template-columns: 1fr;
+        gap: var(--spacing);
       }
 
       .block {
-        padding: 14px;
+        padding: 16px;
         border-radius: var(--radius);
         border: 1px solid var(--border);
         background: var(--surface-2);
       }
+      body.glass .block {
+        background: var(--surface);
+        backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      }
+      body.manuscript .block,
+      body.muji .block {
+        background: transparent; border: none;
+        border-top: var(--rule-weight) solid var(--border);
+        border-radius: 0; padding: 14px 0;
+      }
+      body.swiss .block {
+        background: transparent; border: none;
+        border-top: var(--rule-weight) solid var(--border);
+        border-radius: 0; padding: 14px 0;
+      }
+      body.brutalist .block { border-width: 2px; }
 
       .block h3 {
-        font-size: 0.72rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
+        font-family: var(--font-label);
+        font-size: var(--label-size);
+        font-weight: var(--label-weight);
+        text-transform: var(--label-transform);
+        letter-spacing: var(--label-tracking);
         color: var(--text-muted);
-        margin-bottom: 10px;
+        margin-bottom: 12px;
       }
 
-      ul {
+      ul { padding-left: 18px; list-style: none; }
+      li {
+        margin: 0 0 10px;
+        font-size: 0.88rem;
+        position: relative;
         padding-left: 16px;
       }
-
-      li {
-        margin: 0 0 8px;
-        font-size: 0.88rem;
+      li::before {
+        content: '\2192';
+        position: absolute;
+        left: 0;
+        color: var(--accent);
+        font-size: 0.82rem;
       }
 
-      a {
-        color: #F05454;
-        text-decoration: none;
+      a { color: var(--link-color); text-decoration: none; font-weight: 500; }
+      a:hover { text-decoration: underline; }
+
+      .query-reason {
+        color: var(--text-muted);
+        font-weight: 400;
       }
 
-      a:hover {
-        text-decoration: underline;
-      }
+      /* ===================== CALLOUT ===================== */
 
-      .note {
-        margin-top: 16px;
-        padding: 12px 14px;
+      .callout {
+        margin-top: 20px;
+        padding: 14px 18px;
         border-radius: var(--radius);
-        border: 1px dashed rgba(255, 255, 255, 0.1);
+        border: 1px solid var(--border);
+        background: var(--accent-soft);
         color: var(--text-muted);
+        font-size: 0.86rem;
+      }
+      /* Flat themes: left-border accent */
+      body.manuscript .callout,
+      body.muji .callout {
+        background: transparent; border: none;
+        border-left: 3px solid var(--accent); border-radius: 0;
+      }
+      body.swiss .callout,
+      body.academic .callout,
+      body.grayscale .callout {
+        border-left: 3px solid var(--accent); border-radius: 0;
+      }
+      body.brutalist .callout {
+        border-left: 4px solid var(--accent); border-radius: 0;
         background: var(--surface-2);
-        font-size: 0.84rem;
       }
-
-      .note strong {
-        color: #F05454;
+      /* Rounded themes: subtle border only, no left-accent */
+      body.stripe .callout,
+      body.linear .callout,
+      body.notion .callout,
+      body.glass .callout {
+        border-left: none;
       }
+      body.brutalist .callout strong {
+        background: #2B5CFF; color: #fff; padding: 1px 4px;
+      }
+      .callout strong { color: var(--accent); font-weight: 600; }
 
-      .footer-note {
-        margin-top: 32px;
+      /* ===================== FOOTER ===================== */
+
+      .footer {
+        margin-top: 56px;
         padding-top: 16px;
-        border-top: 1px solid var(--border);
+        border-top: var(--rule-weight) solid var(--border);
         color: var(--text-muted);
-        font-size: 0.8rem;
+        font-size: 0.76rem;
         text-align: center;
       }
-
-      .footer-note span {
-        color: #F05454;
-      }
+      .footer span { color: var(--accent); font-weight: 500; }
 
       @media (max-width: 768px) {
         .columns { grid-template-columns: 1fr; }
+        .shell { padding: 28px 0 48px; }
+        .idea { padding: 20px; }
       }
     </style>
   </head>
@@ -173,81 +425,79 @@
       <section class="hero">
         <h1 id="title"></h1>
         <p id="subtitle"></p>
-        <div class="meta" id="meta"></div>
+        <div class="hero-meta" id="meta"></div>
       </section>
       <section id="ideas"></section>
-      <p class="footer-note">
-        Generated by <span>superstack</span> &middot; Click highest-signal queries first
+      <p class="footer">
+        Generated by <a href="https://solana.new" target="_blank" rel="noreferrer" style="color:var(--accent);text-decoration:none;font-weight:500">solana.new</a>
       </p>
     </main>
 
     <script>
-      const PACK = __DATA_JSON__;
+      var PACK = __DATA_JSON__;
+      document.body.className = (PACK.theme || 'manuscript').toLowerCase().trim();
 
-      function el(tag, className, text) {
-        const node = document.createElement(tag);
-        if (className) node.className = className;
-        if (text !== undefined && text !== null) node.textContent = text;
-        return node;
+      function el(t, c, txt) {
+        var n = document.createElement(t);
+        if (c) n.className = c;
+        if (txt != null) n.textContent = txt;
+        return n;
       }
 
       function queryList(items) {
-        const list = el("ul");
-        items.forEach((item) => {
-          const li = el("li");
-          const a = document.createElement("a");
+        var list = el('ul');
+        items.forEach(function(item) {
+          var li = el('li');
+          var a = document.createElement('a');
           a.href = item.url;
-          a.target = "_blank";
-          a.rel = "noreferrer";
+          a.target = '_blank';
+          a.rel = 'noreferrer';
           a.textContent = item.query;
           li.appendChild(a);
           if (item.reason) {
-            li.appendChild(document.createTextNode(` — ${item.reason}`));
+            li.appendChild(el('span', 'query-reason', ' \u2014 ' + item.reason));
           }
           list.appendChild(li);
         });
         return list;
       }
 
-      document.getElementById("title").textContent = "Live Research Worksheet";
-      document.getElementById("subtitle").textContent =
-        "Browser-first for X, web-first for everything else. Click the highest-signal queries first.";
+      document.getElementById('title').textContent = 'Live Research Worksheet';
+      document.getElementById('subtitle').textContent =
+        'Browser-first for X, web-first for everything else. Click the highest-signal queries first.';
 
-      const meta = document.getElementById("meta");
+      var meta = document.getElementById('meta');
       [
         PACK.generated_at,
-        `browser: ${PACK.open_request?.browser || "default"}`,
-        `sources: ${(PACK.open_request?.sources || []).join(", ") || "none"}`
-      ]
-        .filter(Boolean)
-        .forEach((value) => meta.appendChild(el("span", "chip", value)));
+        'browser: ' + ((PACK.open_request && PACK.open_request.browser) || 'default'),
+        'sources: ' + ((PACK.open_request && PACK.open_request.sources || []).join(', ') || 'none')
+      ].filter(Boolean).forEach(function(v) { meta.appendChild(el('span', 'chip', v)); });
 
-      const root = document.getElementById("ideas");
-      (PACK.ideas || []).forEach((idea) => {
-        const card = el("article", "idea");
-        card.appendChild(el("h2", "", idea.name || "Untitled idea"));
-        card.appendChild(el("p", "", idea.one_liner || ""));
+      var root = document.getElementById('ideas');
+      (PACK.ideas || []).forEach(function(idea) {
+        var card = el('article', 'idea');
+        card.appendChild(el('h2', '', idea.name || 'Untitled idea'));
+        card.appendChild(el('p', '', idea.one_liner || ''));
 
-        const cols = el("div", "columns");
+        var cols = el('div', 'columns');
         [
-          ["X Queries", idea.search_plan?.x || []],
-          ["GitHub Queries", idea.search_plan?.github || []],
-          ["Web Queries", idea.search_plan?.web || []]
-        ].forEach(([label, items]) => {
-          const block = el("section", "block");
-          block.appendChild(el("h3", "", label));
-          if (items.length) {
-            block.appendChild(queryList(items));
+          ['X Queries', idea.search_plan && idea.search_plan.x || []],
+          ['GitHub Queries', idea.search_plan && idea.search_plan.github || []],
+          ['Web Queries', idea.search_plan && idea.search_plan.web || []]
+        ].forEach(function(entry) {
+          var block = el('section', 'block');
+          block.appendChild(el('h3', '', entry[0]));
+          if (entry[1].length) {
+            block.appendChild(queryList(entry[1]));
           } else {
-            block.appendChild(el("div", "", "No queries generated."));
+            block.appendChild(el('div', '', 'No queries generated.'));
           }
           cols.appendChild(block);
         });
         card.appendChild(cols);
 
-        const note = el("div", "note");
-        note.innerHTML =
-          "<strong>Capture next:</strong> direct competitors, adjacent substitutes, OSS repos, complaint signals, and why-now signals.";
+        var note = el('div', 'callout');
+        note.innerHTML = '<strong>Capture next:</strong> direct competitors, adjacent substitutes, OSS repos, complaint signals, and why-now signals.';
         card.appendChild(note);
         root.appendChild(card);
       });

@@ -51,6 +51,7 @@ Use this shape when invoking the render script:
 ```json
 {
   "report_type": "shortlist",
+  "theme": "manuscript",
   "title": "Find Next Crypto Idea",
   "generated_at": "2026-03-23T12:00:00Z",
   "user_context": {
