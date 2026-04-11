@@ -1,6 +1,6 @@
 ---
 name: apply-grant
-description: Prepare an Agentic Engineering Grant application by gathering project data, git history, and context files, then presenting all fields needed to fill the Solana Earn grant form. Use when the user says "apply for grant", "agentic engineering grant", "apply-grant", "grant application", "fill grant form", or "200 USDG grant".
+description: Prepare an Agentic Engineering Grant application by gathering project data, git history, and context files, then presenting all fields needed to fill the Solana Earn grant form. Use when the user says "apply for grant", "agentic engineering grant", "apply-grant", "grant application", "fill grant form", "200 USDG grant", "ST earn", "Superteam earn", "Superteam grant", "earn grant", "help me apply for grant", "solana earn grant", or "submit grant".
 ---
 
 # Apply for Agentic Engineering Grant

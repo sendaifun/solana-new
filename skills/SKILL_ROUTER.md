@@ -51,7 +51,7 @@
 | "pitch deck", "slides", "investor presentation" | `create-pitch-deck` | Pitch deck creation |
 | "hackathon submission", "submit", "demo video" | `submit-to-hackathon` | Hackathon submission prep |
 | "marketing video", "deck review", "product video" | `marketing-video` | Video content creation |
-| "apply for grant", "grant application", "200 USDG", "agentic engineering grant" | `apply-grant` | Prepare Agentic Engineering Grant application |
+| "apply for grant", "grant application", "200 USDG", "agentic engineering grant", "ST earn", "Superteam earn", "Superteam grant", "solana earn grant" | `apply-grant` | Prepare Agentic Engineering Grant application |
 
 ## Shared Guides
 
