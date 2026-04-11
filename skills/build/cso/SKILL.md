@@ -208,7 +208,7 @@ Use Bash only for: git commands, running test suites, checking file permissions,
 **Goal:** Ensure the build and deploy pipeline cannot be compromised.
 
 1. **GitHub Actions:**
-   - Search for `uses:` entries not pinned to a full-length commit SHA (`@<40-char commit SHA>`)
+   - Search for `uses:` entries not pinned to a full immutable commit SHA (for example, `@<full commit SHA>`, including 40- or 64-character SHAs)
    - Treat `@v*` tags, branches, and other mutable refs as weaker references, not immutable pinning
    - Check for `pull_request_target` trigger (code injection risk)
    - Check for `${{ github.event.*.body }}` or similar injection points
