@@ -110,7 +110,9 @@ Best for: Analytics, monitoring, research tools, DePIN data.
 
 ## Pattern 6: Mobile App
 
-**Repos:** `solana-mobile-dapp-scaffold`, `solana-kotlin-compose`
+**Repos/Templates:** `create-solana-dapp` mobile templates (`kit-expo-minimal`, `kit-expo-uniwind`, `web3js-expo`, `web3js-expo-minimal`, `web3js-expo-paper`), `react-native-samples`
+
+**Native Android:** follow the current Solana Mobile Kotlin installation/setup/quickstart docs when a true native Android app is required.
 
 ```
 my-mobile-app/
@@ -122,5 +124,11 @@ my-mobile-app/
   package.json
 ```
 
-Best for: Mobile-first wallets, payment apps, consumer dApps.
+Best for: Mobile-first consumer dApps, wallet-connected apps, payment apps. Prefer official `create-solana-dapp` mobile templates for React Native/Expo starts.
 **Skills:** `phantom-connect-skill`
+
+## Sources
+
+- Solana Mobile React Native project creation docs: https://docs.solanamobile.com/get-started/react-native/create-solana-mobile-app
+- Official template inventory: https://github.com/solana-foundation/templates/blob/main/TEMPLATES.md
+- Solana Mobile React Native samples: https://github.com/solana-mobile/react-native-samples

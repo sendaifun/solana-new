@@ -30,20 +30,20 @@ Map the user's idea to specific repos, skills, and MCPs from the solana-new cata
 **Repos:** `create-solana-dapp` (npx), [official templates](https://solana.com/developers/templates), `builderz-scaffold`
 **Skills:** `frontend-framework-kit` (official), `kit` (official), `kit-web3-interop` (official), `solana-kit-skill`, `phantom-connect-skill`
 **MCPs:** `helius-mcp`, `phantom-mcp-server`
-**Tip:** Browse starter templates at https://solana.com/developers/templates. `npx create-solana-dapp@latest` scaffolds Next.js, React+Vite, or Express. Use Wallet Standard for wallet connection.
+**Tip:** Browse starter templates at https://solana.com/developers/templates. `npm create solana-dapp@latest` scaffolds the current official templates, including Next.js, React + Vite, and Solana Mobile Expo/React Native templates via `--template`. Express is not a current official default option. Use Wallet Standard for wallet connection on web.
 
 ## Mobile
 
-**Repos:** `solana-mobile-dapp-scaffold`, `solana-kotlin-compose`, `solana-app-kit`
+**Repos/Templates:** `create-solana-dapp` mobile templates (`gh:solana-foundation/templates/mobile/kit-expo-minimal`, `gh:solana-foundation/templates/mobile/kit-expo-uniwind`, `gh:solana-foundation/templates/mobile/web3js-expo`, `gh:solana-foundation/templates/mobile/web3js-expo-minimal`, `gh:solana-foundation/templates/mobile/web3js-expo-paper`), `react-native-samples`, `solana-app-kit`
 **Skills:** `phantom-connect-skill`
-**Tip:** React Native starter for JS devs. Kotlin+Compose for Android-native.
+**Tip:** For React Native, prefer the current official Solana Mobile path: generate an Expo/React Native app with `create-solana-dapp` and choose an official mobile template. Use `react-native-samples` for current patterns. For native Android, follow the current Solana Mobile Kotlin installation/setup/quickstart docs rather than older standalone scaffold repos.
 
 ## NFTs & Digital Assets
 
 **Repos:** `mpl-candy-machine`, `mpl-bubblegum`, `compressed-nfts`, `mosaic`
 **Skills:** `metaplex-skill`, `confidential-transfers` (official), `light-protocol-skill`
 **MCPs:** `helius-mcp`
-**Tip:** Core NFTs for standard collections. Compressed NFTs for scale (>10k items). `mosaic` for Token-2022 extensions.
+**Tip:** Use Umi-based Metaplex clients. For new standard assets/collections, use `@metaplex-foundation/umi` + `@metaplex-foundation/mpl-core`. For Token Metadata or pNFT-compatible flows, use `@metaplex-foundation/umi` + `@metaplex-foundation/mpl-token-metadata`. For compressed NFTs at scale, use `@metaplex-foundation/umi` + `@metaplex-foundation/mpl-bubblegum`. Use Candy Machine for collection mint/drop flows, not as the default asset SDK. `mosaic` remains relevant for Token-2022 extensions.
 
 ## DePIN & Oracles
 
@@ -63,7 +63,19 @@ Map the user's idea to specific repos, skills, and MCPs from the solana-new cata
 
 **Repos:** `solana-unity-sdk`, `mpl-candy-machine`
 **Skills:** `metaplex-skill`, `solana-game-skill`
-**Tip:** Unity SDK for game integration. Metaplex Core for in-game assets.
+**Tip:** Use Unity SDK for game integration. For in-game assets, prefer `@metaplex-foundation/umi` + `@metaplex-foundation/mpl-core`; use Candy Machine only if you need a public mint/drop flow.
+
+## Sources
+
+- create-solana-dapp README: https://github.com/solana-foundation/create-solana-dapp
+- Official template inventory: https://github.com/solana-foundation/templates/blob/main/TEMPLATES.md
+- Solana developer templates: https://solana.com/developers/templates
+- Solana Mobile React Native project creation docs: https://docs.solanamobile.com/get-started/react-native/create-solana-mobile-app
+- Solana Mobile React Native samples: https://github.com/solana-mobile/react-native-samples
+- Metaplex JS deprecated/archived: https://github.com/metaplex-foundation/js and https://www.npmjs.com/package/@metaplex-foundation/js
+- Metaplex Core JS docs: https://www.metaplex.com/docs/smart-contracts/core/sdk/javascript
+- Metaplex Bubblegum JS docs: https://developers.metaplex.com/bubblegum/sdk/javascript
+- Umi repo: https://github.com/metaplex-foundation/umi
 
 ## Governance & DAOs
 
