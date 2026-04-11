@@ -9,7 +9,7 @@ The open-source platform behind [solana.new](https://solana.new) — 25 journey 
 
 Works with [Claude Code](https://claude.ai/code) and [Codex](https://openai.com/index/codex/).
 
-<img width="5760" height="3240" alt="solana-new-gh" src="https://github.com/user-attachments/assets/54b1ba0e-eaf9-4dfd-b733-8509aba73ff5" />
+<img width="5760" height="3240" alt="gh-cover-2" src="https://github.com/user-attachments/assets/dbf27bc1-423d-405b-8c6a-04253f5ba176" />
 
 ## Install
 
