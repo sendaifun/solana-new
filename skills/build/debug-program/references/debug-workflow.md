@@ -104,7 +104,9 @@ Simulation gives you full program logs without spending SOL or changing state.
 // Surfpool shows execution trace, CU usage per instruction, and account state changes
 
 // Start Surfpool with the relevant state
-// surfpool start --mainnet-fork
+// surfpool start --network mainnet
+// Or point Surfpool at a specific upstream RPC:
+// surfpool start --rpc-url https://api.mainnet-beta.solana.com
 
 const simResult = await connection.simulateTransaction(tx, {
   sigVerify: false,
@@ -205,8 +207,14 @@ After identifying the cause, apply the minimal fix:
 | Reproduce a mainnet failure | Surfpool (mainnet fork) | Exact state replay |
 | Account inspection | `helius-mcp` (getAccountInfo) | Full account details |
 | Static analysis | `solana-fender-mcp` | Find bugs before they happen |
-| Full execution trace | Surfpool web UI | Visual instruction trace |
+| Full execution trace | Surfpool Studio | Visual instruction trace |
 
 **Skills:** `common-errors` (official — diagnose and fix common Solana errors)
 **Skills:** `surfpool-cheatcodes` (official — surfnet_* RPC methods for state manipulation)
 **MCPs:** `solscan-mcp` (transaction forensics via Solscan Pro API)
+
+## Sources
+
+- Surfpool README: https://github.com/solana-foundation/surfpool
+- Surfpool CLI source: https://github.com/solana-foundation/surfpool/blob/main/crates/cli/src/cli/mod.rs
+- Surfpool docs: https://docs.surfpool.run
