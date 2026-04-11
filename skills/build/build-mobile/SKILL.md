@@ -64,20 +64,21 @@ Guide the user through building a Solana mobile application using React Native o
 3. Read [references/mobile-wallet-patterns.md](references/mobile-wallet-patterns.md) for wallet connection and transaction signing patterns.
 4. Implement in milestones:
    a. Scaffold the project from the appropriate mobile template
-   b. Integrate wallet connection (MWA or Phantom Connect)
+   b. Integrate wallet connection (MWA, Phantom mobile flow, or embedded wallet)
    c. Build the first transaction flow (send SOL, swap, mint — whatever the app does)
    d. Handle mobile-specific edge cases (network drops, backgrounding, timeout)
-   e. Test on physical device — emulators miss real wallet interaction
-5. Verify the full flow: install app, connect wallet, sign transaction, confirm on-chain.
+   e. Test on Android emulator or device during development; use Mock MWA Wallet for development wallet flows
+5. Verify the full flow before signoff: install app, connect wallet, sign transaction, confirm on-chain, then repeat on a physical device with a real wallet installed.
 
 ## Non-Negotiables
 
-- Always test on a physical device with a real wallet installed — emulators cannot test MWA or deep links.
+- Do development testing on any Android device or emulator; use Mock MWA Wallet when testing MWA flows during development.
+- Always do final end-to-end verification on a physical device with a real wallet installed before calling the mobile flow production-ready.
 - Handle network interruptions gracefully — mobile networks drop constantly.
-- Never store private keys on device. Use Mobile Wallet Adapter or embedded wallet SDKs.
+- Never store private keys on device. Use Mobile Wallet Adapter, secure embedded wallet SDKs, or wallet-provider flows designed for mobile apps.
 - Add loading states for every transaction — mobile users expect visual feedback.
-- Test transaction signing timeout — wallets may not respond if the user switches apps.
-- For React Native, pin `@solana/web3.js` and polyfill crypto modules (Buffer, crypto, etc.).
+- Test transaction signing timeout and app-switching behavior — wallets may not respond if the user backgrounds the app or switches apps.
+- For React Native, follow the current Solana Mobile installation flow: use a custom Expo development build, import crypto polyfills before Solana libraries, and prefer current Solana Mobile sample patterns over older manual Buffer/url polyfill recipes.
 
 ## Phase Handoff
 
@@ -97,20 +98,37 @@ See `../../data/specs/phase-handoff.md` for the full JSON contract.
 ## Quick Start
 
 ```bash
-# React Native via Expo (recommended):
-npx create-expo-app MySolanaDapp
-cd MySolanaDapp
-npm install @solana-mobile/mobile-wallet-adapter-protocol @solana/web3.js  # @solana/kit for new non-mobile-specific code
-# Note: For non-Expo projects, use: npx @react-native-community/cli init MySolanaDapp
+# Recommended: start from the current Solana Mobile React Native template
+npm create solana-dapp@latest
 
-# Or clone the mobile scaffold:
-git clone https://github.com/nickytonline/solana-mobile-dapp-scaffold.git
-cd solana-mobile-dapp-scaffold && npm install
+# Choose a Solana Mobile / React Native template, then enter the project
+cd MySolanaDapp
+
+# Use the dependency set that matches your chosen template/sample
+# Official Solana Mobile React Native docs commonly show:
+# npm install @wallet-ui/react-native-web3js react-native-quick-crypto @solana/web3.js expo-dev-client
+#
+# Newer Kit-based samples (for example skr-staking) use:
+# npm install @wallet-ui/react-native-kit react-native-quick-crypto @solana/kit expo-dev-client
+#
+# Prefer the template/sample's exact dependency set and avoid mixing web3.js and Kit stacks casually.
+
+# If using Expo Router, create the current polyfill entrypoints
+# polyfill.js
+#   import { install } from 'react-native-quick-crypto';
+#   install();
+#
+# index.js
+#   import './polyfill';
+#   import 'expo-router/entry';
+
+# Build a custom Android development build (Expo Go is not enough for MWA)
+npx expo run:android
 ```
 
 ## Decision Points
 
-- **Which wallet SDK?** Mobile Wallet Adapter for React Native, Kotlin SDK for native Android.
+- **Which wallet SDK?** For React Native, prefer the current Solana Mobile / wallet-ui React Native integration patterns. For native Android, use Mobile Wallet Adapter directly. Use Phantom-specific mobile SDK or deep-link flows only when they fit the product requirements.
 - **React Native vs Native?** React Native for faster development + code sharing with web. Native for best performance + platform features.
 - **Which RPC?** Mobile apps should use paid RPC (Helius) for reliability.
 
@@ -120,6 +138,13 @@ cd solana-mobile-dapp-scaffold && npm install
 
 - [references/mobile-architecture.md](references/mobile-architecture.md)
 - [references/mobile-wallet-patterns.md](references/mobile-wallet-patterns.md)
+
+### current external references
+
+- [Solana Mobile Docs — Create a Project](https://docs.solanamobile.com/get-started/react-native/create-solana-mobile-app)
+- [Solana Mobile Docs — Installation](https://docs.solanamobile.com/get-started/react-native/installation)
+- [Solana Mobile Docs — Test with any Android device](https://docs.solanamobile.com/recipes/general/test-with-any-android-device)
+- [solana-mobile/react-native-samples](https://github.com/solana-mobile/react-native-samples)
 
 ## Telemetry (run last)
 
