@@ -231,3 +231,11 @@ Solana's runtime prevents direct re-entrancy (a program cannot CPI back into its
 - **Jupiter**: Uses PDAs for route caching, user-specific limit orders, and DCA positions. Seeds include user key + position index for multiple positions per user.
 - **Orca Whirlpool**: Pool PDAs derived from token pair mints. Tick array PDAs derived from pool + tick index. Position PDAs from pool + lower/upper tick.
 - **Drift**: Uses PDAs for user accounts and sub-accounts; for example, user account addresses are derived from seeds including `"user"`, the authority pubkey, and a sub-account index. Useful as an architectural example of multi-account-per-user design. Drift was exploited in April 2026 via a social-engineering incident and is currently paused; that status note is operational, not a comment on the PDA design pattern itself. Treat it as a design reference only and revalidate current protocol status before any integration work.
+
+## Sources
+
+- [Anchor Docs — Transfer Tokens](https://www.anchor-lang.com/docs/tokens/basics/transfer-tokens)
+- [Metaplex Token Metadata source — PDA helpers](https://github.com/metaplex-foundation/mpl-token-metadata/blob/main/programs/token-metadata/program/src/pda.rs)
+- [Metaplex JS client — findMetadataPda](https://github.com/metaplex-foundation/mpl-token-metadata/blob/main/clients/js/src/generated/accounts/metadata.ts)
+- [Drift Protocol Docs](https://docs.drift.trade)
+- [Drift protocol-v2 repo](https://github.com/drift-labs/protocol-v2)

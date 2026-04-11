@@ -262,3 +262,12 @@ Rust panics on overflow in debug mode but wraps in release. Use `checked_add`, `
 
 ### String and Vec in Accounts
 Strings and Vecs are dynamically sized. You must pre-allocate space: `4 + (max_length * item_size)`. The 4 bytes store the length prefix.
+
+## Sources
+
+- [Anchor Docs — Transfer Tokens](https://www.anchor-lang.com/docs/tokens/basics/transfer-tokens)
+- [Anchor Docs — Create Token Account](https://www.anchor-lang.com/docs/tokens/basics/create-token-account)
+- [Anchor Docs — Mint Tokens](https://www.anchor-lang.com/docs/tokens/basics/mint-tokens)
+- [Anchor Docs — Account Types](https://www.anchor-lang.com/docs/references/account-types)
+- [Anchor SPL source — token_interface.rs](https://github.com/solana-foundation/anchor/blob/master/spl/src/token_interface.rs)
+- [Anchor source — InterfaceAccount](https://github.com/solana-foundation/anchor/blob/master/lang/src/accounts/interface_account.rs)

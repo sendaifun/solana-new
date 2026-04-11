@@ -137,3 +137,10 @@ execute(program_id, accounts[], instruction_data) → Result<(), ProgramError>
 - It receives `instruction_data` (arbitrary bytes — your function args)
 - It returns success or an error
 - Any modifications to accounts are committed on success, rolled back on failure
+
+## Sources
+
+- [Solana Docs — Programs](https://solana.com/docs/core/programs)
+- [Solana Docs — Program Execution](https://solana.com/docs/core/programs/program-execution)
+- [Solana Docs — Deploying Programs](https://solana.com/docs/programs/deploying)
+- [Agave source — program-runtime](https://github.com/anza-xyz/agave/tree/master/program-runtime)
