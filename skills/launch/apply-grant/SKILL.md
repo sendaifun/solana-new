@@ -3,6 +3,54 @@ name: apply-grant
 description: Prepare an Agentic Engineering Grant application by gathering project data, git history, and context files, then presenting all fields needed to fill the Solana Earn grant form. Use when the user says "apply for grant", "agentic engineering grant", "apply-grant", "grant application", "fill grant form", "200 USDG grant", "ST earn", "Superteam earn", "Superteam grant", "earn grant", "help me apply for grant", "solana earn grant", or "submit grant".
 ---
 
+## Preamble (run first)
+
+```bash
+_TEL_TIER=$(cat ~/.superstack/config.json 2>/dev/null | grep -o '"telemetryTier": *"[^"]*"' | head -1 | sed 's/.*"telemetryTier": *"//;s/"$//'  || echo "anonymous")
+_TEL_TIER="${_TEL_TIER:-anonymous}"
+_TEL_PROMPTED=$([ -f ~/.superstack/.telemetry-prompted ] && echo "yes" || echo "no")
+_TEL_START=$(date +%s)
+_SESSION_ID="$$-$(date +%s)"
+mkdir -p ~/.superstack
+echo "TELEMETRY: $_TEL_TIER"
+echo "TEL_PROMPTED: $_TEL_PROMPTED"
+if [ "$_TEL_TIER" != "off" ]; then
+_TEL_EVENT='{"skill":"apply-grant","phase":"launch","event":"started","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"}' 
+echo "$_TEL_EVENT" >> ~/.superstack/telemetry.jsonl 2>/dev/null || true
+_CONVEX_URL=$(cat ~/.superstack/config.json 2>/dev/null | grep -o '"convexUrl":"[^"]*"' | head -1 | cut -d'"' -f4 || echo "")
+[ -n "$_CONVEX_URL" ] && curl -s -X POST "$_CONVEX_URL/api/mutation" -H "Content-Type: application/json" -d '{"path":"telemetry:track","args":{"skill":"apply-grant","phase":"launch","status":"success","version":"0.2.0","platform":"'$(uname -s)-$(uname -m)'","timestamp":'$(date +%s)000'}}' >/dev/null 2>&1 &
+true
+fi
+```
+
+If `TEL_PROMPTED` is `no`: Before starting the skill workflow, ask the user about telemetry.
+Use AskUserQuestion:
+
+> Help superstack get better! We track which skills get used and how long they take —
+> no code, no file paths, no PII. Change anytime in `~/.superstack/config.json`.
+
+Options:
+- A) Sure, help superstack improve (anonymous)
+- B) No thanks
+
+If A: run this bash:
+```bash
+echo '{"telemetryTier":"anonymous"}' > ~/.superstack/config.json
+_TEL_TIER="anonymous"
+touch ~/.superstack/.telemetry-prompted
+```
+
+If B: run this bash:
+```bash
+echo '{"telemetryTier":"off"}' > ~/.superstack/config.json
+_TEL_TIER="off"
+touch ~/.superstack/.telemetry-prompted
+```
+
+This only happens once. If `TEL_PROMPTED` is `yes`, skip this entirely and proceed to the skill workflow.
+
+---
+
 # Apply for Agentic Engineering Grant
 
 Gather everything the user needs to submit an **Agentic Engineering Grant Application** on Solana Earn. The grant is fixed at 200 USDG. Present the output organized by the form's 3 steps so the user can copy-paste into the form.
@@ -125,3 +173,23 @@ After presenting the draft:
 - If the project has a Colosseum submission, reference it in proof of work.
 - If prior skills have been used (idea validation, scaffold, build), reference those outputs as proof of work.
 - Keep the tone professional but concise — grant reviewers read many applications.
+
+## Telemetry (run last)
+
+After the skill workflow completes (success, error, or abort), log the telemetry event.
+Determine the outcome from the workflow result: `success` if completed normally, `error`
+if it failed, `abort` if the user interrupted.
+
+Run this bash:
+
+```bash
+_TEL_END=$(date +%s)
+_TEL_DUR=$(( _TEL_END - ${_TEL_START:-$_TEL_END} ))
+_TEL_TIER=$(cat ~/.superstack/config.json 2>/dev/null | grep -o '"telemetryTier": *"[^"]*"' | head -1 | sed 's/.*"telemetryTier": *"//;s/"$//' || echo "anonymous")
+if [ "$_TEL_TIER" != "off" ]; then
+echo '{"skill":"apply-grant","phase":"launch","event":"completed","outcome":"OUTCOME","duration_s":"'"$_TEL_DUR"'","session":"'"$_SESSION_ID"'","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","platform":"'$(uname -s)-$(uname -m)'"}' >> ~/.superstack/telemetry.jsonl 2>/dev/null || true
+true
+fi
+```
+
+Replace `OUTCOME` with success/error/abort based on the workflow result.

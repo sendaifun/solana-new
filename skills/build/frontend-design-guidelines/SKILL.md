@@ -3,6 +3,52 @@ name: frontend-design-guidelines
 description: Apply high-quality web interface design rules when building, reviewing, or styling frontend code. Use when the user says "build a frontend", "create a component", "style this", "review my UI", "build a landing page", "design this page", "make this look good", "add animation", "build a form", "improve the UI", "polish this", "make this feel right", "review for craft", "the interaction feels off", "make this look polished", or when generating any React/Next.js component. Defaults to Tailwind CSS and shadcn/ui. Reads brand.md at the project root (if present) and uses it as the source of truth for colors, typography, and voice. Covers interactions, layout, typography, forms, animation, states, accessibility, and a dedicated craft-and-polish layer for taste-level review. Use proactively whenever frontend code is being written — do not wait to be asked.
 ---
 
+## Preamble (run first)
+
+```bash
+_TEL_TIER=$(cat ~/.superstack/config.json 2>/dev/null | grep -o '"telemetryTier": *"[^"]*"' | head -1 | sed 's/.*"telemetryTier": *"//;s/"$//'  || echo "anonymous")
+_TEL_TIER="${_TEL_TIER:-anonymous}"
+_TEL_PROMPTED=$([ -f ~/.superstack/.telemetry-prompted ] && echo "yes" || echo "no")
+_TEL_START=$(date +%s)
+_SESSION_ID="$$-$(date +%s)"
+mkdir -p ~/.superstack
+echo "TELEMETRY: $_TEL_TIER"
+echo "TEL_PROMPTED: $_TEL_PROMPTED"
+if [ "$_TEL_TIER" != "off" ]; then
+_TEL_EVENT='{"skill":"frontend-design-guidelines","phase":"build","event":"started","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"}' 
+echo "$_TEL_EVENT" >> ~/.superstack/telemetry.jsonl 2>/dev/null || true
+_CONVEX_URL=$(cat ~/.superstack/config.json 2>/dev/null | grep -o '"convexUrl":"[^"]*"' | head -1 | cut -d'"' -f4 || echo "")
+[ -n "$_CONVEX_URL" ] && curl -s -X POST "$_CONVEX_URL/api/mutation" -H "Content-Type: application/json" -d '{"path":"telemetry:track","args":{"skill":"frontend-design-guidelines","phase":"build","status":"success","version":"0.2.0","platform":"'$(uname -s)-$(uname -m)'","timestamp":'$(date +%s)000'}}' >/dev/null 2>&1 &
+true
+fi
+```
+
+If `TEL_PROMPTED` is `no`: Before starting the skill workflow, ask the user about telemetry.
+Use AskUserQuestion:
+
+> Help superstack get better! We track which skills get used and how long they take —
+> no code, no file paths, no PII. Change anytime in `~/.superstack/config.json`.
+
+Options:
+- A) Sure, help superstack improve (anonymous)
+- B) No thanks
+
+If A: run this bash:
+```bash
+echo '{"telemetryTier":"anonymous"}' > ~/.superstack/config.json
+_TEL_TIER="anonymous"
+touch ~/.superstack/.telemetry-prompted
+```
+
+If B: run this bash:
+```bash
+echo '{"telemetryTier":"off"}' > ~/.superstack/config.json
+_TEL_TIER="off"
+touch ~/.superstack/.telemetry-prompted
+```
+
+This only happens once. If `TEL_PROMPTED` is `yes`, skip this entirely and proceed to the skill workflow.
+
 # Frontend Design Guidelines
 
 A practical, enforceable ruleset for building frontend UIs that look and feel high-quality instead of generic. This skill exists because most AI-generated frontends ship with hardcoded colors, broken keyboard nav, missing empty states, and janky animations. This skill catches that before the user sees it.
@@ -140,3 +186,23 @@ Before marking any frontend task as complete, confirm each of these. If you cann
 - [references/states.md](references/states.md) — loading, empty, error, success — coverage and patterns
 - [references/solana-ui-patterns.md](references/solana-ui-patterns.md) — wallet connect, tx confirm, token amounts, addresses
 - [references/craft-and-polish.md](references/craft-and-polish.md) — taste-level craft layer (animation discipline, optical alignment, micro-interaction systems, before/after review format, polish tells, Solana-specific polish). Inspired by Emil Kowalski's design engineering philosophy — credit to [emilkowal.ski](https://emilkowal.ski) and [github.com/emilkowalski/skill](https://github.com/emilkowalski/skill). The original skill is not modified or redistributed — install `emil-design-eng` from his repo for his exact words.
+
+## Telemetry (run last)
+
+After the skill workflow completes (success, error, or abort), log the telemetry event.
+Determine the outcome from the workflow result: `success` if completed normally, `error`
+if it failed, `abort` if the user interrupted.
+
+Run this bash:
+
+```bash
+_TEL_END=$(date +%s)
+_TEL_DUR=$(( _TEL_END - ${_TEL_START:-$_TEL_END} ))
+_TEL_TIER=$(cat ~/.superstack/config.json 2>/dev/null | grep -o '"telemetryTier": *"[^"]*"' | head -1 | sed 's/.*"telemetryTier": *"//;s/"$//' || echo "anonymous")
+if [ "$_TEL_TIER" != "off" ]; then
+echo '{"skill":"frontend-design-guidelines","phase":"build","event":"completed","outcome":"OUTCOME","duration_s":"'"$_TEL_DUR"'","session":"'"$_SESSION_ID"'","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","platform":"'$(uname -s)-$(uname -m)'"}' >> ~/.superstack/telemetry.jsonl 2>/dev/null || true
+true
+fi
+```
+
+Replace `OUTCOME` with success/error/abort based on the workflow result.

@@ -3,6 +3,52 @@ name: brand-design
 description: Generate, preview, and apply a brand color palette (plus typography, gradients, and tone/voice) to a frontend project. Use when a user says "pick brand colors", "choose a color palette", "brand design", "generate a palette", "theme this project", "what colors should I use", "brand identity", "design my brand", "set up brand colors", "time to build the frontend", "let's start the UI", "make this look branded", or any time a project is about to start frontend work and has no brand.md yet. Presents 6 candidate palettes as a visual HTML preview opened in the user's browser, supports an infinite regenerate loop until the user is satisfied, then writes the chosen palette to shadcn CSS variables (light + dark), wires up typography via next/font, derives brand gradients, and writes brand.md for future reference.
 ---
 
+## Preamble (run first)
+
+```bash
+_TEL_TIER=$(cat ~/.superstack/config.json 2>/dev/null | grep -o '"telemetryTier": *"[^"]*"' | head -1 | sed 's/.*"telemetryTier": *"//;s/"$//'  || echo "anonymous")
+_TEL_TIER="${_TEL_TIER:-anonymous}"
+_TEL_PROMPTED=$([ -f ~/.superstack/.telemetry-prompted ] && echo "yes" || echo "no")
+_TEL_START=$(date +%s)
+_SESSION_ID="$$-$(date +%s)"
+mkdir -p ~/.superstack
+echo "TELEMETRY: $_TEL_TIER"
+echo "TEL_PROMPTED: $_TEL_PROMPTED"
+if [ "$_TEL_TIER" != "off" ]; then
+_TEL_EVENT='{"skill":"brand-design","phase":"build","event":"started","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"}' 
+echo "$_TEL_EVENT" >> ~/.superstack/telemetry.jsonl 2>/dev/null || true
+_CONVEX_URL=$(cat ~/.superstack/config.json 2>/dev/null | grep -o '"convexUrl":"[^"]*"' | head -1 | cut -d'"' -f4 || echo "")
+[ -n "$_CONVEX_URL" ] && curl -s -X POST "$_CONVEX_URL/api/mutation" -H "Content-Type: application/json" -d '{"path":"telemetry:track","args":{"skill":"brand-design","phase":"build","status":"success","version":"0.2.0","platform":"'$(uname -s)-$(uname -m)'","timestamp":'$(date +%s)000'}}' >/dev/null 2>&1 &
+true
+fi
+```
+
+If `TEL_PROMPTED` is `no`: Before starting the skill workflow, ask the user about telemetry.
+Use AskUserQuestion:
+
+> Help superstack get better! We track which skills get used and how long they take —
+> no code, no file paths, no PII. Change anytime in `~/.superstack/config.json`.
+
+Options:
+- A) Sure, help superstack improve (anonymous)
+- B) No thanks
+
+If A: run this bash:
+```bash
+echo '{"telemetryTier":"anonymous"}' > ~/.superstack/config.json
+_TEL_TIER="anonymous"
+touch ~/.superstack/.telemetry-prompted
+```
+
+If B: run this bash:
+```bash
+echo '{"telemetryTier":"off"}' > ~/.superstack/config.json
+_TEL_TIER="off"
+touch ~/.superstack/.telemetry-prompted
+```
+
+This only happens once. If `TEL_PROMPTED` is `yes`, skip this entirely and proceed to the skill workflow.
+
 # Brand Design
 
 Turn a project from "unthemed shadcn default" into something with real identity. This skill runs the full brand pass: palette, typography, gradients, tone/voice. Pairs with `scaffold-project` (runs after it) and `frontend-design-guidelines` (which reads the `brand.md` this skill writes).
@@ -253,3 +299,23 @@ Before marking the skill complete, confirm:
 - [references/typography-preview.md](references/typography-preview.md) — typography preview HTML template (6 font pairs rendered on the chosen palette)
 - [references/gradient-recipes.md](references/gradient-recipes.md) — deriving brand gradients from a palette
 - [references/brand-md-template.md](references/brand-md-template.md) — the brand.md output template
+
+## Telemetry (run last)
+
+After the skill workflow completes (success, error, or abort), log the telemetry event.
+Determine the outcome from the workflow result: `success` if completed normally, `error`
+if it failed, `abort` if the user interrupted.
+
+Run this bash:
+
+```bash
+_TEL_END=$(date +%s)
+_TEL_DUR=$(( _TEL_END - ${_TEL_START:-$_TEL_END} ))
+_TEL_TIER=$(cat ~/.superstack/config.json 2>/dev/null | grep -o '"telemetryTier": *"[^"]*"' | head -1 | sed 's/.*"telemetryTier": *"//;s/"$//' || echo "anonymous")
+if [ "$_TEL_TIER" != "off" ]; then
+echo '{"skill":"brand-design","phase":"build","event":"completed","outcome":"OUTCOME","duration_s":"'"$_TEL_DUR"'","session":"'"$_SESSION_ID"'","ts":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","platform":"'$(uname -s)-$(uname -m)'"}' >> ~/.superstack/telemetry.jsonl 2>/dev/null || true
+true
+fi
+```
+
+Replace `OUTCOME` with success/error/abort based on the workflow result.
