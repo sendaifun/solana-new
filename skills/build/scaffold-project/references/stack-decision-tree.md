@@ -21,7 +21,7 @@ Match an idea to the right technology stack.
 |-----------|-------|
 | Token transfers | @solana/kit (or legacy @solana/web3.js), SPL Token |
 | Swaps | Jupiter SDK/MCP |
-| NFTs | Metaplex SDK |
+| NFTs & digital assets | Umi + Metaplex program clients (MPL Core for new standard assets/collections, MPL Token Metadata for Token Metadata and pNFT-compatible flows, MPL Bubblegum for compressed NFTs, Candy Machine for mint/drop flows) |
 | Programs | Anchor framework |
 | High-perf programs | Pinocchio |
 | Compressed state | ZK Compression |
