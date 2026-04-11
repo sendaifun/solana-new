@@ -1,7 +1,7 @@
 # Contributing to superstack
 
 superstack is the open-source platform behind [solana.new](https://solana.new) —
-25 journey skills, 101 repos, 77 ecosystem skills, and 53 MCP servers that take
+25 journey skills, 105 repos, 77 ecosystem skills, and 53 MCP servers that take
 builders from idea to shipped product on Solana.
 
 There are several ways to contribute, from adding a repo to the catalog (5 min)

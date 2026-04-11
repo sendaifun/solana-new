@@ -1607,6 +1607,69 @@
       ],
       "clone_command": "git clone https://github.com/blueshift-gg/quasar-svm.git",
       "is_template": false
+    },
+    {
+      "id": "connectorkit",
+      "repo": "solana-foundation/connectorkit",
+      "description": "Production-ready headless Solana wallet connector — framework-agnostic, built on Wallet Standard",
+      "category": "infrastructure",
+      "keywords": [
+        "wallet",
+        "connector",
+        "headless",
+        "wallet-standard",
+        "foundation"
+      ],
+      "clone_command": "git clone https://github.com/solana-foundation/connectorkit.git",
+      "is_template": false
+    },
+    {
+      "id": "mpp-sdk",
+      "repo": "solana-foundation/mpp-sdk",
+      "description": "Machine Payments Protocol SDK — Solana payment method for autonomous agent-to-agent and machine-to-machine payments",
+      "category": "infrastructure",
+      "keywords": [
+        "payments",
+        "mpp",
+        "machine",
+        "agent",
+        "foundation",
+        "protocol"
+      ],
+      "clone_command": "git clone https://github.com/solana-foundation/mpp-sdk.git",
+      "is_template": false
+    },
+    {
+      "id": "solana-keychain",
+      "repo": "solana-foundation/solana-keychain",
+      "description": "Framework-agnostic Solana transaction signing with multiple backends — unified trait interface, async-first design",
+      "category": "infrastructure",
+      "keywords": [
+        "signing",
+        "keychain",
+        "transaction",
+        "wallet",
+        "async",
+        "foundation"
+      ],
+      "clone_command": "git clone https://github.com/solana-foundation/solana-keychain.git",
+      "is_template": false
+    },
+    {
+      "id": "solana-bootcamp-2026",
+      "repo": "solana-foundation/solana-bootcamp-2026",
+      "description": "Official Solana Bootcamp 2026 curriculum — developer training materials from the Solana Foundation",
+      "category": "example",
+      "keywords": [
+        "bootcamp",
+        "education",
+        "curriculum",
+        "training",
+        "foundation",
+        "2026"
+      ],
+      "clone_command": "git clone https://github.com/solana-foundation/solana-bootcamp-2026.git",
+      "is_template": true
     }
   ]
 }
