@@ -1,6 +1,6 @@
 # Skills — Learn to Launch
 
-24 Codex/Claude skills that take a Solana developer from "what is Solana?" to a shipped, pitched product. Every skill interviews you first — never assumes.
+25 Codex/Claude skills that take a Solana developer from "what is Solana?" to a shipped, pitched product. Every skill interviews you first — never assumes.
 
 ```
   LEARN                   IDEA                    BUILD                        LAUNCH
@@ -18,6 +18,7 @@
                                                   cso
                                                   debug-program
                                                   navigate-skills
+                                                  flash-trade-trading
 ```
 
 ## The Journey
@@ -63,6 +64,7 @@ Set up your workspace, build the MVP, review it, and get it roasted.
 | `cso` | Infrastructure-first security audit: secrets, deps, CI/CD, OWASP | "Run a security audit" |
 | `debug-program` | Diagnose program errors and failed transactions | "Debug my program" |
 | `navigate-skills` | Browse all installed skills, repos, and MCPs | "What skills do I have?" |
+| `flash-trade-trading` | Integrate with Flash Trade perpetual futures DEX — API, MCP, SDK | "Help me build on Flash Trade" |
 
 **Output**: `.superstack/build-context.md` with your stack, milestones, and review scores.
 
@@ -173,6 +175,7 @@ skills/
     cso/                                 # Infrastructure security audit
     debug-program/                       # Program error diagnosis
     navigate-skills/                     # Meta skill browser
+    flash-trade-trading/                 # Flash Trade perpetual DEX integration
   launch/
     deploy-to-mainnet/                   # Production deployment
     create-pitch-deck/                   # Pitch deck generator

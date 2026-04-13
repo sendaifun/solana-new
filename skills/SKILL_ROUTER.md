@@ -36,6 +36,7 @@
 | "product review", "UX review", "is my product good", "onboarding review" | `product-review` | Product quality evaluation |
 | "pick brand colors", "brand design", "theme this project", "brand identity", "choose palette" | `brand-design` | Interactive brand palette + typography + gradients + tone/voice with HTML browser preview |
 | "build a frontend", "create a component", "review my UI", "style this", "polish this", "design this page" | `frontend-design-guidelines` | Enforceable web interface rules (interactions, forms, states, animation, craft layer) with shadcn + Tailwind defaults; reads brand.md |
+| "flash trade", "flash perps", "perpetual futures on flash", "flash-trade-mcp", "leverage trading flash", "flash trade bot" | `flash-trade-trading` | Building on Flash Trade DEX — API, MCP, positions, orders |
 | "security audit infrastructure", "CSO", "threat model", "OWASP" | `cso` | Infrastructure-first security audit |
 | "security audit", "signer check", "PDA security" | `solana-security-audit` | Deep Sealevel security analysis |
 | "QA", "test my dApp", "test wallet flow" | `solana-qa` | Systematic QA testing |

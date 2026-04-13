@@ -2,7 +2,7 @@
 
 ## What This Is
 
-Skills and knowledge base to ship on Solana — Idea to Launch. 25 journey skills, 106 repos, 77 ecosystem skills, 36 MCP servers.
+Skills and knowledge base to ship on Solana — Idea to Launch. 26 journey skills, 107 repos, 78 ecosystem skills, 36 MCP servers.
 
 ## Install
 
@@ -22,7 +22,7 @@ claude "/deploy-to-mainnet Ship it"
 
 ## Journey Skills
 
-25 skills across 4 phases — user just asks naturally, right skill activates.
+26 skills across 4 phases — user just asks naturally, right skill activates.
 
 | Phase | Skill | Trigger Prompt |
 |-------|-------|---------------|
@@ -45,6 +45,7 @@ claude "/deploy-to-mainnet Ship it"
 | Build | `review-and-iterate` | "Review my code" |
 | Build | `cso` | "Run a security audit" |
 | Build | `debug-program` | "Debug my program" |
+| Build | `flash-trade-trading` | "Help me build on Flash Trade" |
 | Launch | `deploy-to-mainnet` | "Deploy to mainnet" |
 | Launch | `create-pitch-deck` | "Create a pitch deck" |
 | Launch | `submit-to-hackathon` | "Prepare my hackathon submission" |
@@ -64,8 +65,8 @@ Skills live in `skills/<phase>/<skill-name>/`. To add a new skill, create a fold
 
 | Catalog | Count | File |
 |---------|-------|------|
-| Repos | 81 | `cli/data/clonable-repos.json` |
-| Skills | 73 | `cli/data/solana-skills.json` |
+| Repos | 82 | `cli/data/clonable-repos.json` |
+| Skills | 74 | `cli/data/solana-skills.json` |
 | MCPs | 53 | `cli/data/solana-mcps.json` |
 
 ## File Map
@@ -77,13 +78,13 @@ cli/
   telemetry.ts              Skill usage tracking (Convex + local JSONL)
   init.ts                   Auto-install skills to ~/.claude/skills/ and ~/.codex/skills/
   data/
-    clonable-repos.json     106 repos (Solana official, SendAI, Metaplex, DeFi, etc.)
-    solana-skills.json      77 skills (15 official + 62 community)
+    clonable-repos.json     107 repos (Solana official, SendAI, Metaplex, DeFi, etc.)
+    solana-skills.json      78 skills (15 official + 63 community)
     solana-mcps.json        36 MCP servers
 skills/
   SKILL_ROUTER.md           Shared routing table — AI auto-corrects wrong skill
   idea/                     Discovery & planning skills (6 skills, includes solana-beginner, learn)
-  build/                    Implementation skills (14 skills, includes virtual-solana-incubator, roast-my-product, product-review, cso)
+  build/                    Implementation skills (15 skills, includes virtual-solana-incubator, roast-my-product, product-review, cso, flash-trade-trading)
   launch/                   Go-to-market skills (5 skills, includes marketing-video, apply-grant)
   data/
     guides/                 Shared guides (RPC+wallet, deploy, security, curated ideas)

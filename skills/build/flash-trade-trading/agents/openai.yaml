@@ -1,0 +1,4 @@
+interface:
+  display_name: "Flash Trade Integration"
+  short_description: "Build on Flash Trade perpetual futures DEX on Solana"
+  default_prompt: "Help me integrate with Flash Trade to build a trading bot that can open and manage leveraged positions on Solana."
