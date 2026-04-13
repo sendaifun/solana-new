@@ -359,6 +359,16 @@
       "setup_command": "claude mcp add alchemy --transport http https://mcp.alchemy.com/mcp",
       "url": "https://github.com/alchemyplatform/alchemy-mcp-server",
       "keywords": ["alchemy", "rpc", "infrastructure", "token", "nft", "balance", "transaction", "swap", "multi-chain"]
+    },
+    {
+      "id": "moonpay-mcp",
+      "name": "MoonPay MCP (Official)",
+      "repo": "moonpay/mcp",
+      "description": "Official MoonPay MCP — fiat on-ramp and off-ramp for Solana. Buy/sell crypto with credit card or bank transfer, token swaps, wallet management, virtual accounts, and prediction markets",
+      "category": "payments",
+      "setup_command": "claude mcp add moonpay --transport http https://mcp.moonpay.com/mcp",
+      "url": "https://github.com/moonpay/mcp",
+      "keywords": ["moonpay", "fiat", "on-ramp", "off-ramp", "buy", "sell", "payments", "credit-card", "bank", "swap", "wallet", "virtual-account"]
     }
   ]
 }

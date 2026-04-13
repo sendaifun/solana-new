@@ -29,6 +29,7 @@
 | "launch token", "SPL token", "memecoin", "pump.fun" | `launch-token` | Token creation and distribution |
 | "data pipeline", "indexer", "webhook", "analytics" | `build-data-pipeline` | On-chain data infrastructure |
 | "mobile app", "React Native", "mobile wallet" | `build-mobile` | Mobile dApp development |
+| "MoonPay", "fiat on-ramp", "fiat off-ramp", "buy crypto with card", "sell crypto for fiat", "MoonPay widget", "accept fiat" | `integrate-moonpay` | Integrating MoonPay fiat on/off-ramp |
 | "debug", "error", "transaction failed", "stuck" | `debug-program` | Diagnosing program failures |
 | "review", "audit", "security", "production ready" | `review-and-iterate` | Code review and security audit |
 | "Solana incubator", "teach me Rust", "SVM deep dive", "Solana bootcamp" | `virtual-solana-incubator` | Deep technical Solana learning |
