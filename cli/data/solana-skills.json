@@ -245,7 +245,7 @@
     {
       "slug": "magicblock-dev-skill",
       "title": "MagicBlock Dev Skill",
-      "description": "End-to-end MagicBlock development skill for Claude Code covering Ephemeral Rollups, Private Ephemeral Rollups (PERs), BOLT ECS, VRFs, session keys, and real-time on-chain gaming on Solana.",
+      "description": "End-to-end MagicBlock development skill covering Ephemeral Rollups, Private Ephemeral Rollups (PERs), private transfers, VRFs, session keys, and low-latency on-chain gaming on Solana.",
       "url": "https://github.com/magicblock-labs/magicblock-dev-skill",
       "category": {
         "labelKey": "infrastructure"
