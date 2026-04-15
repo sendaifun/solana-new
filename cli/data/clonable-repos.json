@@ -1686,6 +1686,25 @@
       ],
       "clone_command": "git clone https://github.com/solana-foundation/noir-examples.git",
       "is_template": true
+    },
+    {
+      "id": "flash-trade-mcp",
+      "repo": "flash-trade/flash-trade-MCP",
+      "description": "MCP server and CLI for Flash Trade perpetual DEX on Solana — AI agent tools, leveraged trading, position management",
+      "category": "defi",
+      "keywords": [
+        "flash",
+        "trade",
+        "perpetual",
+        "perps",
+        "leverage",
+        "mcp",
+        "cli",
+        "trading",
+        "futures"
+      ],
+      "clone_command": "git clone https://github.com/flash-trade/flash-trade-MCP.git",
+      "is_template": false
     }
   ]
 }

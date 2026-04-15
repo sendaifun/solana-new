@@ -7,7 +7,7 @@
   "install_all_command": "npx skills add https://github.com/solana-foundation/solana-dev-skill",
   "counts": {
     "official": 15,
-    "community": 62
+    "community": 63
   },
   "official_skills": [
     {
@@ -609,6 +609,15 @@
       "title": "Helius x OKX Skill (Official)",
       "description": "Official Helius skill for trading apps with OKX DEX aggregation — swaps, token discovery, smart money signals, and meme token analysis.",
       "url": "https://github.com/helius-labs/core-ai/tree/main/helius-skills/helius-okx",
+      "category": {
+        "labelKey": "defi"
+      }
+    },
+    {
+      "slug": "flash-trade",
+      "title": "Flash Trade Perpetual DEX",
+      "description": "Perpetual futures trading integration for Flash Trade on Solana — REST API, MCP server, TypeScript SDK, position management.",
+      "url": "https://github.com/flash-trade/flash-trade-MCP/tree/v0.4.1",
       "category": {
         "labelKey": "defi"
       }

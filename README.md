@@ -1,11 +1,11 @@
 # superstack
 [![solana.new](https://img.shields.io/badge/solana.new-Install-black?logo=solana&logoColor=white)](https://solana.new)
-[![Skills](https://img.shields.io/badge/skills-77-blueviolet)](#ecosystem-catalog)
-[![Repos](https://img.shields.io/badge/repos-106-blue)](#ecosystem-catalog)
+[![Skills](https://img.shields.io/badge/skills-78-blueviolet)](#ecosystem-catalog)
+[![Repos](https://img.shields.io/badge/repos-107-blue)](#ecosystem-catalog)
 [![MCPs](https://img.shields.io/badge/MCPs-36-green)](#ecosystem-catalog)
 [![License](https://img.shields.io/github/license/sendaifun/solana-new)](LICENSE)
 
-The open-source platform behind [solana.new](https://solana.new) — 25 journey skills that take you from "what should I build?" to a shipped, funded product on Solana. Backed by 106 repos, 77 ecosystem skills, 36 MCP servers, 515+ curated ideas, and a comprehensive Solana knowledge base.
+The open-source platform behind [solana.new](https://solana.new) — 26 journey skills that take you from "what should I build?" to a shipped, funded product on Solana. Backed by 107 repos, 78 ecosystem skills, 36 MCP servers, 515+ curated ideas, and a comprehensive Solana knowledge base.
 
 Works with [Claude Code](https://claude.ai/code) and [Codex](https://openai.com/index/codex/).
 

@@ -197,6 +197,39 @@ Jupiter Perps is now Solana's leading derivatives platform, offering oracle-base
 
 ---
 
+### Flash Trade -- Perpetual Futures DEX
+
+Flash Trade is a pool-to-peer perpetual futures DEX on Solana offering up to 100x leverage (500x Degen Mode) on crypto, forex, commodities, and equities via Pyth oracle pricing. Non-custodial, no orderbook — trades execute against shared liquidity pools.
+
+| Feature | Description |
+|---------|-------------|
+| Perpetual Futures | Up to 100x leverage (500x Degen Mode) on SOL, BTC, ETH, and more |
+| Multi-Asset | Crypto, forex (EUR, GBP), commodities (XAU, XAG, CRUDEOIL), equities (TSLAr, NVDAr) |
+| Pool-to-Peer | No orderbook — trades against shared liquidity pools with near-zero slippage |
+| Oracle-based | Pyth Lazer (200ms updates) for trade execution |
+| MCP Server | AI agent integration via `flash-trade-mcp` NPM package (30 tools) |
+| REST API | Public API at `https://flashapi.trade` — no auth required |
+
+**When to use:** When building perps trading bots, leveraged trading frontends, AI agent integrations, or dashboards that need position management with TP/SL. Flash Trade provides both REST API and MCP server interfaces — choose MCP for AI agents, REST for custom apps.
+
+**Key URLs:**
+- App: https://flash.trade
+- API: https://flashapi.trade (Swagger at /docs/)
+- GitHub: https://github.com/flash-trade/flash-trade-MCP
+- MCP: https://www.npmjs.com/package/flash-trade-mcp
+
+**npm packages:**
+- `flash-trade-mcp` -- MCP server for AI agent integration (v0.4.1)
+- `flash-sdk` -- TypeScript SDK for direct on-chain interaction
+
+**Program IDs:**
+- Mainnet: `FLASH6Lo6h3iasJKWDs2F8TkW2UKf3s15C8PMGuVfgBn`
+- Devnet: `FTPP4jEWW1n8s2FEccwVfS9KCPjpndaswg7Nkkuz4ER4`
+
+**Critical integration note:** Minimum collateral must be >$10 after fees for limit orders, TP, and SL. Use $11-12+ minimum. Pyth prices are mainnet only — devnet returns stale/zero.
+
+---
+
 ### Kamino -- Automated Liquidity & Lending
 
 Kamino automates concentrated liquidity management and provides lending/borrowing with leverage strategies.
@@ -782,7 +815,7 @@ const ix = createInitializeTransferFeeConfigInstruction(
 |------|-----|
 | Swap tokens | Jupiter |
 | Create liquidity pool | Orca Whirlpools or Raydium |
-| Perps / derivatives | Jupiter Perpetual Exchange (Drift is defunct — exploited April 2026) |
+| Perps / derivatives | Jupiter Perpetual Exchange or Flash Trade (Drift is defunct — exploited April 2026) |
 | Lending / borrowing | Kamino or Marginfi |
 | Liquid staking | Marinade (mSOL) or Jito (jitoSOL) |
 | NFT minting | Metaplex (Bubblegum for scale, Core for new projects) |
