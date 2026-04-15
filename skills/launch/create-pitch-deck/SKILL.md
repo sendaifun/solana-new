@@ -243,7 +243,7 @@ Write a polished HTML pitch deck to `pitch-deck-YYYYMMDD-HHMMSS.html` in the pro
 
 3. **Fill every `{{PLACEHOLDER}}`** with content from the interview. Every piece of text comes from what the user told you — never generate generic filler.
 
-4. **Customize the brand palette** — if the user has brand colors, update the CSS variables in `:root`. Otherwise use the Solana defaults.
+4. **Customize the visual direction** — invoke the `design-taste` skill's "Pitch Deck Styles" section (`references/theme-references.md`) to choose between Confident Navy, Clean White, Dark Premium, or Warm Editorial based on audience. If the user has brand colors, apply them within the chosen style. If no brand exists, the style's default palette applies.
 
 5. **Add presenter notes** to every slide (hidden by default, press N to show).
 
@@ -286,6 +286,10 @@ If `.superstack/idea-context.md` or `.superstack/build-context.md` exist, use th
 ### references/ — Design & Templates
 - [references/deck-design-system.md](references/deck-design-system.md) — **Complete HTML/CSS design system**: brand palette, typography scale, layout grid, components (cards, badges, progress bars, comparison tables, timelines, quote blocks), slide navigation, presenter notes, print support, animations
 - [references/slide-templates.md](references/slide-templates.md) — **15 production-ready slide templates**: Title, Problem (2 variants), Why Now, Solution, Demo/Product, Why Crypto, Traction, Market (TAM/SAM/SOM), Competition, Business Model, Team, Ask, Contact, Tokenomics, Roadmap — all with `{{PLACEHOLDERS}}`
+
+### Cross-skill references
+- `design-taste` → `references/theme-references.md` § "Pitch Deck Styles" — 4 deck-specific visual directions (Confident Navy, Clean White, Dark Premium, Warm Editorial) with audience mapping. Use to choose the visual direction before generating HTML.
+- `number-formatting` — for any metrics, traction numbers, or financial data shown in slides
 
 ### Cross-skill data (use if available)
 - [skills/data/colosseum/hackathon-winners.md](../../data/colosseum/hackathon-winners.md) — **Complete Colosseum hackathon winner dataset** — 6 grand champions, 40+ track winners, winning patterns by track, track distribution analysis. Use to reference similar winners and position your pitch.

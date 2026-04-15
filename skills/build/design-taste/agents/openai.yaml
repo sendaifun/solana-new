@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design Taste"
+  short_description: "Design direction, judgment calls, and anti-AI-slop review for crypto UIs"
+  default_prompt: "Review my UI for generic AI patterns and suggest a stronger design direction. Output a design brief with density, surface model, typography mood, and do/don't list."

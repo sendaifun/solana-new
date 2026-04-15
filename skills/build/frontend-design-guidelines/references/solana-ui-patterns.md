@@ -54,26 +54,26 @@ export function truncateAddress(address: string | PublicKey, chars = 4) {
 
 ## Token amounts
 
+> **Full spec:** The `number-formatting` skill (`skills/build/number-formatting/`) is the authoritative source for all number display rules — dynamic decimals, zero-subscript, abbreviations, sign policy, tiny markers, and copy behavior. The rules below are a quick summary. When in doubt, defer to `number-formatting`.
+
 1. **Use `font-mono tabular-nums`** so digits align vertically and don't jitter when they update.
-2. **Format with the token's decimals, not a hardcoded precision.** SOL has 9, USDC has 6, a custom token could have anything. Always read from the mint.
+2. **Use dynamic decimals based on token price**, not hardcoded precision. The number-formatting spec computes decimals as `ceil(-log10(threshold / tokenPriceUsd))` and clamps to context-appropriate ranges. See `number-formatting` references/formatting-spec.md for the full algorithm.
 3. **Show a human-readable unit**, not raw lamports. Use `amount / 10 ** decimals`.
-4. **Truncate display precision by value size**:
-   - Large amounts (>1000) → 2 decimals max
-   - Medium (1–1000) → 4 decimals max
-   - Small (<1) → as many as fit, but trim trailing zeros
+4. **Use zero-subscript notation** for very small values (>= 3 leading zeros after decimal): `0.0₄58` instead of `0.00005835`. Include an `aria-label` with the expanded decimal.
 5. **Always show the token symbol** next to the amount. "12.34" is not a balance; "12.34 SOL" is.
 6. **USD values are secondary.** Show them smaller, in `text-muted-foreground`, below or next to the token amount.
 7. **Show the source of the price** on hover or in a footnote. "Est. via Pyth" or "Est. via Jupiter". Users should not have to guess.
+8. **Copy gives raw precision.** When a user copies a formatted amount, clipboard gets the raw decimal string, never the display format.
 
 ```tsx
 <div className="flex items-baseline gap-1">
   <span className="font-mono tabular-nums text-2xl font-semibold">
-    {formatTokenAmount(amount, decimals)}
+    <FormattedNumber value={amount} type="token_amount" context="compact" tokenPriceUsd={priceUsd} />
   </span>
   <span className="text-sm text-muted-foreground">SOL</span>
 </div>
 <p className="text-xs text-muted-foreground tabular-nums">
-  ≈ ${formatUsd(usdValue)}
+  ≈ <FormattedNumber value={usdValue} type="fiat_value" context="compact" />
 </p>
 ```
 

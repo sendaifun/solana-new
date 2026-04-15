@@ -129,7 +129,9 @@ If the repo already has a different stack, match it. Do not rewrite the stack.
 1. **Before writing code**, identify which reference files are relevant to the task and read them:
    - Building a form → `references/forms.md` + `references/interactions.md`
    - Building a page/layout → `references/layout-and-design.md`
-   - Adding motion → `references/animation.md`
+   - Adding motion → `references/animation.md` (theory: when to animate, duration tiers, easing, reduced motion)
+   - Building framer-motion page entrances, list staggers, modals, or live data animations → the `page-load-animations` skill has production recipes. Invoke it alongside this skill.
+   - Making design direction decisions, choosing page archetypes, or reviewing for generic AI output → the `design-taste` skill has judgment rules and style direction. Invoke it when direction is unclear.
    - Any interactive component → `references/interactions.md` + `references/states.md`
    - Solana-specific UI (wallet, tx, token amounts) → `references/solana-ui-patterns.md`
    - Unsure about the stack → `references/stack-defaults.md`
