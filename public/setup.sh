@@ -34,29 +34,107 @@ for arg in "$@"; do
   esac
 done
 
+# --- Manifest helpers ---
+MANIFEST_FILE="$HOME/.${PRODUCT_NAME}/manifest.json"
+
+read_manifest_field() {
+  # Usage: read_manifest_field "fieldName"
+  # Returns the string value of a top-level JSON field
+  [ -f "$MANIFEST_FILE" ] || return 1
+  local val
+  val=$(grep -o "\"$1\":\"[^\"]*\"" "$MANIFEST_FILE" 2>/dev/null | head -1 | cut -d'"' -f4)
+  [ -n "$val" ] && echo "$val" || return 1
+}
+
+read_manifest_array() {
+  # Usage: read_manifest_array "fieldName"
+  # Returns one element per line from a JSON string array
+  [ -f "$MANIFEST_FILE" ] || return 1
+  # Extract the array, then each quoted string inside it
+  sed -n "s/.*\"$1\":\[\([^]]*\)\].*/\1/p" "$MANIFEST_FILE" 2>/dev/null \
+    | grep -o '"[^"]*"' | tr -d '"'
+}
+
 # --- Uninstall mode ---
 if [ "$UNINSTALL_MODE" = true ]; then
   printf "\n"
   printf "  ${CYAN}${BOLD}Uninstalling ${PRODUCT_NAME}...${RESET}\n\n"
 
-  SKILLS_DIR="$HOME/.claude/skills"
-  CODEX_DIR="$HOME/.codex/skills"
-  AGENTS_DIR="$HOME/.agents/skills"
   CONFIG_DIR="$HOME/.${PRODUCT_NAME}"
 
-  # Read installed skill names from SKILL.md files
-  for dir in "$SKILLS_DIR" "$CODEX_DIR" "$AGENTS_DIR"; do
-    [ -d "$dir" ] || continue
-    for skill in "$dir"/*/SKILL.md; do
-      [ -f "$skill" ] || continue
-      skill_dir=$(dirname "$skill")
-      rm -rf "$skill_dir"
-    done
-    rm -rf "$dir/data" "$dir/SKILL_ROUTER.md"
-  done
+  if [ -f "$MANIFEST_FILE" ]; then
+    # ── Manifest-based uninstall: only remove what we installed ──
 
+    # Remove each skill path from the manifest
+    REMOVED_COUNT=0
+    while IFS= read -r skill_path; do
+      [ -z "$skill_path" ] && continue
+      expanded="$HOME/$skill_path"
+      if [ -d "$expanded" ]; then
+        rm -rf "$expanded"
+        REMOVED_COUNT=$((REMOVED_COUNT + 1))
+      fi
+    done <<EOF
+$(read_manifest_array "skillPaths")
+EOF
+
+    # Remove shared data paths from the manifest
+    while IFS= read -r data_path; do
+      [ -z "$data_path" ] && continue
+      expanded="$HOME/$data_path"
+      if [ -e "$expanded" ]; then
+        rm -rf "$expanded"
+      fi
+    done <<EOF
+$(read_manifest_array "dataPaths")
+EOF
+
+    # ── Undo Claude Code permission changes ──
+    CLAUDE_SETTINGS="$HOME/.claude/settings.json"
+    if [ -f "$CLAUDE_SETTINGS" ] && has_cmd node; then
+      PERMS_TO_REMOVE=$(read_manifest_array "permissionsAdded" | tr '\n' ',' | sed 's/,$//')
+      if [ -n "$PERMS_TO_REMOVE" ]; then
+        node -e "
+          const fs = require('fs');
+          const p = '$CLAUDE_SETTINGS';
+          const c = JSON.parse(fs.readFileSync(p, 'utf8'));
+          const toRemove = '$PERMS_TO_REMOVE'.split(',');
+          if (c.permissions && Array.isArray(c.permissions.allow)) {
+            c.permissions.allow = c.permissions.allow.filter(r => !toRemove.includes(r));
+            if (c.permissions.allow.length === 0) delete c.permissions.allow;
+            if (Object.keys(c.permissions).length === 0) delete c.permissions;
+          }
+          fs.writeFileSync(p, JSON.stringify(c, null, 2));
+        " 2>/dev/null && ok "Reverted Claude Code permissions" || warn "Could not revert Claude settings"
+      fi
+    fi
+
+    ok "Removed ${REMOVED_COUNT} skills (manifest-based)"
+  else
+    # ── Legacy fallback: no manifest found, remove only known skill names ──
+    warn "No install manifest found — falling back to name-based removal"
+    warn "Only removing skills that match known ${PRODUCT_NAME} skill names"
+
+    SKILLS_DIR="$HOME/.claude/skills"
+    CODEX_DIR="$HOME/.codex/skills"
+    AGENTS_DIR="$HOME/.agents/skills"
+
+    # Known superstack skill names (hardcoded fallback)
+    KNOWN_SKILLS="find-next-crypto-idea validate-idea competitive-landscape defillama-research colosseum-copilot solana-beginner learn scaffold-project build-with-claude virtual-solana-incubator build-defi-protocol build-data-pipeline build-mobile launch-token roast-my-product product-review review-and-iterate cso debug-program deploy-to-mainnet create-pitch-deck submit-to-hackathon marketing-video apply-grant frontend-design-guidelines brand-design"
+
+    for dir in "$SKILLS_DIR" "$CODEX_DIR" "$AGENTS_DIR"; do
+      [ -d "$dir" ] || continue
+      for skill_name in $KNOWN_SKILLS; do
+        skill_path="$dir/$skill_name"
+        [ -d "$skill_path" ] && rm -rf "$skill_path"
+      done
+      rm -rf "$dir/data" "$dir/SKILL_ROUTER.md"
+    done
+    ok "Removed known ${PRODUCT_NAME} skills (legacy mode)"
+  fi
+
+  # Remove config dir (always ours) and manifest
   rm -rf "$CONFIG_DIR"
-  ok "Removed skills from ~/.claude/skills/, ~/.codex/skills/, ~/.agents/skills/"
   ok "Removed config from ~/.$PRODUCT_NAME/"
   printf "\n  ${DIM}To reinstall: curl -fsSL ${BASE_URL}/setup.sh | bash${RESET}\n\n"
   exit 0
@@ -92,6 +170,10 @@ else
   warn "Claude Code not found. Install: npm i -g @anthropic-ai/claude-code"
 fi
 
+# --- Version detection ---
+# Extract bundle version from the tarball (read after download) or fallback
+BUNDLE_VERSION=""
+
 # --- Download and install skills ---
 log "Downloading skills..."
 
@@ -120,18 +202,41 @@ ok "Downloaded skills bundle"
 tar -xzf "$TMP_DIR/skills.tar.gz" -C "$TMP_DIR"
 ok "Extracted skills"
 
+# Read bundle version from package.json in the tarball (if present)
+if [ -f "$TMP_DIR/package.json" ]; then
+  BUNDLE_VERSION=$(grep -o '"version":"[^"]*"' "$TMP_DIR/package.json" 2>/dev/null | head -1 | cut -d'"' -f4 || echo "")
+elif [ -f "$TMP_DIR/version.txt" ]; then
+  BUNDLE_VERSION=$(cat "$TMP_DIR/version.txt" 2>/dev/null | tr -d '[:space:]')
+fi
+BUNDLE_VERSION="${BUNDLE_VERSION:-0.0.0}"
+
+# --- Version check (--update mode) ---
+if [ "$UPDATE_MODE" = true ]; then
+  INSTALLED_VERSION=$(read_manifest_field "version" 2>/dev/null || echo "")
+  if [ -n "$INSTALLED_VERSION" ] && [ "$INSTALLED_VERSION" = "$BUNDLE_VERSION" ]; then
+    ok "Already up to date (v${BUNDLE_VERSION})"
+    printf "\n  ${DIM}No changes needed.${RESET}\n\n"
+    exit 0
+  fi
+  if [ -n "$INSTALLED_VERSION" ]; then
+    log "Upgrading v${INSTALLED_VERSION} → v${BUNDLE_VERSION}"
+  fi
+fi
+
 # --- Install skills to ~/.claude/skills/ ---
 log "Installing skills..."
 
 mkdir -p "$SKILLS_DIR" "$CODEX_DIR" "$AGENTS_DIR"
 
-# Copy each skill as its own directory
+# Copy each skill as its own directory — track names for manifest
+INSTALLED_SKILL_NAMES=""
 for skill_dir in "$TMP_DIR"/skills/idea/*/  "$TMP_DIR"/skills/build/*/  "$TMP_DIR"/skills/launch/*/; do
   [ -d "$skill_dir" ] || continue
   skill_name=$(basename "$skill_dir")
   cp -Rf "$skill_dir" "$SKILLS_DIR/$skill_name"
   cp -Rf "$skill_dir" "$CODEX_DIR/$skill_name"
   cp -Rf "$skill_dir" "$AGENTS_DIR/$skill_name"
+  INSTALLED_SKILL_NAMES="${INSTALLED_SKILL_NAMES}${skill_name} "
 done
 
 # Copy shared data (decision trees, runbooks, knowledge base)
@@ -159,29 +264,65 @@ ok "Installed ${SKILL_COUNT} skills to ~/.agents/skills/"
 log "Configuring Claude Code permissions..."
 
 CLAUDE_SETTINGS="$HOME/.claude/settings.json"
+PERMISSIONS_ADDED=""
 if [ -f "$CLAUDE_SETTINGS" ] && has_cmd node; then
-  # Add permission rule to auto-allow skill bash preambles
-  node -e "
+  # Add permission rules, track which ones were actually new
+  PERMISSIONS_ADDED=$(node -e "
     const fs = require('fs');
     const p = '$CLAUDE_SETTINGS';
     const c = JSON.parse(fs.readFileSync(p, 'utf8'));
     if (!c.permissions) c.permissions = {};
     if (!c.permissions.allow) c.permissions.allow = [];
     const rules = ['Bash', 'Read', 'Glob', 'Grep'];
+    const added = [];
     for (const rule of rules) {
       if (!c.permissions.allow.includes(rule)) {
         c.permissions.allow.push(rule);
+        added.push(rule);
       }
     }
-    fs.writeFileSync(p, JSON.stringify(c));
-  " 2>/dev/null && ok "Auto-allow skill preambles: enabled" || warn "Could not update Claude settings"
+    fs.writeFileSync(p, JSON.stringify(c, null, 2));
+    console.log(added.join(','));
+  " 2>/dev/null) && ok "Auto-allow skill preambles: enabled" || warn "Could not update Claude settings"
 elif [ ! -f "$CLAUDE_SETTINGS" ]; then
   mkdir -p "$HOME/.claude"
   echo '{"permissions":{"allow":["Bash","Read","Glob","Grep"]}}' > "$CLAUDE_SETTINGS"
+  PERMISSIONS_ADDED="Bash,Read,Glob,Grep"
   ok "Auto-allow skill preambles: enabled"
 else
   warn "Node.js needed to update Claude settings. Skill preambles may prompt for approval."
 fi
+
+# --- Write install manifest ---
+CONFIG_DIR_M="$HOME/.${PRODUCT_NAME}"
+mkdir -p "$CONFIG_DIR_M"
+
+# Build JSON arrays for skill paths and data paths
+SKILL_PATHS_JSON=""
+DATA_PATHS_JSON=""
+for skill_name in $INSTALLED_SKILL_NAMES; do
+  for prefix in ".claude/skills" ".codex/skills" ".agents/skills"; do
+    SKILL_PATHS_JSON="${SKILL_PATHS_JSON}\"${prefix}/${skill_name}\","
+  done
+done
+# Remove trailing comma
+SKILL_PATHS_JSON=$(echo "$SKILL_PATHS_JSON" | sed 's/,$//')
+
+for prefix in ".claude/skills" ".codex/skills" ".agents/skills"; do
+  DATA_PATHS_JSON="${DATA_PATHS_JSON}\"${prefix}/data\",\"${prefix}/SKILL_ROUTER.md\","
+done
+DATA_PATHS_JSON=$(echo "$DATA_PATHS_JSON" | sed 's/,$//')
+
+# Build permissions array
+PERMS_JSON=""
+if [ -n "$PERMISSIONS_ADDED" ]; then
+  PERMS_JSON=$(echo "$PERMISSIONS_ADDED" | tr ',' '\n' | sed 's/.*/"&"/' | tr '\n' ',' | sed 's/,$//')
+fi
+
+cat > "$MANIFEST_FILE" <<MANIFEST_EOF
+{"installedBy":"${PRODUCT_NAME}","version":"${BUNDLE_VERSION}","installedAt":"$(date -u +%Y-%m-%dT%H:%M:%SZ)","scope":"global","skillPaths":[${SKILL_PATHS_JSON}],"dataPaths":[${DATA_PATHS_JSON}],"permissionsAdded":[${PERMS_JSON}],"settingsFile":"${CLAUDE_SETTINGS}"}
+MANIFEST_EOF
+ok "Wrote install manifest to ~/.$PRODUCT_NAME/manifest.json"
 
 # --- Telemetry opt-in (skip if already prompted) ---
 CONFIG_DIR="$HOME/.${PRODUCT_NAME}"
