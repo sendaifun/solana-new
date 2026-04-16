@@ -100,7 +100,7 @@ Durable techniques, not dated trends. Each solves a specific visual problem.
 
 ## End-Card Archetypes
 
-CTA placement strategy (when in the video) belongs to `marketing-video/video-storytelling.md`. This section covers the visual composition of the final frame.
+CTA placement strategy (when in the video) belongs to [`skills/launch/marketing-video/references/video-storytelling.md`](../../marketing-video/references/video-storytelling.md). This section covers the visual composition of the final frame.
 
 **Rules:** minimum 3 seconds (90 frames), one action maximum, logo small and consistent, "Thank you" is not a CTA — end with an action verb. Test QR codes at output resolution before shipping.
 

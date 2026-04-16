@@ -61,7 +61,7 @@ const CURSOR_PATH = [
 ### Click Effect
 - Expanding circle at click position: `scale(0) → scale(1)`, `opacity(0.6) → opacity(0)`, 200ms duration
 - Circle: 40px diameter, accent color, 2px stroke, no fill
-- SFX: soft click sound synchronized to the visual (see `marketing-video/audio-library.md`)
+- SFX: soft click sound synchronized to the visual (see `../../marketing-video/references/audio-library.md`)
 
 ### Timing
 - Cursor appears: 10 frames before first action

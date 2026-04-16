@@ -91,7 +91,7 @@ skills/
   SKILL_ROUTER.md           Shared routing table — AI auto-corrects wrong skill
   idea/                     Discovery & planning skills (7 skills, includes solana-beginner, learn)
   build/                    Implementation skills (18 skills, includes virtual-solana-incubator, roast-my-product, product-review, cso, page-load-animations, number-formatting, design-taste)
-  launch/                   Go-to-market skills (5 skills, includes marketing-video, apply-grant)
+  launch/                   Go-to-market skills (6 skills, includes marketing-video, apply-grant, video-craft)
   data/
     guides/                 Shared guides (RPC+wallet, deploy, security, curated ideas)
     solana-knowledge/       6 knowledge area docs + cookbook index (covers all of solana.com)

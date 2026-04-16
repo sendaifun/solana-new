@@ -57,8 +57,8 @@ export function truncateAddress(address: string | PublicKey, chars = 4) {
 > **Full spec:** The `number-formatting` skill (`skills/build/number-formatting/`) is the authoritative source for all number display rules — dynamic decimals, zero-subscript, abbreviations, sign policy, tiny markers, and copy behavior. The rules below are a quick summary. When in doubt, defer to `number-formatting`.
 
 1. **Use `font-mono tabular-nums`** so digits align vertically and don't jitter when they update.
-2. **Use dynamic decimals based on token price**, not hardcoded precision. The number-formatting spec computes decimals as `ceil(-log10(threshold / tokenPriceUsd))` and clamps to context-appropriate ranges. See `number-formatting` references/formatting-spec.md for the full algorithm.
-3. **Show a human-readable unit**, not raw lamports. Use `amount / 10 ** decimals`.
+2. **Use dynamic decimals for display precision based on token price**, not hardcoded precision. Apply this only after converting raw units into the token's human-readable unit using the mint's on-chain decimals. The number-formatting spec computes display decimals as `ceil(-log10(threshold / tokenPriceUsd))` and clamps to context-appropriate ranges. See `number-formatting` references/formatting-spec.md for the full algorithm.
+3. **Show a human-readable unit**, not raw lamports. Convert raw amounts using the token mint's decimals: `amount / 10 ** mintDecimals`.
 4. **Use zero-subscript notation** for very small values (>= 3 leading zeros after decimal): `0.0₄58` instead of `0.00005835`. Include an `aria-label` with the expanded decimal.
 5. **Always show the token symbol** next to the amount. "12.34" is not a balance; "12.34 SOL" is.
 6. **USD values are secondary.** Show them smaller, in `text-muted-foreground`, below or next to the token amount.

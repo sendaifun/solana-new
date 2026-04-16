@@ -311,9 +311,9 @@ If the user has no brand colors, generate a professional palette:
 ### Step 5: Build (Remotion Workflow)
 
 **Apply `video-craft` preflight checklist before rendering** (one focal point per frame, depth in backgrounds, screenshots in device frames, max 8 words per text block, 1-2 effect families max). Load `video-craft` references as needed during build:
-- Showing product UI → read `video-craft/references/product-demo-patterns.md`
-- Building the CTA/end frame → read end-card section in `video-craft/references/frame-composition.md`
-- Frame composition feels off → read full `video-craft/references/frame-composition.md`
+- Showing product UI → read [product-demo-patterns.md](../video-craft/references/product-demo-patterns.md)
+- Building the CTA/end frame → read end-card section in [frame-composition.md](../video-craft/references/frame-composition.md)
+- Frame composition feels off → read full [frame-composition.md](../video-craft/references/frame-composition.md)
 
 Read [references/remotion-quickstart.md](references/remotion-quickstart.md) for the full technical reference based on the [official Remotion skills](https://github.com/remotion-dev/skills) (38 rule modules covering animations, transitions, text, charts, audio, 3D, captions, and more).
 

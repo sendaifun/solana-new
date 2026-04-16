@@ -97,7 +97,7 @@ Direction guidelines:
 const [stage, setStage] = useState(0);
 
 useEffect(() => {
-  const timers: NodeJS.Timeout[] = [];
+  const timers: ReturnType<typeof setTimeout>[] = [];
 
   timers.push(setTimeout(() => setStage(1), TIMING.header));
   timers.push(setTimeout(() => setStage(2), TIMING.chart));
