@@ -218,12 +218,12 @@ After the interview, YOU produce the creative direction. Don't ask the user to p
    | **Testimonial Sandwich** | YouTube, longer content | User quote → Demo → User quote |
    | **Data Story** | DeFi/infra products | Animated metrics telling growth story |
 
-3. **Visual Direction** — Read the `video-craft` skill's `references/frame-composition.md` for frame archetypes and `references/product-demo-patterns.md` if the video includes product screenshots. Then define:
+3. **Visual Direction** — Read the `video-craft` skill's [frame composition reference](../video-craft/references/frame-composition.md) for frame archetypes and [product demo patterns reference](../video-craft/references/product-demo-patterns.md) if the video includes product screenshots. Then define:
    - Color palette (hex codes — derived from their brand or generated)
    - Typography choices (headline font + body font)
    - Animation feel: "smooth and elegant" or "fast and punchy" or "heavy and cinematic"
    - Frame archetype per scene (hero / product / split / data / comparison / end-card)
-   - Effect family choice (1-2 max per video — see `video-craft` effect families)
+   - Effect family choice (1-2 max per video — see the [effect families section in frame-composition.md](../video-craft/references/frame-composition.md#effect-families))
    - Key visual elements: What appears on screen in each scene
 
 4. **Scene-by-Scene Storyboard** — Written out, frame by frame:

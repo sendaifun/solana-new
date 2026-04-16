@@ -2,7 +2,7 @@
 
 Video-specific composition rules for Remotion. These are about composing frames for time-bounded viewing — viewers can't scroll back, re-read, or hover. Every frame gets one glance.
 
-General design rules (type minimums, safe zones, spring defaults) are inherited from `marketing-video/professional-quality-guide.md`. Color restraint and asymmetry from `design-taste/design-judgment.md`. This file adds the delta.
+General design rules (type minimums, safe zones, spring defaults) are inherited from [`marketing-video/references/professional-quality-guide.md`](../../marketing-video/references/professional-quality-guide.md). Color restraint and asymmetry from [`design-taste/references/design-judgment.md`](../../../build/design-taste/references/design-judgment.md). This file adds the delta.
 
 ## Frame Archetypes (16:9)
 
