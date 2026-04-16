@@ -218,10 +218,12 @@ After the interview, YOU produce the creative direction. Don't ask the user to p
    | **Testimonial Sandwich** | YouTube, longer content | User quote → Demo → User quote |
    | **Data Story** | DeFi/infra products | Animated metrics telling growth story |
 
-3. **Visual Direction** — Mood board in words:
+3. **Visual Direction** — Read the `video-craft` skill's [frame composition reference](../video-craft/references/frame-composition.md) for frame archetypes and [product demo patterns reference](../video-craft/references/product-demo-patterns.md) if the video includes product screenshots. Then define:
    - Color palette (hex codes — derived from their brand or generated)
    - Typography choices (headline font + body font)
    - Animation feel: "smooth and elegant" or "fast and punchy" or "heavy and cinematic"
+   - Frame archetype per scene (hero / product / split / data / comparison / end-card)
+   - Effect family choice (1-2 max per video — see the [effect families section in frame-composition.md](../video-craft/references/frame-composition.md#effect-families))
    - Key visual elements: What appears on screen in each scene
 
 4. **Scene-by-Scene Storyboard** — Written out, frame by frame:
@@ -307,6 +309,11 @@ If the user has no brand colors, generate a professional palette:
 - Danger/warning: For "before" scenes — desaturated reds `#e94560`
 
 ### Step 5: Build (Remotion Workflow)
+
+**Apply `video-craft` preflight checklist before rendering** (one focal point per frame, depth in backgrounds, screenshots in device frames, max 8 words per text block, 1-2 effect families max). Load `video-craft` references as needed during build:
+- Showing product UI → read [product-demo-patterns.md](../video-craft/references/product-demo-patterns.md)
+- Building the CTA/end frame → read end-card section in [frame-composition.md](../video-craft/references/frame-composition.md)
+- Frame composition feels off → read full [frame-composition.md](../video-craft/references/frame-composition.md)
 
 Read [references/remotion-quickstart.md](references/remotion-quickstart.md) for the full technical reference based on the [official Remotion skills](https://github.com/remotion-dev/skills) (38 rule modules covering animations, transitions, text, charts, audio, 3D, captions, and more).
 
@@ -492,6 +499,7 @@ For every video project, deliver:
 - [references/video-storytelling.md](references/video-storytelling.md) — 6 video storytelling frameworks with script templates
 
 ### Cross-skill resources
+- `video-craft` — frame-level visual composition and product demo presentation. Invoke during creative direction and build phases for higher frame-by-frame quality.
 - Output from `create-pitch-deck` skill → convert pitch deck to video
 - `.superstack/idea-context.md` — project concept, target audience, value proposition
 - `.superstack/build-context.md` — tech stack, features built, screenshots

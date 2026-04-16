@@ -52,6 +52,8 @@ Pick from this list. Do not invent new numbers.
 | Long | 300–400 ms | page transitions, large layout changes |
 | Never longer than | 500 ms | if you need >500 ms, reconsider — the user will wait |
 
+**Exception for mount reveals and data visualization:** rolling number digits (600ms), SVG donut sweeps (1300ms), and chart morphs (600ms) legitimately exceed 500ms because they are decorative reveals that don't block user interaction. These are non-interactive animations that run after the page is usable. See `page-load-animations` skill for the specific patterns and timing.
+
 ## Easing curves
 
 Never use `linear` for UI motion (it feels mechanical). Never use `ease` (the default is wrong for most things).
@@ -122,3 +124,15 @@ For any interactive element with hover/focus/active states:
 - [ ] Wrapped in `motion-safe:` or inside a `prefers-reduced-motion: no-preference` block
 - [ ] Only appears on devices with `hover: hover` when it's hover-triggered
 - [ ] Does not jank on slow devices (test at 4× CPU throttle)
+
+## Framer-Motion Production Recipes
+
+This file covers animation theory — when to animate, duration tiers, easing curves, GPU properties, reduced motion. For production framer-motion code recipes, see the **`page-load-animations`** skill (`skills/build/page-load-animations/`), which covers:
+
+- Page entrance choreography (stage-driven, spring physics)
+- Staggered list animations
+- Modal and dropdown transitions
+- Filter cross-fades with height springs
+- Live data animations (rolling numbers, chart morphs, donut reveals)
+- Micro-interaction patterns (CSS vs framer-motion decision matrix)
+- Spring preset library

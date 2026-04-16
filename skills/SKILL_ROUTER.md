@@ -36,6 +36,9 @@
 | "product review", "UX review", "is my product good", "onboarding review" | `product-review` | Product quality evaluation |
 | "pick brand colors", "brand design", "theme this project", "brand identity", "choose palette" | `brand-design` | Interactive brand palette + typography + gradients + tone/voice with HTML browser preview |
 | "build a frontend", "create a component", "review my UI", "style this", "polish this", "design this page" | `frontend-design-guidelines` | Enforceable web interface rules (interactions, forms, states, animation, craft layer) with shadcn + Tailwind defaults; reads brand.md |
+| "format numbers", "number display", "token amounts", "price formatting", "zero subscript", "abbreviate numbers", "format currency", "format percent", "number formatting spec", "how should I display this number", "numbers are jittering" | `number-formatting` | Consistent number formatting for crypto UIs — zero-subscript, abbreviations, dynamic decimals, sign policy, tiny markers |
+| "page load animation", "entrance choreography", "stagger animation", "framer-motion recipe", "page feels janky", "everything appears at once", "spring animation", "modal animation", "dropdown animation", "rolling numbers", "chart morph", "donut reveal", "filter animation", "tab transition", "AnimatePresence", "micro-interaction recipe", "hover animation pattern" | `page-load-animations` | Production framer-motion recipes for page entrances, list staggers, modals, filters, live data, micro-interactions |
+| "this looks generic", "this looks AI-generated", "anti-slop", "design judgment", "premium feel", "design direction", "what direction should this take", "make this feel more premium", "review for taste", "theme reference", "warm monochrome", "stark minimal", "gradient trust", "workstation dense", "density", "page archetype", "design brief" | `design-taste` | Design direction, judgment calls, anti-AI-slop review, style references |
 | "security audit infrastructure", "CSO", "threat model", "OWASP" | `cso` | Infrastructure-first security audit |
 | "security audit", "signer check", "PDA security" | `solana-security-audit` | Deep Sealevel security analysis |
 | "QA", "test my dApp", "test wallet flow" | `solana-qa` | Systematic QA testing |
@@ -53,6 +56,7 @@
 | "pitch deck", "slides", "investor presentation" | `create-pitch-deck` | Pitch deck creation |
 | "hackathon submission", "submit", "demo video" | `submit-to-hackathon` | Hackathon submission prep |
 | "marketing video", "deck review", "product video" | `marketing-video` | Video content creation |
+| "video looks generic", "video frame design", "device frame", "video CTA", "end card", "video composition", "video craft", "screenshot in video", "frame quality" | `video-craft` | Frame-level visual composition, product demo presentation, end-card design |
 | "apply for grant", "grant application", "200 USDG", "agentic engineering grant", "ST earn", "Superteam earn", "Superteam grant", "solana earn grant" | `apply-grant` | Prepare Agentic Engineering Grant application |
 
 ## Shared Guides

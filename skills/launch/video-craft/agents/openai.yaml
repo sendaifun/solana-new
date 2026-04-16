@@ -1,0 +1,4 @@
+interface:
+  display_name: "Video Craft"
+  short_description: "Frame-level visual composition and product demo presentation for Remotion videos"
+  default_prompt: "Review my Remotion video frames for visual quality. Check composition, device framing, backgrounds, text readability, and end-card design."

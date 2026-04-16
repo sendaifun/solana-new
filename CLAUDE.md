@@ -2,7 +2,7 @@
 
 ## What This Is
 
-Skills and knowledge base to ship on Solana — Idea to Launch. 25 journey skills, 106 repos, 77 ecosystem skills, 36 MCP servers.
+Skills and knowledge base to ship on Solana — Idea to Launch. 31 journey skills, 106 repos, 77 ecosystem skills, 36 MCP servers.
 
 ## Install
 
@@ -22,7 +22,7 @@ claude "/deploy-to-mainnet Ship it"
 
 ## Journey Skills
 
-25 skills across 4 phases — user just asks naturally, right skill activates.
+31 skills across 4 phases — user just asks naturally, right skill activates.
 
 | Phase | Skill | Trigger Prompt |
 |-------|-------|---------------|
@@ -40,6 +40,12 @@ claude "/deploy-to-mainnet Ship it"
 | Build | `build-data-pipeline` | "Build an indexer" |
 | Build | `build-mobile` | "Build a mobile app" |
 | Build | `launch-token` | "Launch a token" |
+| Build | `brand-design` | "Pick brand colors" |
+| Build | `frontend-design-guidelines` | "Build a frontend" |
+| Build | `number-formatting` | "Format numbers in my UI" |
+| Build | `page-load-animations` | "Fix my page load animations" |
+| Build | `design-taste` | "This looks generic / not premium" |
+| Build | `navigate-skills` | "What skills are available?" |
 | Build | `roast-my-product` | "Roast my product — be brutal" |
 | Build | `product-review` | "Review my product's UX" |
 | Build | `review-and-iterate` | "Review my code" |
@@ -49,6 +55,7 @@ claude "/deploy-to-mainnet Ship it"
 | Launch | `create-pitch-deck` | "Create a pitch deck" |
 | Launch | `submit-to-hackathon` | "Prepare my hackathon submission" |
 | Launch | `marketing-video` | "Create a marketing video" |
+| Launch | `video-craft` | "Make my video frames look better" |
 | Launch | `apply-grant` | "Apply for Agentic Engineering Grant" |
 
 Skills live in `skills/<phase>/<skill-name>/`. To add a new skill, create a folder with `SKILL.md` + `references/` + `agents/openai.yaml`.
@@ -82,9 +89,9 @@ cli/
     solana-mcps.json        36 MCP servers
 skills/
   SKILL_ROUTER.md           Shared routing table — AI auto-corrects wrong skill
-  idea/                     Discovery & planning skills (6 skills, includes solana-beginner, learn)
-  build/                    Implementation skills (14 skills, includes virtual-solana-incubator, roast-my-product, product-review, cso)
-  launch/                   Go-to-market skills (5 skills, includes marketing-video, apply-grant)
+  idea/                     Discovery & planning skills (7 skills, includes solana-beginner, learn)
+  build/                    Implementation skills (18 skills, includes virtual-solana-incubator, roast-my-product, product-review, cso, page-load-animations, number-formatting, design-taste)
+  launch/                   Go-to-market skills (6 skills, includes marketing-video, apply-grant, video-craft)
   data/
     guides/                 Shared guides (RPC+wallet, deploy, security, curated ideas)
     solana-knowledge/       6 knowledge area docs + cookbook index (covers all of solana.com)

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Number Formatting"
+  short_description: "Format numbers consistently in Solana/crypto UIs following the number formatting spec"
+  default_prompt: "Apply the number formatting spec to all numbers in my UI. Review existing number displays for spec compliance and fix any violations."

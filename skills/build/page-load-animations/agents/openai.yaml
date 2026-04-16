@@ -1,0 +1,4 @@
+interface:
+  display_name: "Page Load Animations"
+  short_description: "Fix janky page loads with production framer-motion choreography patterns"
+  default_prompt: "Review and fix the page load animations in my UI. Apply the page choreography pattern with stage-driven entrance sequences, staggered lists, and spring physics."
