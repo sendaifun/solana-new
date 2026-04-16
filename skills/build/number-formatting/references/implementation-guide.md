@@ -195,14 +195,14 @@ function applySign(
 
 ## Decimal String Helper
 
-`Number.toString()` emits scientific notation for very small/large numbers. This helper always returns a plain decimal string:
+`Number.toString()` can emit scientific notation for very small/large numbers. This helper is only a best-effort conversion for JavaScript `number` values: it may round because `number` is IEEE-754, and `toFixed(20)` can still fall back to scientific notation for values with `abs >= 1e21`. If you need exact, non-scientific decimal export, preserve the original input as a string or use a decimal library instead.
 
 ```ts
 function toDecimalString(value: number): string {
   if (value === 0) return "0";
   const str = value.toString();
   if (!str.includes("e") && !str.includes("E")) return str;
-  // Use toFixed with enough precision to capture all digits
+  // Best-effort for JS numbers only; may round and may still use scientific notation for very large values.
   return value.toFixed(20).replace(/\.?0+$/, "");
 }
 ```
