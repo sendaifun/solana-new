@@ -30,7 +30,7 @@
 | "data pipeline", "indexer", "webhook", "analytics" | `build-data-pipeline` | On-chain data infrastructure |
 | "mobile app", "React Native", "mobile wallet" | `build-mobile` | Mobile dApp development |
 | "debug", "error", "transaction failed", "stuck" | `debug-program` | Diagnosing program failures |
-| "review", "audit", "security", "production ready" | `review-and-iterate` | Code review and security audit |
+| "review", "audit", "security", "production ready", "formal verification", "prove invariants", "Lean proof", "machine-checked", "QEDGen", "verify my program", "CPI correctness" | `review-and-iterate` | Code review, security audit, and escalation to formal verification (QEDGen) for invariant-critical programs |
 | "Solana incubator", "teach me Rust", "SVM deep dive", "Solana bootcamp" | `virtual-solana-incubator` | Deep technical Solana learning |
 | "roast my product", "harsh feedback", "be brutal", "what sucks" | `roast-my-product` | Harsh product critique |
 | "product review", "UX review", "is my product good", "onboarding review" | `product-review` | Product quality evaluation |

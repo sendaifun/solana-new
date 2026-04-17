@@ -128,6 +128,7 @@ solana program show <PROGRAM_ID>
 
 - **Which RPC for mainnet?** NEVER use public RPC for deployment. Helius paid tier minimum.
 - **Upgrade authority:** Keep for first 3 months. Transfer to Squads multisig when stable. Freeze only when fully audited.
+- **Invariant-critical program?** If the program protects high-value assets or has non-trivial conservation / authorization / state-machine / CPI-correctness properties, ask whether those invariants are machine-checked before mainnet. Route to the community skill `qedgen-formal-verification` for spec-driven Lean proofs + Kani + proptests. Testing alone is not sufficient evidence for these property classes.
 - **Full checklist:** See `../../data/guides/deploy-runbook.md` for complete pre-flight + post-deploy verification.
 - **Wallet strategy:** See `../../data/guides/rpc-wallet-guide.md` — dedicated mainnet keypair, never reuse devnet key.
 

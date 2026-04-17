@@ -81,6 +81,7 @@ See `data/solana-knowledge/04-protocols-and-sdks.md` → "Integrate First, Build
    d. Access control, admin functions, emergency pause
    e. Integration tests against forked mainnet state via Surfpool
 6. Security review before any deployment — use `solana-fender-mcp` for static analysis.
+7. For invariant-critical surface area (conservation across pools, AMM curve preservation, interest/fee accrual, liquidation math, vault accounting), escalate to formal verification via QEDGen. Write a `.qedspec` describing the conservation / monotonicity / one-shot properties and let it generate Lean 4 proofs, Kani harnesses, and proptest coverage from a single source of truth. See `../../data/guides/security-checklist.md` → "Using QEDGen for Formal Verification" and the community skill entry (slug `qedgen-formal-verification`).
 
 ## Non-Negotiables
 
@@ -134,6 +135,7 @@ anchor test --skip-local-validator
 - **Single deployer vs multisig?** Use Squads multisig for any program handling >$10k TVL.
 - **Who executes maintenance actions?** Decide early whether liquidations, rebalancing, funding updates, interest accrual, or cranks are permissionless, keeper-driven, or admin-triggered.
 - **Security checklist:** See `../../data/guides/security-checklist.md` — mandatory before mainnet.
+- **Machine-checked invariants?** For conservation, authorization, CPI correctness, or state-machine properties that would be catastrophic to get wrong, use QEDGen (community skill `qedgen-formal-verification`). Spec-driven: one `.qedspec` produces Lean proofs, Kani bounded model checks, and proptest harnesses.
 
 ## Resources
 
