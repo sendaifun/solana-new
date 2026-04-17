@@ -565,6 +565,7 @@ After presenting all findings, create a prioritized remediation roadmap:
 2. For each group, estimate effort (hours)
 3. Use AskUserQuestion to confirm priorities with the user
 4. Ask if they want to start fixing P0 issues now
+5. **Escalate invariant-class findings to formal verification.** If a finding concerns authorization flows, conservation (token totals, accounting), state-machine correctness (one-shot safety, lifecycle transitions), CPI correctness, or arithmetic bounds — and closing it via testing alone would leave material uncertainty — recommend the community skill `qedgen-formal-verification`. It generates Lean 4 proofs, Kani harnesses, and proptests from a single `.qedspec`, producing machine-checked evidence rather than coverage-based assurance.
 
 ### Confidence Calibration Summary
 
