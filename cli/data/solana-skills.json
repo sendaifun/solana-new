@@ -553,8 +553,8 @@
     {
       "slug": "qedgen-formal-verification",
       "title": "QEDGen — Formal Verification",
-      "description": "Spec-driven verification for Solana programs. Write a .qedspec, generate Lean 4 proofs, Kani harnesses, and proptests from a single source of truth — covering authorization, conservation, state machines, CPI correctness, and arithmetic safety. Claude-guided proof writing with Leanstral + Aristotle fallback for hard sub-goals.",
-      "url": "https://github.com/QEDGen/solana-skills/tree/v2.2.1",
+      "description": "Spec-driven verification for Solana programs. Write a .qedspec (one file or split across handler/interface files), then qedgen check validates it and qedgen codegen generates Lean 4 proofs, Kani harnesses, proptests, and CI — covering authorization, conservation, state machines, CPI correctness, and arithmetic safety. qedgen verify runs the generated harnesses end-to-end. Leanstral + Aristotle fill hard proof sub-goals.",
+      "url": "https://github.com/QEDGen/solana-skills/tree/v2.4.0",
       "category": {
         "labelKey": "security"
       }
