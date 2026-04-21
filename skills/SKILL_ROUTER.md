@@ -26,6 +26,7 @@
 | "scaffold", "set up project", "initialize" | `scaffold-project` | Starting from scratch, need project structure |
 | "help me build", "build the MVP", "guide me" | `build-with-claude` | Step-by-step implementation guidance |
 | "DeFi protocol", "AMM", "lending", "vault", "DEX" | `build-defi-protocol` | Building DeFi-specific programs |
+| "confidential app", "encrypted computation", "MPC", "Arcium", "Arcis", "dark pool", "sealed bid auction", "encrypted voting", "hidden game state", "private state", "secret inputs" | `build-confidential-app` | Building privacy-preserving apps with encrypted computation (Arcium MPC) |
 | "launch token", "SPL token", "memecoin", "pump.fun" | `launch-token` | Token creation and distribution |
 | "data pipeline", "indexer", "webhook", "analytics" | `build-data-pipeline` | On-chain data infrastructure |
 | "mobile app", "React Native", "mobile wallet" | `build-mobile` | Mobile dApp development |

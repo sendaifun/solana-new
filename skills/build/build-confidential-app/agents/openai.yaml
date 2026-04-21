@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build Confidential App"
+  short_description: "Build encrypted/confidential apps on Solana with Arcium MPC"
+  default_prompt: "Help me build a confidential app on Solana. Guide me through choosing the right privacy approach, setting up Arcium MPC, writing circuits, and wiring the Anchor program."

@@ -1686,6 +1686,80 @@
       ],
       "clone_command": "git clone https://github.com/solana-foundation/noir-examples.git",
       "is_template": true
+    },
+    {
+      "id": "arcium-examples",
+      "repo": "arcium-hq/examples",
+      "description": "Full Arcium app examples — coinflip, voting, sealed-bid auction, blackjack, rock-paper-scissors, shared medical records, and ed25519",
+      "category": "example",
+      "keywords": [
+        "arcium",
+        "mpc",
+        "encrypted",
+        "confidential",
+        "privacy",
+        "circuit",
+        "arcis",
+        "auction",
+        "voting",
+        "blackjack"
+      ],
+      "clone_command": "git clone https://github.com/arcium-hq/examples.git",
+      "is_template": false
+    },
+    {
+      "id": "arcium-agent-skills",
+      "repo": "arcium-hq/agent-skills",
+      "description": "Official Arcium agent skill — SKILL.md, circuit patterns, troubleshooting, and MCP config for AI-assisted Arcium development",
+      "category": "infrastructure",
+      "keywords": [
+        "arcium",
+        "mpc",
+        "skill",
+        "agent",
+        "encrypted",
+        "confidential",
+        "claude",
+        "mcp"
+      ],
+      "clone_command": "git clone https://github.com/arcium-hq/agent-skills.git",
+      "is_template": false
+    },
+    {
+      "id": "arcium-ideas-list",
+      "repo": "arcium-hq/ideas-list",
+      "description": "Six confidential app ideas built for Arcium MPC — dark pool, sealed-bid auction, voting, poker, AI inference, matchmaking",
+      "category": "example",
+      "keywords": [
+        "arcium",
+        "mpc",
+        "ideas",
+        "dark-pool",
+        "auction",
+        "voting",
+        "poker",
+        "privacy",
+        "confidential"
+      ],
+      "clone_command": "git clone https://github.com/arcium-hq/ideas-list.git",
+      "is_template": false
+    },
+    {
+      "id": "arcium-setup-action",
+      "repo": "arcium-hq/setup-arcium",
+      "description": "GitHub Action to install and configure the Arcium CLI in CI/CD pipelines for automated Arcium app builds and tests",
+      "category": "infrastructure",
+      "keywords": [
+        "arcium",
+        "ci",
+        "github-actions",
+        "devops",
+        "cli",
+        "setup",
+        "build"
+      ],
+      "clone_command": "git clone https://github.com/arcium-hq/setup-arcium.git",
+      "is_template": false
     }
   ]
 }

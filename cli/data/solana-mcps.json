@@ -359,6 +359,16 @@
       "setup_command": "claude mcp add alchemy --transport http https://mcp.alchemy.com/mcp",
       "url": "https://github.com/alchemyplatform/alchemy-mcp-server",
       "keywords": ["alchemy", "rpc", "infrastructure", "token", "nft", "balance", "transaction", "swap", "multi-chain"]
+    },
+    {
+      "id": "arcium-docs-mcp",
+      "name": "Arcium Docs MCP (Official)",
+      "repo": "arcium-hq/agent-skills",
+      "description": "Official Arcium documentation MCP — search and query encrypted computation, circuit patterns, SDK references, and deployment guides for MPC-based confidential apps on Solana",
+      "category": "infrastructure",
+      "setup_command": "claude mcp add --transport http arcium-docs https://docs.arcium.com/mcp",
+      "url": "https://docs.arcium.com/mcp",
+      "keywords": ["arcium", "mpc", "encrypted", "confidential", "privacy", "circuit", "arcis", "compute"]
     }
   ]
 }
