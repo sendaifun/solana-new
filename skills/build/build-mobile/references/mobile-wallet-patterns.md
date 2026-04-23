@@ -116,7 +116,8 @@ Choose one of these based on app needs:
 - **MWA / Solana Mobile wallet flow**: best default for Solana-native mobile apps
 - **Phantom mobile SDK flow**: when Phantom-specific UX or embedded/social features are required
 - **Phantom deep links**: for simpler connect-and-sign flows without a full SDK integration
-- **Embedded wallet SDK**: when the product explicitly needs embedded onboarding
+- **Dynamic embedded wallet (Expo / React Native)**: when the product needs email/SMS/social onboarding with MPC wallets and multi-chain (Solana + EVM) support
+- **Embedded wallet SDK (Privy, Dynamic, etc.)**: when the product explicitly needs embedded onboarding
 
 ### Caution
 
@@ -124,6 +125,52 @@ Do not copy browser-SDK examples into React Native mobile apps. Browser SDK exam
 
 **Skills:** `phantom-connect-skill` (Phantom Connect SDK — React, React Native, browser, social login, token gating)
 **Skills:** `helius-phantom-skill` (Official Helius skill for frontend dApp development with Phantom Connect)
+**Skills:** `dynamic-react-native-sdk` (Dynamic embedded wallets for Expo / React Native — email/social login, MPC wallets, Solana signing)
+
+## Dynamic Embedded Wallets (Expo / React Native)
+
+When the app needs zero-extension onboarding — email, SMS, or social sign-in that provisions an MPC wallet on Solana (and optionally EVM/others) — use Dynamic's React Native extension.
+
+### Install
+
+```bash
+npx expo install @dynamic-labs/sdk-react-core @dynamic-labs/solana @dynamic-labs/react-native-extension
+```
+
+### Minimal Wiring
+
+```tsx
+// App.tsx
+import { DynamicContextProvider } from "@dynamic-labs/sdk-react-core";
+import { SolanaWalletConnectors } from "@dynamic-labs/solana";
+import { ReactNativeExtension } from "@dynamic-labs/react-native-extension";
+
+export default function App() {
+  return (
+    <DynamicContextProvider
+      settings={{
+        environmentId: process.env.EXPO_PUBLIC_DYNAMIC_ENVIRONMENT_ID!,
+        walletConnectors: [SolanaWalletConnectors],
+      }}
+    >
+      <ReactNativeExtension>
+        {/* your app */}
+      </ReactNativeExtension>
+    </DynamicContextProvider>
+  );
+}
+```
+
+### When to Use
+
+- Consumer mobile dApps where users don't have or don't want a wallet extension
+- Multi-chain apps that need Solana + EVM in one onboarding flow
+- Apps that need server-side signing too — pair with `@dynamic-labs-wallet/node-svm` on the backend
+
+### Requires
+
+- Expo development build (not Expo Go) — same constraint as Phantom's embedded RN SDK
+- Environment ID from https://app.dynamic.xyz/dashboard/developer
 
 ## Phantom Deep Links (Simplest Integration)
 
