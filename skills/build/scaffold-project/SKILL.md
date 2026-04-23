@@ -123,7 +123,7 @@ solana airdrop 5
 ## Decision Points
 
 - **Which starter repo?** See `references/catalog-recommendations.md` — maps idea types to specific repos.
-- **Which wallet SDK?** Privy for best UX, Unified Wallet Adapter for flexibility, Phantom for simplest integration.
+- **Which wallet SDK?** Privy or Dynamic for best embedded-wallet UX (Dynamic also covers multi-chain EVM + Solana, React Native, and Node server wallets), Unified Wallet Adapter for flexibility, Phantom for simplest integration.
 - **Which RPC?** Helius free tier for development.
 - **Which test framework?** Surfpool for mainnet-state testing, LiteSVM for fast unit tests.
 
