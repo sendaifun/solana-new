@@ -1686,6 +1686,358 @@
       ],
       "clone_command": "git clone https://github.com/solana-foundation/noir-examples.git",
       "is_template": true
+    },
+    {
+      "id": "dynamic-create-app",
+      "repo": "dynamic-labs-oss/create-dynamic-app",
+      "description": "Official Dynamic scaffolder — interactive CLI that creates a Dynamic-powered app (Next.js, React, React Native) with embedded wallets + multi-chain auth, including Solana",
+      "category": "scaffold",
+      "keywords": [
+        "scaffold",
+        "create",
+        "init",
+        "starter",
+        "dynamic",
+        "embedded-wallet",
+        "auth",
+        "next",
+        "react",
+        "react-native"
+      ],
+      "clone_command": "npx create-dynamic-app@latest",
+      "is_template": true
+    },
+    {
+      "id": "dynamic-hackathon-starter",
+      "repo": "dynamic-labs-oss/hackathon-starter-kit",
+      "description": "Dynamic hackathon starter kit — opinionated Next.js app with embedded wallets, social login, and Solana signing wired up end-to-end",
+      "category": "agent",
+      "keywords": [
+        "dynamic",
+        "hackathon",
+        "starter",
+        "next",
+        "embedded-wallet",
+        "auth",
+        "social-login"
+      ],
+      "clone_command": "git clone https://github.com/dynamic-labs-oss/hackathon-starter-kit.git",
+      "is_template": true
+    },
+    {
+      "id": "dynamic-react-native-expo",
+      "repo": "dynamic-labs-oss/react-native-expo",
+      "description": "Dynamic Expo / React Native starter — embedded wallets and social login on mobile with Solana support",
+      "category": "agent",
+      "keywords": [
+        "dynamic",
+        "react-native",
+        "expo",
+        "mobile",
+        "embedded-wallet",
+        "auth",
+        "solana"
+      ],
+      "clone_command": "git clone https://github.com/dynamic-labs-oss/react-native-expo.git",
+      "is_template": true
+    },
+    {
+      "id": "dynamic-gasless-solana",
+      "repo": "dynamic-labs-oss/gasless-solana",
+      "description": "Dynamic gasless Solana transactions — relayer-sponsored transactions using Dynamic server wallets, end-to-end example",
+      "category": "example",
+      "keywords": [
+        "dynamic",
+        "gasless",
+        "relayer",
+        "solana",
+        "server-wallet",
+        "sponsored",
+        "node"
+      ],
+      "clone_command": "git clone https://github.com/dynamic-labs-oss/gasless-solana.git",
+      "is_template": true
+    },
+    {
+      "id": "dynamic-mpc-node-server",
+      "repo": "dynamic-labs-oss/mpc-node-server-demo",
+      "description": "Dynamic MPC Node server demo — backend reference for server-side signing and delegated Solana transactions with Dynamic's MPC wallets",
+      "category": "example",
+      "keywords": [
+        "dynamic",
+        "mpc",
+        "node",
+        "server-wallet",
+        "signing",
+        "solana",
+        "backend"
+      ],
+      "clone_command": "git clone https://github.com/dynamic-labs-oss/mpc-node-server-demo.git",
+      "is_template": true
+    },
+    {
+      "id": "dynamic-agentkit",
+      "repo": "dynamic-labs-oss/agentkit",
+      "description": "Dynamic AgentKit — give AI agents their own Dynamic wallets on Solana and EVM, with login, signing, and server-side transaction flows",
+      "category": "agent",
+      "keywords": [
+        "dynamic",
+        "agent",
+        "ai",
+        "wallet",
+        "solana",
+        "evm",
+        "server-wallet"
+      ],
+      "clone_command": "git clone https://github.com/dynamic-labs-oss/agentkit.git",
+      "is_template": true
+    },
+    {
+      "id": "dynamic-examples",
+      "repo": "dynamic-labs-oss/examples",
+      "description": "Dynamic examples monorepo — Next.js, Vite, Node, Python, and React Native demos covering gasless, MPC, Kamino yield, Kalshi/Polymarket, stablecoin payments, and more on Solana",
+      "category": "example",
+      "keywords": [
+        "dynamic",
+        "examples",
+        "monorepo",
+        "next",
+        "vite",
+        "node",
+        "react-native",
+        "kamino",
+        "kalshi",
+        "polymarket",
+        "stablecoin"
+      ],
+      "clone_command": "git clone https://github.com/dynamic-labs-oss/examples.git",
+      "is_template": false
+    },
+    {
+      "id": "dynamic-passport",
+      "repo": "dynamic-labs-oss/passport-dynamic",
+      "description": "Dynamic + Passport.js strategy — verify Dynamic JWTs in an Express/Passport backend for session-based auth",
+      "category": "example",
+      "keywords": [
+        "dynamic",
+        "passport",
+        "jwt",
+        "express",
+        "auth",
+        "node",
+        "backend"
+      ],
+      "clone_command": "git clone https://github.com/dynamic-labs-oss/passport-dynamic.git",
+      "is_template": true
+    },
+    {
+      "id": "dynamic-tg-bot-starter",
+      "repo": "dynamic-labs-oss/tg-bot-starter",
+      "description": "Dynamic Telegram bot starter — server wallets for Solana transactions inside a Telegram bot, with user-scoped signing",
+      "category": "agent",
+      "keywords": [
+        "dynamic",
+        "telegram",
+        "bot",
+        "server-wallet",
+        "solana",
+        "node"
+      ],
+      "clone_command": "git clone https://github.com/dynamic-labs-oss/tg-bot-starter.git",
+      "is_template": true
+    },
+    {
+      "id": "dynamic-telegram-miniapp",
+      "repo": "dynamic-labs-oss/telegram-miniapp-dynamic",
+      "description": "Dynamic Telegram Mini App starter — Next.js + Dynamic wallets inside a Telegram WebApp with Solana support",
+      "category": "agent",
+      "keywords": [
+        "dynamic",
+        "telegram",
+        "miniapp",
+        "webapp",
+        "next",
+        "solana"
+      ],
+      "clone_command": "git clone https://github.com/dynamic-labs-oss/telegram-miniapp-dynamic.git",
+      "is_template": true
+    },
+    {
+      "id": "dynamic-telegram-bot-multichain",
+      "repo": "dynamic-labs-oss/dynamic-telegram-bot",
+      "description": "Dynamic multi-chain Telegram bot — EVM + Solana signing flows with server wallets for user-driven transactions",
+      "category": "agent",
+      "keywords": [
+        "dynamic",
+        "telegram",
+        "bot",
+        "multichain",
+        "evm",
+        "solana",
+        "server-wallet"
+      ],
+      "clone_command": "git clone https://github.com/dynamic-labs-oss/dynamic-telegram-bot.git",
+      "is_template": true
+    },
+    {
+      "id": "dynamic-kamino-yield",
+      "repo": "dynamic-labs-oss/examples",
+      "description": "Next.js stablecoin yield app on Kamino using Dynamic wallets — deposit, borrow, and manage Kamino positions with embedded-wallet UX",
+      "category": "example",
+      "keywords": [
+        "dynamic",
+        "kamino",
+        "defi",
+        "yield",
+        "stablecoin",
+        "next",
+        "solana"
+      ],
+      "clone_command": "git clone https://github.com/dynamic-labs-oss/examples.git && cd examples/nextjs-stablecoin-yield-kamino",
+      "is_template": true
+    },
+    {
+      "id": "dynamic-kalshi-demo",
+      "repo": "dynamic-labs-oss/examples",
+      "description": "Next.js Kalshi-style prediction market demo powered by DFlow + Dynamic wallets — sign Solana trades with a social-login wallet",
+      "category": "example",
+      "keywords": [
+        "dynamic",
+        "kalshi",
+        "prediction",
+        "dflow",
+        "next",
+        "solana"
+      ],
+      "clone_command": "git clone https://github.com/dynamic-labs-oss/examples.git && cd examples/nextjs-kalshi-demo",
+      "is_template": true
+    },
+    {
+      "id": "dynamic-polymarket-demo",
+      "repo": "dynamic-labs-oss/examples",
+      "description": "Next.js Polymarket-style prediction market demo with Dynamic wallets for Solana signing and social onboarding",
+      "category": "example",
+      "keywords": [
+        "dynamic",
+        "polymarket",
+        "prediction",
+        "next",
+        "solana"
+      ],
+      "clone_command": "git clone https://github.com/dynamic-labs-oss/examples.git && cd examples/nextjs-polymarket-demo",
+      "is_template": true
+    },
+    {
+      "id": "dynamic-payment-links-vite",
+      "repo": "dynamic-labs-oss/examples",
+      "description": "Vite + Dynamic stablecoin payment links — share a URL, recipient pays with an embedded wallet on Solana",
+      "category": "example",
+      "keywords": [
+        "dynamic",
+        "vite",
+        "payment-links",
+        "stablecoin",
+        "solana"
+      ],
+      "clone_command": "git clone https://github.com/dynamic-labs-oss/examples.git && cd examples/vite-stablecoin-payment-links",
+      "is_template": true
+    },
+    {
+      "id": "dynamic-nextjs-mpc-demo",
+      "repo": "dynamic-labs-oss/examples",
+      "description": "Next.js MPC embedded wallets demo — end-to-end Dynamic MPC wallet onboarding + signing on Solana",
+      "category": "example",
+      "keywords": [
+        "dynamic",
+        "mpc",
+        "embedded-wallet",
+        "next",
+        "solana",
+        "onboarding"
+      ],
+      "clone_command": "git clone https://github.com/dynamic-labs-oss/examples.git && cd examples/nextjs-mpc-demo",
+      "is_template": true
+    },
+    {
+      "id": "dynamic-nextjs-gasless-relayer",
+      "repo": "dynamic-labs-oss/examples",
+      "description": "Next.js + Node gasless relayer — sponsor user transactions on Solana via a Dynamic server wallet",
+      "category": "example",
+      "keywords": [
+        "dynamic",
+        "gasless",
+        "relayer",
+        "sponsored",
+        "next",
+        "node",
+        "solana"
+      ],
+      "clone_command": "git clone https://github.com/dynamic-labs-oss/examples.git && cd examples/nextjs-gasless-relayer",
+      "is_template": true
+    },
+    {
+      "id": "dynamic-nodejs-server-wallets",
+      "repo": "dynamic-labs-oss/examples",
+      "description": "Node.js server wallets example — programmatic Solana signing from a backend with Dynamic's MPC node SDK",
+      "category": "example",
+      "keywords": [
+        "dynamic",
+        "node",
+        "server-wallet",
+        "mpc",
+        "backend",
+        "solana"
+      ],
+      "clone_command": "git clone https://github.com/dynamic-labs-oss/examples.git && cd examples/nodejs-server-wallets",
+      "is_template": true
+    },
+    {
+      "id": "dynamic-nodejs-omnibus-sweep",
+      "repo": "dynamic-labs-oss/examples",
+      "description": "Node omnibus sweep example — sweep funds from many Dynamic server wallets to a treasury on Solana",
+      "category": "example",
+      "keywords": [
+        "dynamic",
+        "node",
+        "omnibus",
+        "sweep",
+        "treasury",
+        "backend",
+        "solana"
+      ],
+      "clone_command": "git clone https://github.com/dynamic-labs-oss/examples.git && cd examples/nodejs-omnibus-sweep",
+      "is_template": true
+    },
+    {
+      "id": "dynamic-python-server-wallets",
+      "repo": "dynamic-labs-oss/examples",
+      "description": "Python server wallets example — programmatic Solana signing from a Python backend via the Dynamic server-wallet API",
+      "category": "example",
+      "keywords": [
+        "dynamic",
+        "python",
+        "server-wallet",
+        "backend",
+        "solana"
+      ],
+      "clone_command": "git clone https://github.com/dynamic-labs-oss/examples.git && cd examples/python-server-wallets",
+      "is_template": true
+    },
+    {
+      "id": "dynamic-nextjs-js-sdk-demo",
+      "repo": "dynamic-labs-oss/examples",
+      "description": "Next.js demo using the Dynamic JS (client) SDK + @dynamic-labs/solana-extension — framework-agnostic client path",
+      "category": "example",
+      "keywords": [
+        "dynamic",
+        "js-sdk",
+        "client",
+        "next",
+        "solana",
+        "vanilla"
+      ],
+      "clone_command": "git clone https://github.com/dynamic-labs-oss/examples.git && cd examples/nextjs-js-sdk-wallet-demo",
+      "is_template": true
     }
   ]
 }

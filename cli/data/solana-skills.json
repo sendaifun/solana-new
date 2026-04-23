@@ -7,7 +7,7 @@
   "install_all_command": "npx skills add https://github.com/solana-foundation/solana-dev-skill",
   "counts": {
     "official": 15,
-    "community": 62
+    "community": 67
   },
   "official_skills": [
     {
@@ -611,6 +611,51 @@
       "url": "https://github.com/helius-labs/core-ai/tree/main/helius-skills/helius-okx",
       "category": {
         "labelKey": "defi"
+      }
+    },
+    {
+      "slug": "dynamic-react-sdk",
+      "title": "Dynamic React SDK (Solana)",
+      "description": "Embedded wallets, social login, and Solana signing for React and Next.js via @dynamic-labs/sdk-react-core + @dynamic-labs/solana — drop-in UI widget with MPC wallets and multi-chain auth.",
+      "url": "https://www.dynamic.xyz/docs/react/wallets/using-wallets/solana/solana-wallets",
+      "category": {
+        "labelKey": "infrastructure"
+      }
+    },
+    {
+      "slug": "dynamic-react-native-sdk",
+      "title": "Dynamic React Native SDK",
+      "description": "Dynamic embedded wallets and social login for Expo / React Native apps with Solana support via @dynamic-labs/react-native-extension.",
+      "url": "https://www.dynamic.xyz/docs/react-native/wallets/using-wallets/solana/solana-wallets",
+      "category": {
+        "labelKey": "infrastructure"
+      }
+    },
+    {
+      "slug": "dynamic-js-sdk",
+      "title": "Dynamic JavaScript SDK (Solana)",
+      "description": "Framework-agnostic Dynamic client for vanilla JS or non-React web stacks — @dynamic-labs/client + @dynamic-labs/solana-extension for wallets, auth, and Solana signing.",
+      "url": "https://www.dynamic.xyz/docs/javascript/reference/solana/adding-solana-extensions",
+      "category": {
+        "labelKey": "infrastructure"
+      }
+    },
+    {
+      "slug": "dynamic-node-svm",
+      "title": "Dynamic Node SDK (SVM)",
+      "description": "Server-side Solana signing, gasless relayers, and server-wallet flows via @dynamic-labs-wallet/node-svm — delegated MPC signing from your backend.",
+      "url": "https://www.dynamic.xyz/docs/node/svm/overview",
+      "category": {
+        "labelKey": "infrastructure"
+      }
+    },
+    {
+      "slug": "dynamic-anchor-recipe",
+      "title": "Dynamic + Anchor Recipe",
+      "description": "Official recipe for signing Anchor program transactions using a Dynamic embedded wallet — method-level signing, transaction building, and dApp wiring.",
+      "url": "https://www.dynamic.xyz/docs/recipes/frameworks/anchor",
+      "category": {
+        "labelKey": "programs"
       }
     }
   ],

@@ -359,6 +359,16 @@
       "setup_command": "claude mcp add alchemy --transport http https://mcp.alchemy.com/mcp",
       "url": "https://github.com/alchemyplatform/alchemy-mcp-server",
       "keywords": ["alchemy", "rpc", "infrastructure", "token", "nft", "balance", "transaction", "swap", "multi-chain"]
+    },
+    {
+      "id": "dynamic-docs-mcp",
+      "name": "Dynamic Docs MCP (Official)",
+      "repo": "dynamic-labs/docs",
+      "description": "Official Dynamic docs MCP — search and query Dynamic SDK docs for React, React Native, JS, and Node (SVM) server wallets, embedded wallets, and Solana integration recipes",
+      "category": "infrastructure",
+      "setup_command": "claude mcp add dynamic --transport http https://www.dynamic.xyz/docs/mcp",
+      "url": "https://www.dynamic.xyz/docs",
+      "keywords": ["dynamic", "docs", "official", "wallet", "embedded-wallet", "auth", "solana", "react", "react-native", "node", "mpc", "server-wallet"]
     }
   ]
 }
