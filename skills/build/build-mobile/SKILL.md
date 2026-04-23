@@ -128,7 +128,7 @@ npx expo run:android
 
 ## Decision Points
 
-- **Which wallet SDK?** For React Native, prefer the current Solana Mobile / wallet-ui React Native integration patterns. For native Android, use Mobile Wallet Adapter directly. Use Phantom-specific mobile SDK or deep-link flows only when they fit the product requirements.
+- **Which wallet SDK?** For React Native, prefer the current Solana Mobile / wallet-ui React Native integration patterns. For native Android, use Mobile Wallet Adapter directly. Use Phantom-specific mobile SDK or deep-link flows only when they fit the product requirements. For embedded-wallet / social-login mobile UX, use Dynamic's React Native extension (`@dynamic-labs/react-native-extension`) — see `references/mobile-wallet-patterns.md`.
 - **React Native vs Native?** React Native for faster development + code sharing with web. Native for best performance + platform features.
 - **Which RPC?** Mobile apps should use paid RPC (Helius) for reliability.
 
