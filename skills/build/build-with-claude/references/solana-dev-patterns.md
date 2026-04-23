@@ -228,7 +228,7 @@ function App() {
 - Use Wallet Standard — pass `wallets={[]}` to auto-detect installed wallets
 - Don't hardcode wallet adapters — the standard handles Phantom, Solflare, Backpack, etc.
 
-**Skills:** `frontend-framework-kit` (official), `phantom-connect-skill` (community)
+**Skills:** `frontend-framework-kit` (official), `phantom-connect-skill` (community), `dynamic-react-sdk` (community — embedded wallets + social login, Solana support via `@dynamic-labs/solana`), `dynamic-js-sdk` (community — vanilla JS path)
 
 ## Transaction Patterns
 

@@ -24,7 +24,12 @@ Use installed skills and MCPs during development — they accelerate every step.
 | `kit` (official) | @solana/kit reference (the modern SDK) |
 | `frontend-framework-kit` (official) | @solana/kit for frontend integration |
 | `kit-web3-interop` (official) | Migration from web3.js v1 to @solana/kit |
-| `phantom-connect-skill` | Wallet connection + embedded wallets |
+| `phantom-connect-skill` | Wallet connection + embedded wallets (Phantom) |
+| `dynamic-react-sdk` | Embedded MPC wallets + social login + multi-chain auth (React/Next.js, Solana) |
+| `dynamic-react-native-sdk` | Dynamic embedded wallets for Expo / React Native (Solana) |
+| `dynamic-js-sdk` | Dynamic framework-agnostic JS client + Solana extension |
+| `dynamic-node-svm` | Node server-wallet SDK for Solana (gasless relayer, programmatic signing) |
+| `dynamic-anchor-recipe` | Signing Anchor transactions with a Dynamic embedded wallet |
 
 ### Testing
 | Skill | What it gives you |

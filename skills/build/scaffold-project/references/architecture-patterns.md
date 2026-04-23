@@ -124,8 +124,8 @@ my-mobile-app/
   package.json
 ```
 
-Best for: Mobile-first consumer dApps, wallet-connected apps, payment apps. Prefer official `create-solana-dapp` mobile templates for React Native/Expo starts.
-**Skills:** `phantom-connect-skill`
+Best for: Mobile-first consumer dApps, wallet-connected apps, payment apps. Prefer official `create-solana-dapp` mobile templates for React Native/Expo starts. For embedded-wallet / social-login mobile UX, use the `solana-react-native-dynamic` community template (`@dynamic-labs/react-native-extension`).
+**Skills:** `phantom-connect-skill`, `dynamic-react-native-sdk`
 
 ## Sources
 

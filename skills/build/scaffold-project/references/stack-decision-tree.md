@@ -42,6 +42,9 @@ Match an idea to the right technology stack.
 | Choice | When |
 |--------|------|
 | Wallet Standard (`@solana/wallet-adapter-react`) | Any Next.js/React dApp — auto-detects Phantom, Solflare, Backpack |
+| Privy (`@privy-io/react-auth`) | Consumer app with social login + embedded wallets |
+| Dynamic (`@dynamic-labs/sdk-react-core` + `@dynamic-labs/solana`) | Consumer or multi-chain app (EVM + Solana) with embedded MPC wallets, social login; has React Native + vanilla JS + Node server-wallet SDKs |
+| Dynamic Node SVM (`@dynamic-labs-wallet/node-svm`) | Backend that needs to sign Solana transactions for users (gasless relayer, Telegram bot, server-side agent) |
 | Phantom MCP (`phantom-mcp-server`) | Agent that needs wallet access |
 | None | Backend-only or bot |
 

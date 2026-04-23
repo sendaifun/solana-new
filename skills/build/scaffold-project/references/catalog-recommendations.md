@@ -13,10 +13,10 @@ Map the user's idea to specific repos, skills, and MCPs from the solana-new cata
 
 ## AI Agents
 
-**Repos:** `create-solana-agent` (npx), `solana-agent-kit`, `sak-telegram-bot`, `sak-discord-bot`, `sak-langgraph`, `sak-phantom-agent`
-**Skills:** `solana-agent-kit-skill`, `phantom-connect-skill`, `helius-build-skill`
-**MCPs:** `solana-mcp` (60+ actions), `helius-mcp`, `phantom-mcp-server`
-**Tip:** `npx create-solana-agent` is the fastest start. Add Helius MCP for wallet data.
+**Repos:** `create-solana-agent` (npx), `solana-agent-kit`, `sak-telegram-bot`, `sak-discord-bot`, `sak-langgraph`, `sak-phantom-agent`, `dynamic-agentkit`, `dynamic-tg-bot-starter`, `dynamic-telegram-miniapp`
+**Skills:** `solana-agent-kit-skill`, `phantom-connect-skill`, `helius-build-skill`, `dynamic-node-svm`
+**MCPs:** `solana-mcp` (60+ actions), `helius-mcp`, `phantom-mcp-server`, `dynamic-docs-mcp`
+**Tip:** `npx create-solana-agent` is the fastest start. Add Helius MCP for wallet data. For agents that need their own user-scoped Solana wallet, use Dynamic's Node SVM server-wallet SDK (`@dynamic-labs-wallet/node-svm`).
 
 ## On-chain Programs
 
@@ -27,16 +27,16 @@ Map the user's idea to specific repos, skills, and MCPs from the solana-new cata
 
 ## Frontend & dApps
 
-**Repos:** `create-solana-dapp` (npx), [official templates](https://solana.com/developers/templates), `builderz-scaffold`
-**Skills:** `frontend-framework-kit` (official), `kit` (official), `kit-web3-interop` (official), `solana-kit-skill`, `phantom-connect-skill`
-**MCPs:** `helius-mcp`, `phantom-mcp-server`
-**Tip:** Browse starter templates at https://solana.com/developers/templates. `npm create solana-dapp@latest` scaffolds the current official templates, including Next.js, React + Vite, and Solana Mobile Expo/React Native templates via `--template`. Express is not a current official default option. Use Wallet Standard for wallet connection on web.
+**Repos:** `create-solana-dapp` (npx), [official templates](https://solana.com/developers/templates), `builderz-scaffold`, `dynamic-create-app` (npx `create-dynamic-app`), `dynamic-hackathon-starter`, `dynamic-nextjs-js-sdk-demo`
+**Skills:** `frontend-framework-kit` (official), `kit` (official), `kit-web3-interop` (official), `solana-kit-skill`, `phantom-connect-skill`, `dynamic-react-sdk`, `dynamic-js-sdk`
+**MCPs:** `helius-mcp`, `phantom-mcp-server`, `dynamic-docs-mcp`
+**Tip:** Browse starter templates at https://solana.com/developers/templates. `npm create solana-dapp@latest` scaffolds the current official templates, including Next.js, React + Vite, and Solana Mobile Expo/React Native templates via `--template` (including the `solana-nextjs-dynamic`, `solana-react-dynamic`, `solana-react-native-dynamic` community templates). Use Wallet Standard for wallet connection on web, or Dynamic if you need embedded wallets + social login + multi-chain auth.
 
 ## Mobile
 
-**Repos/Templates:** `create-solana-dapp` mobile templates (`gh:solana-foundation/templates/mobile/kit-expo-minimal`, `gh:solana-foundation/templates/mobile/kit-expo-uniwind`, `gh:solana-foundation/templates/mobile/web3js-expo`, `gh:solana-foundation/templates/mobile/web3js-expo-minimal`, `gh:solana-foundation/templates/mobile/web3js-expo-paper`), `react-native-samples`, `solana-app-kit`
-**Skills:** `phantom-connect-skill`
-**Tip:** For React Native, prefer the current official Solana Mobile path: generate an Expo/React Native app with `create-solana-dapp` and choose an official mobile template. Use `react-native-samples` for current patterns. For native Android, follow the current Solana Mobile Kotlin installation/setup/quickstart docs rather than older standalone scaffold repos.
+**Repos/Templates:** `create-solana-dapp` mobile templates (`gh:solana-foundation/templates/mobile/kit-expo-minimal`, `gh:solana-foundation/templates/mobile/kit-expo-uniwind`, `gh:solana-foundation/templates/mobile/web3js-expo`, `gh:solana-foundation/templates/mobile/web3js-expo-minimal`, `gh:solana-foundation/templates/mobile/web3js-expo-paper`, `gh:solana-foundation/templates/community/solana-react-native-dynamic`), `react-native-samples`, `solana-app-kit`, `dynamic-react-native-expo`
+**Skills:** `phantom-connect-skill`, `dynamic-react-native-sdk`
+**Tip:** For React Native, prefer the current official Solana Mobile path: generate an Expo/React Native app with `create-solana-dapp` and choose an official mobile template. For embedded-wallet / social-login mobile UX, use Dynamic's Expo template (`solana-react-native-dynamic`) with `@dynamic-labs/react-native-extension`. Use `react-native-samples` for current patterns. For native Android, follow the current Solana Mobile Kotlin installation/setup/quickstart docs rather than older standalone scaffold repos.
 
 ## NFTs & Digital Assets
 
