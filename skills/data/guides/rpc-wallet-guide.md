@@ -111,8 +111,12 @@ HELIUS_API_KEY=
 | Use case | SDK | Install |
 |----------|-----|---------|
 | Web dApp, crypto users | `@solana/wallet-adapter-react` | `npm i @solana/wallet-adapter-react @solana/wallet-adapter-react-ui @solana/wallet-adapter-wallets` |
-| Web dApp, social login | `@privy-io/react-auth` | `npm i @privy-io/react-auth` |
+| Web dApp, social login | `@privy-io/react-auth` _or_ `@dynamic-labs/sdk-react-core` | `npm i @privy-io/react-auth` _or_ `npm i @dynamic-labs/sdk-react-core @dynamic-labs/solana` |
+| Multi-chain auth (EVM + Solana) | `@dynamic-labs/sdk-react-core` + `@dynamic-labs/solana` | `npm i @dynamic-labs/sdk-react-core @dynamic-labs/solana` |
+| Vanilla JS / non-React web | `@dynamic-labs/client` + `@dynamic-labs/solana-extension` | `npm i @dynamic-labs/client @dynamic-labs/solana-extension` |
 | Phantom only | `@phantom/browser-sdk` | `npm i @phantom/browser-sdk` |
 | AI Agent / Bot | `@solana/kit` Keypair | `npm i @solana/kit` |
-| Agent + persistence | Privy server wallet | `npm i @privy-io/server-auth` |
-| Mobile (React Native) | Mobile Wallet Adapter | `npm i @solana-mobile/mobile-wallet-adapter-protocol` |
+| Agent + persistence | Privy server wallet _or_ Dynamic Node SVM | `npm i @privy-io/server-auth` _or_ `npm i @dynamic-labs-wallet/node @dynamic-labs-wallet/node-svm` |
+| Server-side Solana signing / gasless relayer | `@dynamic-labs-wallet/node-svm` | `npm i @dynamic-labs-wallet/node @dynamic-labs-wallet/node-svm` |
+| Mobile (React Native) | Mobile Wallet Adapter _or_ Dynamic RN | `npm i @solana-mobile/mobile-wallet-adapter-protocol` _or_ `npm i @dynamic-labs/sdk-react-core @dynamic-labs/solana @dynamic-labs/react-native-extension` |
+| Embedded mobile wallet (Expo) | `@dynamic-labs/react-native-extension` | `npm i @dynamic-labs/sdk-react-core @dynamic-labs/solana @dynamic-labs/react-native-extension` |

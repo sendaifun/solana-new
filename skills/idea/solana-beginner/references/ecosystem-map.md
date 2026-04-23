@@ -40,6 +40,16 @@ A categorized guide to the major projects, protocols, and tools in the Solana ec
 | **Solflare** | Full-featured Solana wallet. Staking, swaps, NFT gallery. Strong mobile app. | https://solflare.com |
 | **Backpack** | All-in-one crypto app with exchange, futures, spot trading, and lending. | https://backpack.app |
 
+## Wallet SDKs / Auth (for dApp builders)
+
+| Project | What It Does | URL |
+|---------|-------------|-----|
+| **Solana Wallet Adapter** | Standard React/JS adapter — auto-detects Phantom, Solflare, Backpack, and any Wallet Standard wallet. | https://github.com/anza-xyz/wallet-adapter |
+| **Privy** | Embedded wallets + social login for React. Consumer-app onboarding. | https://privy.io |
+| **Dynamic** | Embedded MPC wallets, social login, multi-chain auth (Solana + EVM + Bitcoin). React, React Native, vanilla JS, and Node SDKs — plus server wallets and gas sponsorship. | https://www.dynamic.xyz |
+| **Phantom Connect SDK** | Direct Phantom integration SDK — React, React Native, browser, deep links. | https://docs.phantom.app |
+| **Turnkey** | API-first non-custodial wallet infrastructure — programmatic key management. | https://turnkey.com |
+
 ## Payments
 
 | Project | What It Does | URL |
