@@ -118,7 +118,7 @@ Ships with a curated catalog of the Solana ecosystem that skills search and reco
 | Catalog | Count | Examples |
 |---------|-------|---------|
 | **Repos** | 106 | Anchor, Pinocchio, Quasar, Doppler, Metaplex, Orca, Raydium, Jupiter, Jito, LiteSVM, Mollusk, Codama, Blueshift, ConnectorKit, Solana Agent Kit, MagicBlock |
-| **Skills** | 77 | 15 official (Solana Foundation) + 62 community (Jupiter, Helius, Kamino, Privy, DFlow, Meteora, Sanctum, QEDGen, Carbium) |
+| **Skills** | 82 | 15 official (Solana Foundation) + 67 community (Jupiter, Helius, Kamino, Privy, Dynamic, DFlow, Meteora, Sanctum, QEDGen, Carbium) |
 | **MCPs** | 36 | Helius, Jupiter, Phantom, Orca, Alchemy, Flash Trade, Solscan, DexScreener, Solana Foundation |
 | **Knowledge** | 7 docs | Architecture, programs, protocols, SDKs, app layer, open-source research, Cookbook index |
 | **Guides** | 3 | RPC + wallet setup, deploy runbook, security checklist |
@@ -177,7 +177,7 @@ Built by [SendAI](https://sendai.fun) and [Superteam](https://superteam.fun). Po
 - [Metaplex](https://github.com/metaplex-foundation) — NFT standards and tooling
 - [MagicBlock](https://github.com/magicblock-labs) — On-chain gaming, Ephemeral Rollups, BOLT ECS
 - [Orca](https://github.com/orca-so), [Raydium](https://github.com/raydium-io), [Kamino](https://github.com/Kamino-Finance), [Meteora](https://meteora.ag) — DeFi protocols
-- [Privy](https://privy.io), [Phantom](https://phantom.app), [Squads](https://squads.so) — Wallets and auth
+- [Privy](https://privy.io), [Dynamic](https://www.dynamic.xyz), [Phantom](https://phantom.app), [Squads](https://squads.so) — Wallets and auth
 - [Colosseum](https://colosseum.org) — Hackathon data and startup research
 - [DFlow](https://dflow.net), [Sanctum](https://sanctum.so), [Light Protocol](https://lightprotocol.com) — Ecosystem protocols
 - And [50+ more projects](cli/data/solana-skills.json) building the Solana developer ecosystem
