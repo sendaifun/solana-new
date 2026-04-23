@@ -482,17 +482,76 @@ Privy provides embedded wallets with social login (email, Google, Twitter), elim
 
 ---
 
-### Dynamic -- Wallet Abstraction
+### Dynamic -- Embedded Wallets, Social Login, Server Wallets
 
-Multi-chain wallet connection with embedded wallets and social login.
+Dynamic provides embedded MPC wallets, social login, and multi-chain auth (Solana + EVM + Bitcoin) with a drop-in React widget, Expo/React Native support, a framework-agnostic JS client, and a Node SDK for backend/server-wallet flows (gas sponsorship, programmatic signing).
 
-**When to use:** Multi-chain apps that need both EVM and Solana wallet support in one SDK.
+**When to use:**
+- Consumer or prosumer apps that need email/SMS/social sign-in with zero-extension wallets on Solana
+- Multi-chain products that need a single auth + wallet layer across EVM and Solana
+- Backends or Telegram bots that need server-side Solana signing via MPC
+- Agent use-cases where each user/agent gets a programmatically-controlled wallet
 
-**Key URLs:** https://docs.dynamic.xyz
+**Key URLs:**
+- Docs: https://www.dynamic.xyz/docs
+- Solana React quickstart: https://www.dynamic.xyz/docs/react/wallets/using-wallets/solana/solana-wallets
+- Node SVM overview: https://www.dynamic.xyz/docs/node/svm/overview
+- React Native Solana: https://www.dynamic.xyz/docs/react-native/wallets/using-wallets/solana/solana-wallets
+- JS SDK Solana: https://www.dynamic.xyz/docs/javascript/reference/solana/adding-solana-extensions
+- Anchor recipe: https://www.dynamic.xyz/docs/recipes/frameworks/anchor
+- Dashboard (get Environment ID): https://app.dynamic.xyz/dashboard/developer
+- MCP: `claude mcp add dynamic --transport http https://www.dynamic.xyz/docs/mcp`
+- GitHub (templates + examples): https://github.com/dynamic-labs-oss
+- llms.txt: https://www.dynamic.xyz/docs/llms.txt
 
-**npm packages:**
-- `@dynamic-labs/sdk-react-core` -- core React SDK
-- `@dynamic-labs/solana` -- Solana module
+**npm packages (Solana-relevant):**
+- `@dynamic-labs/sdk-react-core` -- core React / Next.js SDK (UI widget, providers, hooks)
+- `@dynamic-labs/solana` -- Solana connector for the React SDK (SVM wallets, signing, RPC)
+- `@dynamic-labs/react-native-extension` -- Expo / React Native extension
+- `@dynamic-labs/client` -- framework-agnostic vanilla JS client
+- `@dynamic-labs/solana-extension` -- Solana extension for the JS client
+- `@dynamic-labs/react-hooks` -- React hooks layer over the client SDK
+- `@dynamic-labs-wallet/node` -- Node.js core server SDK
+- `@dynamic-labs-wallet/node-svm` -- Node.js Solana server-wallet SDK (signing, gas sponsorship)
+- `@dynamic-labs/wallet-connect` -- WalletConnect connector
+- `@dynamic-labs/multi-wallet` -- multi-wallet signing / verification utilities
+
+**Scaffold:** `npx create-dynamic-app@latest`
+
+**Minimal React + Solana:**
+```tsx
+// app/providers.tsx
+import { DynamicContextProvider } from "@dynamic-labs/sdk-react-core";
+import { SolanaWalletConnectors } from "@dynamic-labs/solana";
+
+export function Providers({ children }: { children: React.ReactNode }) {
+  return (
+    <DynamicContextProvider
+      settings={{
+        environmentId: process.env.NEXT_PUBLIC_DYNAMIC_ENVIRONMENT_ID!,
+        walletConnectors: [SolanaWalletConnectors],
+      }}
+    >
+      {children}
+    </DynamicContextProvider>
+  );
+}
+```
+
+**Server wallet (Node SVM):**
+```ts
+import { createDynamicWalletClient } from "@dynamic-labs-wallet/node";
+import { solana } from "@dynamic-labs-wallet/node-svm";
+
+const client = createDynamicWalletClient({
+  environmentId: process.env.DYNAMIC_ENVIRONMENT_ID!,
+  apiToken: process.env.DYNAMIC_API_TOKEN!,
+  extensions: [solana()],
+});
+// Use client.solana.signTransaction(...) from your backend
+```
+
+**Templates (community/):** `solana-nextjs-dynamic`, `solana-react-dynamic`, `solana-react-native-dynamic`, `solana-node-dynamic`.
 
 ---
 
@@ -791,7 +850,10 @@ const ix = createInitializeTransferFeeConfigInstruction(
 | RPC (lowest latency) | Triton |
 | Data streaming | Triton Yellowstone gRPC or QuickNode Streams |
 | Wallet (React) | Solana Wallet Adapter |
-| Wallet (consumer app) | Privy |
+| Wallet (consumer app) | Privy or Dynamic |
+| Wallet (multi-chain auth, EVM + Solana) | Dynamic |
+| Wallet (Expo / React Native embedded) | Dynamic (`@dynamic-labs/react-native-extension`) |
+| Server wallet / gasless on Solana (Node) | Dynamic (`@dynamic-labs-wallet/node-svm`) |
 | Program framework | Anchor |
 | Program authority | Squads multisig |
 | Oracle data | Switchboard or Doppler (21 CU) |
