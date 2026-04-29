@@ -2,7 +2,7 @@
 
 ## What This Is
 
-Skills and knowledge base to ship on Solana — Idea to Launch. 31 journey skills, 106 repos, 77 ecosystem skills, 36 MCP servers.
+Skills and knowledge base to ship on Solana — Idea to Launch. 31 journey skills, 106 repos, 78 ecosystem skills, 36 MCP servers.
 
 ## Install
 
@@ -72,7 +72,7 @@ Skills live in `skills/<phase>/<skill-name>/`. To add a new skill, create a fold
 | Catalog | Count | File |
 |---------|-------|------|
 | Repos | 81 | `cli/data/clonable-repos.json` |
-| Skills | 73 | `cli/data/solana-skills.json` |
+| Skills | 78 | `cli/data/solana-skills.json` |
 | MCPs | 53 | `cli/data/solana-mcps.json` |
 
 ## File Map
@@ -85,7 +85,7 @@ cli/
   init.ts                   Auto-install skills to ~/.claude/skills/ and ~/.codex/skills/
   data/
     clonable-repos.json     106 repos (Solana official, SendAI, Metaplex, DeFi, etc.)
-    solana-skills.json      77 skills (15 official + 62 community)
+    solana-skills.json      78 skills (15 official + 63 community)
     solana-mcps.json        36 MCP servers
 skills/
   SKILL_ROUTER.md           Shared routing table — AI auto-corrects wrong skill

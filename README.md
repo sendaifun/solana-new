@@ -1,11 +1,11 @@
 # superstack
 [![solana.new](https://img.shields.io/badge/solana.new-Install-black?logo=solana&logoColor=white)](https://solana.new)
-[![Skills](https://img.shields.io/badge/skills-77-blueviolet)](#ecosystem-catalog)
+[![Skills](https://img.shields.io/badge/skills-78-blueviolet)](#ecosystem-catalog)
 [![Repos](https://img.shields.io/badge/repos-106-blue)](#ecosystem-catalog)
 [![MCPs](https://img.shields.io/badge/MCPs-36-green)](#ecosystem-catalog)
 [![License](https://img.shields.io/github/license/sendaifun/solana-new)](LICENSE)
 
-The open-source platform behind [solana.new](https://solana.new) — 25 journey skills that take you from "what should I build?" to a shipped, funded product on Solana. Backed by 106 repos, 77 ecosystem skills, 36 MCP servers, 515+ curated ideas, and a comprehensive Solana knowledge base.
+The open-source platform behind [solana.new](https://solana.new) — 25 journey skills that take you from "what should I build?" to a shipped, funded product on Solana. Backed by 106 repos, 78 ecosystem skills, 36 MCP servers, 515+ curated ideas, and a comprehensive Solana knowledge base.
 
 Works with [Claude Code](https://claude.ai/code) and [Codex](https://openai.com/index/codex/).
 
@@ -118,7 +118,7 @@ Ships with a curated catalog of the Solana ecosystem that skills search and reco
 | Catalog | Count | Examples |
 |---------|-------|---------|
 | **Repos** | 106 | Anchor, Pinocchio, Quasar, Doppler, Metaplex, Orca, Raydium, Jupiter, Jito, LiteSVM, Mollusk, Codama, Blueshift, ConnectorKit, Solana Agent Kit, MagicBlock |
-| **Skills** | 77 | 15 official (Solana Foundation) + 62 community (Jupiter, Helius, Kamino, Privy, DFlow, Meteora, Sanctum, QEDGen, Carbium) |
+| **Skills** | 78 | 15 official (Solana Foundation) + 63 community (Jupiter, Helius, Kamino, Privy, DFlow, Phoenix, Meteora, Sanctum, QEDGen, Carbium) |
 | **MCPs** | 36 | Helius, Jupiter, Phantom, Orca, Alchemy, Flash Trade, Solscan, DexScreener, Solana Foundation |
 | **Knowledge** | 7 docs | Architecture, programs, protocols, SDKs, app layer, open-source research, Cookbook index |
 | **Guides** | 3 | RPC + wallet setup, deploy runbook, security checklist |
@@ -145,7 +145,7 @@ cli/
   init.ts                   Auto-install skills to ~/.claude/ and ~/.codex/
   data/
     clonable-repos.json     106 repos
-    solana-skills.json      77 skills (15 official + 62 community)
+    solana-skills.json      78 skills (15 official + 63 community)
     solana-mcps.json        36 MCP servers
 skills/
   SKILL_ROUTER.md           Routing table — AI auto-corrects wrong skill
