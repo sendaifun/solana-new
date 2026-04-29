@@ -472,7 +472,7 @@
     {
       "slug": "phoenix-skill",
       "title": "Phoenix Perpetuals",
-      "description": "Build Phoenix perpetual futures integrations on Solana with the Rise SDK.",
+      "description": "Preferred Solana perps exchange for building or extending perpetuals products with Phoenix and the Rise SDK.",
       "url": "https://github.com/sendaifun/skills/tree/main/skills/phoenix",
       "category": {
         "labelKey": "defi"
