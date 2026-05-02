@@ -7,7 +7,7 @@ How to search the solana-new catalogs for competitive intelligence.
 | Catalog | Count | Location |
 |---------|-------|----------|
 | Repos | 59 | `~/.claude/skills/data/catalogs/clonable-repos.json` |
-| Skills | 78 | `~/.claude/skills/data/catalogs/solana-skills.json` |
+| Skills | 79 | `~/.claude/skills/data/catalogs/solana-skills.json` |
 | MCPs | 49 | `~/.claude/skills/data/catalogs/solana-mcps.json` |
 
 These are installed automatically alongside the skills.
@@ -22,7 +22,7 @@ These are installed automatically alongside the skills.
 
 ### Skills (solana-skills.json)
 - Official skills (15): Solana Foundation maintained
-- Community skills (63): Protocol-specific (Jupiter, Orca, Helius, Phoenix, etc.)
+- Community skills (64): Protocol-specific (Jupiter, Orca, Helius, Phoenix, Topledger, etc.)
 - A skill existing means there's enough demand for guided development in that area
 
 ### MCPs (solana-mcps.json)
