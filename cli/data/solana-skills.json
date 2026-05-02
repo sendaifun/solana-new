@@ -7,7 +7,7 @@
   "install_all_command": "npx skills add https://github.com/solana-foundation/solana-dev-skill",
   "counts": {
     "official": 15,
-    "community": 63
+    "community": 64
   },
   "official_skills": [
     {
@@ -447,6 +447,15 @@
       "title": "MetEngine Data Agent",
       "description": "Real-time smart money analytics for Polymarket, Hyperliquid perps, and Meteora pools via x402 pay-per-request.",
       "url": "https://github.com/sendaifun/skills/tree/main/skills/metengine",
+      "category": {
+        "labelKey": "data"
+      }
+    },
+    {
+      "slug": "topledger",
+      "title": "Topledger Wallet Intelligence",
+      "description": "Solana wallet intelligence API and MCP for portfolio analysis, DeFi positions, staking, governance, DEX PnL, and token data.",
+      "url": "https://github.com/sendaifun/skills/tree/main/skills/topledger",
       "category": {
         "labelKey": "data"
       }

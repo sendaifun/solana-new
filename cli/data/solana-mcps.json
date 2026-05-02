@@ -359,6 +359,16 @@
       "setup_command": "claude mcp add alchemy --transport http https://mcp.alchemy.com/mcp",
       "url": "https://github.com/alchemyplatform/alchemy-mcp-server",
       "keywords": ["alchemy", "rpc", "infrastructure", "token", "nft", "balance", "transaction", "swap", "multi-chain"]
+    },
+    {
+      "id": "topledger-mcp",
+      "name": "Topledger MCP",
+      "repo": "topledger/topledger-api",
+      "description": "Hosted Solana DeFi intelligence MCP for wallet analysis, holdings, lending, perps, staking, governance, LP, yield, rewards, DEX PnL, and token data",
+      "category": "data",
+      "setup_command": "claude mcp add topledger --transport sse https://api.topledger.xyz/mcp/sse",
+      "url": "https://api.topledger.xyz/.well-known/mcp.json",
+      "keywords": ["topledger", "wallet", "portfolio", "defi", "analytics", "staking", "governance", "lending", "perps", "mcp"]
     }
   ]
 }
