@@ -2,7 +2,7 @@
 
 ## What This Is
 
-Skills and knowledge base to ship on Solana — Idea to Launch. 31 journey skills, 106 repos, 78 ecosystem skills, 36 MCP servers.
+Skills and knowledge base to ship on Solana — Idea to Launch. 32 journey skills, 106 repos, 78 ecosystem skills, 36 MCP servers.
 
 ## Install
 
@@ -50,6 +50,7 @@ claude "/deploy-to-mainnet Ship it"
 | Build | `product-review` | "Review my product's UX" |
 | Build | `review-and-iterate` | "Review my code" |
 | Build | `cso` | "Run a security audit" |
+| Build | `verify-humanity-poh` | "Filter bots from my airdrop / DAO / NFT mint" |
 | Build | `debug-program` | "Debug my program" |
 | Launch | `deploy-to-mainnet` | "Deploy to mainnet" |
 | Launch | `create-pitch-deck` | "Create a pitch deck" |
@@ -90,7 +91,7 @@ cli/
 skills/
   SKILL_ROUTER.md           Shared routing table — AI auto-corrects wrong skill
   idea/                     Discovery & planning skills (7 skills, includes solana-beginner, learn)
-  build/                    Implementation skills (18 skills, includes virtual-solana-incubator, roast-my-product, product-review, cso, page-load-animations, number-formatting, design-taste)
+  build/                    Implementation skills (19 skills, includes virtual-solana-incubator, roast-my-product, product-review, cso, page-load-animations, number-formatting, design-taste, verify-humanity-poh)
   launch/                   Go-to-market skills (6 skills, includes marketing-video, apply-grant, video-craft)
   data/
     guides/                 Shared guides (RPC+wallet, deploy, security, curated ideas)

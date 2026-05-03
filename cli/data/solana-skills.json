@@ -7,7 +7,7 @@
   "install_all_command": "npx skills add https://github.com/solana-foundation/solana-dev-skill",
   "counts": {
     "official": 15,
-    "community": 63
+    "community": 64
   },
   "official_skills": [
     {
@@ -47,7 +47,7 @@
     },
     {
       "slug": "kit-web3-interop",
-      "title": "Kit ↔ web3.js Interop",
+      "title": "Kit \u2194 web3.js Interop",
       "description": "Patterns for bridging @solana/kit and legacy @solana/web3.js at adapter boundaries while migrating incrementally.",
       "github_url": "https://github.com/solana-foundation/solana-dev-skill/blob/main/skill/references/kit-web3-interop.md",
       "raw_url": "https://raw.githubusercontent.com/solana-foundation/solana-dev-skill/main/skill/references/kit-web3-interop.md"
@@ -111,7 +111,7 @@
     {
       "slug": "kit",
       "title": "@solana/kit Reference",
-      "description": "Comprehensive guide to @solana/kit — the modular, tree-shakable JavaScript SDK for Solana covering accounts, codecs, Codama codegen, plugins, React integration, and program interaction.",
+      "description": "Comprehensive guide to @solana/kit \u2014 the modular, tree-shakable JavaScript SDK for Solana covering accounts, codecs, Codama codegen, plugins, React integration, and program interaction.",
       "github_url": "https://github.com/solana-foundation/solana-dev-skill/tree/main/skill/references/kit",
       "raw_url": "https://raw.githubusercontent.com/solana-foundation/solana-dev-skill/main/skill/references/kit/overview.md"
     }
@@ -517,7 +517,7 @@
     {
       "slug": "magicblock-skill",
       "title": "MagicBlock Skill",
-      "description": "Gaming and Ephemeral Rollups on Solana using MagicBlock — BOLT ECS, Private Ephemeral Rollups (PERs), sub-10ms latency, gasless transactions, VRFs, SOAR achievements, and session keys.",
+      "description": "Gaming and Ephemeral Rollups on Solana using MagicBlock \u2014 BOLT ECS, Private Ephemeral Rollups (PERs), sub-10ms latency, gasless transactions, VRFs, SOAR achievements, and session keys.",
       "url": "https://github.com/sendaifun/skills/tree/main/skills/magicblock",
       "category": {
         "labelKey": "gaming"
@@ -526,7 +526,7 @@
     {
       "slug": "helius-build-skill",
       "title": "Helius Build Skill (Official)",
-      "description": "Official Helius skill for core Solana development — DAS API, Sender, WebSockets, LaserStream gRPC, webhooks, wallet API, and transaction analysis.",
+      "description": "Official Helius skill for core Solana development \u2014 DAS API, Sender, WebSockets, LaserStream gRPC, webhooks, wallet API, and transaction analysis.",
       "url": "https://github.com/helius-labs/core-ai/tree/main/helius-skills/helius",
       "category": {
         "labelKey": "infrastructure"
@@ -535,7 +535,7 @@
     {
       "slug": "helius-phantom-skill",
       "title": "Helius x Phantom Skill (Official)",
-      "description": "Official Helius skill for frontend dApp development with Phantom Connect SDK — React, React Native, browser, token gating, and payments.",
+      "description": "Official Helius skill for frontend dApp development with Phantom Connect SDK \u2014 React, React Native, browser, token gating, and payments.",
       "url": "https://github.com/helius-labs/core-ai/tree/main/helius-skills/helius-phantom",
       "category": {
         "labelKey": "infrastructure"
@@ -544,7 +544,7 @@
     {
       "slug": "helius-dflow-skill",
       "title": "Helius x DFlow Skill (Official)",
-      "description": "Official Helius skill for trading applications — spot swaps, prediction markets, real-time streaming, and Proof KYC via DFlow.",
+      "description": "Official Helius skill for trading applications \u2014 spot swaps, prediction markets, real-time streaming, and Proof KYC via DFlow.",
       "url": "https://github.com/helius-labs/core-ai/tree/main/helius-skills/helius-dflow",
       "category": {
         "labelKey": "defi"
@@ -553,7 +553,7 @@
     {
       "slug": "helius-svm-skill",
       "title": "Helius SVM Skill (Official)",
-      "description": "Official Helius skill for Solana protocol internals — SVM execution model, consensus, account model, validator economics, and token extensions.",
+      "description": "Official Helius skill for Solana protocol internals \u2014 SVM execution model, consensus, account model, validator economics, and token extensions.",
       "url": "https://github.com/helius-labs/core-ai/tree/main/helius-skills/svm",
       "category": {
         "labelKey": "infrastructure"
@@ -561,8 +561,8 @@
     },
     {
       "slug": "qedgen-formal-verification",
-      "title": "QEDGen — Formal Verification",
-      "description": "Spec-driven verification for Solana programs. Write a .qedspec (one file or split across handler/interface files), then qedgen check validates it and qedgen codegen generates Lean 4 proofs, Kani harnesses, proptests, and CI — covering authorization, conservation, state machines, CPI correctness, and arithmetic safety. qedgen verify runs the generated harnesses end-to-end. Leanstral + Aristotle fill hard proof sub-goals.",
+      "title": "QEDGen \u2014 Formal Verification",
+      "description": "Spec-driven verification for Solana programs. Write a .qedspec (one file or split across handler/interface files), then qedgen check validates it and qedgen codegen generates Lean 4 proofs, Kani harnesses, proptests, and CI \u2014 covering authorization, conservation, state machines, CPI correctness, and arithmetic safety. qedgen verify runs the generated harnesses end-to-end. Leanstral + Aristotle fill hard proof sub-goals.",
       "url": "https://github.com/QEDGen/solana-skills/tree/v2.5.0",
       "category": {
         "labelKey": "security"
@@ -580,7 +580,7 @@
     {
       "slug": "privy-agent-wallets",
       "title": "Privy Agent Wallets",
-      "description": "Give AI agents their own Ethereum and Solana wallets via the Privy Agent CLI — login, fund, sign messages, send transactions, and make x402/MPP paid API calls.",
+      "description": "Give AI agents their own Ethereum and Solana wallets via the Privy Agent CLI \u2014 login, fund, sign messages, send transactions, and make x402/MPP paid API calls.",
       "url": "https://agents.privy.io/skill.md",
       "category": {
         "labelKey": "infrastructure"
@@ -589,7 +589,7 @@
     {
       "slug": "carbium-skill",
       "title": "Carbium Skill",
-      "description": "AI coding skill for Carbium bare-metal Solana infrastructure — RPC, gRPC full-block streaming, DEX aggregation via CQ1, gasless swaps, MEV-protected execution.",
+      "description": "AI coding skill for Carbium bare-metal Solana infrastructure \u2014 RPC, gRPC full-block streaming, DEX aggregation via CQ1, gasless swaps, MEV-protected execution.",
       "url": "https://github.com/sendaifun/skills/tree/main/skills/carbium",
       "category": {
         "labelKey": "infrastructure"
@@ -607,7 +607,7 @@
     {
       "slug": "jupiter-vrfd-skill",
       "title": "Jupiter VRFD Skill",
-      "description": "AI coding skill for Jupiter token verification — submit verification requests, update metadata via Jupiter express verification.",
+      "description": "AI coding skill for Jupiter token verification \u2014 submit verification requests, update metadata via Jupiter express verification.",
       "url": "https://github.com/jup-ag/agent-skills/tree/main/skills/jupiter-vrfd",
       "category": {
         "labelKey": "defi"
@@ -616,12 +616,21 @@
     {
       "slug": "helius-okx-skill",
       "title": "Helius x OKX Skill (Official)",
-      "description": "Official Helius skill for trading apps with OKX DEX aggregation — swaps, token discovery, smart money signals, and meme token analysis.",
+      "description": "Official Helius skill for trading apps with OKX DEX aggregation \u2014 swaps, token discovery, smart money signals, and meme token analysis.",
       "url": "https://github.com/helius-labs/core-ai/tree/main/helius-skills/helius-okx",
       "category": {
         "labelKey": "defi"
       }
+    },
+    {
+      "slug": "verify-humanity-poh",
+      "title": "Proof of Human (POH) Verification",
+      "description": "AI-powered bot detection API \u2014 verify wallet humanity for airdrops, DAOs, NFT mints, and sybil resistance.",
+      "url": "https://github.com/sendaifun/solana-new/tree/main/skills/build/verify-humanity-poh",
+      "category": {
+        "labelKey": "security"
+      }
     }
   ],
-  "skill_md": "# Solana Agent Skills\n\n> Foundation-maintained skills for AI agents building on Solana.\n> Install any skill: `npx skills add <url>`\n\n## Install All Skills\n\n```\nnpx skills add https://github.com/solana-foundation/solana-dev-skill\n```\n\n## Skills\n\n### Common Errors & Solutions\nDiagnose and fix common errors encountered when building on Solana, including GLIBC issues, Anchor version conflicts, and RPC errors.\n- **Category**: Reference\n\n### Version Compatibility Matrix\nReference table for matching Anchor, Solana CLI, Rust, and Node.js versions to avoid toolchain conflicts.\n- **Category**: Tooling\n\n### Confidential Transfers\nImplement private, encrypted token balances on Solana using the Token-2022 confidential transfers extension.\n- **Category**: Tokens\n\n### Frontend with framework-kit\nBuild React and Next.js Solana apps with a single client instance, Wallet Standard-first connection, and minimal client-side footprint.\n- **Category**: Frontend\n\n### IDL & Client Code Generation\nGenerate type-safe program clients from IDLs using Codama, eliminating hand-maintained serializers across languages.\n- **Category**: Tooling\n\n### Kit ↔ web3.js Interop\nPatterns for bridging @solana/kit and legacy @solana/web3.js at adapter boundaries while migrating incrementally.\n- **Category**: Tooling\n\n### Payments & Commerce\nBuild checkout flows, payment buttons, and QR-based payment requests using Commerce Kit. Note: Solana Pay has been discontinued.\n- **Category**: Payments\n\n### Programs with Anchor\nWrite Solana programs using the Anchor framework for fast iteration, automatic account validation, and built-in TypeScript client generation.\n- **Category**: Programs\n\n### Programs with Pinocchio\nBuild high-performance Solana programs with zero-copy techniques and minimal dependencies, without the solana-program overhead.\n- **Category**: Programs\n\n### Curated Resources\nAuthoritative Solana learning platforms, documentation, tooling references, and community resources.\n- **Category**: Reference\n\n### Security Checklist\nProgram and client security checklist covering account validation, signer checks, and common attack vectors to review before deploying.\n- **Category**: Security\n\n### Surfpool Cheatcodes\nFull reference for all surfnet_* RPC methods to manipulate time, accounts, and programs in a local Surfpool network during testing.\n- **Category**: Tooling\n\n### Surfpool\nA drop-in replacement for solana-test-validator with sub-second startup, automatic mainnet state cloning, transaction profiling, and a built-in web UI.\n- **Category**: Tooling\n\n### Testing Strategy\nA testing pyramid for Solana programs using LiteSVM for fast unit tests, Mollusk for isolated instruction checks, and Surfpool for integration tests with realistic state.\n- **Category**: Testing"
+  "skill_md": "# Solana Agent Skills\n\n> Foundation-maintained skills for AI agents building on Solana.\n> Install any skill: `npx skills add <url>`\n\n## Install All Skills\n\n```\nnpx skills add https://github.com/solana-foundation/solana-dev-skill\n```\n\n## Skills\n\n### Common Errors & Solutions\nDiagnose and fix common errors encountered when building on Solana, including GLIBC issues, Anchor version conflicts, and RPC errors.\n- **Category**: Reference\n\n### Version Compatibility Matrix\nReference table for matching Anchor, Solana CLI, Rust, and Node.js versions to avoid toolchain conflicts.\n- **Category**: Tooling\n\n### Confidential Transfers\nImplement private, encrypted token balances on Solana using the Token-2022 confidential transfers extension.\n- **Category**: Tokens\n\n### Frontend with framework-kit\nBuild React and Next.js Solana apps with a single client instance, Wallet Standard-first connection, and minimal client-side footprint.\n- **Category**: Frontend\n\n### IDL & Client Code Generation\nGenerate type-safe program clients from IDLs using Codama, eliminating hand-maintained serializers across languages.\n- **Category**: Tooling\n\n### Kit \u2194 web3.js Interop\nPatterns for bridging @solana/kit and legacy @solana/web3.js at adapter boundaries while migrating incrementally.\n- **Category**: Tooling\n\n### Payments & Commerce\nBuild checkout flows, payment buttons, and QR-based payment requests using Commerce Kit. Note: Solana Pay has been discontinued.\n- **Category**: Payments\n\n### Programs with Anchor\nWrite Solana programs using the Anchor framework for fast iteration, automatic account validation, and built-in TypeScript client generation.\n- **Category**: Programs\n\n### Programs with Pinocchio\nBuild high-performance Solana programs with zero-copy techniques and minimal dependencies, without the solana-program overhead.\n- **Category**: Programs\n\n### Curated Resources\nAuthoritative Solana learning platforms, documentation, tooling references, and community resources.\n- **Category**: Reference\n\n### Security Checklist\nProgram and client security checklist covering account validation, signer checks, and common attack vectors to review before deploying.\n- **Category**: Security\n\n### Surfpool Cheatcodes\nFull reference for all surfnet_* RPC methods to manipulate time, accounts, and programs in a local Surfpool network during testing.\n- **Category**: Tooling\n\n### Surfpool\nA drop-in replacement for solana-test-validator with sub-second startup, automatic mainnet state cloning, transaction profiling, and a built-in web UI.\n- **Category**: Tooling\n\n### Testing Strategy\nA testing pyramid for Solana programs using LiteSVM for fast unit tests, Mollusk for isolated instruction checks, and Surfpool for integration tests with realistic state.\n- **Category**: Testing"
 }

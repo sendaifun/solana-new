@@ -1,0 +1,4 @@
+interface:
+  display_name: "Verify Wallet Humanity (POH)"
+  short_description: "Integrate Proof of Human API to filter bots from airdrops, DAOs, NFT mints, and APIs."
+  default_prompt: "Help me add bot/sybil protection to my Solana app using Proof of Human."
