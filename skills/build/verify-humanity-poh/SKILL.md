@@ -157,7 +157,7 @@ async function isHuman(walletAddress: string): Promise<boolean> {
       return verdict.verdict === 'HUMAN' && verdict.confidence >= 0.7;
     }
   }
-  return false; // timeout — fail open
+  return false; // timeout — fail closed
 }
 ```
 
