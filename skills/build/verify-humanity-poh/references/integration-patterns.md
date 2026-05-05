@@ -84,10 +84,10 @@ async function requireHuman(req: express.Request, res: express.Response, next: e
     }
 
     if (verdict.verdict === 'UNCERTAIN') {
-      return res.status(403).json({
-        error: 'Insufficient on-chain history to verify humanity. Build more history and try again.',
-        verdict: 'UNCERTAIN',
-      });
+      // UNCERTAIN = insufficient signal, not "is a bot" — never hard-block, pass with warning flag
+      req.body._pohVerified = false;
+      req.body._pohUncertain = true;
+      return next();
     }
 
     return res.status(403).json({ error: 'Bot activity detected.', verdict: verdict.verdict });
@@ -151,7 +151,7 @@ app.post('/api/check-human', async (req, res) => {
       return res.json({ human: v.verdict === 'HUMAN' && v.confidence >= 0.7 });
     }
   }
-  res.json({ human: false }); // timeout — fail closed for mints
+  res.json({ human: true }); // timeout — fail open (POH infra failure must never block users)
 });
 ```
 

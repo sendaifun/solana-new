@@ -84,7 +84,8 @@ If the use case is unclear, ask: "Are you filtering a list of wallets, gating li
 
 4. **Get API access:**
    - For testing: use `walletAddress` field (free tier, 100 scans)
-   - For production: connect wallet at `https://proofofhuman.ge/devnet/` → Profile → copy API key
+   - For production: connect wallet at `https://proofofhuman.ge/` → Profile → copy API key
+   - For devnet/testing: connect wallet at `https://proofofhuman.ge/devnet/` → Profile → copy API key
    - Devnet faucet: `POST https://proofofhuman.ge/devnet/profile/faucet` (10 000 POH test tokens)
 
 5. **Implement the integration** following the chosen pattern. Key decision points:
@@ -134,7 +135,7 @@ curl -X POST https://proofofhuman.ge/devnet/checker \
 
 # Poll AI verdict
 curl https://proofofhuman.ge/devnet/checker/brain/abc123
-# → { "verdict": "HUMAN", "confidence": 0.87, "reasoning": "..." }
+# → { "status": "done", "verdict": "HUMAN", "confidence": 0.87, "reasoning": "..." }
 ```
 
 ```typescript
@@ -157,7 +158,7 @@ async function isHuman(walletAddress: string): Promise<boolean> {
       return verdict.verdict === 'HUMAN' && verdict.confidence >= 0.7;
     }
   }
-  return false; // timeout — fail closed
+  return true; // timeout — fail open (never block on infrastructure failure)
 }
 ```
 

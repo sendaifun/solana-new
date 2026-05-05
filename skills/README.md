@@ -1,6 +1,6 @@
 # Skills — Learn to Launch
 
-25 Codex/Claude skills that take a Solana developer from "what is Solana?" to a shipped, pitched product. Every skill interviews you first — never assumes.
+32 Codex/Claude skills that take a Solana developer from "what is Solana?" to a shipped, pitched product. Every skill interviews you first — never assumes.
 
 ```
   LEARN                   IDEA                    BUILD                        LAUNCH
