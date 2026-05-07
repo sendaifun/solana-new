@@ -7,7 +7,7 @@
   "install_all_command": "npx skills add https://github.com/solana-foundation/solana-dev-skill",
   "counts": {
     "official": 15,
-    "community": 64
+    "community": 65
   },
   "official_skills": [
     {
@@ -278,6 +278,15 @@
       "description": "AI coding skill for deBridge Protocol covering cross-chain bridges and token transfers between chains.",
       "url": "https://github.com/sendaifun/skills/tree/main/skills/debridge",
       "category": null
+    },
+    {
+      "slug": "lifi-skill",
+      "title": "LI.FI Skill",
+      "description": "AI coding skill for LI.FI cross-chain infrastructure covering quotes, routes, status tracking, chains, tokens, tools, SDK usage, and Solana-specific execution guidance.",
+      "url": "https://github.com/sendaifun/skills/tree/main/skills/lifi",
+      "category": {
+        "labelKey": "defi"
+      }
     },
     {
       "slug": "helius-skill",
