@@ -2,10 +2,10 @@
 [![solana.new](https://img.shields.io/badge/solana.new-Install-black?logo=solana&logoColor=white)](https://solana.new)
 [![Skills](https://img.shields.io/badge/skills-78-blueviolet)](#ecosystem-catalog)
 [![Repos](https://img.shields.io/badge/repos-106-blue)](#ecosystem-catalog)
-[![MCPs](https://img.shields.io/badge/MCPs-36-green)](#ecosystem-catalog)
+[![MCPs](https://img.shields.io/badge/MCPs-37-green)](#ecosystem-catalog)
 [![License](https://img.shields.io/github/license/sendaifun/solana-new)](LICENSE)
 
-The open-source platform behind [solana.new](https://solana.new) — 25 journey skills that take you from "what should I build?" to a shipped, funded product on Solana. Backed by 106 repos, 78 ecosystem skills, 36 MCP servers, 515+ curated ideas, and a comprehensive Solana knowledge base.
+The open-source platform behind [solana.new](https://solana.new) — 25 journey skills that take you from "what should I build?" to a shipped, funded product on Solana. Backed by 106 repos, 78 ecosystem skills, 37 MCP servers, 515+ curated ideas, and a comprehensive Solana knowledge base.
 
 Works with [Claude Code](https://claude.ai/code) and [Codex](https://openai.com/index/codex/).
 
@@ -119,7 +119,7 @@ Ships with a curated catalog of the Solana ecosystem that skills search and reco
 |---------|-------|---------|
 | **Repos** | 106 | Anchor, Pinocchio, Quasar, Doppler, Metaplex, Orca, Raydium, Jupiter, Jito, LiteSVM, Mollusk, Codama, Blueshift, ConnectorKit, Solana Agent Kit, MagicBlock |
 | **Skills** | 78 | 15 official (Solana Foundation) + 63 community (Jupiter, Helius, Kamino, Privy, DFlow, Phoenix, Meteora, Sanctum, QEDGen, Carbium) |
-| **MCPs** | 36 | Helius, Jupiter, Phantom, Orca, Alchemy, Flash Trade, Solscan, DexScreener, Solana Foundation |
+| **MCPs** | 37 | Helius, Jupiter, Phantom, Orca, Alchemy, Flash Trade, Solscan, DexScreener, Solana Foundation |
 | **Knowledge** | 7 docs | Architecture, programs, protocols, SDKs, app layer, open-source research, Cookbook index |
 | **Guides** | 3 | RPC + wallet setup, deploy runbook, security checklist |
 | **Ideas** | 515+ | Curated from YC, a16z, Alliance, SendAI, and Superteam |
