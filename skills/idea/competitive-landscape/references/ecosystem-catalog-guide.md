@@ -7,7 +7,7 @@ How to search the solana-new catalogs for competitive intelligence.
 | Catalog | Count | Location |
 |---------|-------|----------|
 | Repos | 59 | `~/.claude/skills/data/catalogs/clonable-repos.json` |
-| Skills | 78 | `~/.claude/skills/data/catalogs/solana-skills.json` |
+| Skills | 83 | `~/.claude/skills/data/catalogs/solana-skills.json` |
 | MCPs | 49 | `~/.claude/skills/data/catalogs/solana-mcps.json` |
 
 These are installed automatically alongside the skills.

@@ -7,7 +7,7 @@
   "install_all_command": "npx skills add https://github.com/solana-foundation/solana-dev-skill",
   "counts": {
     "official": 15,
-    "community": 65
+    "community": 68
   },
   "official_skills": [
     {
@@ -645,6 +645,33 @@
       "title": "Alchemy Skills (Official)",
       "description": "Official Alchemy skill bundle \u2014 alchemy-cli (live agent work), alchemy-mcp (hosted MCP, 159 tools across 100+ chains), alchemy-api (app integration with API key), and agentic-gateway (wallet-based auth with x402/MPP payments). Solana support today: Node API, Websockets, gRPC (Yellowstone), Webhooks, Prices API, and Gas Manager.",
       "url": "https://github.com/alchemyplatform/skills",
+      "category": {
+        "labelKey": "infrastructure"
+      }
+    },
+    {
+      "slug": "safe-solana-builder",
+      "title": "Safe Solana Builder",
+      "description": "Claude AI skill that scaffolds security-hardened Solana programs across Anchor, Native Rust, and Pinocchio frameworks, with LiteSVM for testing — encodes 31 vulnerability categories distilled from real audits.",
+      "url": "https://github.com/Frankcastleauditor/safe-solana-builder",
+      "category": {
+        "labelKey": "security"
+      }
+    },
+    {
+      "slug": "trailofbits-skills",
+      "title": "Trail of Bits Skills",
+      "description": "Trail of Bits' Claude Code plugin marketplace of 40+ security skills — smart contract auditing, static analysis (Semgrep, CodeQL), constant-time analysis, mutation testing, supply-chain risk auditing, and malware analysis.",
+      "url": "https://github.com/trailofbits/skills",
+      "category": {
+        "labelKey": "security"
+      }
+    },
+    {
+      "slug": "solana-mobile-dev-skill",
+      "title": "Solana Mobile Dev Skill",
+      "description": "Official Solana Mobile Claude Code skill — Mobile Wallet Adapter integration, Solana Domains resolution, and Seeker Genesis Token verification.",
+      "url": "https://github.com/solana-mobile/solana-mobile-dev-skill",
       "category": {
         "labelKey": "infrastructure"
       }
