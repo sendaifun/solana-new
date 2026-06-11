@@ -157,7 +157,7 @@ function generateProjectClaudeMd(): string {
   md += `## Ecosystem\n`;
   md += `- \`${BINARY_NAME} search <query>\` — find repos, skills, MCPs\n`;
   md += `- \`${BINARY_NAME} repos\` — 88 cloneable Solana repos\n`;
-  md += `- \`${BINARY_NAME} skills\` — 77 ecosystem skills\n`;
+  md += `- \`${BINARY_NAME} skills\` — 83 ecosystem skills\n`;
   md += `- \`${BINARY_NAME} mcps\` — 36 MCP servers\n`;
 
   return md;

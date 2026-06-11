@@ -67,7 +67,7 @@ Catalog data may be in either location:
 | File | What it contains |
 |------|-----------------|
 | `clonable-repos.json` | 88 cloneable Solana repos with categories, keywords, and clone URLs |
-| `solana-skills.json` | 77 skills (15 official + 62 community) with install commands |
+| `solana-skills.json` | 83 skills (15 official + 68 community) with install commands |
 | `solana-mcps.json` | 36 MCP servers with setup instructions |
 
 Read these files to answer the user's questions accurately.
