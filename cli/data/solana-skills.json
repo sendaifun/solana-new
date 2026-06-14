@@ -652,7 +652,7 @@
     {
       "slug": "x402-publish",
       "title": "x402 Publish \u2014 Make Any Paid API Discoverable",
-      "description": "Generates OpenAPI discovery docs, pay.sh provider YAML, and x402scan compliance validation for any x402-gated API. One command turns a deployed Express service into a listing on x402scan.com and pay.sh.",
+      "description": "The provider side of the x402 ecosystem. Generates OpenAPI discovery docs, pay.sh provider YAML, and x402scan compliance validation for any x402-gated Express API — so Solana Agent Kit agents and other x402 clients can discover and pay for your service autonomously.",
       "url": "https://github.com/lpsmurf/hfsp-labs-colosseum/tree/main/.claude/skills/x402-publish",
       "category": {
         "labelKey": "tooling"
