@@ -7,7 +7,7 @@
   "install_all_command": "npx skills add https://github.com/solana-foundation/solana-dev-skill",
   "counts": {
     "official": 15,
-    "community": 65
+    "community": 67
   },
   "official_skills": [
     {
@@ -647,6 +647,15 @@
       "url": "https://github.com/alchemyplatform/skills",
       "category": {
         "labelKey": "infrastructure"
+      }
+    },
+    {
+      "slug": "alphabasket-skill",
+      "title": "AlphaBasket Prediction Basket Skill",
+      "description": "Research theses, map verified Polymarket outcomes into weighted baskets, and execute them through Solana escrow.",
+      "url": "https://github.com/ScalperSolana/AlphaBasket/tree/v0.1.0/skills/alphabasket",
+      "category": {
+        "labelKey": "defi"
       }
     }
   ],
