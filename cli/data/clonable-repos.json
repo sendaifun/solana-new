@@ -1686,6 +1686,25 @@
       ],
       "clone_command": "git clone https://github.com/solana-foundation/noir-examples.git",
       "is_template": true
+    },
+    {
+      "id": "alphabasket",
+      "repo": "ScalperSolana/AlphaBasket",
+      "description": "Solana prediction-market baskets with Anchor USDC escrow, AI thesis research, MCP tools, and automated settlement",
+      "category": "defi",
+      "keywords": [
+        "alphabasket",
+        "prediction-markets",
+        "polymarket",
+        "basket",
+        "anchor",
+        "usdc",
+        "escrow",
+        "ai",
+        "mcp"
+      ],
+      "clone_command": "git clone https://github.com/ScalperSolana/AlphaBasket.git",
+      "is_template": false
     }
   ]
 }

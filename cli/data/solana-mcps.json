@@ -359,6 +359,16 @@
       "setup_command": "claude mcp add alchemy --transport http https://mcp.alchemy.com/mcp",
       "url": "https://github.com/alchemyplatform/alchemy-mcp-server",
       "keywords": ["alchemy", "rpc", "infrastructure", "token", "nft", "balance", "transaction", "swap", "multi-chain"]
+    },
+    {
+      "id": "alphabasket-mcp",
+      "name": "AlphaBasket Prediction Markets MCP",
+      "repo": "ScalperSolana/AlphaBasket",
+      "description": "AI/MCP server for thesis research and on-chain prediction baskets — create, stake, inspect, claim, and sweep on Solana",
+      "category": "defi",
+      "setup_command": "git clone --branch v0.1.0 --depth 1 https://github.com/ScalperSolana/AlphaBasket.git && cd AlphaBasket && npm install --prefix ai-server && npm --prefix ai-server run mcp",
+      "url": "https://github.com/ScalperSolana/AlphaBasket/tree/v0.1.0/ai-server",
+      "keywords": ["alphabasket", "prediction-markets", "polymarket", "basket", "ai", "mcp", "anchor", "usdc", "escrow"]
     }
   ]
 }
