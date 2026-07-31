@@ -156,6 +156,7 @@ If the user asks "what spring config for X?" or "how do I animate Y?", answer di
 - **`frontend-design-guidelines`** — the general UI skill. It delegates framer-motion work to this skill. When both fire, `animation.md` baseline rules are authoritative for constraints; this skill is authoritative for implementation recipes.
 - **`number-formatting`** — for live-updating number displays, use `number-formatting` for the formatting spec and this skill for the rolling-digit animation pattern.
 - **`brand-design`** — brand colors may affect animation color choices (positive/negative indicators, accent highlights).
+- **`animation-reverse-engineering`** — when the goal is to match a specific reference video/GIF, that skill measures the timing/easing/stagger first; this skill supplies the recipes to implement the measured spec.
 
 ## Resources
 

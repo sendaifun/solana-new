@@ -1,0 +1,4 @@
+interface:
+  display_name: "Animation Reverse-Engineering"
+  short_description: "Reverse-engineer any motion reference into production animation code via frame-level dissection"
+  default_prompt: "I have a reference video of an animation I want to recreate. Dissect it frame by frame, measure the timing, easing, and stagger, then port it to production framer-motion code."
