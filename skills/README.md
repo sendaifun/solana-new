@@ -1,6 +1,6 @@
 # Skills — Learn to Launch
 
-32 Codex/Claude skills that take a Solana developer from "what is Solana?" to a shipped, pitched product. Every skill interviews you first — never assumes.
+33 Codex/Claude skills that take a Solana developer from "what is Solana?" to a shipped, pitched product. Every skill interviews you first — never assumes.
 
 ```
   LEARN                   IDEA                    BUILD                        LAUNCH
@@ -19,6 +19,7 @@
                                                   debug-program
                                                   navigate-skills
                                                   verify-humanity-poh
+                                                  animation-reverse-engineering
 ```
 
 ## The Journey
@@ -65,6 +66,7 @@ Set up your workspace, build the MVP, review it, and get it roasted.
 | `debug-program` | Diagnose program errors and failed transactions | "Debug my program" |
 | `navigate-skills` | Browse all installed skills, repos, and MCPs | "What skills do I have?" |
 | `verify-humanity-poh` | Integrate Proof of Human API to filter bots from airdrops, DAOs, and NFT mints | "Filter bots from my airdrop" |
+| `animation-reverse-engineering` | Reverse-engineer a motion reference (video/GIF) into production animation code via frame-level dissection | "Implement this animation" + a video |
 
 **Output**: `.superstack/build-context.md` with your stack, milestones, and review scores.
 
@@ -176,6 +178,7 @@ skills/
     debug-program/                       # Program error diagnosis
     navigate-skills/                     # Meta skill browser
     verify-humanity-poh/                 # Bot/sybil detection via Proof of Human API
+    animation-reverse-engineering/       # Motion reference → dissection → production port
   launch/
     deploy-to-mainnet/                   # Production deployment
     create-pitch-deck/                   # Pitch deck generator

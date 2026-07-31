@@ -2,7 +2,7 @@
 
 ## What This Is
 
-Skills and knowledge base to ship on Solana — Idea to Launch. 32 journey skills, 106 repos, 79 ecosystem skills, 36 MCP servers.
+Skills and knowledge base to ship on Solana — Idea to Launch. 33 journey skills, 106 repos, 79 ecosystem skills, 36 MCP servers.
 
 ## Install
 
@@ -22,7 +22,7 @@ claude "/deploy-to-mainnet Ship it"
 
 ## Journey Skills
 
-32 skills across 4 phases — user just asks naturally, right skill activates.
+33 skills across 4 phases — user just asks naturally, right skill activates.
 
 | Phase | Skill | Trigger Prompt |
 |-------|-------|---------------|
@@ -44,6 +44,7 @@ claude "/deploy-to-mainnet Ship it"
 | Build | `frontend-design-guidelines` | "Build a frontend" |
 | Build | `number-formatting` | "Format numbers in my UI" |
 | Build | `page-load-animations` | "Fix my page load animations" |
+| Build | `animation-reverse-engineering` | "Implement this animation" + a reference video |
 | Build | `design-taste` | "This looks generic / not premium" |
 | Build | `navigate-skills` | "What skills are available?" |
 | Build | `roast-my-product` | "Roast my product — be brutal" |
@@ -91,7 +92,7 @@ cli/
 skills/
   SKILL_ROUTER.md           Shared routing table — AI auto-corrects wrong skill
   idea/                     Discovery & planning skills (7 skills, includes solana-beginner, learn)
-  build/                    Implementation skills (19 skills, includes virtual-solana-incubator, roast-my-product, product-review, cso, page-load-animations, number-formatting, design-taste, verify-humanity-poh)
+  build/                    Implementation skills (20 skills, includes virtual-solana-incubator, roast-my-product, product-review, cso, page-load-animations, animation-reverse-engineering, number-formatting, design-taste, verify-humanity-poh)
   launch/                   Go-to-market skills (6 skills, includes marketing-video, apply-grant, video-craft)
   data/
     guides/                 Shared guides (RPC+wallet, deploy, security, curated ideas)
