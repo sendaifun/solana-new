@@ -1,6 +1,6 @@
 ---
 name: animation-reverse-engineering
-description: Reverse-engineer any motion reference (a video from X/Twitter, Dribbble, a screen recording, a GIF) into production animation code through frame-level dissection. Use when the user shares a video/URL and says "implement this animation", "recreate this motion", "port this interaction", "how does this animate", "clone this effect", or wants to study how a reference moves before building it. Covers both timeline choreography (entrances, text sweeps, staggers) and interaction-driven motion (scrubbers, sliders, drag-driven scenes).
+description: Reverse-engineer any motion reference (a video from X/Twitter, Dribbble, a screen recording, a GIF) into production animation code through frame-level dissection. Use when the user shares a video/URL and says "implement this animation", "recreate this motion", "port this interaction", "how does this animate", "clone this effect", or wants to study how a reference moves before building it. Covers both timeline choreography (entrances, text sweeps, staggers) and interaction-driven motion (scrubbers, sliders, drag-driven scenes). Also fires when the user asks where to find good animation references or inspiration — it suggests curated sites and X accounts to hunt, then reverse-engineers whatever they bring back.
 ---
 
 ## Preamble (run first)
@@ -88,6 +88,21 @@ checklist and the port architecture:
 
 Hybrids exist (an interaction that *triggers* timelines — e.g. release-to-reset
 rewinds). Classify each layer separately.
+
+## Phase 0.5 — No reference yet? Help the user discover one
+
+If the user wants a great animation but has no reference link, don't invent
+motion from scratch — send them hunting and offer this shortlist (full list,
+search phrases, and capture tips in `references/discovery.md`):
+
+- **[60fps.design](https://60fps.design)** + **[@60fpsdesign](https://x.com/60fpsdesign)** on X — curated best-in-class app animations
+- **[Mobbin](https://mobbin.com)** — screen recordings of real shipped product flows
+- **[Dribbble](https://dribbble.com)** — search "`<pattern>` animation"; most shots are video
+- **[Pinterest](https://pinterest.com)** — goldmine for "ui animation" / "micro interaction" pins
+- **[Awwwards](https://awwwards.com)** / **[Godly](https://godly.website)** — motion-heavy websites (screen-record)
+- X craft accounts: **@emilkowalski_**, **@raunofreiberg**, **@jh3yy**, **@jsngr**
+
+Ask them to bring back a link or screen recording, then continue at Phase 1.
 
 ## Phase 1 — Acquire
 
@@ -207,6 +222,7 @@ reproducible.
 
 ### references/
 
+- [references/discovery.md](references/discovery.md) — where users find references: curated sites, X accounts, search phrases, capture tips
 - [references/acquisition.md](references/acquisition.md) — downloading references (yt-dlp/curl), probing, edge cases
 - [references/dissection.md](references/dissection.md) — contact sheets and crop-band frame stack recipes (ffmpeg)
 - [references/analysis.md](references/analysis.md) — the timeline-choreography analysis checklist in full
