@@ -24,6 +24,22 @@ ok()   { printf "  ${GREEN}✓${RESET} %s\n" "$1"; }
 
 has_cmd() { command -v "$1" >/dev/null 2>&1; }
 
+# --- Where Claude Code actually keeps its config ---
+# Claude Code honours CLAUDE_CONFIG_DIR, and anyone running more than one
+# account sets it. Installing to a hardcoded ~/.claude puts the skills where
+# their Claude Code will never look: the install reports success and every
+# skill is silently missing. Codex and the generic agents dir are unaffected,
+# so only the Claude paths are resolved here.
+if [ -n "${CLAUDE_CONFIG_DIR:-}" ]; then
+  CLAUDE_HOME="${CLAUDE_CONFIG_DIR%/}"
+  # Recorded absolute in the manifest: the uninstaller resolves recorded paths
+  # relative to $HOME, and a custom config dir need not live under it.
+  CLAUDE_SKILLS_PREFIX="$CLAUDE_HOME/skills"
+else
+  CLAUDE_HOME="$HOME/.claude"
+  CLAUDE_SKILLS_PREFIX=".claude/skills"
+fi
+
 # --- Parse flags ---
 UPDATE_MODE=false
 UNINSTALL_MODE=false
@@ -69,7 +85,12 @@ if [ "$UNINSTALL_MODE" = true ]; then
     REMOVED_COUNT=0
     while IFS= read -r skill_path; do
       [ -z "$skill_path" ] && continue
-      expanded="$HOME/$skill_path"
+      # Recorded paths are relative to $HOME, except under a custom
+      # CLAUDE_CONFIG_DIR, which need not live under $HOME at all.
+      case "$skill_path" in
+        /*|[A-Za-z]:[\/]*) expanded="$skill_path" ;;
+        *) expanded="$HOME/$skill_path" ;;
+      esac
       if [ -d "$expanded" ]; then
         rm -rf "$expanded"
         REMOVED_COUNT=$((REMOVED_COUNT + 1))
@@ -81,7 +102,10 @@ EOF
     # Remove shared data paths from the manifest
     while IFS= read -r data_path; do
       [ -z "$data_path" ] && continue
-      expanded="$HOME/$data_path"
+      case "$data_path" in
+        /*|[A-Za-z]:[\/]*) expanded="$data_path" ;;
+        *) expanded="$HOME/$data_path" ;;
+      esac
       if [ -e "$expanded" ]; then
         rm -rf "$expanded"
       fi
@@ -90,7 +114,7 @@ $(read_manifest_array "dataPaths")
 EOF
 
     # ── Undo Claude Code permission changes ──
-    CLAUDE_SETTINGS="$HOME/.claude/settings.json"
+    CLAUDE_SETTINGS="$CLAUDE_HOME/settings.json"
     if [ -f "$CLAUDE_SETTINGS" ] && has_cmd node; then
       PERMS_TO_REMOVE=$(read_manifest_array "permissionsAdded" | tr '\n' ',' | sed 's/,$//')
       if [ -n "$PERMS_TO_REMOVE" ]; then
@@ -115,7 +139,7 @@ EOF
     warn "No install manifest found — falling back to name-based removal"
     warn "Only removing skills that match known ${PRODUCT_NAME} skill names"
 
-    SKILLS_DIR="$HOME/.claude/skills"
+    SKILLS_DIR="$CLAUDE_HOME/skills"
     CODEX_DIR="$HOME/.codex/skills"
     AGENTS_DIR="$HOME/.agents/skills"
 
@@ -177,7 +201,7 @@ BUNDLE_VERSION=""
 # --- Download and install skills ---
 log "Downloading skills..."
 
-SKILLS_DIR="$HOME/.claude/skills"
+SKILLS_DIR="$CLAUDE_HOME/skills"
 CODEX_DIR="$HOME/.codex/skills"
 AGENTS_DIR="$HOME/.agents/skills"
 TMP_DIR=$(mktemp -d)
@@ -263,7 +287,7 @@ ok "Installed ${SKILL_COUNT} skills to ~/.agents/skills/"
 # --- Auto-allow skill bash preambles in Claude Code ---
 log "Configuring Claude Code permissions..."
 
-CLAUDE_SETTINGS="$HOME/.claude/settings.json"
+CLAUDE_SETTINGS="$CLAUDE_HOME/settings.json"
 PERMISSIONS_ADDED=""
 if [ -f "$CLAUDE_SETTINGS" ] && has_cmd node; then
   # Add permission rules, track which ones were actually new
@@ -285,7 +309,7 @@ if [ -f "$CLAUDE_SETTINGS" ] && has_cmd node; then
     console.log(added.join(','));
   " 2>/dev/null) && ok "Auto-allow skill preambles: enabled" || warn "Could not update Claude settings"
 elif [ ! -f "$CLAUDE_SETTINGS" ]; then
-  mkdir -p "$HOME/.claude"
+  mkdir -p "$CLAUDE_HOME"
   echo '{"permissions":{"allow":["Bash","Read","Glob","Grep"]}}' > "$CLAUDE_SETTINGS"
   PERMISSIONS_ADDED="Bash,Read,Glob,Grep"
   ok "Auto-allow skill preambles: enabled"
@@ -301,14 +325,14 @@ mkdir -p "$CONFIG_DIR_M"
 SKILL_PATHS_JSON=""
 DATA_PATHS_JSON=""
 for skill_name in $INSTALLED_SKILL_NAMES; do
-  for prefix in ".claude/skills" ".codex/skills" ".agents/skills"; do
+  for prefix in "$CLAUDE_SKILLS_PREFIX" ".codex/skills" ".agents/skills"; do
     SKILL_PATHS_JSON="${SKILL_PATHS_JSON}\"${prefix}/${skill_name}\","
   done
 done
 # Remove trailing comma
 SKILL_PATHS_JSON=$(echo "$SKILL_PATHS_JSON" | sed 's/,$//')
 
-for prefix in ".claude/skills" ".codex/skills" ".agents/skills"; do
+for prefix in "$CLAUDE_SKILLS_PREFIX" ".codex/skills" ".agents/skills"; do
   DATA_PATHS_JSON="${DATA_PATHS_JSON}\"${prefix}/data\",\"${prefix}/SKILL_ROUTER.md\","
 done
 DATA_PATHS_JSON=$(echo "$DATA_PATHS_JSON" | sed 's/,$//')
