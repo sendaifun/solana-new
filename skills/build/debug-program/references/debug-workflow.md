@@ -11,7 +11,7 @@ Before anything else, get the exact error. There are three sources:
 ```typescript
 // Get transaction details with logs
 const tx = await connection.getTransaction(signature, {
-  maxSupportedTransactionVersion: 0,
+  maxSupportedTransactionVersion: 1,
 });
 
 if (tx?.meta?.err) {
@@ -19,6 +19,8 @@ if (tx?.meta?.err) {
   console.log("Logs:", tx.meta.logMessages);
 }
 ```
+
+`maxSupportedTransactionVersion: 1` returns legacy, v0 and v1 transactions. With `0`, the RPC rejects a v1 transaction with error -32015. `@solana/web3.js` needs to be 1.99.0 or later: older versions fail to parse a v1 response.
 
 ### From Simulation
 
